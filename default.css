@@ -80,12 +80,13 @@ div#header a:hover
 div#content
 {
 	background-color:	#002E63;
-	color: 			#000;
+	color: 			#fff;
 	clear: 			both;
 	width: 			100%;
 	text-align:		center;
 	height:			auto;
 	min-height:		500px;
+	font-size:		14px;
 }
 
 div#footer
