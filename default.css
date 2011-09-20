@@ -1,0 +1,110 @@
+body { 
+	font-family: 		"Open Sans", Helvetica;
+	font-size:		10px;
+	font-weight:		normal;
+	padding:		0px;
+	margin:			0px;
+	background-color:	#FFF;
+}
+
+div#header
+{
+	width:			100%;
+	float: left;
+	text-align: center;
+}
+div.container
+{
+	width: 75%;
+	margin-left: auto;
+	margin-right: auto;
+}
+div#top_nav
+{
+
+	font-size: 		14px;
+	font-weight: 		bold;
+	color:			#105B63;
+	height:			90px;
+	text-align:		center;
+	float: 			right;
+	clear: 			none;
+}
+div#icon
+{
+	font-size: 32px;
+	font-weight: bold;
+	color:			#000;
+	height:			90px;
+	float: 			left;
+	clear: 			none;
+
+	
+}
+div#header a
+{
+	display: 		inline-block;
+	margin:			22px;
+	margin-top: 30px;
+	vertical-align:		middle;
+	padding: 9px;
+	border-bottom: 3px #FFF solid;
+
+}
+div#header a:link
+{
+	color: 			#AAA;
+	text-decoration: 	none;
+}
+
+div#header a:active
+{
+	color: 			#AAA;
+	text-decoration: 	none;
+}
+
+div#header a:visited
+{
+	color: 			#AAA;
+	text-decoration: 	none;
+}
+
+div#header a:hover
+{
+	color: 			#000;
+	border-bottom: 3px #000 solid;
+}
+
+
+div#content
+{
+	background-color:	#002E63;
+	color: 			#000;
+	clear: 			both;
+	width: 			100%;
+	text-align:		center;
+	height:			auto;
+	min-height:		500px;
+}
+
+div#footer
+{
+	font-size:		10px;
+	font-weight:		bold;
+	background-color:	#191919;
+	height:			175px;
+	vertical-align:		middle;
+	clear:			both;
+	width: 			100%;
+	text-align:		center;
+}
+
+div#footer .columnhead
+{
+	color:			#FFF;
+}
+
+div#footer .column
+{
+	color:			#EEE;
+}
