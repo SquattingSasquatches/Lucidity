@@ -1,0 +1,41 @@
+Lucidity
+ | students
+	- id
+	- name
+
+ | professors
+	- id
+	- name
+	
+ | courses
+	- id
+	- uni_id
+	- name
+	- start_date
+	- end_date
+	
+ | meetings_times
+	- course_id
+	- date
+	- is_cancelled (bool)
+	
+ | student_courses
+	- student_id
+	- course_id
+	
+ | professor_courses
+	- professor_id
+	- course_id
+	
+ | documents
+	- id
+	- course_id
+	- title
+	- allow_remote_dl (bool)
+	
+ | assignments
+	- id
+	- doc_id
+	- name
+	- descrip
+	- due_date
