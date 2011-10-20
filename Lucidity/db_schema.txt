@@ -1,9 +1,16 @@
 Lucidity
- | students
+ | user
 	- id
 	- name
 
  | professors
+	- user_id
+	
+ | user_devices
+	- user_id
+	- device_uuid
+	
+ | uni
 	- id
 	- name
 	
@@ -22,6 +29,7 @@ Lucidity
  | student_courses
 	- student_id
 	- course_id
+	- verified (bool)
 	
  | professor_courses
 	- professor_id
