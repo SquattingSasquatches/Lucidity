@@ -12,9 +12,13 @@ public class LucidityActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        TextView textAndroidId = (TextView)findViewById(R.id.uuid);
-        String AndroidId = Settings.Secure.getString(getContentResolver(),
-          Settings.Secure.ANDROID_ID);
-        textAndroidId.setText("My ID is: " + AndroidId);
+        // get device's unique ID
+        String deviceUUID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        
+        if (deviceUUID.equals("")) {
+        	// deal with problem of device having no UUID
+        } else {
+        	// check database for UUID, create new user if not found
+        }
     }
 }
