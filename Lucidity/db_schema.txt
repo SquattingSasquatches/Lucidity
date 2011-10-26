@@ -1,5 +1,5 @@
 Lucidity
- | user
+ | users
 	- id
 	- name
 
@@ -10,7 +10,7 @@ Lucidity
 	- user_id
 	- device_uuid
 	
- | uni
+ | unis
 	- id
 	- name
 	
