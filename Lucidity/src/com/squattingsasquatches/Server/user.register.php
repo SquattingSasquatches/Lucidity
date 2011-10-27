@@ -53,7 +53,7 @@
 		return;
 	}
 	
-	if ( !$db->insert('users', array( 'name' => $name ) ) )
+	if ( !$db->insert('users', array( 'name' => $name ), false, true ))
 	{
 		echo '6';
 		return;
