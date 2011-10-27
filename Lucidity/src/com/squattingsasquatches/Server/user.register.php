@@ -3,7 +3,9 @@
 	include('init.php');
 	
 	global $db;
+	
 	$db->debug = true;
+	
 	extract( $_REQUEST );
 	
 	// If no name parameter is specified, return with error code 1.
@@ -25,11 +27,8 @@
 	
 	// If database encounters an error, return with error code 3.
 	
-	if( !$records = $db->fetch_assoc_all() )
-	{
-		echo '3';
-		return;
-	}
+	$records = $db->fetch_assoc_all();
+	
 	
 	// Name exists. Return with error code 4.
 	
