@@ -2,8 +2,8 @@
 	
 	include('init.php');
 	
-	ini_set('display_errors',0);
-	error_reporting(0);
+	ini_set('display_errors',1);
+	error_reporting(E_ALL);
 	global $db;
 	
 	$db->debug = true;
@@ -59,14 +59,13 @@
 	
 	if ( !$db->insert('users', array( 'name' => $name ), false, true ))
 	{
-		$db->write_log();
 		echo '6';
 		return;
 	}
 	
 	$user_id = $db->insert_id();
 	
-	if( !$db->insert('user_devices', array( 'user_id' => $user_id, 'device_id' => device_id ) ) )
+	if( !$db->insert('user_devices', array( 'user_id' => $user_id, 'device_id' => $device_id ) ) )
 	{	
 		echo '7';
 		return;

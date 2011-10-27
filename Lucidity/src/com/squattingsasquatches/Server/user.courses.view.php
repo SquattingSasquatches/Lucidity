@@ -10,21 +10,13 @@
  	
  	if( !isset( $device_id ) )
  	{
- 		echo '1';
+ 		echo json_encode($errors['no_device_id_supplied']);
  		return;
  	}
  	
- 	if( !$db->query('SELECT FROM `user_devices` AS ud, `student_courses` AS sc, `courses` AS c WHERE ud.user_id = sc.student_id AND courses.id = sc.course_id') )
- 	{
- 		echo '2';
-		return; 		
- 	}
+ 	$db->query('SELECT FROM `user_devices` AS ud, `student_courses` AS sc, `courses` AS c WHERE ud.user_id = sc.student_id AND courses.id = sc.course_id') )
  	
- 	if( !$records = $db_fetch_assoc_all() )
-	{
-		echo '3';
-		return;
-	}
+ 	$records = $db->fetch_assoc_all()
 	
 	echo json_encode( $records );
 	

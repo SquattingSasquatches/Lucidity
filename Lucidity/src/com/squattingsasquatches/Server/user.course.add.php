@@ -26,7 +26,7 @@
 		return; 		
  	}
  	
- 	$records = $db_fetch_assoc_all();
+ 	$records = $db->fetch_assoc_all();
  	
  	// If they've already added the course, return with error code 3.
  	
@@ -36,7 +36,7 @@
 		return;
 	}
 	
-	if( !$db->query('SELECT FROM `user_devices` AS ud WHERE ud.user_id = ?', array('device_id' => $device_id )) )
+	if( !$db->query('SELECT FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $device_id )) )
  	{
  		echo '4';
 		return; 		
