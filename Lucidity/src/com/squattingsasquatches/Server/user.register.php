@@ -43,11 +43,7 @@
 	
 	// If database encounters an error, return with error code 4.
 	
-	if( !$records = $db->fetch_assoc_all() )
-	{
-		echo '4';
-		return;
-	}
+	$records = $db->fetch_assoc_all();
 	
 	// UUID exists. Return with error code 5.
 	
