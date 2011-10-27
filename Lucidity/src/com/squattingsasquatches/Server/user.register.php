@@ -2,9 +2,13 @@
 	
 	include('init.php');
 	
+	ini_set('display_errors',0);
+	error_reporting(0);
 	global $db;
 	
 	$db->debug = true;
+	
+	
 	
 	extract( $_REQUEST );
 	
