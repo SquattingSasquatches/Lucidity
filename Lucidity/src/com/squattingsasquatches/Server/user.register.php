@@ -58,7 +58,7 @@
 		return;
 	}
 	
-	if ( !$db->insert('name', array( 'name' => $name ) )
+	if ( !$db->insert('name', array( 'name' => $name ) ) )
 	{
 		echo '6';
 		return;
@@ -66,7 +66,7 @@
 	
 	$user_id = $db->insert_id();
 	
-	if( !$db->insert('user_id, device_id', array( 'user_id' => $user_id, 'device_id' => device_id ) )
+	if( !$db->insert('user_id, device_id', array( 'user_id' => $user_id, 'device_id' => device_id ) ) )
 	{	
 		echo '7';
 		return;
