@@ -62,7 +62,7 @@ public class DBAdapter extends AsyncTask<ArrayList<NameValuePair>, Void, JSONObj
 	@Override
 	protected JSONObject doInBackground(ArrayList<NameValuePair>... params) {
 		InputStream is;
-		String line, result = "";
+		String line;
 		JSONObject jsonResult = new JSONObject();
 		
 		try {
@@ -75,12 +75,14 @@ public class DBAdapter extends AsyncTask<ArrayList<NameValuePair>, Void, JSONObj
 			
 			try {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-				
+				StringBuilder sb = new StringBuilder();
 				while ((line = reader.readLine()) != null) {
-					result += line;
+					sb.append(line + "\n");
 				}
-				 
-				jsonResult = new JSONObject(result);
+				
+				jsonResult = new JSONObject();
+				
+				Log.i("result", sb.toString());
 				
 			} catch (UnsupportedEncodingException e) {
 				Log.e("doInBackground", "Error getting http result " + e.getMessage());
@@ -95,8 +97,9 @@ public class DBAdapter extends AsyncTask<ArrayList<NameValuePair>, Void, JSONObj
 	
 	@Override
 	protected void onPostExecute(JSONObject result) {
-		dialog = null;
 		this.result = result;
+		Log.i("onPostExecute", "here");
+		dialog.cancel();
 	}
 	 
 	@Override
