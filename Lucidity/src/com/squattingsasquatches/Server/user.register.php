@@ -20,10 +20,10 @@
 		return;
 	}
 	
-	$db->select('name','users', 'criteria = ?', array($name) );
+	$db->select('name','users', 'name = ?', array($name) );
 	
 	
-	// If database encounters an error, return with error code 2.
+	// If database encounters an error, return with error code 3.
 	
 	if( !$records = $db->fetch_assoc_all() )
 	{
@@ -31,7 +31,7 @@
 		return;
 	}
 	
-	// Name exists. Return with error code 3.
+	// Name exists. Return with error code 4.
 	
 	if( !empty( $records ) )
 	{
@@ -39,7 +39,7 @@
 		return;
 	}
 	
-	$db->select('device_id','user_devices', 'criteria = ?', array($device_id) );
+	$db->select('user_id','user_devices', 'device_id = ?', array($device_id) );
 	
 	
 	// If database encounters an error, return with error code 4.
@@ -58,7 +58,7 @@
 		return;
 	}
 	
-	if ( !$db->insert('name', array( 'name' => $name ) ) )
+	if ( !$db->insert('users', array( 'name' => $name ) ) )
 	{
 		echo '6';
 		return;
@@ -66,7 +66,7 @@
 	
 	$user_id = $db->insert_id();
 	
-	if( !$db->insert('user_id, device_id', array( 'user_id' => $user_id, 'device_id' => device_id ) ) )
+	if( !$db->insert('user_devices', array( 'user_id' => $user_id, 'device_id' => device_id ) ) )
 	{	
 		echo '7';
 		return;
