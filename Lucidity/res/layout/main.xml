@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout android:id="@+id/LinearLayout1" xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView  
-	android="@+id/uuid"
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
-</LinearLayout>
+    <Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/btnLogin" android:layout_centerVertical="true" android:layout_centerHorizontal="true" android:text="@string/loginBtn"></Button>
+    <EditText android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/txtName" android:inputType="textPersonName" android:layout_above="@+id/btnLogin" android:layout_alignParentLeft="true" android:layout_marginBottom="26dp">
+        <requestFocus></requestFocus>
+    </EditText>
+</RelativeLayout>

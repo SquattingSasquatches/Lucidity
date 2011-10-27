@@ -47,3 +47,8 @@ Lucidity
 	- name
 	- descrip
 	- due_date
+	
+	
+HOST: 207.210.251.2
+USER: thesouth_ss
+PASS: s}0}Q8h1Uur=
