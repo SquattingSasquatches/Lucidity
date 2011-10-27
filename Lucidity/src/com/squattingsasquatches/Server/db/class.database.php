@@ -141,7 +141,7 @@ class database
      *
      *  @var array
      */
-    var $debugger_ip;
+    var $debugger_ip = array();
 
     /**
      *  By default, if {@link set_charset()} is not called, a warning message will be displayed in the debug console.
@@ -2308,14 +2308,16 @@ class database
 
             // if execution time exceeds max_query_time
             if ($stop_timer - $start_timer > $this->max_query_time) {
-
-                // then send a notification mail
-                @mail(
-                    $this->notification_address,
-                    sprintf($this->language['email_subject'], $this->notifier_domain),
-                    sprintf($this->language['email_content'], $this->max_query_time, $stop_timer - $start_timer, $sql),
-                    'From: ' . $this->notifier_domain
-                );
+				if( $this->notification_address )
+				{
+	                // then send a notification mail
+	                @mail(
+	                    $this->notification_address,
+	                    sprintf($this->language['email_subject'], $this->notifier_domain),
+	                    sprintf($this->language['email_content'], $this->max_query_time, $stop_timer - $start_timer, $sql),
+	                    'From: ' . $this->notifier_domain
+	                );
+				}
 
             }
 
@@ -3540,7 +3542,7 @@ class database
 
             // this is the url that will be used for automatically including
             // the CSS and the JavaScript files
-            $path = rtrim(preg_replace('/\\\/', '/', $protocol . '://' . $_SERVER['SERVER_NAME'] . DIRECTORY_SEPARATOR . substr(dirname(__FILE__), strlen($_SERVER['DOCUMENT_ROOT']))), '/');
+            $path = rtrim(preg_replace('/\\\/', '/', $protocol . '://' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . DIRECTORY_SEPARATOR . substr(dirname(__FILE__), strlen($_SERVER['DOCUMENT_ROOT']))), '/');
 
             // link the required javascript
             $output = '<script type="text/javascript" src="' . $path . '/public/javascript/database.js"></script>' . $output;

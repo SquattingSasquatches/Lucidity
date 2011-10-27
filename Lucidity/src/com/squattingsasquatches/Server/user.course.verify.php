@@ -12,7 +12,7 @@
  	include('init.php');
 	
 	global $db;
-	
+	$db->debug = true;
 	extract( $_REQUEST );
  
  	
@@ -39,21 +39,24 @@
  	
  	
 	
-	$db->query('SELECT FROM `user_devices` AS ud, `professors` AS p, `courses` AS c WHERE ud.device_id = ? AND p.user_id = ud.user_id AND p.user_id = c.professor_id AND c.course_id = ?', array('device_id' => $device_id, 'course_id' => $course_id ));
+	$db->query('SELECT * FROM `user_devices` AS ud, `professors` AS p, `courses` AS c, `professor_courses` AS pc WHERE ud.device_id = ? AND p.user_id = ud.user_id AND p.user_id = pc.professor_id AND pc.course_id = c.id  AND c.id = ?', array('device_id' => $device_id, 'course_id' => $course_id ));
  	
-	if( !$records = $db_fetch_assoc_all() )
+	if( $db->found_rows )
 	{
 		// No professor id found.
  		$error->add('user_not_professor_of_course', true);
 	}
 	
-	$db->update('student_courses', array('verified' => true), 'course_id = ? AND student_id = ?', array($course_id, $student_id) );
+	$db->update('student_courses', array('verified' => '1'), 'course_id = ? AND student_id = ?', array($course_id, $student_id) );
 	
 	if( !$db->affected_rows )
 	{
 		// No course id found.
+		$db->show_debug_console();
  		$error->add('no_student_course_pair_found', true);
 	}
 	
-	echo '0';
+	$db->show_debug_console();
+	
+	$db->close();
 ?>

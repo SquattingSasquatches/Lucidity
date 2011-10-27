@@ -3,7 +3,13 @@
 	include('init.php');
 	
 	global $db;
+	ini_set('error_reporting', 1);
+	error_reporting(E_ALL);
 	
+	$db->debug = true;
+	$db->halt_on_errors = true;
+	
+	print_r( $db );
 	extract( $_REQUEST );
 	
 	
@@ -22,24 +28,21 @@
 	}
 	
 	
+	$db->select('name','users', 'name = ?', false, false, array($name) );
 	
-	$db->select('name','users', 'name = ?', array($name) );
-	
-	if( $records = $db->fetch_assoc_all() )
+	if( $db->found_rows )
 	{
 		$error->add('student_already_exists', true);
 	}
 	
 	
 	
-	$db->select('user_id','user_devices', 'device_id = ?', array($device_id) );
+	$db->select('user_id','user_devices', 'device_id = ?', false, false, array($device_id) );
 	
-	if( $records = $db->fetch_assoc_all() )
+	if( $db->found_rows )
 	{
-		$error->add('device_id_exists_already', true);
+		$error->add('device_id_already_exists', true);
 	}
-	
-	
 	
 	
 	$db->insert('users', array( 'name' => $name ));
@@ -51,5 +54,6 @@
 	$db->show_debug_console();
 	
 	$db->close();
+	
 	
 ?>

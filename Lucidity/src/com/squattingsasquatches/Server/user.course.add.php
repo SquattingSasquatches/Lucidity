@@ -43,7 +43,7 @@
  	
  	// If they've already added the course, return with error code 3.
  	
- 	if( $records = $db->fetch_assoc_all() )
+ 	if( $db->found_rows )
 	{
 		$error->add('course_already_registered', true);
 	}
@@ -60,5 +60,8 @@
 	
 	$db->insert('student_courses', array('student_id' => $records['user_id'], 'course_id' => $course_id, 'verified' => '0') );
 	
+	$db->show_debug_console();
+	
+	$db->close();
 	
 ?>

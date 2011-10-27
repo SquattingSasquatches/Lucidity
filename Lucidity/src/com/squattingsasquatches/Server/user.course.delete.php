@@ -43,6 +43,8 @@
  	
 	$db->delete('student_courses', 'course_id = ? AND student_id = ?', array('course_id' => $course_id, 'student_id' => $records['user_id'] ) );
 	
-	echo '0';
+	$db->show_debug_console();
+	
+	$db->close();
 	
 ?>

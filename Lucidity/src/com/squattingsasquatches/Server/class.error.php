@@ -9,11 +9,11 @@
  class error
  {
  	private $messages = array();
+ 	public $errors;
  	
- 	function add( $message_id, bool $fatal = false)
+ 	function add( $message_id, $fatal = false)
  	{
- 		global $errors;
- 		$messages[] = $errors[$message_id];
+ 		$this->messages[] = $this->errors[$message_id];
  		
  		if ( $fatal )
  		{
@@ -25,6 +25,13 @@
  				break;
  				case 'plain':
  					die( $this->messages );
+ 				break;
+ 				case 'cli':
+ 					foreach( $this->messages as $message )
+ 					{
+ 						echo 'Error ' . $message['id'] . ': ' . $message['message'] . "\n";
+ 					}
+ 					die();
  				break;
  			}
  		}
@@ -41,6 +48,8 @@
 			case 'plain':
 				print_r( $this->messages );
 			break;
+			case 'cli':
+			break;
  		}
  		
  	}
@@ -51,6 +60,7 @@
  		$this->locale = $locale;	
  		
 		include( dirname( __FILE__ ) . '/errors.' . $this->locale . '.php');
+		
  	}
  }
  
