@@ -3,7 +3,7 @@
 	include('init.php');
 	
 	global $db;
-	
+	$db->debug = true;
 	extract( $_REQUEST );
 	
 	// If no name parameter is specified, return with error code 1.
