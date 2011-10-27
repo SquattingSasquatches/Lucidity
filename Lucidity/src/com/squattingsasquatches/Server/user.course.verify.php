@@ -60,4 +60,6 @@
 	$db->show_debug_console();
 	
 	$db->close();
+	
+	echo '0';
 ?>

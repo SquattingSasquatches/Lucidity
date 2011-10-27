@@ -12,7 +12,7 @@
  	include('init.php');
 	
 	global $db;
-	
+	//$db->debug = true;
 	extract( $_REQUEST );
  
  	
@@ -35,13 +35,19 @@
 	
 	$db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $device_id ));
  	
- 	if( !$records = $db_fetch_assoc_all() )
+ 	if( !$db->found_rows )
 	{
 		$error->add('no_user_id_found', true);
  	}
 	
- 	
-	$db->delete('student_courses', 'course_id = ? AND student_id = ?', array('course_id' => $course_id, 'student_id' => $records['user_id'] ) );
+	$records = $db->fetch_assoc_all();
+	
+ 	$db->delete('student_courses', 'course_id = ? AND student_id = ?', array($course_id, $records[0]['user_id'] ) );
+	
+	if( !$db->affected_rows )
+	{
+		echo 'nope';
+	}
 	
 	$db->show_debug_console();
 	
