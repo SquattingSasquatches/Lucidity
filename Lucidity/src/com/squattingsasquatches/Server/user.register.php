@@ -25,7 +25,7 @@
 	
 	// If database encounters an error, return with error code 2.
 	
-	if( !$records = db_fetch_assoc_all() )
+	if( !$records = $db->fetch_assoc_all() )
 	{
 		echo '3';
 		return;
@@ -44,7 +44,7 @@
 	
 	// If database encounters an error, return with error code 4.
 	
-	if( !$records = db_fetch_assoc_all() )
+	if( !$records = $db->fetch_assoc_all() )
 	{
 		echo '4';
 		return;
