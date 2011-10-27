@@ -41,13 +41,14 @@
 	
 	$db->query('SELECT * FROM `user_devices` AS ud, `professors` AS p, `courses` AS c, `professor_courses` AS pc WHERE ud.device_id = ? AND p.user_id = ud.user_id AND p.user_id = pc.professor_id AND pc.course_id = c.id  AND c.id = ?', array('device_id' => $device_id, 'course_id' => $course_id ));
  	
-	if( $db->found_rows )
+	if( !$db->found_rows )
 	{
 		// No professor id found.
+		$db->show_debug_console();
  		$error->add('user_not_professor_of_course', true);
 	}
 	
-	$db->update('student_courses', array('verified' => '1'), 'course_id = ? AND student_id = ?', array($course_id, $student_id) );
+	$db->update('student_courses', array('is_verified' => '1'), 'course_id = ? AND student_id = ?', array($course_id, $student_id) );
 	
 	if( !$db->affected_rows )
 	{
