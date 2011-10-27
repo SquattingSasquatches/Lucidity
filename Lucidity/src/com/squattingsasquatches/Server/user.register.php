@@ -59,6 +59,7 @@
 	
 	if ( !$db->insert('users', array( 'name' => $name ), false, true ))
 	{
+		$db->write_log();
 		echo '6';
 		return;
 	}
