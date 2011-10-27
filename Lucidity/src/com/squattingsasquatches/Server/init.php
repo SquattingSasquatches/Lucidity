@@ -10,6 +10,7 @@
 	$db = new database();
 	$db->connect($config['DB_HOST'], $config['DB_USER'], $config['DB_PASS'], $config['DB_NAME']);
 	$db->maxQueryTime = 10;
+	$db->log_path = dirname( __FILE__ ) . '/';
 
 
 ?>
