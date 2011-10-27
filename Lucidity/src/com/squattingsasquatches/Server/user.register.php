@@ -2,79 +2,54 @@
 	
 	include('init.php');
 	
-	ini_set('display_errors',1);
-	error_reporting(E_ALL);
 	global $db;
-	
-	$db->debug = true;
-	
-	
 	
 	extract( $_REQUEST );
 	
-	// If no name parameter is specified, return with error code 1.
+	
+ 	/*
+ 	 * 		Parameter checks.
+ 	 */
 	
 	if( !isset( $name ) ) 
 	{
-		echo '1';
-		return;
+		$error->add('no_name_supplied', true);
 	}
 	
 	if( !isset( $device_id ) ) 
 	{
-		echo '2';
-		return;
+		$error->add('no_device_id_supplied', true);
 	}
+	
+	
 	
 	$db->select('name','users', 'name = ?', array($name) );
 	
-	
-	// If database encounters an error, return with error code 3.
-	
-	$records = $db->fetch_assoc_all();
-	
-	
-	// Name exists. Return with error code 4.
-	
-	if( !empty( $records ) )
+	if( $records = $db->fetch_assoc_all() )
 	{
-		echo '4';
-		return;
+		$error->add('student_already_exists', true);
 	}
+	
+	
 	
 	$db->select('user_id','user_devices', 'device_id = ?', array($device_id) );
 	
-	
-	// If database encounters an error, return with error code 4.
-	
-	$records = $db->fetch_assoc_all();
-	
-	// UUID exists. Return with error code 5.
-	
-	if( !empty( $records ) )
+	if( $records = $db->fetch_assoc_all() )
 	{
-		echo '5';
-		return;
+		$error->add('device_id_exists_already', true);
 	}
 	
-	if ( !$db->insert('users', array( 'name' => $name ), false, true ))
-	{
-		echo '6';
-		return;
-	}
+	
+	
+	
+	$db->insert('users', array( 'name' => $name ));
 	
 	$user_id = $db->insert_id();
 	
-	if( !$db->insert('user_devices', array( 'user_id' => $user_id, 'device_id' => $device_id ) ) )
-	{	
-		echo '7';
-		return;
-	}
-	
+	$db->insert('user_devices', array( 'user_id' => $user_id, 'device_id' => $device_id ) );
 	
 	$db->show_debug_console();
 	
 	$db->close();
 	
-	echo '0';
 ?>

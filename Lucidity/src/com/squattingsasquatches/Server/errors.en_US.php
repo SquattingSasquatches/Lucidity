@@ -14,4 +14,9 @@
  $errors['no_course_id_supplied'] 			= array( 'id' => 6, 'message' => 'Missing parameter: course_id.');
  $errors['user_not_professor_of_course'] 	= array( 'id' => 7, 'message' => 'Permission denied. User is not a professor of specified course.');
  $errors['no_student_course_pair_found']	= array( 'id' => 8, 'message' => 'User has not registered for course.');
+ $errors['no_name_supplied']				= array( 'id' => 9, 'message' => 'Missing parameter: name.');
+ $errors['student_already_exists']			= array( 'id' => 10, 'message' => 'Student already exists.');
+ $errors['device_id_already_exists']		= array( 'id' => 11, 'message' => 'Device already registered.');
+ $errors['course_already_registered']		= array( 'id' => 12, 'message' => 'Course already registered.');
+ 
 ?>

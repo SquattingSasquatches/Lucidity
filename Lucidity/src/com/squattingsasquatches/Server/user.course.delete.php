@@ -4,6 +4,8 @@
  *
  * Lucidity 
  * Created by Asa Rudick, Brett Aaron, Trypp Cook
+ * 
+ * Parameters: device_id, course_id
  */
  
   
@@ -13,24 +15,31 @@
 	
 	extract( $_REQUEST );
  
- 	// Device id not supplied? Get outta here.
+ 	
+ 	/*
+ 	 * 		Parameter checks.
+ 	 */
  	
  	if( !isset( $device_id ) )
  	{
- 		// No device id supplied.
- 		echo json_encode($errors['no_device_id_supplied']);
- 		return;
+ 		$error->add('no_device_id_supplied', true);
  	}
+ 	
+ 	if( !isset( $course_id ) )
+ 	{
+ 		$error->add('no_course_id_supplied', true);
+ 	}
+ 	
+ 	
  	
 	
-	if( !$db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $device_id )) )
- 	{
- 		// No user id found.
- 		echo json_encode($errors['no_user_id_found']);
-		return; 		
- 	}
+	$db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $device_id ));
  	
-	$records = $db_fetch_assoc_all();
+ 	if( !$records = $db_fetch_assoc_all() )
+	{
+		$error->add('no_user_id_found', true);
+ 	}
+	
  	
 	$db->delete('student_courses', 'course_id = ? AND student_id = ?', array('course_id' => $course_id, 'student_id' => $records['user_id'] ) );
 	

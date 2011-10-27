@@ -2,7 +2,10 @@
 
 	// Set configuration vars
 	include( dirname( __FILE__ ) . '/config.php');
-	include( dirname( __FILE__ ) . '/errors.en-US.php');
+	
+	// Load error handler.
+	include( dirname( __FILE__ ) . '/class.error.php');
+	$error = new error();
 	
 	// Load database class
 	require ( dirname( __FILE__ ) . '/db/class.database.php');  
