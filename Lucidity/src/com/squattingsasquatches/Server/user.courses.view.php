@@ -1,31 +1,42 @@
 <?php
-
+/*
+ * Created on Oct 26, 2011
+ *
+ * Lucidity
+ * Created by Asa Rudick, Brett Aaron, Trypp Cook
+ * 
+ * Parameters: device_id
+ * 
+ */
+ 
 	include('init.php');
 	
 	global $db;
 	
 	extract( $_REQUEST );
  
- 	// Device id not supplied? Get outta here.
+ 	
+ 	/*
+ 	 * 		Parameter checks.
+ 	 */
  	
  	if( !isset( $device_id ) )
  	{
- 		echo '1';
- 		return;
+ 		$error->add('no_device_id_supplied', true);
  	}
  	
- 	if( !$db->query('SELECT FROM `user_devices` AS ud, `student_courses` AS sc, `courses` AS c WHERE ud.user_id = sc.student_id AND courses.id = sc.course_id') )
- 	{
- 		echo '2';
-		return; 		
- 	}
  	
- 	if( !$records = $db_fetch_assoc_all() )
-	{
-		echo '3';
-		return;
-	}
+ 	
+ 	
+ 	
+ 	$db->query('SELECT FROM `user_devices` AS ud, `student_courses` AS sc, `courses` AS c WHERE ud.user_id = sc.student_id AND courses.id = sc.course_id');
+ 	
+ 	$records = $db->fetch_assoc_all();
 	
 	echo json_encode( $records );
+	
+	$db->show_debug_console();
+	
+	$db->close();
 	
 ?>

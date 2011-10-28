@@ -3,6 +3,17 @@
 	// Set configuration vars
 	include( dirname( __FILE__ ) . '/config.php');
 	
+	// Load error handler.
+	include( dirname( __FILE__ ) . '/class.error.php');
+	if( PHP_SAPI == 'cli')
+	{
+		$error = new error( 'cli' );
+	}
+	else
+	{
+		$error = new error();
+	}
+	
 	// Load database class
 	require ( dirname( __FILE__ ) . '/db/class.database.php');  
 	
