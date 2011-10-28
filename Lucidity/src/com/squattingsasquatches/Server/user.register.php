@@ -1,81 +1,52 @@
 <?php
 	
-	include('init.php');
+	include 'return.codes.php';
+	include 'init.php';
 	
-	ini_set('display_errors',0);
-	error_reporting(0);
 	global $db;
-	
-	$db->debug = true;
-	
-	
 	
 	extract( $_REQUEST );
 	
-	// If no name parameter is specified, return with error code 1.
+	// If no name parameter is specified, return with error code.
 	
-	if( !isset( $name ) ) 
+	if( !isset( $name ) || !isset( $device_id ) ) 
 	{
-		echo '1';
+		echo MISSING_REQUIRED_PARAMETER;
 		return;
 	}
 	
-	if( !isset( $device_id ) ) 
+	if ( !$db->select('user_id','user_devices', 'device_id = ?', array($device_id) )
 	{
-		echo '2';
+		echo DATABASE_ERROR;
 		return;
 	}
-	
-	$db->select('name','users', 'name = ?', array($name) );
-	
-	
-	// If database encounters an error, return with error code 3.
 	
 	$records = $db->fetch_assoc_all();
 	
-	
-	// Name exists. Return with error code 4.
-	
-	if( !empty( $records ) )
-	{
-		echo '4';
-		return;
-	}
-	
-	$db->select('user_id','user_devices', 'device_id = ?', array($device_id) );
-	
-	
-	// If database encounters an error, return with error code 4.
-	
-	$records = $db->fetch_assoc_all();
-	
-	// UUID exists. Return with error code 5.
+	// UUID exists. Return with error code.
 	
 	if( !empty( $records ) )
 	{
-		echo '5';
+		echo USER_ALREADY_REGISTERED;
 		return;
 	}
 	
-	if ( !$db->insert('users', array( 'name' => $name ), false, true ))
+	if ( !$db->insert('users', array( 'name' => $name ) ) )
 	{
-		$db->write_log();
-		echo '6';
+
+		echo DATABASE_ERROR;
 		return;
 	}
 	
 	$user_id = $db->insert_id();
 	
-	if( !$db->insert('user_devices', array( 'user_id' => $user_id, 'device_id' => device_id ) ) )
+	if( !$db->insert('user_devices', array( 'user_id' => $user_id, 'device_id' => $device_id ) ) )
 	{	
-		echo '7';
+		echo DATABASE_ERROR;
 		return;
 	}
 	
-	
-	$db->show_debug_console();
-	
 	$db->close();
 	
-	echo '0';
+	echo SUCCESS;
 ?>

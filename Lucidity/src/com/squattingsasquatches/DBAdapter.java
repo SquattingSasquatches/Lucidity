@@ -1,39 +1,21 @@
 package com.squattingsasquatches;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.util.Log;
 
-public class DBAdapter extends AsyncTask<ArrayList<NameValuePair>, Void, JSONObject>{
+public class DBAdapter {
 	
-	private JSONObject result = null;
-	private Activity caller = null;
+	private PHPConnection connection;
 	private String action = "";
-	
-	@SuppressWarnings("unused")
-	private ProgressDialog dialog;
-	
-	public DBAdapter(Activity caller) {
-		this.caller = caller;
-	}
+	private String result = "";
+	private Object mutex = new Object();
 	
 	@SuppressWarnings("unchecked")
 	public void query(HashMap<String, String> params) {
@@ -52,58 +34,33 @@ public class DBAdapter extends AsyncTask<ArrayList<NameValuePair>, Void, JSONObj
 			}
 		}
 		
-		this.execute(nvParams);
-	}
-	
-	public JSONObject getResult() {
-		return result;
-	}
+		synchronized (mutex) {
 
-	@Override
-	protected JSONObject doInBackground(ArrayList<NameValuePair>... params) {
-		InputStream is;
-		String line;
-		JSONObject jsonResult = new JSONObject();
-		
-		try {
-			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("https://www.thesouthernshirtco.com/lucidity/" + action + ".php");
-			httppost.setEntity(new UrlEncodedFormEntity(params[0]));
-			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
+			connection = new PHPConnection(action, mutex);
+			connection.execute(nvParams);
 			
 			try {
-				BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-				StringBuilder sb = new StringBuilder();
-				while ((line = reader.readLine()) != null) {
-					sb.append(line + "\n");
-				}
-				
-				jsonResult = new JSONObject();
-				
-				Log.i("result", sb.toString());
-				
-			} catch (UnsupportedEncodingException e) {
-				Log.e("doInBackground", "Error getting http result " + e.getMessage());
+				mutex.wait();
+			} catch (InterruptedException e) {
+				Log.e("DBAdapter", e.getMessage());
 			}
 			
-		} catch (Exception e) {
-			Log.e("doInBackground", "Error in http connection " + e.getMessage());
-		}
+			result = connection.getResult();
 		
-		return jsonResult;
+		}
 	}
 	
-	@Override
-	protected void onPostExecute(JSONObject result) {
-		this.result = result;
-		Log.i("onPostExecute", "here");
-		dialog.cancel();
+	public int getResult() {
+		return Integer.parseInt(result);
 	}
-	 
-	@Override
-	protected void onPreExecute() {
-		dialog = ProgressDialog.show(caller, "", "Loading. Please wait...", true);
+	
+	public JSONObject getJSONResult() {
+		try {
+			return new JSONObject(result);
+		} catch (JSONException e) {
+			Log.e("getJSONResult() error", e.getMessage());
+		}
+		
+		return null;
 	}
 }
