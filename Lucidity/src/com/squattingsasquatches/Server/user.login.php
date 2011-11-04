@@ -1,6 +1,4 @@
 <?php
-	
-	include 'return.codes.php';
 	include 'init.php';
 	
 	global $db;
@@ -11,11 +9,15 @@
 	
 	if( !isset( $device_id ) ) 
 	{
-		echo MISSING_REQUIRED_PARAMETER;
-		return;
+		$error->add('no_device_id_supplied', true);
 	}
 	
-	$db->select('user_id','user_devices', 'device_id = ?', array($device_id) );
+	$result = $db->select('user_id','user_devices', 'device_id = ?', '', '', array($device_id) );
+	
+	if( $result === false )
+	{
+		$error->add('database_error', true);
+	}
 	
 	$records = $db->fetch_assoc_all();
 	
@@ -23,11 +25,8 @@
 	
 	if( empty( $records ) )
 	{
-		echo USER_NOT_REGISTERED;
-		return;
+		$error->add('no_user_id_found', true);
 	}
 	
 	$db->close();
-	
-	echo SUCCESS;
 ?>

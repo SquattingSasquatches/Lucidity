@@ -4,6 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bg">
-    <ImageView android:id="@+id/logo" android:layout_width="wrap_content" android:src="@drawable/logo" android:layout_alignParentTop="true" android:layout_alignParentLeft="true" android:layout_height="wrap_content" android:drawingCacheQuality="high"></ImageView>
+    <ImageView android:id="@+id/logo" android:layout_width="wrap_content" android:src="@drawable/logo" android:layout_height="wrap_content" android:drawingCacheQuality="high" android:layout_centerHorizontal="true" android:layout_marginTop="35dp"></ImageView>
     <ProgressBar android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/progressBar1" style="?android:attr/progressBarStyleLarge" android:layout_below="@+id/logo" android:layout_centerHorizontal="true" android:layout_marginTop="56dp" android:drawingCacheQuality="high"></ProgressBar>
 </RelativeLayout>

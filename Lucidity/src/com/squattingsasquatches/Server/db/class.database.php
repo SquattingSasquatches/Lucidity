@@ -383,7 +383,8 @@ class database
 
         // close the last one open
         @mysql_close($this->link_identifier);
-
+		echo json_encode(array(array('id' => 0, 'message' => 'Success')));
+		
     }
 
     /**

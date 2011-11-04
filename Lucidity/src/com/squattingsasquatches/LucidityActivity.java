@@ -1,7 +1,5 @@
 package com.squattingsasquatches;
 
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -12,11 +10,20 @@ import android.widget.TextView;
 
 public class LucidityActivity extends Activity {
 	
-	private DBAdapter db;
-	private HashMap<String, String> params;
+	private PHPConnection db;
 	private String deviceID;
-	private int result;
 	private Button btnRegister;
+	private View.OnClickListener handler;
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		try {
+			db.unregisterReceiver();
+		} catch(IllegalArgumentException e) {
+			Log.i("onPause", "receiver not registered");
+		}
+	}
 	
     /** Called when the activity is first created. */
     @Override
@@ -24,37 +31,21 @@ public class LucidityActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
         
-        db = new DBAdapter();
+        db = new PHPConnection(getApplicationContext(), this);       
         
         // get device's unique ID
         deviceID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         
-        View.OnClickListener handler = new View.OnClickListener() {
+        handler = new View.OnClickListener() {
             public void onClick(View v) {
             	switch (v.getId()) {
             		case R.id.btnRegister:
-            			params = new HashMap<String, String>();
-            			params.put("action", "user.register");
-            			params.put("name", ((TextView) findViewById(R.id.txtName)).getText().toString());
-            			params.put("device_id", deviceID);
-                    	db.query(params);
-                    	result = db.getResult();
-                    	
-                    	switch (result) {
-                    		case RETURN_CODE.DATABASE_ERROR:
-                    			Log.i("Register", "DATABASE_ERROR");
-                    			break;
-                    		case RETURN_CODE.USER_ALREADY_REGISTERED:
-                    			// not sure how this happened
-                    			break;
-                    		case RETURN_CODE.SUCCESS:
-                    			// change to main activity
-                    			Log.i("Register", "SUCCESS");
-                    			break;
-                    		default:
-                    			Log.i("Register", "something impossible happened.");
-                    	}
+            			db.setAction("user.register");
+            			db.addParam("name", ((TextView) findViewById(R.id.txtName)).getText().toString());
+            			db.addParam("device_id", deviceID);
+            			db.execute("registerCallback");
             			break;
+            		default:
             	}
             }
         };
@@ -63,31 +54,59 @@ public class LucidityActivity extends Activity {
         	// deal with problem of device having no UUID, maybe generate our own 16-bit hexadecimal number and check it against the db
         	// but what if someone else happens to have that device id?
         } else {
-        	params = new HashMap<String, String>();
-        	params.put("action", "user.login");
-        	params.put("device_id", deviceID);
-        	db.query(params);
-        	result = db.getResult();
-        	
-        	switch (result) {
-        		case RETURN_CODE.DATABASE_ERROR:
-        			// problem communicating with database
-        			Log.i("Login", "DATABASE_ERROR");
-        			break;
-        		case RETURN_CODE.USER_NOT_REGISTERED:
-        			// Device not registered
-        			setContentView(R.layout.register);
-        			btnRegister = (Button) findViewById(R.id.btnRegister);
-        			btnRegister.setOnClickListener(handler);
-        			break;
-        		case RETURN_CODE.SUCCESS:
-        			// user logged in. possible idea: save user_id so we don't have to always pass device_id to our php calls. could pass it between bundles.
-        			// change to main activity
-        			Log.i("Login", "SUCCESS");
-        			break;
-        		default:
-        			Log.i("Login", "something impossible happened.");
-        	}
+        	db.setAction("user.login");
+        	db.addParam("device_id", deviceID);
+        	db.execute("loginCallback");
         }
+    }
+    
+    public void loginCallback(int result) {
+    	switch (result) {
+	    	case RETURN_CODE.NO_DEVICE_ID_SUPPLIED:
+				Log.i("Login", "NO_DEVICE_ID_SUPPLIED");
+				break;
+			case RETURN_CODE.DATABASE_ERROR:
+				Log.i("Login", "DATABASE_ERROR");
+				break;
+			case RETURN_CODE.NO_USER_ID_FOUND:
+				// Device not registered
+    			setContentView(R.layout.register);
+    			btnRegister = (Button) findViewById(R.id.btnRegister);
+    			btnRegister.setOnClickListener(handler);
+				break;
+			case RETURN_CODE.SUCCESS:
+				// change to main activity
+				Log.i("Login", "SUCCESS");
+				break;
+			default:
+				Log.i("Login", "something impossible happened.");
+		}
+    }
+    
+    public void registerCallback(int result) {
+    	switch (result) {
+			case RETURN_CODE.DATABASE_ERROR:
+				Log.i("Register", "DATABASE_ERROR");
+				break;
+			case RETURN_CODE.NO_STUDENT_ID_SUPPLIED:
+				Log.i("Register", "NO_STUDENT_ID_SUPPLIED");
+				break;
+			case RETURN_CODE.NO_DEVICE_ID_SUPPLIED:
+				Log.i("Register", "NO_DEVICE_ID_SUPPLIED");
+				break;
+			case RETURN_CODE.STUDENT_ALREADY_EXISTS:
+				// not sure how this happened
+				Log.i("Register", "STUDENT_ALREADY_EXISTS");
+				break;
+			case RETURN_CODE.DEVICE_ID_ALREADY_EXISTS:
+				Log.i("Register", "DEVICE_ID_ALREADY_EXISTS");
+				break;
+			case RETURN_CODE.SUCCESS:
+				// change to main activity
+				Log.i("Register", "SUCCESS");
+				break;
+			default:
+				Log.i("Register", "something impossible happened.");
+		}
     }
 }
