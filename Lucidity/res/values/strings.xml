@@ -2,6 +2,7 @@
 <resources>
     <string name="hello">Hello World, LucidityActivity!</string>
     <string name="app_name">Lucidity</string>
-    <string name="register_btn">Register</string>
+    <string name="register_btn">REGISTER</string>
     <string name="your_name">Your Name</string>
+    <string name="my_courses">My Courses</string>
 </resources>

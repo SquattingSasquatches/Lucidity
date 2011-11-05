@@ -16,5 +16,6 @@
         </activity>
         <service android:name="DBService">
         </service>
+        <activity android:name=".CourseMenuStudent"></activity>
     </application>
 </manifest>

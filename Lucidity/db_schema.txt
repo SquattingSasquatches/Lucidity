@@ -49,6 +49,6 @@ Lucidity
 	- due_date
 	
 	
-HOST: 207.210.251.2
-USER: thesouth_ss
-PASS: s}0}Q8h1Uur=
+HOST: db4free.net
+USER: androiduser
+PASS: alphatest

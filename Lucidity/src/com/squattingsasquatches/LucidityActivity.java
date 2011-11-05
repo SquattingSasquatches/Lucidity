@@ -1,6 +1,7 @@
 package com.squattingsasquatches;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -14,6 +15,7 @@ public class LucidityActivity extends Activity {
 	private String deviceID;
 	private Button btnRegister;
 	private View.OnClickListener handler;
+	private Intent nextActivity;
 	
 	@Override
 	public void onPause() {
@@ -76,7 +78,10 @@ public class LucidityActivity extends Activity {
 				break;
 			case RETURN_CODE.SUCCESS:
 				// change to main activity
+				nextActivity = new Intent(this, CourseMenuStudent.class);
+				this.startActivity(nextActivity);
 				Log.i("Login", "SUCCESS");
+				finish();
 				break;
 			default:
 				Log.i("Login", "something impossible happened.");
