@@ -6,6 +6,7 @@
  * Created by Asa Rudick, Brett Aaron, Trypp Cook
  */
  $this->errors['database_error'] 				= array( 'id' => -1, 'message' => 'Error connecting to remote database.');
+ $this->errors['success'] 						= array( 'id' => 0, 'message' => 'Success.');
  $this->errors['no_user_id_found'] 				= array( 'id' => 1, 'message' => 'User not found.');
  $this->errors['no_user_id_supplied'] 			= array( 'id' => 2, 'message' => 'Missing parameter: user_id.');
  $this->errors['no_device_id_found'] 			= array( 'id' => 3, 'message' => 'Device not found.');

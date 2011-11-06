@@ -20,11 +20,7 @@ public class LucidityActivity extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
-		try {
-			db.unregisterReceiver();
-		} catch(IllegalArgumentException e) {
-			Log.i("onPause", "receiver not registered");
-		}
+		db.unregisterReceiver();
 	}
 	
     /** Called when the activity is first created. */
@@ -33,7 +29,7 @@ public class LucidityActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
         
-        db = new PHPConnection(getApplicationContext(), this);       
+        db = new PHPConnection(getApplicationContext(), this);
         
         // get device's unique ID
         deviceID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -79,6 +75,7 @@ public class LucidityActivity extends Activity {
 			case RETURN_CODE.SUCCESS:
 				// change to main activity
 				nextActivity = new Intent(this, CourseMenuStudent.class);
+				nextActivity.putExtra("com.squattingsasquatches.deviceID", deviceID);
 				this.startActivity(nextActivity);
 				Log.i("Login", "SUCCESS");
 				finish();

@@ -35,8 +35,6 @@
 	
 	echo json_encode( $records );
 	
-	$db->show_debug_console();
-	
 	$db->close();
 	
 ?>

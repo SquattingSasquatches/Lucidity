@@ -45,4 +45,5 @@
 	
 	$db->close();
 	
+	$error->add('success');	
 ?>

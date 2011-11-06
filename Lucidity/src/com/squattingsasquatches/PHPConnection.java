@@ -48,7 +48,11 @@ public class PHPConnection {
 	}
 	
 	public void unregisterReceiver() {
-		ctx.unregisterReceiver(receiver);
+		try {
+			ctx.unregisterReceiver(receiver);
+		} catch(IllegalArgumentException e) {
+			Log.i("unregisterReceiver", "receiver not registered");
+		}
 	}
 	
 	public void execute(String callback) {
@@ -63,14 +67,25 @@ public class PHPConnection {
 		public void onReceive(Context context, Intent intent) {
 			String result = intent.getStringExtra(DBService.PARAM_OUT_MSG);
 			
-			try {
-				JSONArray resultJSON = new JSONArray(result);
-				
-				// result has only 1 element
-				if (resultJSON.isNull(1)) {
+			
+			if (result.equals("false")) {
+				// query returned empty
+			} else {
+				// query returned error code or success
+				try {
+					JSONArray resultJSON = new JSONArray(result);
+					
 					try {
 						// Reflection... callback method is determined at runtime
-						caller.getClass().getMethod(callback, int.class).invoke(caller, resultJSON.getJSONObject(0).getInt("id"));
+						if (resultJSON.isNull(1)) {
+							// result has only 1 element, return error code id
+							// - might be a problem if query returns result set with only 1 element and it's not an error...not sure what to do
+							caller.getClass().getMethod(callback, int.class).invoke(caller, resultJSON.getJSONObject(0).getInt("id"));
+						} else {
+							// return entire result set
+							caller.getClass().getMethod(callback, JSONArray.class).invoke(caller, resultJSON);
+						}
+						
 					} catch (IllegalArgumentException e) {
 						Log.e("IllegalArgumentException", e.getMessage());
 					} catch (SecurityException e) {
@@ -82,12 +97,12 @@ public class PHPConnection {
 					} catch (NoSuchMethodException e) {
 						Log.e("NoSuchMethodException", e.getMessage());
 					}
-				}
+						
+				} catch (JSONException e) {
+					Log.e("BroadcastReceiver JSONExecption", e.getMessage());
 					
-			} catch (JSONException e) {
-				Log.e("BroadcastReceiver JSONExecption", e.getMessage());
-			}
-			
+				}
+			}			
 		}
     }
 }
