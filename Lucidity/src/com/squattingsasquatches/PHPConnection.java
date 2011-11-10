@@ -60,6 +60,12 @@ public class PHPConnection {
 		dbService.putExtra(DBService.PARAM_IN_MSG, params);
 		ctx.startService(dbService);
 	}
+	
+	public void execute(String action, HashMap<String, String> params, String callback) {
+		setAction(action);
+		this.params = params;
+		execute(callback);
+	}
     
 	public boolean stopService() {
 		return ctx.stopService(dbService);
