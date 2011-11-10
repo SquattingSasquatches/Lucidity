@@ -7,11 +7,14 @@
     android:padding="12dp" >
        
     <TextView
+        android:id="@+id/txtCourseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Course Name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <!--  maybe have another TextView below the name with additional information (next meeting, next assignment due, next test, etc) -->
 
     <ImageView
         android:id="@+id/imageView1"

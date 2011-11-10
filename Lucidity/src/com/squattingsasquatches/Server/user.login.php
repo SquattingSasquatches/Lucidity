@@ -30,5 +30,5 @@
 	
 	$db->close();
 	
-	$error->add('success');
+	$error->add('success', true);
 ?>

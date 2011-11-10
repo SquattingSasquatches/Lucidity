@@ -21,7 +21,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_gravity="center_vertical" />
                 
-        // probably just a temp background
+        <!-- probably just a temp background -->
         <Button
             android:id="@+id/btnNotifications"
             android:layout_width="wrap_content"
@@ -35,8 +35,9 @@
 
     </LinearLayout>
     
+    <!-- bottom border for header -->
    	<LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/headerBorder"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#2b80cd" />

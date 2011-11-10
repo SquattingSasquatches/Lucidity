@@ -61,6 +61,10 @@ public class PHPConnection {
 		ctx.startService(dbService);
 	}
     
+	public boolean stopService() {
+		return ctx.stopService(dbService);
+	}
+	
     public class ResponseReceiver extends BroadcastReceiver {
     	
 		@Override
@@ -88,7 +92,6 @@ public class PHPConnection {
 				Log.e("NoSuchMethodException", e.getMessage());
 			} catch (JSONException e) {
 				Log.e("BroadcastReceiver JSONExecption", e.getMessage());
-				
 			}
 		}
     }

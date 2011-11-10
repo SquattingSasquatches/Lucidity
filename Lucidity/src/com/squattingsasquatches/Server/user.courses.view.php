@@ -26,13 +26,10 @@
  	}
  	
  	
- 	
- 	
- 	
- 	$db->query('SELECT FROM `user_devices` AS ud, `student_courses` AS sc, `courses` AS c WHERE ud.user_id = sc.student_id AND courses.id = sc.course_id');
+ 	$db->query('SELECT * FROM `user_devices` AS ud, `student_courses` AS sc, `courses` AS c WHERE ud.device_id = "' . $device_id . '" AND ud.user_id = sc.student_id AND c.id = sc.course_id');
  	
  	$records = $db->fetch_assoc_all();
-	
+
 	echo json_encode( $records );
 	
 	$db->close();
