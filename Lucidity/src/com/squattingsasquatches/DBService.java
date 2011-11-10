@@ -74,6 +74,10 @@ public class DBService extends IntentService {
 			}
 			
 		} catch (Exception e) {
+			// No internet connection
+			/* TODO: set result as something to notify LucidityActivity that there is no connection
+			 * App can still function, just at a very basic, barebones level.
+			 */
 			Log.e("DBService", "Error in http connection " + e.getMessage());
 		}
 		

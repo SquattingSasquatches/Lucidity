@@ -1,6 +1,7 @@
 package com.squattingsasquatches;
 
 public class RETURN_CODE {
+	public static final int NOT_A_JSON_ARRAY = -2;
 	public static final int DATABASE_ERROR = -1;
 	public static final int SUCCESS = 0;
 	public static final int NO_USER_ID_FOUND = 1;

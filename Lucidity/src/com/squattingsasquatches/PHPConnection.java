@@ -66,43 +66,30 @@ public class PHPConnection {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			String result = intent.getStringExtra(DBService.PARAM_OUT_MSG);
-			
-			
-			if (result.equals("false")) {
-				// query returned empty
-			} else {
-				// query returned error code or success
-				try {
-					JSONArray resultJSON = new JSONArray(result);
-					
-					try {
-						// Reflection... callback method is determined at runtime
-						if (resultJSON.isNull(1)) {
-							// result has only 1 element, return error code id
-							// - might be a problem if query returns result set with only 1 element and it's not an error...not sure what to do
-							caller.getClass().getMethod(callback, int.class).invoke(caller, resultJSON.getJSONObject(0).getInt("id"));
-						} else {
-							// return entire result set
-							caller.getClass().getMethod(callback, JSONArray.class).invoke(caller, resultJSON);
-						}
-						
-					} catch (IllegalArgumentException e) {
-						Log.e("IllegalArgumentException", e.getMessage());
-					} catch (SecurityException e) {
-						Log.e("SecurityException", e.getMessage());
-					} catch (IllegalAccessException e) {
-						Log.e("IllegalAccessException", e.getMessage());
-					} catch (InvocationTargetException e) {
-						Log.e("InvocationTargetException", e.getMessage());
-					} catch (NoSuchMethodException e) {
-						Log.e("NoSuchMethodException", e.getMessage());
-					}
-						
-				} catch (JSONException e) {
-					Log.e("BroadcastReceiver JSONExecption", e.getMessage());
-					
-				}
-			}			
+			JSONArray resultJSON = new JSONArray();
+									
+			try {
+				
+				if (!result.equals("false"))
+					resultJSON = new JSONArray(result);
+
+				// Reflection... callback method is determined at runtime
+				caller.getClass().getMethod(callback, JSONArray.class).invoke(caller, resultJSON);
+				
+			} catch (IllegalArgumentException e) {
+				Log.e("IllegalArgumentException", e.getMessage());
+			} catch (SecurityException e) {
+				Log.e("SecurityException", e.getMessage());
+			} catch (IllegalAccessException e) {
+				Log.e("IllegalAccessException", e.getMessage());
+			} catch (InvocationTargetException e) {
+				Log.e("InvocationTargetException", e.getMessage());
+			} catch (NoSuchMethodException e) {
+				Log.e("NoSuchMethodException", e.getMessage());
+			} catch (JSONException e) {
+				Log.e("BroadcastReceiver JSONExecption", e.getMessage());
+				
+			}
 		}
     }
 }
