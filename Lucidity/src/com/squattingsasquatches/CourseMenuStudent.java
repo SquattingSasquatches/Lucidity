@@ -56,6 +56,8 @@ public class CourseMenuStudent extends Activity {
 		 * I think we should save a user's courses locally, maybe in a SQLite DB.
 		 * That way we only need to send the query to get them after they add a course instead of everytime they visit this activity.
 		 * For now though, the query is run everytime the activity is created.
+		 * 
+		 * Query should be run after first registration, after new device registration, and after everytime a course is added
 		 */
 	}
 	
