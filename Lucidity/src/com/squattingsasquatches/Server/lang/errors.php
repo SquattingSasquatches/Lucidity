@@ -37,5 +37,6 @@
  $this->messages['device_id_already_exists']		= array( 'type' => 'error', 'id' => 11, 'message' => 'Device already registered.');
  $this->messages['course_already_registered']		= array( 'type' => 'error', 'id' => 12, 'message' => 'Course already registered.');
  $this->messages['no_student_id_supplied']			= array( 'type' => 'error', 'id' => 13, 'message' => 'Missing parameter: student_id.');
+ $this->messages['no_lecture_name_supplied']		= array( 'type' => 'error', 'id' => 14, 'message' => 'Missing parameter: lecture_name.');
 
 ?>
