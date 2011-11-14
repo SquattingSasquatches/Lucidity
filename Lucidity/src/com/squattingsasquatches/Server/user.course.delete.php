@@ -22,12 +22,12 @@
  	
  	if( !isset( $device_id ) )
  	{
- 		$error->add('no_device_id_supplied', true);
+ 		$response->add('no_device_id_supplied', true);
  	}
  	
  	if( !isset( $course_id ) )
  	{
- 		$error->add('no_course_id_supplied', true);
+ 		$response->add('no_course_id_supplied', true);
  	}
  	
  	
@@ -37,7 +37,7 @@
  	
  	if( !$db->found_rows )
 	{
-		$error->add('no_user_id_found', true);
+		$response->add('no_user_id_found', true);
  	}
 	
 	$records = $db->fetch_assoc_all();
@@ -52,5 +52,7 @@
 	$db->show_debug_console();
 	
 	$db->close();
+	
+	$response->send('success');
 	
 ?>

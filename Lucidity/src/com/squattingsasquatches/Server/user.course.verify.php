@@ -22,17 +22,17 @@
  	
  	if( !isset( $device_id ) )
  	{
- 		$error->add('no_device_id_supplied', true);
+ 		$response->add('no_device_id_supplied', true);
  	}
  	
 	if( !isset( $course_id ) )
  	{
- 		$error->add('no_course_id_supplied', true);
+ 		$response->add('no_course_id_supplied', true);
  	}
 	
 	if( !isset( $student_id ) )
  	{
- 		$error->add('no_student_id_supplied', true);
+ 		$response->add('no_student_id_supplied', true);
  	}
  	
  	
@@ -45,7 +45,7 @@
 	{
 		// No professor id found.
 		$db->show_debug_console();
- 		$error->add('user_not_professor_of_course', true);
+ 		$response->add('user_not_professor_of_course', true);
 	}
 	
 	$db->update('student_courses', array('is_verified' => '1'), 'course_id = ? AND student_id = ?', array($course_id, $student_id) );
@@ -54,12 +54,12 @@
 	{
 		// No course id found.
 		$db->show_debug_console();
- 		$error->add('no_student_course_pair_found', true);
+ 		$response->add('no_student_course_pair_found', true);
 	}
 	
 	$db->show_debug_console();
 	
 	$db->close();
 	
-	echo '0';
+	$response->send('success');
 ?>

@@ -22,7 +22,7 @@
  	
  	if( !isset( $device_id ) )
  	{
- 		$error->add('no_device_id_supplied', true);
+ 		$response->add('no_device_id_supplied', true);
  	}
  	
  	

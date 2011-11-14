@@ -4,14 +4,14 @@
 	include( dirname( __FILE__ ) . '/config.php');
 	
 	// Load error handler.
-	include( dirname( __FILE__ ) . '/class.error.php');
+	include( dirname( __FILE__ ) . '/class.response.php');
 	if( PHP_SAPI == 'cli')
 	{
-		$error = new error( 'cli' );
+		$response = new response( 'cli' );
 	}
 	else
 	{
-		$error = new error();
+		$response = new response();
 	}
 	
 	// Load database class

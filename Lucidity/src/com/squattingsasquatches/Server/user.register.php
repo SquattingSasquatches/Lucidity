@@ -13,12 +13,12 @@
 	
 	if( !isset( $name ) ) 
 	{
-		$error->add('no_name_supplied', true);
+		$response->add('no_name_supplied', true);
 	}
 	
 	if( !isset( $device_id ) ) 
 	{
-		$error->add('no_device_id_supplied', true);
+		$response->add('no_device_id_supplied', true);
 	}
 	
 	
@@ -26,7 +26,7 @@
 	
 	if( $db->found_rows )
 	{
-		$error->add('student_already_exists', true);
+		$response->add('student_already_exists', true);
 	}*/
 	
 	
@@ -34,7 +34,7 @@
 	
 	if( $db->found_rows )
 	{
-		$error->add('device_id_already_exists', true);
+		$response->add('device_id_already_exists', true);
 	}
 	
 	$db->insert('users', array( 'name' => $name ));
@@ -45,5 +45,5 @@
 	
 	$db->close();
 	
-	$error->add('success');	
+	$response->send('success');	
 ?>

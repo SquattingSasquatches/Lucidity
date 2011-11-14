@@ -9,14 +9,14 @@
 	
 	if( !isset( $device_id ) ) 
 	{
-		$error->add('no_device_id_supplied', true);
+		$response->add('no_device_id_supplied', true);
 	}
 	
 	$result = $db->select('user_id','user_devices', 'device_id = ?', '', '', array($device_id) );
 	
 	if( $result === false )
 	{
-		$error->add('database_error', true);
+		$response->add('database_error', true);
 	}
 	
 	$records = $db->fetch_assoc_all();
@@ -25,10 +25,10 @@
 	
 	if( empty( $records ) )
 	{
-		$error->add('no_user_id_found', true);
+		$response->add('no_user_id_found', true);
 	}
 	
 	$db->close();
 	
-	$error->add('success', true);
+	$response->send('success');
 ?>

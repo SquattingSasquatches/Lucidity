@@ -6,14 +6,14 @@
  * Created by Asa Rudick, Brett Aaron, Trypp Cook
  */
  
- class error
+ class response
  {
- 	private $messages = array();
- 	public $errors;
+ 	private $log = array();
+ 	public $messages;
  	
  	function add( $message_id, $fatal = false)
  	{
- 		$this->messages[] = $this->errors[$message_id];
+ 		$this->messages[] = $this->messages[$message_id] 
  		
  		if ( $fatal )
  		{
@@ -29,14 +29,17 @@
  				case 'cli':
  					foreach( $this->messages as $message )
  					{
- 						echo 'Error ' . $message['id'] . ': ' . $message['message'] . "\n";
+ 						echo $message['type'] . ' ' . $message['id'] . ': ' . $message['message'] . "\n";
  					}
  					die();
  				break;
  			}
  		}
  	}
- 	
+ 	function send( $message = false )
+ 	{
+ 		if( $message ) $this->add($message);	
+ 	}
  	function display()
  	{
  		switch( $this->output )
@@ -59,7 +62,7 @@
  		$this->output = $output;
  		$this->locale = $locale;	
  		
-		include( dirname( __FILE__ ) . '/errors.' . $this->locale . '.php');
+		include( dirname( __FILE__ ) . '/lang/' . $this->locale . '/errors.php');
 		
  	}
  }
