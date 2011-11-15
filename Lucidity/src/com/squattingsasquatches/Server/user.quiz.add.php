@@ -34,13 +34,9 @@
  	
  	if( !isset( $quiz_start_time ) )
  	{
- 		$response->add('no_quiz_start_time_supplied', true);
+ 		$response->add('no_quiz_duration_supplied', true);
  	}
  	
- 	if( !isset( $quiz_end_time ) )
- 	{
- 		$response->add('no_quiz_end_time_supplied', true);
- 	}
  	
  	
  	
@@ -56,8 +52,7 @@
 	
 	$db->insert('quizzes', array(	'lecture_id' => $lecture_id, 
 									'quiz_name' => $quiz_name, 
-									'quiz_start_time' => $quiz_start_time, 
-									'quiz_end_time' => $quiz_end_time ) );
+									'quiz_duration' => $quiz_duration ) );
 	
 	
 	$db->show_debug_console();
