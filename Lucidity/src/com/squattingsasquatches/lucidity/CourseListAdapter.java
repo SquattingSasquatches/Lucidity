@@ -1,6 +1,8 @@
-package com.squattingsasquatches;
+package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
+
+import com.squattingsasquatches.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;

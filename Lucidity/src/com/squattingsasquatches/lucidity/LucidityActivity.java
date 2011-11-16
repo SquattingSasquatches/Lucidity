@@ -1,7 +1,9 @@
-package com.squattingsasquatches;
+package com.squattingsasquatches.lucidity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import com.squattingsasquatches.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -154,6 +156,6 @@ public class LucidityActivity extends Activity {
     	nextActivity = new Intent(this, CourseMenuStudent.class);
 		nextActivity.putExtra("com.squattingsasquatches.deviceID", deviceID);
 		this.startActivity(nextActivity);
-		finish();
+		finish(); // just this one time
     }
 }

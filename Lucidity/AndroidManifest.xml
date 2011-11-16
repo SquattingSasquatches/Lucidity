@@ -14,8 +14,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="DBService">
+        <service android:name=".lucidity.DBService">
         </service>
-        <activity android:name=".CourseMenuStudent"></activity>
+        <activity android:name=".lucidity.CourseMenuStudent"></activity>
     </application>
 </manifest>

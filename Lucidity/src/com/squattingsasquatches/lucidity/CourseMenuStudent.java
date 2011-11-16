@@ -1,8 +1,10 @@
-package com.squattingsasquatches;
+package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
 
 import org.json.JSONArray;
+
+import com.squattingsasquatches.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

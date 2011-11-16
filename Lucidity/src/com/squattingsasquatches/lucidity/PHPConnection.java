@@ -1,4 +1,4 @@
-package com.squattingsasquatches;
+package com.squattingsasquatches.lucidity;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;

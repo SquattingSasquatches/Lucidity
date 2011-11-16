@@ -1,4 +1,4 @@
-package com.squattingsasquatches;
+package com.squattingsasquatches.lucidity;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

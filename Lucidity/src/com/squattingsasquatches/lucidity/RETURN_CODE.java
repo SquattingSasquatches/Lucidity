@@ -1,4 +1,4 @@
-package com.squattingsasquatches;
+package com.squattingsasquatches.lucidity;
 
 public class RETURN_CODE {
 	public static final int NOT_A_JSON_ARRAY = -2;
