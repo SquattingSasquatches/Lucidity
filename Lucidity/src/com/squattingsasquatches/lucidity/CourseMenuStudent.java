@@ -20,7 +20,7 @@ import android.widget.Toast;
 public class CourseMenuStudent extends Activity {
 	
 	private ListView coursesListView;
-	private PHPConnection db;
+	private RemoteDBAdapter db;
 	private String deviceID;
 	private ArrayList<Course> courses;
 	private ProgressDialog loading;
@@ -48,7 +48,7 @@ public class CourseMenuStudent extends Activity {
         coursesListView = (ListView) findViewById(R.id.coursesListView);
         
         deviceID = getIntent().getStringExtra("com.squattingsasquatches.deviceID");
-        db = new PHPConnection(getApplicationContext(), this);
+        db = new RemoteDBAdapter(getApplicationContext(), this);
         
         db.setAction("user.courses.view");
 		db.addParam("device_id", deviceID);

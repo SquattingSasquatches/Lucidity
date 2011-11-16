@@ -1,6 +1,6 @@
 package com.squattingsasquatches.lucidity;
 
-public class RETURN_CODE {
+public class CONSTANTS {
 	public static final int NOT_A_JSON_ARRAY = -2;
 	public static final int DATABASE_ERROR = -1;
 	public static final int SUCCESS = 0;
@@ -16,5 +16,7 @@ public class RETURN_CODE {
 	public static final int STUDENT_ALREADY_EXISTS = 10;
 	public static final int DEVICE_ID_ALREADY_EXISTS = 11;
 	public static final int COURSE_ALREADY_REGISTERED = 12;
-	public static final int NO_STUDENT_ID_SUPPLIED = 13;	
+	public static final int NO_STUDENT_ID_SUPPLIED = 13;
+	public static final int REMOTE_DB = 14;
+	public static final int LOCAL_DB = 15;
 }

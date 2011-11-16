@@ -20,13 +20,13 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
-public class DBService extends IntentService {
+public class PHPService extends IntentService {
 	
 	public static final String PARAM_IN_MSG = "imsg";
     public static final String PARAM_OUT_MSG = "omsg";
  
-    public DBService() {
-        super("DBService");
+    public PHPService() {
+        super("PHPService");
     }
     
     @SuppressWarnings("unchecked")
@@ -83,7 +83,7 @@ public class DBService extends IntentService {
 		
 		// send result back to main activity
         Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction(PHPConnection.ACTION_RESP);
+        broadcastIntent.setAction(RemoteDBAdapter.ACTION_RESP);
         broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
         broadcastIntent.putExtra(PARAM_OUT_MSG, result);
         sendBroadcast(broadcastIntent);

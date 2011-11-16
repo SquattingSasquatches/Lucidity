@@ -1,10 +1,8 @@
 package com.squattingsasquatches.lucidity;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -13,7 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
-public class PHPConnection {
+public class RemoteDBAdapter {
 	
 	public static final String ACTION_RESP = "com.squattingsasquatches.intent.action.MESSAGE_PROCESSED";
 	
@@ -24,13 +22,12 @@ public class PHPConnection {
 	private ResponseReceiver receiver;
 	private HashMap<String, String> params;
 	
-	public PHPConnection(Context ctx, Activity caller) {
-		
+	public RemoteDBAdapter(Context ctx, Activity caller) {
 		this.ctx = ctx;
 		this.caller = caller;
 		
 		// initialize our db service
-        dbService = new Intent(ctx, DBService.class);
+        dbService = new Intent(ctx, PHPService.class);
         params = new HashMap<String, String>();
         
         IntentFilter filter = new IntentFilter(ACTION_RESP);
@@ -57,13 +54,24 @@ public class PHPConnection {
 	
 	public void execute(String callback) {
 		this.callback = callback;
-		dbService.putExtra(DBService.PARAM_IN_MSG, params);
+		dbService.putExtra(PHPService.PARAM_IN_MSG, params);
 		ctx.startService(dbService);
 	}
 	
 	public void execute(String action, HashMap<String, String> params, String callback) {
 		setAction(action);
 		this.params = params;
+		execute(callback);
+	}
+	
+	public void execute(String action, String paramKeys, String paramValues, String callback) {
+		setAction(action);
+		String[] keys = paramKeys.split(","), vals = paramValues.split(",");
+		
+		for (int i = 0; i < keys.length; ++i) {
+			addParam(keys[i].trim(), vals[i].trim());
+		}
+		
 		execute(callback);
 	}
     
@@ -75,7 +83,7 @@ public class PHPConnection {
     	
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			String result = intent.getStringExtra(DBService.PARAM_OUT_MSG);
+			String result = intent.getStringExtra(PHPService.PARAM_OUT_MSG);
 			JSONArray resultJSON = new JSONArray();
 									
 			try {
@@ -86,18 +94,8 @@ public class PHPConnection {
 				// Reflection... callback method is determined at runtime
 				caller.getClass().getMethod(callback, JSONArray.class).invoke(caller, resultJSON);
 				
-			} catch (IllegalArgumentException e) {
-				Log.e("IllegalArgumentException", e.getMessage());
-			} catch (SecurityException e) {
-				Log.e("SecurityException", e.getMessage());
-			} catch (IllegalAccessException e) {
-				Log.e("IllegalAccessException", e.getMessage());
-			} catch (InvocationTargetException e) {
-				Log.e("InvocationTargetException", e.getMessage());
-			} catch (NoSuchMethodException e) {
-				Log.e("NoSuchMethodException", e.getMessage());
-			} catch (JSONException e) {
-				Log.e("BroadcastReceiver JSONExecption", e.getMessage());
+			} catch (Exception e) {
+				Log.e("BroadcastReceiver Execption", e.getMessage());
 			}
 		}
     }
