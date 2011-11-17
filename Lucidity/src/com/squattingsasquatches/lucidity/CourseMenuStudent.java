@@ -48,11 +48,11 @@ public class CourseMenuStudent extends Activity {
         coursesListView = (ListView) findViewById(R.id.coursesListView);
         
         deviceID = getIntent().getStringExtra("com.squattingsasquatches.deviceID");
-        db = new RemoteDBAdapter(getApplicationContext(), this);
+        db = new RemoteDBAdapter(this);
         
         db.setAction("user.courses.view");
 		db.addParam("device_id", deviceID);
-		db.execute("getCoursesCallback");
+		db.execute(Codes.GET_COURSES);
 		
 		/*
 		 * I think we should save a user's courses locally, maybe in a SQLite DB.
@@ -93,7 +93,7 @@ public class CourseMenuStudent extends Activity {
 					// reload courses
 					loading.show();
 					courses.clear();
-					db.execute("getCoursesCallback");
+					db.execute(Codes.GET_COURSES);
 					break;
 				case 0:
 					// Add a Course

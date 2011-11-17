@@ -1,6 +1,7 @@
 package com.squattingsasquatches.lucidity;
 
-public class CONSTANTS {
+public class Codes {
+	/* PHP results */
 	public static final int NOT_A_JSON_ARRAY = -2;
 	public static final int DATABASE_ERROR = -1;
 	public static final int SUCCESS = 0;
@@ -17,6 +18,17 @@ public class CONSTANTS {
 	public static final int DEVICE_ID_ALREADY_EXISTS = 11;
 	public static final int COURSE_ALREADY_REGISTERED = 12;
 	public static final int NO_STUDENT_ID_SUPPLIED = 13;
-	public static final int REMOTE_DB = 14;
-	public static final int LOCAL_DB = 15;
+	public static final int NO_LECTURE_HALL_SUPPLIED = 14;
+	
+	
+	/* App Callbacks */
+	public static final int REMOTE_QUERY_COMPLETE = 50;
+	public static final int REMOTE_QUERY_ERROR = 51;
+	public static final int NO_CALLBACK = 52;
+	public static final int LOGIN = 53;
+	public static final int REGISTER = 54;
+	public static final int GET_COURSES = 55;
+	
+	
+	private Codes() {}
 }

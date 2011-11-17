@@ -18,12 +18,11 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.util.Log;
 
 public class PHPService extends IntentService {
-	
-	public static final String PARAM_IN_MSG = "imsg";
-    public static final String PARAM_OUT_MSG = "omsg";
  
     public PHPService() {
         super("PHPService");
@@ -32,14 +31,16 @@ public class PHPService extends IntentService {
     @SuppressWarnings("unchecked")
 	@Override
     protected void onHandleIntent(Intent intent) {
-    	Log.i("onCreate", "service started");
-    	HashMap<String, String> params = (HashMap<String, String>) intent.getSerializableExtra(PARAM_IN_MSG);
+    	HashMap<String, String> params = (HashMap<String, String>) intent.getSerializableExtra("params");
+    	
+    	final ResultReceiver receiver = intent.getParcelableExtra("receiver");
+    	Bundle b = new Bundle();
+    	
     	InputStream is;
     	String action = params.get("action"),
     			result = "",
     			line = "";
         
-    	// connection stuff
     	ArrayList<NameValuePair> nvParams = new ArrayList<NameValuePair>();
 				
 		if (action == null) {
@@ -69,6 +70,11 @@ public class PHPService extends IntentService {
 				
 				Log.i("result", result);
 				
+				b.putString("result", result);
+				b.putInt("callback", intent.getIntExtra("callback", Codes.NO_CALLBACK));
+				
+                receiver.send(Codes.REMOTE_QUERY_COMPLETE, b);
+				
 			} catch (UnsupportedEncodingException e) {
 				Log.e("DBService", "Error getting http result " + e.getMessage());
 			}
@@ -79,13 +85,16 @@ public class PHPService extends IntentService {
 			 * App can still function, just at a very basic, barebones level.
 			 */
 			Log.e("DBService", "Error in http connection " + e.getMessage());
+			b.putString(Intent.EXTRA_TEXT, e.toString());
+            receiver.send(Codes.REMOTE_QUERY_ERROR, b);
 		}
 		
-		// send result back to main activity
+		/*// send result back to main activity
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(RemoteDBAdapter.ACTION_RESP);
         broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
         broadcastIntent.putExtra(PARAM_OUT_MSG, result);
-        sendBroadcast(broadcastIntent);
+        sendBroadcast(broadcastIntent);*/
+		this.stopSelf();
     }
 }
