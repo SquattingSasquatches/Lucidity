@@ -25,7 +25,7 @@
     	    android:id="@+id/ViewFlipper"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/logo"
+			android:layout_below="@id/logo"
 			android:layout_centerHorizontal="true"
 	    	android:layout_marginTop="50dp">
     	
@@ -48,7 +48,6 @@
 		    	    android:id="@+id/txtName"
 		    	    android:layout_height="wrap_content"
 		    	    android:layout_width="match_parent"
-		    	    android:background="@drawable/textbox"
 		    	    android:inputType="textPersonName"
 		    	    android:drawingCacheQuality="high"
 		    	    android:layout_marginTop="20dp"
@@ -62,12 +61,8 @@
 			        android:layout_height="wrap_content"
 			        android:layout_centerHorizontal="true"
 			        android:layout_marginTop="10dp"
-			        android:background="@drawable/button"
 			        android:drawingCacheQuality="high"
-			        android:paddingLeft="20dp"
-			        android:paddingRight="20dp"
 			        android:text="@string/register_btn"
-			        android:textSize="18dp"
 			        android:layout_below="@id/txtName" />
 	    	    
 	    	</RelativeLayout>

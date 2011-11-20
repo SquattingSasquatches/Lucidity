@@ -43,11 +43,15 @@ public class RemoteDBAdapter {
 		}
 	}
 	
-	public void execute(int callback) {
-		dbService.putExtra("callback", callback);
+	public void execute() {
 		dbService.putExtra("params", params);
 		dbService.putExtra("receiver", receiver);
 		ctx.startService(dbService);
+	}
+	
+	public void execute(int callback) {
+		dbService.putExtra(Codes.KEY_CALLBACK, callback);
+		execute();
 	}
 	
 	public void execute(String action, HashMap<String, String> params, int callback) {
@@ -70,25 +74,4 @@ public class RemoteDBAdapter {
 	public boolean stopService() {
 		return ctx.stopService(dbService);
 	}
-	
-    /*public class ResponseReceiver extends BroadcastReceiver {
-    	
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			String result = intent.getStringExtra(PHPService.PARAM_OUT_MSG);
-			JSONArray resultJSON = new JSONArray();
-									
-			try {
-				
-				if (!result.equals("false"))
-					resultJSON = new JSONArray(result);
-
-				// Reflection... callback method is determined at runtime
-				caller.getClass().getMethod(callback, JSONArray.class).invoke(caller, resultJSON);
-				
-			} catch (Exception e) {
-				Log.e("BroadcastReceiver Execption", e.getMessage());
-			}
-		}
-    }*/
 }

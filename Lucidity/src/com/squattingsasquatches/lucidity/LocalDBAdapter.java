@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class LocalDBAdapter {
 	
-	// db table and key constants
+	// db table and key constants (maybe move to Codes.java)
 	private static final String DB_NAME = "lucidity";
 	private static final String USER_TABLE = "user";
 	private static final String COURSES_TABLE = "courses";
@@ -40,7 +40,7 @@ public class LocalDBAdapter {
 	}
 	
 	// save user data to local DB
-	public long saveUserData(int id, String name, int c2dm_id) {
+	public long saveUserData(int id, String name, String c2dm_id) {
 		ContentValues userData = new ContentValues();
 		userData.put(KEY_ID, id);
 		userData.put(KEY_NAME, name);
@@ -59,7 +59,7 @@ public class LocalDBAdapter {
 		
 		private static final int DB_VERSION = 1;
 		private static final String DB_CREATE = 
-										"create table " + USER_TABLE + " (" + KEY_ID + " NUMERIC not null, " + KEY_NAME + " TEXT not null, " + KEY_C2DM_ID + " NUMERIC not null);" +
+										"create table " + USER_TABLE + " (" + KEY_ID + " NUMERIC not null, " + KEY_NAME + " TEXT not null, " + KEY_C2DM_ID + " TEXT not null);" +
 										"create table " + COURSES_TABLE + " (" + KEY_ID + " INTEGER PRIMARY KEY not null, " + KEY_UNI_ID + " NUMERIC not null, " + KEY_NAME + " TEXT not null, " + KEY_START_DATE + " TEXT not null, " + KEY_END_DATE + " TEXT not null);";
 		
 		public DBHelper(Context ctx) {

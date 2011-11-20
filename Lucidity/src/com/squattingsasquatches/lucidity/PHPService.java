@@ -70,8 +70,8 @@ public class PHPService extends IntentService {
 				
 				Log.i("result", result);
 				
-				b.putString("result", result);
-				b.putInt("callback", intent.getIntExtra("callback", Codes.NO_CALLBACK));
+				b.putString(Codes.KEY_RESULT, result);
+				b.putInt(Codes.KEY_CALLBACK, intent.getIntExtra(Codes.KEY_CALLBACK, Codes.NO_CALLBACK));
 				
                 receiver.send(Codes.REMOTE_QUERY_COMPLETE, b);
 				

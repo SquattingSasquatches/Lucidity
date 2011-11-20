@@ -9,11 +9,10 @@
  class response
  {
  	private $log = array();
- 	public $messages;
  	
  	function add( $message_id, $fatal = false)
  	{
- 		$this->messages[] = $this->messages[$message_id] 
+ 		$this->log[] = $this->messages[$message_id];
  		
  		if ( $fatal )
  		{
@@ -21,13 +20,13 @@
  			{
  				default:
  				case 'json':
- 					die( json_encode($this->messages) );
+ 					die( json_encode($this->log) );
  				break;
  				case 'plain':
- 					die( $this->messages );
+ 					die( $this->log );
  				break;
  				case 'cli':
- 					foreach( $this->messages as $message )
+ 					foreach( $this->log as $message )
  					{
  						echo $message['type'] . ' ' . $message['id'] . ': ' . $message['message'] . "\n";
  					}
@@ -38,7 +37,7 @@
  	}
  	function send( $message = false )
  	{
- 		if( $message ) $this->add($message);	
+ 		if( $message ) $this->add($message, true);	
  	}
  	function display()
  	{
@@ -46,10 +45,10 @@
  		{
  			default:
 			case 'json':
-				echo json_encode($this->messages) ;
+				echo json_encode($this->log) ;
 			break;
 			case 'plain':
-				print_r( $this->messages );
+				print_r( $this->log );
 			break;
 			case 'cli':
 			break;

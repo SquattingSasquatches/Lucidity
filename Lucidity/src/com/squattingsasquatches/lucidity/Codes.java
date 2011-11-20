@@ -1,10 +1,13 @@
 package com.squattingsasquatches.lucidity;
 
 public class Codes {
+	/* General */
+	public static final int ERROR = -1;
+	public static final int SUCCESS = 0;
+	
 	/* PHP results */
 	public static final int NOT_A_JSON_ARRAY = -2;
 	public static final int DATABASE_ERROR = -1;
-	public static final int SUCCESS = 0;
 	public static final int NO_USER_ID_FOUND = 1;
 	public static final int NO_USER_ID_SUPPLIED = 2;
 	public static final int NO_DEVICE_ID_FOUND = 3;
@@ -29,6 +32,13 @@ public class Codes {
 	public static final int REGISTER = 54;
 	public static final int GET_COURSES = 55;
 	
+	/* String constants */
+	public static final String KEY_RESULT = "result";
+	public static final String KEY_CALLBACK = "callback";
+	public static final String KEY_C2DM_RESULT = "c2dm_result";
+	public static final String KEY_C2DM_ID = "c2dm_id";
+	public static final String KEY_DEVICE_ID = "deviceID";
+	public static final String KEY_USERS_NAME = "usersName";
 	
-	private Codes() {}
+	private Codes() {} // don't allow instantiation of this class
 }

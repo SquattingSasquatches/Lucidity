@@ -3,24 +3,24 @@ package com.squattingsasquatches.lucidity;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
-
-import com.squattingsasquatches.R;
+import org.json.JSONException;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class CourseMenuStudent extends Activity {
+public class CourseMenuStudent extends Activity implements RemoteResultReceiver.Receiver {
 	
 	private ListView coursesListView;
-	private RemoteDBAdapter db;
+	private RemoteDBAdapter remoteDB;
 	private String deviceID;
 	private ArrayList<Course> courses;
 	private ProgressDialog loading;
@@ -28,7 +28,7 @@ public class CourseMenuStudent extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
-		db.unregisterReceiver();
+		remoteDB.unregisterReceiver();
 	}
 	
 	@Override
@@ -48,11 +48,11 @@ public class CourseMenuStudent extends Activity {
         coursesListView = (ListView) findViewById(R.id.coursesListView);
         
         deviceID = getIntent().getStringExtra("com.squattingsasquatches.deviceID");
-        db = new RemoteDBAdapter(this);
-        
-        db.setAction("user.courses.view");
-		db.addParam("device_id", deviceID);
-		db.execute(Codes.GET_COURSES);
+        remoteDB = new RemoteDBAdapter(this);
+        remoteDB.setReceiver(this);
+        remoteDB.setAction("user.courses.view");
+        remoteDB.addParam("device_id", deviceID);
+        remoteDB.execute();
 		
 		/*
 		 * I think we should save a user's courses locally, maybe in a SQLite DB.
@@ -79,6 +79,24 @@ public class CourseMenuStudent extends Activity {
 		coursesListView.setOnItemClickListener(listViewHandler);
 	}
 	
+	public void onReceiveResult(int resultCode, Bundle resultData) {
+		// result from remote PHP query
+		Log.i("onReceiveResult", String.valueOf(resultCode));
+		
+		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {
+			String result = resultData.getString("result");
+			if (result != null) {
+				try {
+					getCoursesCallback(new JSONArray(result));
+				} catch (JSONException e) {
+					Log.e("onReceiveResult", "error with JSONArray");
+				}
+			}
+		} else {
+			// bads!
+		}
+	}
+	
 	OnItemClickListener listViewHandler = new OnItemClickListener() {
 		
 		public void onItemClick(AdapterView<?> a, View v, int position, long id) {
@@ -93,7 +111,7 @@ public class CourseMenuStudent extends Activity {
 					// reload courses
 					loading.show();
 					courses.clear();
-					db.execute(Codes.GET_COURSES);
+					remoteDB.execute();
 					break;
 				case 0:
 					// Add a Course
@@ -110,7 +128,7 @@ public class CourseMenuStudent extends Activity {
 	OnCancelListener dialogCancelListener = new OnCancelListener() {
 
 		public void onCancel(DialogInterface dialog) {
-			if (db.stopService()) {
+			if (remoteDB.stopService()) {
 				courses.clear();
 				courses.add(new Course(-1, "Load Courses"));
 				initializeCourseOnClickListener();
