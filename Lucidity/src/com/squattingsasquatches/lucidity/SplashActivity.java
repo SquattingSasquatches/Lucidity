@@ -127,7 +127,7 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
 				String deviceRegistrationID = "";
 	        	LocalDBAdapter localDB = new LocalDBAdapter(this);
 	        	localDB.open();
-	        	localDB.saveUserData(0, usersName, deviceRegistrationID); // Actually need to save newly generated user_id from remote database instead of device_id.
+	        	localDB.saveUserData(0, usersName, deviceRegistrationID); // Actually need to save newly generated user_id from remote database instead of 0.
 	        	localDB.close();
 				// start course menu activity
 				Log.i("Register", "SUCCESS");
@@ -191,11 +191,9 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
         		case R.id.btnRegister:
         	        loading.show();
         			// C2DM registration
-        			// Registration with our server is now handled by C2DMResultHandler subclass
+        			// Registration with our server is now handled by remoteRegistration BroadcastReceiver
         	        usersName = ((EditText) findViewById(R.id.txtName)).getText().toString();
-        	        registrationIntent.putExtra("name", usersName);
         			startService(registrationIntent);
-        			Log.i("register handler", "registrationIntent should have started");
         			break;
         		default:
         	}
