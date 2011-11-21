@@ -27,6 +27,10 @@ public class RemoteDBAdapter {
 		params.put(key, value);
 	}
 	
+	public void addParam(String key, int value) {
+		params.put(key, String.valueOf(value));
+	}
+	
 	public void setAction(String action) {
 		params.put("action", action);
 	}

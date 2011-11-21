@@ -29,8 +29,9 @@ public class Codes {
 	public static final int REMOTE_QUERY_ERROR = 51;
 	public static final int NO_CALLBACK = 52;
 	public static final int LOGIN = 53;
-	public static final int REGISTER = 54;
-	public static final int GET_COURSES = 55;
+	public static final int LOAD_UNIVERSITIES = 54;
+	public static final int REGISTER = 55;
+	public static final int GET_COURSES = 56;
 	
 	/* String constants */
 	public static final String KEY_RESULT = "result";

@@ -5,4 +5,6 @@
     <string name="register_btn">REGISTER</string>
     <string name="your_name">Your Name</string>
     <string name="my_courses">My Courses</string>
+    <string name="checking_registration">Checking registration status...</string>
+    <string name="loading_unis">Loading universities...</string>
 </resources>

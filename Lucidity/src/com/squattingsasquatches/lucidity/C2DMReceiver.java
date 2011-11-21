@@ -15,9 +15,8 @@ public class C2DMReceiver extends BroadcastReceiver {
 	
 	@Override
 	public void onReceive(Context ctx, Intent intent) {
-		Log.i("C2DM onReceive", "hello");
 		c2dmRegistrationID = intent.getStringExtra("registration_id");
-		Log.i("C2DM onReceive", c2dmRegistrationID);
+		Log.d("C2DM onReceive", c2dmRegistrationID);
 		this.ctx = ctx;
 		if (intent.getAction().equals("com.google.android.c2dm.intent.REGISTRATION")) {
 			handleRegistration(intent);
@@ -32,9 +31,8 @@ public class C2DMReceiver extends BroadcastReceiver {
 		if (extras != null) {
 			if (extras.getString("error") != null) {
 		        // Registration failed, should try again later.
-			    Log.d("c2dm", "registration failed");
 			    String error = extras.getString("error");
-			    Log.d("c2dm", error);
+			    Log.d("c2dm error", error);
 		    } else if (extras.getString("unregistered") != null) {
 		    	String storedRegistrationId = ""; //TODO: load registrationId from local DB
 		    	DeviceRegistrar.unregisterWithServer(ctx, storedRegistrationId);

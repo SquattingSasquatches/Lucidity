@@ -1,9 +1,11 @@
 package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -21,6 +23,7 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 	
 	private ListView coursesListView;
 	private RemoteDBAdapter remoteDB;
+	private LocalDBAdapter localDB;
 	private String deviceID;
 	private ArrayList<Course> courses;
 	private ProgressDialog loading;
@@ -28,7 +31,8 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 	@Override
 	public void onPause() {
 		super.onPause();
-		remoteDB.unregisterReceiver();
+		if (remoteDB != null)
+			remoteDB.unregisterReceiver();
 	}
 	
 	@Override
@@ -36,39 +40,46 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_menu_student);
         
-        courses = new ArrayList<Course>();
+        boolean updateCourses = getIntent().getExtras().getBoolean("updateCourses", false);
         
+        courses = new ArrayList<Course>();
+        coursesListView = (ListView) findViewById(R.id.coursesListView);
         loading = new ProgressDialog(this);
+        localDB = new LocalDBAdapter(this);
+        deviceID = getIntent().getStringExtra("com.squattingsasquatches.deviceID");
         
         loading.setTitle("Please wait");
         loading.setMessage("Loading your courses... ");
         loading.setOnCancelListener(dialogCancelListener);
         loading.show();
         
-        coursesListView = (ListView) findViewById(R.id.coursesListView);
-        
-        deviceID = getIntent().getStringExtra("com.squattingsasquatches.deviceID");
-        remoteDB = new RemoteDBAdapter(this);
-        remoteDB.setReceiver(this);
-        remoteDB.setAction("user.courses.view");
-        remoteDB.addParam("device_id", deviceID);
-        remoteDB.execute();
-		
-		/*
-		 * I think we should save a user's courses locally, maybe in a SQLite DB.
-		 * That way we only need to send the query to get them after they add a course instead of everytime they visit this activity.
-		 * For now though, the query is run everytime the activity is created.
-		 * 
-		 * Query should be run after first registration, after new device registration, and after everytime a course is added
-		 */
+        if (updateCourses) {
+        	remoteDB = new RemoteDBAdapter(this);
+	        remoteDB.setReceiver(this);
+	        remoteDB.setAction("user.courses.view");
+	        remoteDB.addParam("device_id", deviceID);
+	        remoteDB.execute();
+        } else {
+        	getCoursesCallback(localDB.open().getCourses());
+        }
 	}
 	
 	public void getCoursesCallback(JSONArray result) {
 		// populate coursesListView with courses
-        // "Add a Course" as last view
+        // append "Add a Course" option
 		loading.dismiss();
-		
 		courses.clear();
+		
+		int resultLength = result.length();
+		
+		for (int i = 0; i < resultLength; ++i) {
+			try {
+				JSONObject course = result.getJSONObject(i);
+				courses.add(new Course(course.getInt("id"), course.getInt("professors_id"), course.getString("name"), new Date(course.getString("start_date")), new Date(course.getString("end_date"))));
+			} catch (JSONException e) {
+				Log.d("getCoursesCallback", "JSON error");
+			}
+		}
 		
 		initializeCourseOnClickListener();
 	}
@@ -97,7 +108,7 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 		}
 	}
 	
-	OnItemClickListener listViewHandler = new OnItemClickListener() {
+	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
 		
 		public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 			
@@ -125,10 +136,10 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 		
 	};
 	
-	OnCancelListener dialogCancelListener = new OnCancelListener() {
+	private final OnCancelListener dialogCancelListener = new OnCancelListener() {
 
 		public void onCancel(DialogInterface dialog) {
-			if (remoteDB.stopService()) {
+			if (remoteDB != null && remoteDB.stopService()) {
 				courses.clear();
 				courses.add(new Course(-1, "Load Courses"));
 				initializeCourseOnClickListener();

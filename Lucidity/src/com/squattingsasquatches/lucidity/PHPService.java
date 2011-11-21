@@ -76,25 +76,14 @@ public class PHPService extends IntentService {
                 receiver.send(Codes.REMOTE_QUERY_COMPLETE, b);
 				
 			} catch (UnsupportedEncodingException e) {
-				Log.e("DBService", "Error getting http result " + e.getMessage());
+				Log.e("DBService", "Error getting http result " + e.getMessage() + ". action: " + action);
 			}
 			
 		} catch (Exception e) {
-			// No internet connection
-			/* TODO: set result as something to notify LucidityActivity that there is no connection
-			 * App can still function, just at a very basic, barebones level.
-			 */
 			Log.e("DBService", "Error in http connection " + e.getMessage());
-			b.putString(Intent.EXTRA_TEXT, e.toString());
             receiver.send(Codes.REMOTE_QUERY_ERROR, b);
 		}
 		
-		/*// send result back to main activity
-        Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction(RemoteDBAdapter.ACTION_RESP);
-        broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        broadcastIntent.putExtra(PARAM_OUT_MSG, result);
-        sendBroadcast(broadcastIntent);*/
 		this.stopSelf();
     }
 }
