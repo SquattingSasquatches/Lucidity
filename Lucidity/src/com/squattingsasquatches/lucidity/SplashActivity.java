@@ -51,7 +51,7 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
         user = new User();
         btnRegister = (Button) findViewById(R.id.btnRegister);    
         layoutFlipper = (ViewFlipper) findViewById(R.id.ViewFlipper);
-        txtUni = (AutoCompleteTextView) findViewById(R.id.autocomplete_uni);
+        txtUni = (AutoCompleteTextView) findViewById(R.id.acUni);
         txtLoading = (TextView) findViewById(R.id.txtLoading);
         remoteDB = new RemoteDBAdapter(this);
         loading = new ProgressDialog(this);
@@ -166,7 +166,7 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
 			}
     	}
     	
-    	adapter = new ArrayAdapter<String>(this, R.layout.uni_list_item, unis.toArray(new String[unis.size()]));
+    	adapter = new ArrayAdapter<String>(this, R.layout.ac_list_item, unis.toArray(new String[unis.size()]));
     	txtUni.setAdapter(adapter);
     	loading.dismiss();
     	layoutFlipper.showNext();

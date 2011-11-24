@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CourseListAdapter extends BaseAdapter {
@@ -38,7 +39,12 @@ public class CourseListAdapter extends BaseAdapter {
 			 convertView = mInflater.inflate(R.layout.course_list_item, null);
 			 holder = new ViewHolder();
 			 holder.txtCourseName = (TextView) convertView.findViewById(R.id.txtCourseName);
-
+			 holder.imgAction = (ImageView) convertView.findViewById(R.id.imgAction);
+			 
+			 //If this is the last item in the list, change the arrow to a plus. (Add a Course)
+			 if (getCount() == (getItemId(position) + 1))
+				 holder.imgAction.setImageResource(R.drawable.plus);
+			 
 			 convertView.setTag(holder);
 		 } else {
 			 holder = (ViewHolder) convertView.getTag();
@@ -51,5 +57,6 @@ public class CourseListAdapter extends BaseAdapter {
 
 	static class ViewHolder {
 		TextView txtCourseName;
+		ImageView imgAction;
 	}
 }

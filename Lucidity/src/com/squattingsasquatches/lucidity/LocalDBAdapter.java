@@ -23,6 +23,7 @@ public class LocalDBAdapter {
 	private static final String USER_TABLE = "user";
 	private static final String COURSES_TABLE = "courses";
 	private static final String KEY_ID = "_id";
+	private static final String KEY_UNI_ID = "uni_id";
 	private static final String KEY_NAME = "name";
 	private static final String KEY_C2DM_ID = "c2dm_id";
 	private static final String KEY_PROFESSORS_ID = "professors_id";
@@ -74,6 +75,13 @@ public class LocalDBAdapter {
 		return result.getInt(0);
 	}
 	
+	public int getUserUniId() {
+		String[] columns = {KEY_UNI_ID};
+		Cursor result = db.query(USER_TABLE, columns, null, null, null, null, null);
+		result.moveToFirst();
+		return result.getInt(0);
+	}
+	
 	// save user course info to local DB
 	public long saveCourseInfo(ArrayList<Course> courses) {
 		ContentValues courseInfo = new ContentValues();
@@ -106,12 +114,13 @@ public class LocalDBAdapter {
 	
 	public class DBHelper extends SQLiteOpenHelper {
 		
-		private static final int DB_VERSION = 2;
+		private static final int DB_VERSION = 3;
 		private static final String DB_CREATE = 
 										"create table " +
 												USER_TABLE + 
 												"(" + KEY_ID + " NUMERIC not null, " +
 													  KEY_NAME + " TEXT not null, " +
+													  KEY_UNI_ID + "NUMERIC not null" +
 													  KEY_C2DM_ID + " TEXT not null, " +
 													  KEY_C2DM_IS_REGISTERED + " NUMERIC not null, " +
 													  KEY_C2DM_LAST_CHECK + " TEXT not null); " +

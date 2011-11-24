@@ -8,7 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,6 +31,7 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 	private String deviceID;
 	private ArrayList<Course> courses;
 	private ProgressDialog loading;
+	private Context ctx;
 	
 	@Override
 	public void onPause() {
@@ -40,12 +45,16 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_menu_student);
         
+        ctx = this;
+        
         boolean updateCourses = getIntent().getExtras().getBoolean("updateCourses", false);
         
         courses = new ArrayList<Course>();
         coursesListView = (ListView) findViewById(R.id.coursesListView);
         loading = new ProgressDialog(this);
         localDB = new LocalDBAdapter(this);
+        remoteDB = new RemoteDBAdapter(this);
+        remoteDB.setReceiver(this);
         deviceID = getIntent().getStringExtra("com.squattingsasquatches.deviceID");
         
         loading.setTitle("Please wait");
@@ -54,11 +63,9 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
         loading.show();
         
         if (updateCourses) {
-        	remoteDB = new RemoteDBAdapter(this);
-	        remoteDB.setReceiver(this);
 	        remoteDB.setAction("user.courses.view");
 	        remoteDB.addParam("device_id", deviceID);
-	        remoteDB.execute();
+	        remoteDB.execute(Codes.GET_USER_COURSES);
         } else {
         	getCoursesCallback(localDB.open().getCourses());
         }
@@ -90,15 +97,72 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 		coursesListView.setOnItemClickListener(listViewHandler);
 	}
 	
+	public void loadCoursesCallback(JSONArray result) {
+		Dialog addCourse = new Dialog(ctx, R.style.AddCourseTheme);		
+    	ArrayAdapter<String> adapter;
+    	ArrayList<String> subjects = new ArrayList<String>();
+    	ArrayList<String> courseNums = new ArrayList<String>();
+    	JSONObject course;
+    	int resultLength = result.length();
+    	
+    	/* TODO: view available courses remote query
+    	 * 
+    	 * select subject_id from uni_subjects where uni_id = $uni_id
+    	 * foreach $subject_id : 
+    	 * 		select short_name from subjects where id = $SID
+    	 * 		select course_number, id from courses where subject_id = $SID
+    	 * 
+    	 * should probably combine into single SQL statement
+    	 * 
+    	 * example of expected returned JSON ~> {short_name: "MATH", course_number:350, course_id: 23}
+    	 */
+    	
+    	addCourse.setContentView(R.layout.add_course);
+    	
+    	AutoCompleteTextView acTxtSubject = (AutoCompleteTextView) addCourse.findViewById(R.id.acSubject);
+    	AutoCompleteTextView acTxtCourseNum = (AutoCompleteTextView) addCourse.findViewById(R.id.acCourseNumber);
+    	
+    	for (int i = 0; i < resultLength; ++i) {
+    		try {
+    			course = result.getJSONObject(i);
+    			subjects.add(course.getString("short_name"));
+    			courseNums.add(course.getString("course_number"));
+    			courseNums.add(course.getString("course_id"));
+			} catch (JSONException e) {
+				Log.d("loadUniversities", "error loading univerisites");
+			}
+    	}
+    	
+    	adapter = new ArrayAdapter<String>(this, R.layout.ac_list_item, subjects.toArray(new String[subjects.size()]));
+    	acTxtSubject.setAdapter(adapter);
+    	
+    	adapter = new ArrayAdapter<String>(this, R.layout.ac_list_item, courseNums.toArray(new String[courseNums.size()]));
+    	acTxtCourseNum.setAdapter(adapter);
+    	
+		addCourse.show();
+    	loading.dismiss();
+    }
+	
+	/* calls the designated callback */
+    public void doCallback(int callbackCode, JSONArray result) {
+    	if (callbackCode == Codes.GET_USER_COURSES)
+    		getCoursesCallback(result);
+    	else if (callbackCode == Codes.LOAD_COURSES)
+    		loadCoursesCallback(result);
+    	else
+    		Log.d("WTF", "How'd you get here?");
+    }
+	
 	public void onReceiveResult(int resultCode, Bundle resultData) {
 		// result from remote PHP query
 		Log.i("onReceiveResult", String.valueOf(resultCode));
 		
 		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {
 			String result = resultData.getString("result");
+			int callbackCode = resultData.getInt("callback");
 			if (result != null) {
 				try {
-					getCoursesCallback(new JSONArray(result));
+					doCallback(callbackCode, new JSONArray(result));
 				} catch (JSONException e) {
 					Log.e("onReceiveResult", "error with JSONArray");
 				}
@@ -126,7 +190,12 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 					break;
 				case 0:
 					// Add a Course
-					// start AddCourse activity
+					// Load possible courses from server
+					loading.setMessage("Loading courses...");
+					loading.show();
+					remoteDB.setAction("subjects.view");
+					remoteDB.addParam("uni", localDB.getUserUniId());
+					remoteDB.execute(Codes.LOAD_COURSES);
 					break;
 				default:
 					// load selected course and start Course activity

@@ -31,7 +31,8 @@ public class Codes {
 	public static final int LOGIN = 53;
 	public static final int LOAD_UNIVERSITIES = 54;
 	public static final int REGISTER = 55;
-	public static final int GET_COURSES = 56;
+	public static final int GET_USER_COURSES = 56;
+	public static final int LOAD_COURSES = 57;
 	
 	/* String constants */
 	public static final String KEY_RESULT = "result";

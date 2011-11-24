@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="LucidityTheme">
+    <style name="LucidityTheme" parent="@android:style/Theme.NoTitleBar">
         <item name="android:buttonStyle">@style/Button</item>
     </style>
 </resources>
