@@ -7,4 +7,7 @@
     <string name="my_courses">My Courses</string>
     <string name="checking_registration">Checking registration status...</string>
     <string name="loading_unis">Loading universities...</string>
+    <string name="add_courses">Add Courses</string>
+    <string name="save_new_courses">Save</string>
+    <string name="add_another_course">Add More</string>
 </resources>

@@ -91,7 +91,7 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
     /* switch to CourseMenu Activity and grab courses from remote DB */
     public void goToCourseList(boolean updateCourses) {
     	nextActivity = new Intent(this, CourseMenuStudent.class);
-		nextActivity.putExtra("com.squattingsasquatches.deviceID", user.getDeviceId());
+		nextActivity.putExtra("com.squattingsasquatches.userId", user.getId());
 		nextActivity.putExtra("updateCourses", updateCourses);
 		this.startActivity(nextActivity);
 		finish(); //just this one time
@@ -109,7 +109,7 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
     
     public void loadUniversities() {
     	txtLoading.setText(R.string.loading_unis);
-    	remoteDB.setAction("universities.view");
+    	remoteDB.setAction("unis.view");
     	remoteDB.execute(Codes.LOAD_UNIVERSITIES);
     }
     
@@ -234,7 +234,7 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
         			// C2DM registration
         			// Registration with our server is now handled by remoteRegistration BroadcastReceiver
         	        user.setName(((EditText) findViewById(R.id.txtName)).getText().toString());
-        	        user.setUniId(txtUni.getListSelection()); //TODO: Fix this. In adapter, use actual University objects as opposed to just Strings. Need to write custom AutoCompleteTextView
+        	        user.setUniId(1870); //TODO: Fix this. In adapter, use actual University objects as opposed to just Strings. Need to write custom AutoCompleteTextView
         	        Log.d("sel uni", String.valueOf(user.getUniId()));
         			DeviceRegistrar.startRegistration(getApplicationContext(), remoteRegistration);
         			break;

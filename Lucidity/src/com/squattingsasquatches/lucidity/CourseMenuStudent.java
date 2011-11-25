@@ -16,22 +16,36 @@ import android.content.DialogInterface.OnCancelListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class CourseMenuStudent extends Activity implements RemoteResultReceiver.Receiver {
 	
-	private ListView coursesListView;
+	/* DBs */
 	private RemoteDBAdapter remoteDB;
 	private LocalDBAdapter localDB;
-	private String deviceID;
-	private ArrayList<Course> courses;
+	
+	/* UI */
 	private ProgressDialog loading;
+	private Dialog addCourse;
+	private Button btnSaveCourses;
+	private Button btnAddCourse;
+	private LinearLayout newCourses;
+	private ListView coursesListView;
+	private ArrayList<AutoCompleteTextView> acNewCourses;
+	
+	/* Misc */
+	private CourseArrayAdapter courseAdapter;
+	private ArrayList<Course> courses;
 	private Context ctx;
+	private int userId;	
 	
 	@Override
 	public void onPause() {
@@ -51,29 +65,29 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
         
         courses = new ArrayList<Course>();
         coursesListView = (ListView) findViewById(R.id.coursesListView);
+        acNewCourses = new ArrayList<AutoCompleteTextView>();
         loading = new ProgressDialog(this);
-        localDB = new LocalDBAdapter(this);
+        localDB = new LocalDBAdapter(this).open();
         remoteDB = new RemoteDBAdapter(this);
         remoteDB.setReceiver(this);
-        deviceID = getIntent().getStringExtra("com.squattingsasquatches.deviceID");
+        userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
         
         loading.setTitle("Please wait");
-        loading.setMessage("Loading your courses... ");
+        loading.setMessage("Loading your saved courses... ");
         loading.setOnCancelListener(dialogCancelListener);
         loading.show();
         
         if (updateCourses) {
 	        remoteDB.setAction("user.courses.view");
-	        remoteDB.addParam("device_id", deviceID);
+	        remoteDB.addParam("user_id", localDB.getUserId());
 	        remoteDB.execute(Codes.GET_USER_COURSES);
         } else {
-        	getCoursesCallback(localDB.open().getCourses());
+        	getCoursesCallback(localDB.getCourses());
         }
 	}
 	
 	public void getCoursesCallback(JSONArray result) {
 		// populate coursesListView with courses
-        // append "Add a Course" option
 		loading.dismiss();
 		courses.clear();
 		
@@ -82,7 +96,13 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 		for (int i = 0; i < resultLength; ++i) {
 			try {
 				JSONObject course = result.getJSONObject(i);
-				courses.add(new Course(course.getInt("id"), course.getInt("professors_id"), course.getString("name"), new Date(course.getString("start_date")), new Date(course.getString("end_date"))));
+				courses.add(new Course(course.getInt("id"),
+										course.getInt("course_num"),
+										course.getString("name"),
+										new Date(course.getString("start_date")),
+										new Date(course.getString("end_date")),
+										new Subject(course.getInt("subject_id")),
+										new University(course.getInt("uni_id"))));
 			} catch (JSONException e) {
 				Log.d("getCoursesCallback", "JSON error");
 			}
@@ -92,54 +112,54 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 	}
 	
 	public void initializeCourseOnClickListener() {
-		courses.add(new Course(0, "Add a Course"));
+		courses.add(new Course(0, "Add Courses"));
 		coursesListView.setAdapter(new CourseListAdapter(this, courses));
 		coursesListView.setOnItemClickListener(listViewHandler);
 	}
 	
 	public void loadCoursesCallback(JSONArray result) {
-		Dialog addCourse = new Dialog(ctx, R.style.AddCourseTheme);		
-    	ArrayAdapter<String> adapter;
-    	ArrayList<String> subjects = new ArrayList<String>();
-    	ArrayList<String> courseNums = new ArrayList<String>();
-    	JSONObject course;
+    	JSONObject courseJSON;
+    	ArrayList<Course> courses = new ArrayList<Course>();
+    	
+    	
     	int resultLength = result.length();
     	
-    	/* TODO: view available courses remote query
-    	 * 
-    	 * select subject_id from uni_subjects where uni_id = $uni_id
-    	 * foreach $subject_id : 
-    	 * 		select short_name from subjects where id = $SID
-    	 * 		select course_number, id from courses where subject_id = $SID
-    	 * 
-    	 * should probably combine into single SQL statement
-    	 * 
-    	 * example of expected returned JSON ~> {short_name: "MATH", course_number:350, course_id: 23}
-    	 */
-    	
+    	addCourse = new Dialog(ctx, R.style.AddCourseTheme);
     	addCourse.setContentView(R.layout.add_course);
     	
-    	AutoCompleteTextView acTxtSubject = (AutoCompleteTextView) addCourse.findViewById(R.id.acSubject);
-    	AutoCompleteTextView acTxtCourseNum = (AutoCompleteTextView) addCourse.findViewById(R.id.acCourseNumber);
+    	newCourses = (LinearLayout) addCourse.findViewById(R.id.newCourses);
+    	btnAddCourse = (Button) addCourse.findViewById(R.id.btnAddCourse);
+    	btnSaveCourses = (Button) addCourse.findViewById(R.id.btnSaveNewCourses);
     	
+    	// Add the default 3 ACTV's to our ArrayList
+    	for (int i = 0; i < 3; ++i)    	
+    		acNewCourses.add((AutoCompleteTextView) newCourses.getChildAt(i));
+    	
+    	// Populate 'courses' with the courses available at the user's university
     	for (int i = 0; i < resultLength; ++i) {
     		try {
-    			course = result.getJSONObject(i);
-    			subjects.add(course.getString("short_name"));
-    			courseNums.add(course.getString("course_number"));
-    			courseNums.add(course.getString("course_id"));
+    			courseJSON = result.getJSONObject(i);
+    			courses.add(new Course(courseJSON.getInt("course_id"),
+										courseJSON.getInt("course_number"),
+										new Subject(courseJSON.getInt("subject_id"), courseJSON.getString("subject_name"))));
 			} catch (JSONException e) {
-				Log.d("loadUniversities", "error loading univerisites");
+				Log.d("loadCourses", "error loading courses");
 			}
     	}
     	
-    	adapter = new ArrayAdapter<String>(this, R.layout.ac_list_item, subjects.toArray(new String[subjects.size()]));
-    	acTxtSubject.setAdapter(adapter);
+    	courseAdapter = new CourseArrayAdapter(this, R.layout.ac_list_item, courses);
     	
-    	adapter = new ArrayAdapter<String>(this, R.layout.ac_list_item, courseNums.toArray(new String[courseNums.size()]));
-    	acTxtCourseNum.setAdapter(adapter);
+    	for (int i = 0; i < 3; ++i) {
+    		acNewCourses.get(i).setAdapter(courseAdapter);
+    		acNewCourses.get(i).setOnItemClickListener(courseNumListener);
+    	}
+    	
+    	btnAddCourse.setOnClickListener(addCourseTxtViewListener);
+    	btnSaveCourses.setOnClickListener(saveCoursesListener);
     	
 		addCourse.show();
+		addCourse.getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		
     	loading.dismiss();
     }
 	
@@ -172,14 +192,52 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 		}
 	}
 	
-	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
-		
+	private final OnItemClickListener courseNumListener = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+			Log.d("selected", ((Course) a.getItemAtPosition(position)).getId() +"");
 			
+		}
+	};
+	
+	private final OnClickListener addCourseTxtViewListener = new OnClickListener() {
+		public void onClick(View v) {
+			if (acNewCourses.size() < 5) {
+				LayoutParams layout = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+				AutoCompleteTextView acNewCourse = new AutoCompleteTextView(ctx);
+				
+				acNewCourse.setLayoutParams(layout);
+				acNewCourse.setHint("...");
+				acNewCourse.setThreshold(1);
+				acNewCourse.setAdapter(courseAdapter);
+				acNewCourse.setOnItemClickListener(courseNumListener);
+				
+				acNewCourses.add(acNewCourse);
+				
+				newCourses.addView(acNewCourse);
+			} else {
+				Toast.makeText(ctx, "You can only add 5 courses at a time.", Toast.LENGTH_LONG).show(); // Just because
+			}
+		}
+	};
+	
+	private final OnClickListener saveCoursesListener = new OnClickListener() {
+		public void onClick(View v) {
+			loading.setMessage("Saving selected course...");
+			addCourse.dismiss();
+			loading.show();
+			
+			remoteDB.setAction("user.course.add");
+			remoteDB.addParam(Codes.KEY_USER_ID, userId);
+			//remoteDB.addParam(Codes.KEY_COURSE_ID, v.get)
+			
+			loading.dismiss();
+		}
+	};
+	
+	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
+		public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 			Object o = coursesListView.getItemAtPosition(position);
 			Course course = (Course) o;
-			
-			Toast.makeText(CourseMenuStudent.this, "You have chosen: " + " " + course.getName(), Toast.LENGTH_LONG).show();
 			
 			switch (course.getId()) {
 				case -1:
@@ -191,10 +249,11 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 				case 0:
 					// Add a Course
 					// Load possible courses from server
-					loading.setMessage("Loading courses...");
+					loading.setMessage("Loading available courses...");
 					loading.show();
-					remoteDB.setAction("subjects.view");
-					remoteDB.addParam("uni", localDB.getUserUniId());
+					remoteDB.setAction("uni.courses.view");
+					Log.d("uni_id", userId + "");
+					remoteDB.addParam("uni_id", localDB.getUserUniId());
 					remoteDB.execute(Codes.LOAD_COURSES);
 					break;
 				default:
@@ -202,18 +261,15 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 					break;
 			}
 		}
-		
 	};
 	
 	private final OnCancelListener dialogCancelListener = new OnCancelListener() {
-
 		public void onCancel(DialogInterface dialog) {
-			if (remoteDB != null && remoteDB.stopService()) {
+			if (remoteDB.stopService()) {
 				courses.clear();
-				courses.add(new Course(-1, "Load Courses"));
+				courses.add(new Course(-1, "Load My Courses"));
 				initializeCourseOnClickListener();
 			}
 		}
-		
 	};
 }

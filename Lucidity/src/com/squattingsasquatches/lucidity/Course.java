@@ -5,21 +5,33 @@ import java.util.Date;
 public class Course {
 	
 	private int id;
-	private int professorsId;
+	private int courseNum;
 	private String name;
 	private Date startDate;
 	private Date endDate;
+	private University uni;
+	private Subject subject;
 	
-	public Course(int id, String name) {
-		this(id, 0, name, new Date(0), new Date(0));
+	public Course(int id, int courseNum) {
+		this(id, courseNum, new Subject());
 	}
 	
-	public Course(int id, int professorsId, String name, Date startDate, Date endDate) {
+	public Course(int id, String name) {
+		this(id, 0, name, new Date(0), new Date(0), new Subject(), new University());
+	}
+	
+	public Course(int id, int courseNum, Subject subject) {
+		this(id, courseNum, "", new Date(0), new Date(0), subject, new University());
+	}
+	
+	public Course(int id, int courseNum, String name, Date startDate, Date endDate, Subject subject, University uni) {
 		this.id = id;
-		this.professorsId = professorsId;
+		this.uni = uni;
+		this.courseNum = courseNum;
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.subject = subject;
 	}
 
 	public int getId() {
@@ -30,12 +42,12 @@ public class Course {
 		this.id = id;
 	}
 
-	public int getProfessorsID() {
-		return professorsId;
+	public University getUni() {
+		return uni;
 	}
 
-	public void setProfessorsID(int professorsId) {
-		this.professorsId = professorsId;
+	public void setUni(University uni) {
+		this.uni = uni;
 	}
 
 	public String getName() {
@@ -60,5 +72,26 @@ public class Course {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+
+	public int getCourseNum() {
+		return courseNum;
+	}
+
+	public void setCourseNum(int courseNum) {
+		this.courseNum = courseNum;
+	}
+	
+	@Override
+	public String toString() {
+		return getSubject().getShortName() + " " + getCourseNum();
 	}
 }

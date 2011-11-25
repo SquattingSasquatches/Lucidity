@@ -5,7 +5,7 @@
  * Lucidity
  * Created by Asa Rudick, Brett Aaron, Trypp Cook
  * 
- * Parameters: device_id
+ * Parameters: user_id
  * 
  */
  
@@ -20,13 +20,14 @@
  	 * 		Parameter checks.
  	 */
  	
- 	if( !isset( $device_id ) )
+ 	if( !isset( $user_id ) )
  	{
- 		$response->add('no_device_id_supplied', true);
+ 		$response->add('no_user_id_supplied', true);
  	}
  	
  	
- 	$db->query('SELECT * FROM `user_devices` AS ud, `student_courses` AS sc, `courses` AS c WHERE ud.device_id = "' . $device_id . '" AND ud.user_id = sc.student_id AND c.id = sc.course_id');
+ 	//$db->query('SELECT * FROM `user_devices` AS ud, `student_courses` AS sc, `courses` AS c WHERE ud.device_id = "' . $device_id . '" AND ud.user_id = sc.student_id AND c.id = sc.course_id');
+ 	$db->query('SELECT * FROM `courses` AS C inner join `student_courses` AS SC on SC.course_id = C.id WHERE SC.student_id = ?', array($user_id));
  	
  	$records = $db->fetch_assoc_all();
 

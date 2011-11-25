@@ -4,30 +4,80 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <AutoCompleteTextView
-		android:id="@+id/acSubject"
-		android:layout_height="wrap_content"
-  	    android:layout_width="match_parent"
-  	    android:layout_marginLeft="5dp"
-  	    android:layout_marginRight="5dp"
-  	    android:hint="Course Subject"
-  	    android:completionThreshold="1" />
-    
-	<AutoCompleteTextView
-		android:id="@+id/acCourseNumber"
-		android:layout_height="wrap_content"
-   	    android:layout_width="match_parent"
-   	    android:layout_marginTop="5dp"
-   	    android:layout_marginLeft="5dp"
-   	    android:layout_marginRight="5dp"
-   	    android:hint="Course Number"
-   	    android:completionThreshold="1" />
-
-    <Button
-        android:id="@+id/btnAddCourse"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="Add Course" />
+        android:text="@string/add_courses"
+        android:layout_margin="5dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <!-- 1px Horizontal Rule -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FF777777"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp" />
+    
+    <LinearLayout
+        android:id="@+id/newCourses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+        
+	    <AutoCompleteTextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+	  	    android:hint="Course Name"
+	  	    android:completionThreshold="1" />
+	    
+	    <AutoCompleteTextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+	  	    android:hint="(ex. CHEM 101, HY 123)"
+	  	    android:completionThreshold="1" />
+	    
+	    <AutoCompleteTextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+	  	    android:hint="..."
+	  	    android:completionThreshold="1" />
+	    
+	</LinearLayout>
+	
+    <!-- 1px Horizontal Rule -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FF777777"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+	    
+        <Button
+	        android:id="@+id/btnAddCourse"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_marginRight="2dp"
+	        android:layout_weight="0.4"
+	        android:text="@string/add_another_course" />
+        
+        <Button
+	        android:id="@+id/btnSaveNewCourses"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="2dp"
+	        android:layout_weight="0.6"
+	        android:text="@string/save_new_courses" />
+        
+	</LinearLayout>	
     
 </LinearLayout>

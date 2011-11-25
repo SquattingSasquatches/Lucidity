@@ -41,6 +41,7 @@ public class Codes {
 	public static final String KEY_C2DM_ID = "c2dm_id";
 	public static final String KEY_DEVICE_ID = "deviceID";
 	public static final String KEY_USERS_NAME = "usersName";
+	public static final String KEY_USER_ID = "user_id";
 	
 	private Codes() {} // don't allow instantiation of this class
 }

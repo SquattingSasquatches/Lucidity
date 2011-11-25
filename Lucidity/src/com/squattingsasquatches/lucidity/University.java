@@ -5,6 +5,14 @@ public class University {
 	private int id;
 	private String name;
 	
+	public University() {
+		this(0, "");
+	}
+	
+	public University(int id) {
+		this(id, "");
+	}
+	
 	public University(int id, String name) {
 		this.setId(id);
 		this.setName(name);
