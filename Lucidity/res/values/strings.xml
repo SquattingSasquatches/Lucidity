@@ -10,4 +10,5 @@
     <string name="add_courses">Add Courses</string>
     <string name="save_new_courses">Save</string>
     <string name="add_another_course">Add More</string>
+    <string name="cancel">Cancel</string>
 </resources>

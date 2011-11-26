@@ -21,46 +21,44 @@
  	 * 		Parameter checks.
  	 */
  	
- 	if( !isset( $device_id ) )
+ 	if( !isset( $user_id ) )
  	{
- 		$response->add('no_device_id_supplied', true);
+ 		$response->add('no_user_id_supplied', true);
  	}
  	
- 	if( !isset( $course_id ) )
+ 	if( !isset( $course_ids ) )
  	{
  		$response->add('no_course_id_supplied', true);
  	}
  	
+ 	$course_ids = explode(',', $course_ids);
  	
  	
+ 	$db->select('course_id', 'student_courses', 'student_id = ? AND course_id IN ?', array($user_id, $db->implode($course_ids)));
  	
- 	
- 	
- 	
- 	$db->query('SELECT * FROM `users_devices` AS ud, `student_courses` AS sc, WHERE ud.device_id = ? AND ud.user_id = sc.student_id AND ?', array('device_id' => $device_id, 'course_id' => $course_id ));
- 	
- 	
- 	
- 	// If they've already added the course, return with error code 3.
+ 	// Remove the courses they've already registered for
  	
  	if( $db->found_rows )
 	{
-		$response->add('course_already_registered', true);
+		$found = $db->fetch_assoc_all();
+		
+		foreach ($found as $course_id_to_remove) {
+			foreach ($course_ids as $i => $id) {
+				if ($id == $course_id_to_remove)
+					unset($course_ids[$i]);
+			}
+		}
+		
+		// If user is already registered for all the courses they're trying to register for
+		if (count($courseIds) == 0)
+			$response->add('course_already_registered', true);
 	}
 	
 	
-	// They haven't registered for the course. Fetch user id, and register them.
+	// They haven't registered for the courses, so register them.
 	
-	$db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $device_id ));
- 	
- 	if( !$records = $db->fetch_assoc_all() )
-	{
-		$response->add('no_user_id_found', true);
-	}
-	
-	$db->insert('student_courses', array('student_id' => $records['user_id'], 'course_id' => $course_id, 'verified' => '0') );
-	
-	$db->show_debug_console();
+	foreach ($course_ids as $course_id)
+		$db->insert('student_courses', array('student_id' => $user_id, 'course_id' => $course_id, 'verified' => '0') );
 	
 	$db->close();
 	

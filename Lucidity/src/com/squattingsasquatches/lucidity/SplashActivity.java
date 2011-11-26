@@ -139,8 +139,8 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
     	
     	switch (resultCode) {
 			case Codes.SUCCESS:
-	        	LocalDBAdapter localDB = new LocalDBAdapter(this);
-	        	localDB.open().saveUserData(user); // Actually need to save newly generated user_id from remote database instead of 0.
+	        	LocalDBAdapter localDB = new LocalDBAdapter(this).open();
+	        	localDB.saveUserData(user); // Actually need to save newly generated user_id from remote database instead of 0.
 	        	localDB.close();
 				// start course menu activity
 				Log.d("Register", "SUCCESS");

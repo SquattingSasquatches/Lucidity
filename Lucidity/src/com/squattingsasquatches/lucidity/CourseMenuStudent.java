@@ -2,29 +2,28 @@ package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
+import android.view.View.OnFocusChangeListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class CourseMenuStudent extends Activity implements RemoteResultReceiver.Receiver {
 	
@@ -34,17 +33,19 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 	
 	/* UI */
 	private ProgressDialog loading;
-	private Dialog addCourse;
-	private Button btnSaveCourses;
-	private Button btnAddCourse;
+	private AlertDialog.Builder addCourseBuilder;
+	private AlertDialog addCourseDialog;
+	private View addCourseDialogLayout;
+	private LayoutInflater dialogInflater;
 	private LinearLayout newCourses;
 	private ListView coursesListView;
 	private ArrayList<AutoCompleteTextView> acNewCourses;
 	
 	/* Misc */
 	private CourseArrayAdapter courseAdapter;
-	private ArrayList<Course> courses;
-	private Context ctx;
+	private ArrayList<Course> userCourses;
+	private ArrayList<Course> availableCourses;
+	private ArrayList<Course> coursesToAdd;
 	private int userId;	
 	
 	@Override
@@ -52,6 +53,8 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 		super.onPause();
 		if (remoteDB != null)
 			remoteDB.unregisterReceiver();
+		if (localDB != null)
+			localDB.close();
 	}
 	
 	@Override
@@ -59,11 +62,11 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_menu_student);
         
-        ctx = this;
-        
         boolean updateCourses = getIntent().getExtras().getBoolean("updateCourses", false);
         
-        courses = new ArrayList<Course>();
+        userCourses = new ArrayList<Course>();
+        availableCourses = new ArrayList<Course>();
+        coursesToAdd = new ArrayList<Course>();
         coursesListView = (ListView) findViewById(R.id.coursesListView);
         acNewCourses = new ArrayList<AutoCompleteTextView>();
         loading = new ProgressDialog(this);
@@ -74,7 +77,7 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
         
         loading.setTitle("Please wait");
         loading.setMessage("Loading your saved courses... ");
-        loading.setOnCancelListener(dialogCancelListener);
+        loading.setCancelable(false);
         loading.show();
         
         if (updateCourses) {
@@ -86,23 +89,29 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
         }
 	}
 	
+	public void initializeCourseOnClickListener() {
+		userCourses.add(new Course(0, "Add Courses"));
+		coursesListView.setAdapter(new CourseListAdapter(this, userCourses));
+		coursesListView.setOnItemClickListener(listViewHandler);
+		loading.dismiss();
+	}
+	
 	public void getCoursesCallback(JSONArray result) {
 		// populate coursesListView with courses
-		loading.dismiss();
-		courses.clear();
+		userCourses.clear();
 		
 		int resultLength = result.length();
 		
 		for (int i = 0; i < resultLength; ++i) {
 			try {
 				JSONObject course = result.getJSONObject(i);
-				courses.add(new Course(course.getInt("id"),
-										course.getInt("course_num"),
-										course.getString("name"),
-										new Date(course.getString("start_date")),
-										new Date(course.getString("end_date")),
-										new Subject(course.getInt("subject_id")),
-										new University(course.getInt("uni_id"))));
+				userCourses.add(new Course(course.getInt(LocalDBAdapter.KEY_ID),
+										course.getInt(LocalDBAdapter.KEY_COURSE_NUMBER),
+										course.getString(LocalDBAdapter.KEY_NAME),
+										new Date(course.getString(LocalDBAdapter.KEY_START_DATE)),
+										new Date(course.getString(LocalDBAdapter.KEY_END_DATE)),
+										new Subject(course.getInt(LocalDBAdapter.KEY_SUBJECT_ID)),
+										new University(course.getInt(LocalDBAdapter.KEY_UNI_ID))));
 			} catch (JSONException e) {
 				Log.d("getCoursesCallback", "JSON error");
 			}
@@ -111,35 +120,33 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 		initializeCourseOnClickListener();
 	}
 	
-	public void initializeCourseOnClickListener() {
-		courses.add(new Course(0, "Add Courses"));
-		coursesListView.setAdapter(new CourseListAdapter(this, courses));
-		coursesListView.setOnItemClickListener(listViewHandler);
-	}
-	
 	public void loadCoursesCallback(JSONArray result) {
     	JSONObject courseJSON;
-    	ArrayList<Course> courses = new ArrayList<Course>();
     	
-    	
+    	dialogInflater = getLayoutInflater();
+    	addCourseDialogLayout = dialogInflater.inflate(R.layout.add_course, (ViewGroup) findViewById(R.id.addCourseDialog));
+    	    	
     	int resultLength = result.length();
     	
-    	addCourse = new Dialog(ctx, R.style.AddCourseTheme);
-    	addCourse.setContentView(R.layout.add_course);
+    	addCourseBuilder = new AlertDialog.Builder(this);
+    	addCourseBuilder
+    				.setTitle(R.string.add_courses)
+    				.setIcon(R.drawable.plus)
+    				.setView(addCourseDialogLayout)
+    				.setNegativeButton(R.string.cancel, cancelListener)
+    				.setPositiveButton(R.string.save_new_courses, saveCoursesListener);
     	
-    	newCourses = (LinearLayout) addCourse.findViewById(R.id.newCourses);
-    	btnAddCourse = (Button) addCourse.findViewById(R.id.btnAddCourse);
-    	btnSaveCourses = (Button) addCourse.findViewById(R.id.btnSaveNewCourses);
+    	newCourses = (LinearLayout) addCourseDialogLayout.findViewById(R.id.addCourseDialog);
     	
     	// Add the default 3 ACTV's to our ArrayList
-    	for (int i = 0; i < 3; ++i)    	
+    	for (int i = 0; i < 3; ++i)
     		acNewCourses.add((AutoCompleteTextView) newCourses.getChildAt(i));
     	
     	// Populate 'courses' with the courses available at the user's university
     	for (int i = 0; i < resultLength; ++i) {
     		try {
     			courseJSON = result.getJSONObject(i);
-    			courses.add(new Course(courseJSON.getInt("course_id"),
+    			availableCourses.add(new Course(courseJSON.getInt("course_id"),
 										courseJSON.getInt("course_number"),
 										new Subject(courseJSON.getInt("subject_id"), courseJSON.getString("subject_name"))));
 			} catch (JSONException e) {
@@ -147,21 +154,25 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 			}
     	}
     	
-    	courseAdapter = new CourseArrayAdapter(this, R.layout.ac_list_item, courses);
+    	courseAdapter = new CourseArrayAdapter(this, R.layout.ac_list_item, availableCourses);
     	
     	for (int i = 0; i < 3; ++i) {
     		acNewCourses.get(i).setAdapter(courseAdapter);
-    		acNewCourses.get(i).setOnItemClickListener(courseNumListener);
+    		acNewCourses.get(i).setValidator(new ACValidator());
+    		acNewCourses.get(i).setOnFocusChangeListener(new ValidateStarter());
+    		acNewCourses.get(i).setOnItemClickListener(itemClickListener);
     	}
     	
-    	btnAddCourse.setOnClickListener(addCourseTxtViewListener);
-    	btnSaveCourses.setOnClickListener(saveCoursesListener);
+    	addCourseDialog = addCourseBuilder.create();
+    	addCourseDialog.show();
     	
-		addCourse.show();
-		addCourse.getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		
     	loading.dismiss();
     }
+	
+	public void addCoursesCallback(JSONArray result) {
+		localDB.saveCourseInfo(coursesToAdd);
+		getCoursesCallback(localDB.getCourses());
+	}	
 	
 	/* calls the designated callback */
     public void doCallback(int callbackCode, JSONArray result) {
@@ -169,6 +180,8 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
     		getCoursesCallback(result);
     	else if (callbackCode == Codes.LOAD_COURSES)
     		loadCoursesCallback(result);
+    	else if (callbackCode == Codes.ADD_COURSES)
+    		addCoursesCallback(result);
     	else
     		Log.d("WTF", "How'd you get here?");
     }
@@ -192,50 +205,48 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 		}
 	}
 	
-	private final OnItemClickListener courseNumListener = new OnItemClickListener() {
-		public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-			Log.d("selected", ((Course) a.getItemAtPosition(position)).getId() +"");
-			
-		}
-	};
-	
-	private final OnClickListener addCourseTxtViewListener = new OnClickListener() {
-		public void onClick(View v) {
-			if (acNewCourses.size() < 5) {
-				LayoutParams layout = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-				AutoCompleteTextView acNewCourse = new AutoCompleteTextView(ctx);
-				
-				acNewCourse.setLayoutParams(layout);
-				acNewCourse.setHint("...");
-				acNewCourse.setThreshold(1);
-				acNewCourse.setAdapter(courseAdapter);
-				acNewCourse.setOnItemClickListener(courseNumListener);
-				
-				acNewCourses.add(acNewCourse);
-				
-				newCourses.addView(acNewCourse);
-			} else {
-				Toast.makeText(ctx, "You can only add 5 courses at a time.", Toast.LENGTH_LONG).show(); // Just because
+	private final OnItemClickListener itemClickListener = new OnItemClickListener() {
+		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			for (int i = 0; i < 3; ++i) {
+				if (acNewCourses.get(i).isFocused()) {
+					acNewCourses.get(i).clearFocus();
+					if (i >= coursesToAdd.size())
+						coursesToAdd.add(availableCourses.get(position));
+					else
+						coursesToAdd.set(i, availableCourses.get(position));
+				}
 			}
 		}
 	};
 	
+	private final OnClickListener cancelListener = new OnClickListener() {
+		public void onClick(DialogInterface dialog, int position) {
+			dialog.cancel();
+		}
+	};
+	
 	private final OnClickListener saveCoursesListener = new OnClickListener() {
-		public void onClick(View v) {
-			loading.setMessage("Saving selected course...");
-			addCourse.dismiss();
+		public void onClick(DialogInterface dialog, int position) {
+			loading.setMessage("Saving selected courses...");
 			loading.show();
+			
+			int numAdding = coursesToAdd.size();
+			String courseIds = "";
+			
+			for (int i = 0; i < numAdding; ++i) {
+				courseIds += coursesToAdd.get(i).getId() + ",";
+			}
 			
 			remoteDB.setAction("user.course.add");
 			remoteDB.addParam(Codes.KEY_USER_ID, userId);
-			//remoteDB.addParam(Codes.KEY_COURSE_ID, v.get)
-			
-			loading.dismiss();
+			remoteDB.addParam(Codes.KEY_COURSE_IDS, courseIds);
+			remoteDB.execute(Codes.ADD_COURSES);
+			//loading.dismiss();
 		}
 	};
 	
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
-		public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Object o = coursesListView.getItemAtPosition(position);
 			Course course = (Course) o;
 			
@@ -243,7 +254,7 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 				case -1:
 					// reload courses
 					loading.show();
-					courses.clear();
+					userCourses.clear();
 					remoteDB.execute();
 					break;
 				case 0:
@@ -263,13 +274,44 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 		}
 	};
 	
-	private final OnCancelListener dialogCancelListener = new OnCancelListener() {
-		public void onCancel(DialogInterface dialog) {
-			if (remoteDB.stopService()) {
-				courses.clear();
-				courses.add(new Course(-1, "Load My Courses"));
-				initializeCourseOnClickListener();
-			}
+	class ValidateStarter implements OnFocusChangeListener {
+		
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (!hasFocus) {
+                ((AutoCompleteTextView) v).performValidation();
+            }
+        }
+        
+    };
+	
+	class ACValidator implements AutoCompleteTextView.Validator {
+
+		public CharSequence fixText(CharSequence invalidText) {
+			return "";
 		}
+
+		public boolean isValid(CharSequence text) {
+			String courseTitle = text.toString();
+			Iterator<Course> it = availableCourses.iterator();
+			
+			// Check that the user hasn't already entered this course
+			int count = 0;
+			
+			for (int i = 0; i < 3; ++i) {
+	    		if (courseTitle.equals(acNewCourses.get(i).getText().toString()))
+	    			++count;
+	    		
+	    		if (count > 1) return false; // 1 for the text just entered
+			}
+			
+			// Check entered course against valid courses for the user's university	
+			while (it.hasNext()) {
+				if (((Course) it.next()).equals(courseTitle.toString()))
+					return true;
+			}
+			
+			return false; // Course doesn't exist
+		}
+		
 	};
 }

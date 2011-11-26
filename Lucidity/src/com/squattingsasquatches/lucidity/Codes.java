@@ -1,5 +1,7 @@
 package com.squattingsasquatches.lucidity;
 
+// should probably spread these around to their respective classes...eventually
+
 public class Codes {
 	/* General */
 	public static final int ERROR = -1;
@@ -23,7 +25,6 @@ public class Codes {
 	public static final int NO_STUDENT_ID_SUPPLIED = 13;
 	public static final int NO_LECTURE_HALL_SUPPLIED = 14;
 	
-	
 	/* App Callbacks */
 	public static final int REMOTE_QUERY_COMPLETE = 50;
 	public static final int REMOTE_QUERY_ERROR = 51;
@@ -33,6 +34,7 @@ public class Codes {
 	public static final int REGISTER = 55;
 	public static final int GET_USER_COURSES = 56;
 	public static final int LOAD_COURSES = 57;
+	protected static final int ADD_COURSES = 58;
 	
 	/* String constants */
 	public static final String KEY_RESULT = "result";
@@ -42,6 +44,8 @@ public class Codes {
 	public static final String KEY_DEVICE_ID = "deviceID";
 	public static final String KEY_USERS_NAME = "usersName";
 	public static final String KEY_USER_ID = "user_id";
+	public static final String KEY_COURSE_IDS = "course_ids";
+	
 	
 	private Codes() {} // don't allow instantiation of this class
 }

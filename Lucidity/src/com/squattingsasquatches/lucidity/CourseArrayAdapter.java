@@ -63,8 +63,6 @@ public class CourseArrayAdapter extends ArrayAdapter<Course> implements Filterab
             protected void publishResults(CharSequence contraint, FilterResults results) {
                 if (results != null && results.count > 0) {
                 	notifyDataSetChanged();
-                } else {
-                    notifyDataSetInvalidated();
                 }
             }
         };

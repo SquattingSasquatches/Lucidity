@@ -12,6 +12,10 @@ public class Course {
 	private University uni;
 	private Subject subject;
 	
+	public Course() {
+		this(0, 0);
+	}
+	
 	public Course(int id, int courseNum) {
 		this(id, courseNum, new Subject());
 	}
@@ -93,5 +97,23 @@ public class Course {
 	@Override
 	public String toString() {
 		return getSubject().getShortName() + " " + getCourseNum();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		Course c = (Course) o;
+		return equals(c.getSubject().getShortName(), c.getCourseNum());
+	}
+	
+	public boolean equals(String courseTitle) {
+		return toString().equalsIgnoreCase(courseTitle);
+	}
+	
+	public boolean equals(String subject, int courseNum) {
+		return equalsIgnoreCase(subject, String.valueOf(courseNum));
+	}
+	
+	public boolean equalsIgnoreCase(String subject, String courseNum) {
+		return subject.toLowerCase().equals(getSubject().getShortName().toLowerCase()) && courseNum.equals(String.valueOf(getCourseNum())); 
 	}
 }

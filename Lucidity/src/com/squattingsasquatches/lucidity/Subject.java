@@ -14,6 +14,10 @@ public class Subject {
 		this(id, "");
 	}
 	
+	public Subject(String shortName) {
+		this(0, "", shortName);
+	}
+	
 	public Subject(int id, String shortName) {
 		this(id, "", shortName);
 	}
