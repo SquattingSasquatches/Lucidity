@@ -1,21 +1,27 @@
 <?php
-
 	// Set configuration vars
 	include( dirname( __FILE__ ) . '/config.php');
 	
 	// Load error handler.
 	include( dirname( __FILE__ ) . '/class.response.php');
+
+	// Load database class
+	require ( dirname( __FILE__ ) . '/db/class.database.php');  
+
 	if( PHP_SAPI == 'cli')
 	{
-		$response = new response( 'cli' );
+		$response = new CLIresponse();
 	}
 	else
 	{
-		$response = new response();
+		$android = stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android');
+		if( $android )
+			$response = new JSONresponse();
+		else
+	  		$response = new HTMLresponse();
 	}
-	
-	// Load database class
-	require ( dirname( __FILE__ ) . '/db/class.database.php');  
+
+
 	
 	// Connect to database and set timeout.
 	$db = new database();

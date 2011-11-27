@@ -19,12 +19,12 @@
  	
  	if( !isset( $device_id ) )
  	{
- 		$response->add('no_device_id_supplied', true);
+ 		$response->addError('no_device_id_supplied', true);
  	}
  	
  	if( !isset( $quiz_id ) )
  	{
- 		$response->add('no_quiz_id_supplied', true);
+ 		$response->addError('no_quiz_id_supplied', true);
  	}
  	
  	// Fetch lecture_id
@@ -33,7 +33,7 @@
  	if( !$db->found_rows )
 	{
 		// No lecture id found.
- 		$response->add('quiz_not_found', true);
+ 		$response->addError('quiz_not_found', true);
 	}
  	
  	
@@ -45,7 +45,7 @@
 	if( !$db->found_rows )
 	{
 		// User not professor of lecture/course.
- 		$response->add('user_not_professor_of_course', true);
+ 		$response->addError('user_not_professor_of_course', true);
 	}
 	
 	
@@ -56,5 +56,5 @@
 	
 	$db->close();
 	
-	$response->send('success');
+	$response->send();
 ?>

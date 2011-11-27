@@ -19,22 +19,22 @@
  	
  	if( !isset( $device_id ) )
  	{
- 		$response->add('no_device_id_supplied', true);
+ 		$response->addError('no_device_id_supplied', true);
  	}
  	
  	if( !isset( $lecture_id ) )
  	{
- 		$response->add('no_lecture_id_supplied', true);
+ 		$response->addError('no_lecture_id_supplied', true);
  	}
  	
  	if( !isset( $quiz_name ) )
  	{
- 		$response->add('no_quiz_name_supplied', true);
+ 		$response->addError('no_quiz_name_supplied', true);
  	}
  	
  	if( !isset( $quiz_start_time ) )
  	{
- 		$response->add('no_quiz_duration_supplied', true);
+ 		$response->addError('no_quiz_duration_supplied', true);
  	}
  	
  	
@@ -46,7 +46,7 @@
 	if( !$db->found_rows )
 	{
 		// User not professor of lecture/course.
- 		$response->add('user_not_professor_of_course', true);
+ 		$response->addError('user_not_professor_of_course', true);
 	}
 	
 	
@@ -59,5 +59,5 @@
 	
 	$db->close();
 	
-	$response->send('success');
+	$response->send();
 ?>

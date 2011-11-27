@@ -5,12 +5,7 @@
 		$config['DB_PASS'] = 'password';
 		$config['DB_HOST'] = 'localhost';
 		$config['DB_NAME'] = 'thesouth_lucidity';
-		if( PHP_SAPI == "cli" ) {
-			for($i=1;$i<$argc;$i++) {
-				$things = split("=",$argv[$i]);
-				$_REQUEST[$things[0]] = $things[1];
-			}
-		}
+		
 		
 	}
 	else

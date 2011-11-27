@@ -8,51 +8,61 @@
  * Parameters: device_id, course_id
  */
  
-  
- 	include('init.php');
-	
-	global $db;
-	//$db->debug = true;
-	extract( $_REQUEST );
- 
- 	
- 	/*
- 	 * 		Parameter checks.
- 	 */
- 	
- 	if( !isset( $device_id ) )
- 	{
- 		$response->add('no_device_id_supplied', true);
- 	}
- 	
- 	if( !isset( $course_id ) )
- 	{
- 		$response->add('no_course_id_supplied', true);
- 	}
- 	
- 	
- 	
-	
-	$db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $device_id ));
- 	
- 	if( !$db->found_rows )
+include('class.controller.php');
+
+class DeleteCourse extends Controller
+{
+	function execute()
 	{
-		$response->add('no_user_id_found', true);
- 	}
+		$db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $this->params['device_id'] ));
+		
+		$records = $db->fetch_assoc_all();
+		
+	 	$db->delete('student_courses', 'course_id = ? AND student_id = ?', array($this->params['course_id'], $records[0]['user_id'] ) );
+		
+		if( !$db->affected_rows )
+		{
+			echo 'nope';
+		}
+		
+		$db->show_debug_console();
+		
+		$db->close();
+		
+		$response->send();
 	
-	$records = $db->fetch_assoc_all();
-	
- 	$db->delete('student_courses', 'course_id = ? AND student_id = ?', array($course_id, $records[0]['user_id'] ) );
-	
-	if( !$db->affected_rows )
+	}
+	function userExists( $param_names )
 	{
-		echo 'nope';
+		$this->db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $this->params[$param_names[0]] ));
+	 	
+	 	if( !$records = $db->fetch_assoc_all() ) return false;
+	 	return true;
+	}
+	function showView()
+	{
+	 	$this->response->addData( $this->params );
+	 	
+		$this->db->close();
+		
+		$this->response->send();
+		
 	}
 	
-	$db->show_debug_console();
-	
-	$db->close();
-	
-	$response->send('success');
+}
+
+
+/* Main */
+
+$controller = new DeleteCourse();
+
+$controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
+$controller->addValidation( 'course_id', 'isParamSet', 'no_course_id_supplied', true );
+$controller->addValidation( 'device_id', 'userExists', 'no_user_id_found', true );
+
+if( $controller->validate() ) $controller->execute();
+
+$controller->showView();
+
 	
 ?>

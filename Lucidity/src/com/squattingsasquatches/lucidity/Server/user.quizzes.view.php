@@ -19,12 +19,12 @@
  	
  	if( !isset( $device_id ) )
  	{
- 		$response->add('no_device_id_supplied', true);
+ 		$response->addError('no_device_id_supplied', true);
  	}
  	
  	if( !isset( $lecture_id ) )
  	{
- 		$response->add('no_lecture_id_supplied', true);
+ 		$response->addError('no_lecture_id_supplied', true);
  	}
  	
  	
@@ -34,14 +34,15 @@
 	if( !$db->found_rows )
 	{
 		// User not professor of lecture/course.
- 		$response->add('user_not_professor_of_course', true);
+ 		$response->addError('user_not_professor_of_course', true);
 	}
 	
 	$db->select('*', 'quizzes', 'lecture_id  = ?', false, false, array( $lecture_id ) );
  	
  	$records = $db->fetch_assoc_all();
 
+	$db->close();
+	
 	echo json_encode( $records );
 	
-	$db->close();
 ?>
