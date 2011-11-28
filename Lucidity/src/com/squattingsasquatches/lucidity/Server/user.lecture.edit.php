@@ -10,7 +10,16 @@
 {
 	function execute()
 	{
-		$db->update('lectures', array('course_id' => $this->params['course_id'], 'lecture_name' => $this->params['lecture_name'] ), 'lecture_id = ?', array( $this->params['lecture_id'] ) );
+		$db->update('	lectures',
+		 
+						array( 	'course_id' 	=> 	$this->params['course_id'], 
+								'lecture_name' 	=> 	$this->params['lecture_name'] ), 
+						
+						'lecture_id = ?',
+						 
+						array( $this->params['lecture_id'] ) );
+						
+						
 		$this->db->close();
 	}
 	function lectureExists( $param_names )

@@ -17,11 +17,7 @@ class AddCourse extends Controller
 	{
 	 	$db->insert('courses', array('course_name' => $this->params['course_name'], 'course_department_prefix' => $this->params['course_department_prefix'],'uni_id' => $this->params['uni_id'], 'start_date' => $this->params['start_date'],'end_date' => $this->params['end_date']     ) );
 		
-		$db->show_debug_console();
-		
 		$db->close();
-		
-		$response->send();
 	
 	}
 	function isNotDuplicateCourse( $param_names )
