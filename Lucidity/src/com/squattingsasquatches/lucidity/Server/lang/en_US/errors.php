@@ -29,6 +29,12 @@ $this->messages['no_student_id_supplied']			= new Message( MessageType::Error, 1
 $this->messages['no_lecture_name_supplied']			= new Message( MessageType::Error, 14, 'Missing parameter: lecture_name.');
 $this->messages['no_c2dm_id_supplied']				= new Message( MessageType::Error, 15, 'Missing parameter: c2dm_id.');
 $this->messages['no_uni_id_supplied']				= new Message( MessageType::Error, 16, 'Missing parameter: uni_id.');
-
+$this->messages['user_not_professor_of_lecture']	= new Message( MessageType::Error, 17, 'Permission denied: User is not a professor of the specified lecture.');
+$this->messages['user_not_professor_of_quiz']		= new Message( MessageType::Error, 18, 'Permission denied: User is not a professor of the specified quiz.');
+$this->messages['no_quiz_id_supplied']				= new Message( MessageType::Error, 19, 'Missing parameter: quiz_id');
+$this->messages['no_quiz_name_supplied']			= new Message( MessageType::Error, 20, 'Missing parameter: quiz_name');
+$this->messages['no_quiz_duration_supplied']		= new Message( MessageType::Error, 21, 'Missing parameter: quiz_duration');
+$this->messages['quiz_not_found']					= new Message( MessageType::Error, 22, 'Selected quiz does not exist.');
+$this->messages['no_lecture_id_supplied']			= new Message( MessageType::Error, 23, 'Missing parameter: lecture_id');
 
 ?>
