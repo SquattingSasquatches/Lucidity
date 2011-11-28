@@ -86,7 +86,7 @@ $controller->addValidation( 'order', 'isParamSet', 'no_order_supplied', true );
 $controller->addValidation( 'text', 'isParamSet', 'no_text_supplied', true );
 $controller->addValidation( 'correct_answer_id', 'isParamSet', 'no_correct_answer_id_supplied', true );
 $controller->addValidation( 'max_number_of_answers', 'isParamSet', 'no_max_number_of_answers_supplied', true );
-$controller->addValidation( array( 'device_id', 'text' ), 'isNotDuplicateQuestion', 'question_already_exists', true );
+$controller->addValidation( array( 'quiz_id', 'text' ), 'isNotDuplicateQuestion', 'question_already_exists', true );
 $controller->addValidation( array( 'device_id', 'quiz_id' ), 'isProfessorOfQuiz', 'user_not_professor_of_quiz', true );
 
 if( $controller->validate() ) $controller->execute();

@@ -7,11 +7,11 @@
  */
  include('class.controller.php');
 
-class ViewQuestions extends Controller
+class ViewAnswers extends Controller
 {
 	function execute()
 	{
-	 	$db->select('*', 'questions', 'quiz_id  = ?', false, false, array( $this->params['quiz_id'] ) );
+	 	$db->select('*', 'answers', 'question_id  = ?', false, false, array( $this->params['quuestion_id'] ) );
 	 	
 	 	$records = $this->db->fetch_assoc_all();
 	 	
@@ -21,26 +21,27 @@ class ViewQuestions extends Controller
 	
 	}
 	
-	function isProfessorOfQuiz( $param_names )
+	function isProfessorOfQuestion( $param_names )
 	{
-		$this->db->query(	'SELECT * FROM ' .
-							'`user_devices` AS ud, ' .
+		$this->db->query(	'SELECT * FROM `user_devices` AS ud, ' .
+							'`questions` AS qu, ' .
 							'`quizzes` AS q, ' .
-							'`lectures` AS l, ' .
-							'`lecture_courses` AS lc ' .
 							'`professors` AS p, ' .
 							'`courses` AS c, ' .
-							'`professor_courses` AS pc ' .
+							'`professor_courses` AS pc, ' .
+							'`lectures` AS l, ' .
+							'`lecture_courses` AS lc ' .
 							'WHERE ud.device_id = ? ' .
 							'AND p.user_id = ud.user_id ' .
 							'AND p.user_id = pc.professor_id ' .
 							'AND pc.course_id = c.id  ' .
 							'AND c.id = lc.course_id ' .
-							'AND l.id = lc.lecture_id ' .
+							'AND lc.lecture_id = l.id ' .
 							'AND l.id = q.lecture_id ' .
-							'AND q.id = ?', 
-							array('device_id' => $this->params[$param_names[0]], 'quiz_id' => $this->params[$param_names[1]] ));
- 	
+							'AND qu.id = ? ' .
+							'AND q.id = qu.quiz_id', 
+							array('device_id' => $this->params[$param_names[0]], 'question_id' => $this->params[$param_names[1]] ));
+							
 		if( !$this->db->found_rows ) return false;
 		
 		return true;
@@ -50,11 +51,11 @@ class ViewQuestions extends Controller
 
 /* Main function */
 
-$controller = new ViewQuestions();
+$controller = new ViewAnswers();
 
 $controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
-$controller->addValidation( 'quiz_id', 'isParamSet', 'no_quiz_id_supplied', true );
-$controller->addValidation( array( 'device_id', 'quiz_id' ), 'isProfessorOfQuiz', 'user_not_professor_of_quiz', true );
+$controller->addValidation( 'question_id', 'isParamSet', 'no_question_id_supplied', true );
+$controller->addValidation( array( 'device_id', 'question_id' ), 'isProfessorOfQuestion', 'user_not_professor_of_question', true );
 
 
 if( $controller->validate() ) $controller->execute();

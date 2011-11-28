@@ -11,16 +11,13 @@
  
 include('class.controller.php');
 
-class EditQuestion extends Controller
+class AddAnswer extends Controller
 {
 	function execute()
 	{
-	 	$db->update('questions', 
-	 				array( 	'quiz_id' 				=> $this->params['quiz_id'], 
-							'order' 				=> $this->params['order'],
-							'text' 					=> $this->params['text'], 	
-							'correct_answer_id' 	=> $this->params['correct_answer_id'],
-							'max_num_of_answers' 	=> $this->params['max_num_of_answers']    
+	 	$db->insert('answers', 
+	 				array( 	'question_id' 			=> $this->params['question_id'],
+							'text' 					=> $this->params['text']    
 							) 
 					);
 		
@@ -29,21 +26,18 @@ class EditQuestion extends Controller
 		
 	
 	}
-	function isNotDuplicateQuestion( $param_names )
+	function isNotDuplicateAnswer( $param_names )
 	{
-	 	$this->db->query('SELECT * FROM `questions` AS qu, `quizzes` as q WHERE qu.quiz_id = ? AND qu.text = ?', array('quiz_id' => $this->params[$param_names[0]], 'text' => $this->params[$param_names[1]] ));
+	 	$this->db->query(	'SELECT * FROM ' .
+	 						'`questions` AS qu, ' .
+	 						'`answers` as a ' .
+	 						'WHERE qu.id = ? ' .
+	 						'AND a.text = ?', 
+	 						array('question_id' => $this->params[$param_names[0]], 'text' => $this->params[$param_names[1]] ));
 	 	
 	 	if( $this->db->found_rows ) return true;
 		
 	 	return false;
-	}
-	
-	function quizExists( $param_names )
-	{
-		$db->select('lecture_id', 'quizzes', 'quiz_id = ?', false, false, array( $this->params['quiz_id'] ) );
- 	
-	 	if( !$db->found_rows ) return false;
-	 	return true;
 	}
 	function isProfessorOfQuestion( $param_names )
 	{
@@ -82,16 +76,12 @@ class EditQuestion extends Controller
 
 /* Main */
 
-$controller = new EditQuestion();
+$controller = new AddAnswer();
 
 $controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
-$controller->addValidation( 'quiz_id', 'isParamSet', 'no_quiz_id_supplied', true );
-$controller->addValidation( 'order', 'isParamSet', 'no_order_supplied', true );
+$controller->addValidation( 'question_id', 'isParamSet', 'no_question_id_supplied', true );
 $controller->addValidation( 'text', 'isParamSet', 'no_text_supplied', true );
-$controller->addValidation( 'correct_answer_id', 'isParamSet', 'no_correct_answer_id_supplied', true );
-$controller->addValidation( 'max_number_of_answers', 'isParamSet', 'no_max_number_of_answers_supplied', true );
-$controller->addValidation( 'quiz_id', 'quizExists', 'quiz_not_found', true );
-$controller->addValidation( array( 'device_id', 'course_name' ), 'isNotDuplicateQuestion', 'question_already_exists', true );
+$controller->addValidation( array( 'question_id', 'text' ), 'isNotDuplicateAnswer', 'answer_already_exists', true );
 $controller->addValidation( array( 'device_id', 'question_id' ), 'isProfessorOfQuestion', 'user_not_professor_of_question', true );
 
 if( $controller->validate() ) $controller->execute();
