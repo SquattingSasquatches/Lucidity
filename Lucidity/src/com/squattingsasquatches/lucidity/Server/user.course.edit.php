@@ -16,11 +16,8 @@ class EditCourse extends Controller
 	{
 		$db->update('courses', array('course_name' => $this->params['course_name'], 'course_department_prefix' => $this->params['course_department_prefix'],'uni_id' => $this->params['uni_id'], 'start_date' => $this->params['start_date'],'end_date' => $this->params['end_date']     ), 'id = ?', array( $this->params['course_id']) );
 		
- 		$this->db->show_debug_console();
-		
 		$this->db->close();
 		
-		$this->response->send();
 	
 	}
 	function isProfessorOfCourse( $param_names )

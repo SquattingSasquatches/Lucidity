@@ -44,16 +44,16 @@ class AddQuiz extends Controller
 	}
 	function showView()
 	{
-		$this->db->query('SELECT * FROM `courses`');
- 	
-	 	$records = $this->db->fetch_assoc_all();
-	 	
-	 	$this->response->addData( $records );
-	 	$this->response->addData( $this->params );
-	 	
-		$this->db->close();
-		
-		$this->response->send();
+//		$this->db->query('SELECT * FROM `courses`');
+// 	
+//	 	$records = $this->db->fetch_assoc_all();
+//	 	
+//	 	$this->response->addData( $records );
+//	 	$this->response->addData( $this->params );
+//	 	
+//		$this->db->close();
+//		
+//		$this->response->send();
 		
 	}
 	

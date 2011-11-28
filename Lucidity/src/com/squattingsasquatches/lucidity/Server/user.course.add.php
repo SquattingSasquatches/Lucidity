@@ -56,8 +56,10 @@ $controller = new AddCourse();
 
 $controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
 $controller->addValidation( 'course_id', 'isParamSet', 'no_course_id_supplied', true );
-$controller->addValidation( array( 'device_id', 'course_id' ), 'isNotDuplicateCourse', 'course_already_exists', true );
-$controller->addValidation( array( 'device_id', 'course_id' ), 'isProfessorOfCourse', 'user_not_professor_of_course', true );
+$controller->addValidation( 'course_department_prefix', 'isParamSet', 'no_course_department_prefix_supplied', true );
+$controller->addValidation( 'course_number', 'isParamSet', 'no_course_number_supplied', true );
+$controller->addValidation( array( 'device_id', 'course_name' ), 'isNotDuplicateCourse', 'course_already_exists', true );
+$controller->addValidation( 'device_id', 'isProfessor', 'user_not_professor_of_course', true );
 
 if( $controller->validate() ) $controller->execute();
 
