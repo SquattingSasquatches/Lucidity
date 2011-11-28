@@ -15,22 +15,8 @@ class VerifyCourse extends Controller
 {
 	function execute()
 	{
-	 	$db->update('student_courses', array('is_verified' => '1'), 'course_id = ? AND student_id = ?', array($this->params['course_id'], $this->params['student_id']) );
-		
-		$db->show_debug_console();
-		
-		$db->close();
-		
-		$response->send();
+	 	$this->db->update('student_courses', array('is_verified' => '1'), 'course_id = ? AND student_id = ?', array($this->params['course_id'], $this->params['student_id']) );
 	
-	}
-	function isNotAlreadyAdded( $param_names )
-	{
-	 	$this->db->query('SELECT * FROM `users_devices` AS ud, `student_courses` AS sc, WHERE ud.device_id = ? AND ud.user_id = sc.student_id AND ?', array('device_id' => $this->params[$param_names[0]], 'course_id' => $this->params[$param_names[1]] ));
-	 	
-	 	if( $this->db->found_rows ) return true;
-		
-	 	return false;
 	}
 	function isProfessorOfCourse( $param_names )
 	{
@@ -60,7 +46,7 @@ class VerifyCourse extends Controller
 
 /* Main */
 
-$controller = new AddCourse();
+$controller = new VerifyCourse();
 
 $controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
 $controller->addValidation( 'course_id', 'isParamSet', 'no_course_id_supplied', true );

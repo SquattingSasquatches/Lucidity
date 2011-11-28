@@ -8,17 +8,30 @@
  * Parameters: device_id
  * 
  */
+include('class.controller.php');
  
-	include('init.php');
+class UnisView extends Controller
+{
+ 	function execute()
+ 	{
+ 		$db->query('SELECT * FROM `unis`');
+ 	
+	 	$records = $db->fetch_assoc_all();
 	
-	global $db;
+		$this->addData( $records );
+		
+		$this->db->close();
+ 	}
  	
- 	$db->query('SELECT * FROM `unis`');
- 	
- 	$records = $db->fetch_assoc_all();
+}
+ 
 
-	echo json_encode( $records );
-	
-	$db->close();
+ 
+$controller = new UnisView();
+
+// No validation needed.
+$controller->execute();
+
+$controller->showView();
 	
 ?>

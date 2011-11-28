@@ -23,9 +23,6 @@ class RegisterCourse extends Controller
 	 	
 		$this->db->insert('student_courses', array('student_id' => $records['user_id'], 'course_id' => $this->params['course_id'], 'verified' => '0') );
 		
-		$this->db->show_debug_console();
-		
-		$this->db->close();
 	
 	}
 	function isNotAlreadyRegistered( $param_names )

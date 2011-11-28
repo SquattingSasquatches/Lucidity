@@ -32,7 +32,8 @@ class ViewCourses extends Controller
 
 $controller = new ViewCourses();
 
-$controller->addValidation( 'device_id', 'isParamSet', true );
+
+$controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
 
 
 if( $controller->validate() ) $controller->execute();

@@ -5,64 +5,49 @@
  * Lucidity 
  * Created by Asa Rudick, Brett Aaron, Trypp Cook
  */
+ class DeleteLecture extends Controller
+{
+	function execute()
+	{
+		$db->delete('lecture_courses', 'lecture_id = ?', array($this->params['lecture_id'] ) );
+	 	$db->delete('lectures', 'id = ?', array($this->params['lecture_id'] ) );
+		$this->db->close();
+	}
+	function lectureExists( $param_names )
+	{
+		$db->select('course_id', 'lectures', 'id = ?', false, false, array( $this->params['lecture_id'] ) );
+ 	
+	 	if( !$db->found_rows ) return false;
+	 	return true;
+	}
+	function isProfessorOfLecture( $param_names )
+	{
+		$this->db->query('SELECT * FROM `user_devices` AS ud, `professors` AS p, `courses` AS c, `professor_courses` AS pc, `lectures` as l, `lecture_courses` as lc WHERE ud.device_id = ? AND p.user_id = ud.user_id AND p.user_id = pc.professor_id AND pc.course_id = c.id  AND c.id = lc.course_id AND lc.lecture_id = ?', array('device_id' => $this->params[$param_names[0]], 'lecture_id' => $this->params[$param_names[1]] ));
+ 	
+		if( !$this->db->found_rows ) return false;
+		
+		return true;
+	}
+	function showView()
+	{
+	 	$this->response->addData( $this->params );
+	 	
+		$this->response->send();
+	}
+	
+}
  
+ /* Main */
+
+$controller = new DeleteLecture();
+
+$controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
+$controller->addValidation( 'lecture_id', 'isParamSet', 'no_course_id_supplied', true );
+$controller->addValidation( array( 'device_id', 'lecture_id'), 'isProfessorOfLecture', 'user_not_professor_of_lecture', true );
+
+if( $controller->validate() ) $controller->execute();
+
+$controller->showView();
  
   
- 	include('init.php');
-	
-	global $db;
-	//$db->debug = true;
-	extract( $_REQUEST );
- 
- 	
- 	/*
- 	 * 		Parameter checks.
- 	 */
- 	
- 	if( !isset( $device_id ) )
- 	{
- 		$response->addError('no_device_id_supplied', true);
- 	}
- 	
- 	if( !isset( $lecture_id ) )
- 	{
- 		$response->addError('no_lecture_id_supplied', true);
- 	}
- 	
- 	
- 	
- 	
- 	// Fetch course_id
- 	$db->select('course_id', 'lectures', 'lecture_id = ?', false, false, array( $lecture_id ) );
- 	
- 	if( !$db->found_rows )
-	{
-		// No lecture id found.
- 		$response->addError('lecture_not_found', true);
-	}
- 	
- 	
- 	
- 	
- 	// Check to see if device is linked to a professor.
- 	$db->query('SELECT * FROM `user_devices` AS ud, `professors` AS p, `courses` AS c, `professor_courses` AS pc WHERE ud.device_id = ? AND p.user_id = ud.user_id AND p.user_id = pc.professor_id AND pc.course_id = c.id  AND c.id = ?', array('device_id' => $device_id, 'course_id' => $course_id ));
- 	
-	if( !$db->found_rows )
-	{
-		// No professor id found.
- 		$response->addError('user_not_professor_of_course', true);
-	}
-	
-	
-	
-	$records = $db->fetch_assoc_all();
-	
- 	
- 	$db->delete('lectures', 'lecture_id = ?', array( $lecture_id ) );
-	
-	$db->show_debug_console();
-	
-	$db->close();
-	
-	$response->send();
 ?>

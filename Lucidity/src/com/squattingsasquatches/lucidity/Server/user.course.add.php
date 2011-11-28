@@ -24,9 +24,9 @@ class AddCourse extends Controller
 		$response->send();
 	
 	}
-	function isNotAlreadyAdded( $param_names )
+	function isNotDuplicateCourse( $param_names )
 	{
-	 	$this->db->query('SELECT * FROM `users_devices` AS ud, `student_courses` AS sc, WHERE ud.device_id = ? AND ud.user_id = sc.student_id AND ?', array('device_id' => $this->params[$param_names[0]], 'course_id' => $this->params[$param_names[1]] ));
+	 	$this->db->query('SELECT * FROM `users_devices` AS ud, `professor_courses` AS pc, WHERE ud.device_id = ? AND ud.user_id = pc.professor_id AND pc.course_id = c.course_id AND c.course_name = ?', array('device_id' => $this->params[$param_names[0]], 'course_name' => $this->params[$param_names[1]] ));
 	 	
 	 	if( $this->db->found_rows ) return true;
 		
@@ -42,17 +42,9 @@ class AddCourse extends Controller
 	}
 	function showView()
 	{
-		$this->db->query('SELECT * FROM `courses`');
- 	
-	 	$records = $this->db->fetch_assoc_all();
+		$this->response->addData( $this->params );
 	 	
-	 	$this->response->addData( $records );
-	 	$this->response->addData( $this->params );
-	 	
-		$this->db->close();
-		
 		$this->response->send();
-		
 	}
 	
 }
@@ -64,8 +56,7 @@ $controller = new AddCourse();
 
 $controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
 $controller->addValidation( 'course_id', 'isParamSet', 'no_course_id_supplied', true );
-$controller->addValidation( 'course_id', 'isNotAlreadyAdded', 'course_already_registered', true );
-$controller->addValidation( 'device_id', 'userExists', 'no_user_id_found', true );
+$controller->addValidation( array( 'device_id', 'course_id' ), 'isNotDuplicateCourse', 'course_already_exists', true );
 $controller->addValidation( array( 'device_id', 'course_id' ), 'isProfessorOfCourse', 'user_not_professor_of_course', true );
 
 if( $controller->validate() ) $controller->execute();

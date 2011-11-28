@@ -8,30 +8,32 @@
  * Parameters: uni_id
  * 
  */
+ include('class.controller.php');
  
-	include('init.php');
-	
-	global $db;
-	
-	extract( $_REQUEST );
- 
- 	
- 	/*
- 	 * 		Parameter checks.
- 	 */
- 	
- 	if( !isset( $uni_id ) )
+class UniCoursesView extends Controller
+{
+ 	function execute()
  	{
- 		$response->add('no_uni_id_supplied', true);
+ 		$this->db->query('select S.id as subject_id, S.short_name as subject_name, C.course_number, C.id as course_id from `courses` as C inner join `subjects` as S on S.id in (select subject_id from `uni_subjects` where uni_id = "' . $this->params['uni_id'] . '")');
+ 	
+	 	$records = $db->fetch_assoc_all();
+	
+		$this->addData( $records );
+		
+		$this->db->close();
  	}
  	
- 	
- 	$db->query('select S.id as subject_id, S.short_name as subject_name, C.course_number, C.id as course_id from `courses` as C inner join `subjects` as S on S.id in (select subject_id from `uni_subjects` where uni_id = "' . $uni_id . '")');
- 	
- 	$records = $db->fetch_assoc_all();
+}
+ 
 
-	echo json_encode( $records );
-	
-	$db->close();
+ 
+$controller = new UniCoursesView();
+
+$controller->addValidation( 'uni_id', 'isParamSet', 'no_uni_id_supplied', true );
+
+if( $controller->validate() ) $controller->execute();
+
+$controller->showView();
+
 	
 ?>

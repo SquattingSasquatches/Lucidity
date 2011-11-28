@@ -14,11 +14,9 @@ class EditCourse extends Controller
 {
 	function execute()
 	{
-		$this->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $this->params['device_id'] ));
- 		
-		$this->records = $this->db->fetch_assoc_all();
+		$db->update('courses', array('course_name' => $this->params['course_name'], 'course_department_prefix' => $this->params['course_department_prefix'],'uni_id' => $this->params['uni_id'], 'start_date' => $this->params['start_date'],'end_date' => $this->params['end_date']     ), 'id = ?', array( $this->params['course_id']) );
 		
-		$this->db->show_debug_console();
+ 		$this->db->show_debug_console();
 		
 		$this->db->close();
 		
@@ -33,21 +31,11 @@ class EditCourse extends Controller
 		
 		return true;
 	}
-	function userExists( $param_names )
-	{
-		$this->db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $this->params[$param_names[0]] ));
-	 	
-	 	if( !$records = $db->fetch_assoc_all() ) return false;
-	 	return true;
-	}
 	function showView()
 	{
 	 	$this->response->addData( $this->params );
 	 	
-		$this->db->close();
-		
-		$this->response->send();
-		
+	 	$this->response->send();
 	}
 	
 }
