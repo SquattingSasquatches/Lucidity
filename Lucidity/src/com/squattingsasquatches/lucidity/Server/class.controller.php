@@ -42,10 +42,10 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 		else
 		{
 			$android = stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android');
-			if( $android !== false )
+			//if( $android !== false )
 				$this->response = new JSONresponse();
-			else
-		  		$this->response = new HTMLresponse();
+//			else
+//		  		$this->response = new HTMLresponse();
 		}
 	
 	
@@ -76,6 +76,7 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 			$function = $validation->validation_function;
 			foreach( $validation->param_names as $p )
 			{
+				if( !is_array( $p )) $p = array( $p );
 				if( !$this->$function( $p ) )
 				{
 					$this->response->addError( $validation->message_id );
@@ -85,7 +86,6 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 				}
 			}
 		}
-			
 		return true;
 	}
 	public function addValidation( $param_names, $function, $message_id, $fatal )

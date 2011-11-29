@@ -15,7 +15,6 @@
  	
  	function __construct( $type, $id, $message )
  	{
- 		
  		$this->id = $id;
  		$this->type = $type;
  		$this->message = $message;
