@@ -14,8 +14,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -55,11 +53,6 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
         txtLoading = (TextView) findViewById(R.id.txtLoading);
         remoteDB = new RemoteDBAdapter(this);
         loading = new ProgressDialog(this);
-        
-        Animation animationFadeIn  = AnimationUtils.loadAnimation(this, R.anim.fadein);
-        Animation animationFadeOut = AnimationUtils.loadAnimation(this, R.anim.fadeout);
-        layoutFlipper.setInAnimation(animationFadeIn);
-        layoutFlipper.setOutAnimation(animationFadeOut);
       
         remoteDB.setReceiver(this);
         
@@ -93,7 +86,7 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
     	nextActivity = new Intent(this, CourseMenuStudent.class);
 		nextActivity.putExtra("com.squattingsasquatches.userId", user.getId());
 		nextActivity.putExtra("updateCourses", updateCourses);
-		this.startActivity(nextActivity);
+		startActivity(nextActivity);
 		finish(); //just this one time
     }
     

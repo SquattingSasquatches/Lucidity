@@ -14,11 +14,11 @@ class UnisView extends Controller
 {
  	function execute()
  	{
- 		$db->query('SELECT * FROM `unis`');
+ 		$this->db->query('SELECT * FROM `unis`');
  	
-	 	$records = $db->fetch_assoc_all();
+	 	$records = $this->db->fetch_assoc_all();
 	
-		$this->addData( $records );
+		$this->response->addData( $records );
 		
 		$this->db->close();
  	}

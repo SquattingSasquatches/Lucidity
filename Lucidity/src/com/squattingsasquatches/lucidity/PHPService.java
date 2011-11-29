@@ -15,6 +15,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.CoreProtocolPNames;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -55,6 +56,7 @@ public class PHPService extends IntentService {
 		
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
+			httpclient.getParams().setParameter(CoreProtocolPNames.USER_AGENT, "Lucidity/android");
 			HttpPost httppost = new HttpPost("https://www.thesouthernshirtco.com/lucidity/" + action + ".php");
 			httppost.setEntity(new UrlEncodedFormEntity(nvParams));
 			HttpResponse response = httpclient.execute(httppost);

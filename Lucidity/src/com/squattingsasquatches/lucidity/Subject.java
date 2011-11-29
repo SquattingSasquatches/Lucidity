@@ -3,8 +3,8 @@ package com.squattingsasquatches.lucidity;
 public class Subject {
 	
 	private int id;
-	private String longName;
-	private String shortName;
+	private String name;
+	private String prefix;
 	
 	public Subject() {
 		this(0);
@@ -14,18 +14,18 @@ public class Subject {
 		this(id, "");
 	}
 	
-	public Subject(String shortName) {
-		this(0, "", shortName);
+	public Subject(String prefix) {
+		this(0, "", prefix);
 	}
 	
-	public Subject(int id, String shortName) {
-		this(id, "", shortName);
+	public Subject(int id, String prefix) {
+		this(id, "", prefix);
 	}
 	
-	public Subject(int id, String longName, String shortName) {
+	public Subject(int id, String name, String prefix) {
 		this.setId(id);
-		this.setLongName(longName);
-		this.setShortName(shortName);
+		this.setName(name);
+		this.setPrefix(prefix);
 	}
 
 	public int getId() {
@@ -36,19 +36,19 @@ public class Subject {
 		this.id = id;
 	}
 
-	public String getLongName() {
-		return longName;
+	public String getName() {
+		return name;
 	}
 
-	public void setLongName(String longName) {
-		this.longName = longName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getShortName() {
-		return shortName;
+	public String getPrefix() {
+		return prefix;
 	}
 
-	public void setShortName(String shortName) {
-		this.shortName = shortName;
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
 	}
 }

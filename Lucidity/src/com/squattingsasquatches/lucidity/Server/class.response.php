@@ -28,7 +28,7 @@
 		
  	}
  	function addData( $data )
- 	{echo __LINE__ . '<br />';
+ 	{
  	
  		$this->data = array_merge( $this->data, (array)$data );
  	}

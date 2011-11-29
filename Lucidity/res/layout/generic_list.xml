@@ -12,7 +12,7 @@
         android:background="@drawable/header_bg" >
 
         <TextView
-            android:id="@+id/txtCoursesHeading"
+            android:id="@+id/txtHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -41,7 +41,7 @@
         android:background="#2b80cd" />
     
     <ListView
-    	android:id="@+id/coursesListView"
+    	android:id="@+id/ListContainer"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content" >
 	</ListView>

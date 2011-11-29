@@ -10,23 +10,25 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CourseListAdapter extends BaseAdapter {
+/* could possibly make this generic by replacing Subject with a generic and .getPrefix with a .toString() method */
+
+public class SubjectListAdapter extends BaseAdapter {
 	
-	 private ArrayList<Course> courses;
+	 private ArrayList<Subject> subjects;
 	 
 	 private LayoutInflater mInflater;
 
-	 public CourseListAdapter(Context context, ArrayList<Course> courses) {
-		 this.courses = courses;
+	 public SubjectListAdapter(Context context, ArrayList<Subject> subjects) {
+		 this.subjects = subjects;
 		 this.mInflater = LayoutInflater.from(context);
 	 }
 
 	 public int getCount() {
-		 return courses.size();
+		 return subjects.size();
 	 }
 
-	 public Course getItem(int position) {
-		 return courses.get(position);
+	 public Subject getItem(int position) {
+		 return subjects.get(position);
 	 }
 
 	 public long getItemId(int position) {
@@ -38,7 +40,7 @@ public class CourseListAdapter extends BaseAdapter {
 		 if (convertView == null) {
 			 convertView = mInflater.inflate(R.layout.simple_list_item, null);
 			 holder = new ViewHolder();
-			 holder.txtCourseName = (TextView) convertView.findViewById(R.id.txtItemName);
+			 holder.txtSubjectPrefix = (TextView) convertView.findViewById(R.id.txtItemName);
 			 holder.imgAction = (ImageView) convertView.findViewById(R.id.imgAction);
 			 
 			 //If this is the last item in the list, change the arrow to a plus. (Add a Course)
@@ -50,13 +52,13 @@ public class CourseListAdapter extends BaseAdapter {
 			 holder = (ViewHolder) convertView.getTag();
 		 }
 	  
-		 holder.txtCourseName.setText(courses.get(position).getName());
+		 holder.txtSubjectPrefix.setText(subjects.get(position).getPrefix());
 
 		 return convertView;
 	}
 
 	static class ViewHolder {
-		TextView txtCourseName;
+		TextView txtSubjectPrefix;
 		ImageView imgAction;
 	}
 }

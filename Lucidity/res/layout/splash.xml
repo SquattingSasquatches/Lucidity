@@ -27,7 +27,9 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@id/logo"
 			android:layout_centerHorizontal="true"
-	    	android:layout_marginTop="50dp">
+	    	android:layout_marginTop="50dp"
+	    	android:inAnimation="@anim/fadein"
+	    	android:outAnimation="@anim/fadeout">
     	
     	    <RelativeLayout
     	        android:id="@+id/LoadingContainer"

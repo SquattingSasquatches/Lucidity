@@ -96,13 +96,13 @@ public class Course {
 	
 	@Override
 	public String toString() {
-		return getSubject().getShortName() + " " + getCourseNum();
+		return getSubject().getPrefix() + " " + getCourseNum();
 	}
 	
 	@Override
 	public boolean equals(Object o) {
 		Course c = (Course) o;
-		return equals(c.getSubject().getShortName(), c.getCourseNum());
+		return equals(c.getSubject().getPrefix(), c.getCourseNum());
 	}
 	
 	public boolean equals(String courseTitle) {
@@ -114,6 +114,6 @@ public class Course {
 	}
 	
 	public boolean equalsIgnoreCase(String subject, String courseNum) {
-		return subject.toLowerCase().equals(getSubject().getShortName().toLowerCase()) && courseNum.equals(String.valueOf(getCourseNum())); 
+		return subject.toLowerCase().equals(getSubject().getPrefix().toLowerCase()) && courseNum.equals(String.valueOf(getCourseNum())); 
 	}
 }

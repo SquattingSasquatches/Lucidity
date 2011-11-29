@@ -42,7 +42,7 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 		else
 		{
 			$android = stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android');
-			if( $android )
+			if( $android !== false )
 				$this->response = new JSONresponse();
 			else
 		  		$this->response = new HTMLresponse();

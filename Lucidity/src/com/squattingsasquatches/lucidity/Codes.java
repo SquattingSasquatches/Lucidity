@@ -34,7 +34,9 @@ public class Codes {
 	public static final int REGISTER = 55;
 	public static final int GET_USER_COURSES = 56;
 	public static final int LOAD_COURSES = 57;
-	protected static final int ADD_COURSES = 58;
+	public static final int ADD_COURSES = 58;
+	public static final int LOAD_UNI_COURSES = 59;
+	
 	
 	/* String constants */
 	public static final String KEY_RESULT = "result";
