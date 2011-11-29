@@ -58,6 +58,7 @@ $controller = new DeleteQuestion();
 
 $controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
 $controller->addValidation( 'quiz_id', 'isParamSet', 'no_quiz_id_supplied', true );
+$controller->addValidation( 'question_id', 'questionExists', 'question_not_found', true );
 $controller->addValidation( array( 'device_id', 'question_id' ), 'isProfessorOfQuestion', 'user_not_professor_of_question', true );
 
 if( $controller->validate() ) $controller->execute();

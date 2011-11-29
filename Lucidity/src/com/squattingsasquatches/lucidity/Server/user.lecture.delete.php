@@ -43,6 +43,7 @@ $controller = new DeleteLecture();
 
 $controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
 $controller->addValidation( 'lecture_id', 'isParamSet', 'no_course_id_supplied', true );
+$controller->addValidation( 'lecture_id', 'lectureExists', 'lecture_not_found', true );
 $controller->addValidation( array( 'device_id', 'lecture_id'), 'isProfessorOfLecture', 'user_not_professor_of_lecture', true );
 
 if( $controller->validate() ) $controller->execute();
