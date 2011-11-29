@@ -11,10 +11,9 @@ class Login extends Controller
 	}
 	function userExists( $param_names )
 	{
-		$this->db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $this->params[$param_names[0]] ));
+		$this->db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $this->params['device_id'] ));
 	 	
-	 	if( !$records = $this->db->fetch_assoc_all() ) return false;
-	 	return true;
+	 	return $this->db->found_rows;
 	}
 	
 }

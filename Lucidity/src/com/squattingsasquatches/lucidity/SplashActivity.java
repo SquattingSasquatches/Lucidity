@@ -185,6 +185,7 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
 			String result = resultData.getString("result");
 			int callbackCode = resultData.getInt("callback");
 			if (result != null && !result.equals("")) {
+				if (!result.startsWith("[")) result = "[" + result + "]"; // quick fix
 				try {
 					doCallback(callbackCode, new JSONArray(result));
 				} catch (JSONException e) {

@@ -6,7 +6,7 @@ class Register extends Controller
 {
 	function execute()
 	{
-		$this->db->insert('users', array( 'name' => $this->params['name'] ));
+		$this->db->insert('users', array( 'name' => $this->params['name'], 'uni_id' => $this->params['uni_id'] , 'c2dm_id' => $this->params['c2dm_id']  ));
 	
 		$user_id = $this->db->insert_id();
 		

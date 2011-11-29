@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class SubjectsActivity extends Activity implements RemoteResultReceiver.Receiver {
 
@@ -55,14 +56,17 @@ public class SubjectsActivity extends Activity implements RemoteResultReceiver.R
         remoteDB.setReceiver(this);
         userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
         
+        TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
+        txtHeading.setText("Subjects");
+        
         loading.setTitle("Please wait");
         loading.setMessage("Loading subjects... ");
         loading.setCancelable(false);
         loading.show();
         
-        remoteDB.setAction("user.courses.view");
+        remoteDB.setAction("uni.subjects.view");
         remoteDB.addParam("uni_id", localDB.getUserUniId());
-        remoteDB.execute(Codes.GET_USER_COURSES);
+        remoteDB.execute(Codes.LOAD_UNI_COURSES);
 	}
 	
 	public void loadSubjectsCallback(JSONArray result) {

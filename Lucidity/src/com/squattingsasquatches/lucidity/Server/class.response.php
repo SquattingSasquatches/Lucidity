@@ -43,7 +43,7 @@
  		else if( $this->data )	
  			echo json_encode( $this->data );
  		else
- 			echo $this->messages['success'];
+ 			echo json_encode(get_object_vars($this->messages['success']));
  	}
  	function addError( $message_id, $fatal = false)
  	{
@@ -71,7 +71,7 @@
  		else if( $this->data )
  			print_r( $this->data );
  		else 
- 			echo $this->messages['success'];
+ 			echo json_encode(get_object_vars($this->messages['success']));
  	}
  	function addError( $message_id, $fatal = false)
  	{
