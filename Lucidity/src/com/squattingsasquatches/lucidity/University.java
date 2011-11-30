@@ -38,4 +38,14 @@ public class University {
 	public String toString() {
 		return getName();
 	}
+	public class Table
+	{
+		public static final String NAME = "unis";
+		
+		public class Fields
+		{
+			public static final String ID = "id";
+			public static final String NAME = "name";
+		}
+	}
 }

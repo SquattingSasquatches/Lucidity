@@ -51,4 +51,15 @@ public class Subject {
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;
 	}
+	public class Table
+	{
+		public static final String NAME = "subjects";
+		
+		public class Fields
+		{
+			public static final String ID = "id";
+			public static final String PREFIX = "prefix";
+			public static final String NAME = "name";
+		}
+	}
 }

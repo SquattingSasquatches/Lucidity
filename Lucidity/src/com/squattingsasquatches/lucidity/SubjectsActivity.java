@@ -1,9 +1,11 @@
 package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -70,6 +72,23 @@ public class SubjectsActivity extends Activity implements RemoteResultReceiver.R
 	}
 	
 	public void loadSubjectsCallback(JSONArray result) {
+		uniSubjects.clear();
+		
+		int resultLength = result.length();
+		
+		for (int i = 0; i < resultLength; ++i) {
+			try {
+				JSONObject subject = result.getJSONObject(i);
+				Log.i("WTF", subject.getString(LocalDBAdapter.KEY_SUBJECT_NAME));
+				uniSubjects.add(new Subject(subject.getInt(LocalDBAdapter.KEY_ID),
+											//subject.getString(LocalDBAdapter.KEY_SUBJECT_NAME),
+											subject.getString(LocalDBAdapter.KEY_SUBJECT_PREFIX)
+											)
+								);
+			} catch (JSONException e) {
+				Log.d("loadSubjectsCallback", "JSON error");
+			}
+		}
 		subjectsListView.setAdapter(new SubjectListAdapter(this, uniSubjects));
 		subjectsListView.setOnItemClickListener(listViewHandler);
 		loading.dismiss();

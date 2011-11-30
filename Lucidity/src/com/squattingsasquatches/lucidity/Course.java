@@ -1,6 +1,7 @@
 package com.squattingsasquatches.lucidity;
 
 import java.util.Date;
+import java.util.ArrayList;
 
 public class Course {
 	
@@ -115,5 +116,26 @@ public class Course {
 	
 	public boolean equalsIgnoreCase(String subject, String courseNum) {
 		return subject.toLowerCase().equals(getSubject().getPrefix().toLowerCase()) && courseNum.equals(String.valueOf(getCourseNum())); 
+	}
+	public class Table
+	{
+		public String NAME = "courses";
+		
+		public class Fields
+		{
+			public static final String ID = "id";
+			public static final String UNI_ID = "uni_id";
+			public static final String NAME = "name";
+			public static final String START_DATE = "start_date";
+			public static final String END_DATE = "end_date";
+		}
+		public Course getCourse( int id )
+		{
+			return new Course();
+		}
+		public ArrayList<Course> getCourses()
+		{
+			return new ArrayList<Course>();
+		}
 	}
 }
