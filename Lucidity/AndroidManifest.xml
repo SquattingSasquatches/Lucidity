@@ -41,5 +41,6 @@
         <activity android:name=".SubjectsActivity"></activity>
         <activity android:name=".CoursesActivity"></activity>
         <activity android:name=".SectionsActivity"></activity> 
+        <activity android:name=".AddCourseSelectionActivity"></activity> 
     </application>
 </manifest>

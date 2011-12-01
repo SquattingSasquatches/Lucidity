@@ -132,6 +132,7 @@ public class Course {
 			public static final String ID = "id";
 			public static final String UNI_ID = "uni_id";
 			public static final String SUBJECT_ID = "subject_id";
+			public static final String COURSE_NUMBER = "course_number";
 			public static final String NAME = "name";
 			public static final String START_DATE = "start_date";
 			public static final String END_DATE = "end_date";
@@ -149,8 +150,8 @@ public class Course {
 		{
 			PHPClient client = new PHPClient();
 			HashMap<String, String> params = new HashMap<String, String>();
-			params.put("action", "user.courses.view");
-			params.put(Course.Table.Fields.ID, String.valueOf(id));
+			params.put("action", "subject.courses.view");
+			params.put(Course.Table.Fields.SUBJECT_ID, String.valueOf(id));
 			JSONArray response = client.execute(params);
 			ArrayList<Course> courses = new ArrayList<Course>();
 			JSONObject course;
@@ -159,7 +160,34 @@ public class Course {
 				try {
 					course = response.getJSONObject(i);
 					courses.add(new Course(	course.getInt(Course.Table.Fields.ID),
-											course.getInt(Course.Table.Fields.UNI_ID),
+											course.getInt(Course.Table.Fields.COURSE_NUMBER),
+											course.getString(Course.Table.Fields.NAME),
+											new Date(course.getString(Course.Table.Fields.START_DATE)),
+											new Date(course.getString(Course.Table.Fields.END_DATE)),
+											new Subject(course.getInt(Course.Table.Fields.SUBJECT_ID)),
+											new University(course.getInt(Course.Table.Fields.UNI_ID))));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return courses;
+		}
+		public static final ArrayList<Course> getCoursesBySubjectId( int subject_id )
+		{
+			PHPClient client = new PHPClient();
+			HashMap<String, String> params = new HashMap<String, String>();
+			params.put("action", "subject.courses.view");
+			params.put(Course.Table.Fields.SUBJECT_ID, String.valueOf(subject_id));
+			JSONArray response = client.execute(params);
+			ArrayList<Course> courses = new ArrayList<Course>();
+			JSONObject course;
+			for( int i = 0; i < response.length(); i++)
+			{
+				try {
+					course = response.getJSONObject(i);
+					courses.add(new Course(	course.getInt(Course.Table.Fields.ID),
+											course.getInt(Course.Table.Fields.COURSE_NUMBER),
 											course.getString(Course.Table.Fields.NAME),
 											new Date(course.getString(Course.Table.Fields.START_DATE)),
 											new Date(course.getString(Course.Table.Fields.END_DATE)),

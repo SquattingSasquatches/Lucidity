@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class Subject {
 	
 	private int id;
@@ -17,6 +19,7 @@ public class Subject {
 	public Subject() {
 		this(0);
 	}
+	
 	
 	public Subject(int id) {
 		this(id, "");
@@ -75,6 +78,7 @@ public class Subject {
 			PHPClient client = new PHPClient();
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put("action", "user.course.get.php");
+			
 			params.put(Course.Table.Fields.ID, String.valueOf(id));
 			
 			return new Subject();
@@ -93,12 +97,12 @@ public class Subject {
 			{
 				try {
 					subject = response.getJSONObject(i);
+					Log.i("getSubjects", subject.getString(Subject.Table.Fields.NAME) );
 					subjects.add(new Subject(subject.getInt(Subject.Table.Fields.ID),
-											subject.getString(Subject.Table.Fields.NAME),
-											subject.getString(Subject.Table.Fields.PREFIX)));
+											subject.getString(Subject.Table.Fields.NAME), ""));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Log.i("getSubjects", e.getMessage());
 				}
 			}
 			return subjects;

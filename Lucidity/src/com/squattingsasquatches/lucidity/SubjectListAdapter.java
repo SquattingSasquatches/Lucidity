@@ -52,7 +52,7 @@ public class SubjectListAdapter extends BaseAdapter {
 			 holder = (ViewHolder) convertView.getTag();
 		 }
 	  
-		 holder.txtSubjectPrefix.setText(subjects.get(position).getPrefix());
+		 holder.txtSubjectPrefix.setText(subjects.get(position).getName());
 
 		 return convertView;
 	}

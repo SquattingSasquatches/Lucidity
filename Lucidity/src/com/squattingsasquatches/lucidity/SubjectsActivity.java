@@ -56,8 +56,8 @@ public class SubjectsActivity extends Activity implements RemoteResultReceiver.R
         loading = new ProgressDialog(this);
 
         localDB = new LocalDBAdapter(this).open();
-        remoteDB = new RemoteDBAdapter(this);
-        remoteDB.setReceiver(this);
+        //remoteDB = new RemoteDBAdapter(this);
+        //remoteDB.setReceiver(this);
         userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
 
         TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
@@ -69,6 +69,7 @@ public class SubjectsActivity extends Activity implements RemoteResultReceiver.R
         loading.show();
 
         uniSubjects = Subject.Table.getSubjects(localDB.getUserUniId());
+        Log.i("subjects size", Integer.toString(uniSubjects.size()) );
         subjectsListView.setAdapter(new SubjectListAdapter(this, uniSubjects));
 		subjectsListView.setOnItemClickListener(listViewHandler);
 		
@@ -130,10 +131,11 @@ public class SubjectsActivity extends Activity implements RemoteResultReceiver.R
 			Object o = subjectsListView.getItemAtPosition(position);
 			Subject subject = (Subject) o;
 			
-			int selected = subject.getId();
 			
-			Log.d("uni click", selected+"");
-			// load courses with subject
+			nextActivity = new Intent(ctx, AddCourseSelectionActivity.class);
+			nextActivity.putExtra("com.squattingsasquatches.subjectId", subject.getId());
+			startActivity(nextActivity);
+			
 		}
 	};
 

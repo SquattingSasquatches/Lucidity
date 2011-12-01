@@ -26,44 +26,52 @@ public class PHPClient {
 	int timeOut = 30 * 1000;
 	public JSONArray execute( HashMap<String, String> params )
 	{
-//		Looper.prepare();
-//		Thread t = new Thread(){
-//			public void run() 
-//			{
-//				
-//			}
-//		};
-//		t.start();
 		
         maybeCreateHttpClient();
-        HttpGet get = new HttpGet( "https://www.thesouthernshirtco.com/lucidity/" + params.get("action") + ".php" );
-
-        HttpProtocolParams.setUserAgent(httpClient.getParams(), "android");
+        StringBuilder strb = new StringBuilder();
+        String uri = "http://" + Config.SERVER_ADDRESS  + "/" + params.get("action") + ".php";
+        strb.append(uri);
+        
         
         params.remove("action");
+        strb.append("?");
         for (HashMap.Entry<String, String> entry : params.entrySet()) {
-            get.getParams().setParameter(entry.getKey(), entry.getValue());
+            strb.append(entry.getKey());
+            strb.append("=");
+            strb.append(entry.getValue());
         }
-        Log.i( "execute", (String)get.getParams().getParameter("uni_id") );
-		Log.i("execute", "Line 47");
-        	HttpResponse resp;
+        
+        Log.i("PHPClient", strb.toString() );
+
+        HttpGet get = new HttpGet( strb.toString() );
+        HttpProtocolParams.setUserAgent(httpClient.getParams(), "android");
+        
+        HttpResponse resp;
+        
 			try {
 				resp = httpClient.execute( get );
 				DataInputStream is = new DataInputStream( resp.getEntity().getContent() );
 				String tmp = is.readLine();
-				Log.i("PHPClient",tmp);
+				is.close();
+				if( tmp == "" )
+					return new JSONArray();
 	        	return new JSONArray( tmp );
 			} catch (ClientProtocolException e) {
 				Log.i("PHPClient","CLientProtocol Error");
-				e.printStackTrace();
+				e.getMessage();
 			} catch (IOException e) {
 				Log.i("PHPClient","IO Error");
-				e.printStackTrace();
+				Log.i("PHPClient","Exception: " + e.getMessage());
+				e.getMessage();
+				
 			} catch (JSONException e) {
 				Log.i("PHPClient","JSON Error");
+				e.getMessage();
+				//e.printStackTrace();
+			} catch(Exception e) {
+				Log.i("PHPClient","Exception: " + e.getMessage());
 				e.printStackTrace();
 			}
-			Log.i("OnCreate", "Line 63");
         	return new JSONArray();
 	}
 	private void maybeCreateHttpClient() {

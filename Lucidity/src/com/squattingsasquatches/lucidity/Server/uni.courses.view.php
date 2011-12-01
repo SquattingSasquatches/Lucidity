@@ -14,6 +14,7 @@ class UniCoursesView extends Controller
 {
  	function execute()
  	{
+ 		 
  		$this->db->query('select S.id as subject_id, S.short_name as subject_name, C.course_number, C.id as course_id from `courses` as C inner join `subjects` as S on S.id in (select subject_id from `uni_subjects` where uni_id = "' . $this->params['uni_id'] . '")');
  	
 	 	$records = $db->fetch_assoc_all();

@@ -2,7 +2,7 @@ package com.squattingsasquatches.lucidity;
 
 public class Config {
 
-		public String SERVER_ADDRESS = "";
+		public static final String SERVER_ADDRESS = "130.160.197.132:8080";
 		
 		public class Database
 		{
@@ -25,6 +25,7 @@ public class Config {
 		public static final String KEY_SUBJECT_NAME = "subject_name";
 		public static final String KEY_SUBJECT_PREFIX = "subject_prefix";
 		public static final String KEY_C2DM_LAST_CHECK = "c2dm_last_check";
+		
 		
 		
 }
