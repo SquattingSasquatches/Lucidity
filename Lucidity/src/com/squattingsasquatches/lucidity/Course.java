@@ -3,6 +3,12 @@ package com.squattingsasquatches.lucidity;
 import java.util.Date;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;	
+
 public class Course {
 	
 	private int id;
@@ -117,25 +123,54 @@ public class Course {
 	public boolean equalsIgnoreCase(String subject, String courseNum) {
 		return subject.toLowerCase().equals(getSubject().getPrefix().toLowerCase()) && courseNum.equals(String.valueOf(getCourseNum())); 
 	}
-	public class Table
+	public static final class Table
 	{
-		public String NAME = "courses";
+		public final String NAME = "courses";
 		
-		public class Fields
+		public final class Fields
 		{
 			public static final String ID = "id";
 			public static final String UNI_ID = "uni_id";
+			public static final String SUBJECT_ID = "subject_id";
 			public static final String NAME = "name";
 			public static final String START_DATE = "start_date";
 			public static final String END_DATE = "end_date";
 		}
-		public Course getCourse( int id )
+		public static final Course getCourse( int id )
 		{
+			PHPClient client = new PHPClient();
+			HashMap<String, String> params = new HashMap<String, String>();
+			params.put("action", "user.course.get.php");
+			params.put(Course.Table.Fields.ID, String.valueOf(id));
+			
 			return new Course();
 		}
-		public ArrayList<Course> getCourses()
+		public static final ArrayList<Course> getCourses( int id )
 		{
-			return new ArrayList<Course>();
+			PHPClient client = new PHPClient();
+			HashMap<String, String> params = new HashMap<String, String>();
+			params.put("action", "user.courses.view");
+			params.put(Course.Table.Fields.ID, String.valueOf(id));
+			JSONArray response = client.execute(params);
+			ArrayList<Course> courses = new ArrayList<Course>();
+			JSONObject course;
+			for( int i = 0; i < response.length(); i++)
+			{
+				try {
+					course = response.getJSONObject(i);
+					courses.add(new Course(	course.getInt(Course.Table.Fields.ID),
+											course.getInt(Course.Table.Fields.UNI_ID),
+											course.getString(Course.Table.Fields.NAME),
+											new Date(course.getString(Course.Table.Fields.START_DATE)),
+											new Date(course.getString(Course.Table.Fields.END_DATE)),
+											new Subject(course.getInt(Course.Table.Fields.SUBJECT_ID)),
+											new University(course.getInt(Course.Table.Fields.UNI_ID))));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return courses;
 		}
 	}
 }

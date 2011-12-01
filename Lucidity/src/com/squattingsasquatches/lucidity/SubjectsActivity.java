@@ -47,28 +47,32 @@ public class SubjectsActivity extends Activity implements RemoteResultReceiver.R
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.generic_list);
 		
 		ctx = this;
 		uniSubjects = new ArrayList<Subject>();
 		subjectsListView = (ListView) findViewById(R.id.ListContainer);
         loading = new ProgressDialog(this);
+
         localDB = new LocalDBAdapter(this).open();
         remoteDB = new RemoteDBAdapter(this);
         remoteDB.setReceiver(this);
         userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
-        
+
         TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
         txtHeading.setText("Subjects");
-        
+
         loading.setTitle("Please wait");
         loading.setMessage("Loading subjects... ");
         loading.setCancelable(false);
         loading.show();
-        
-        remoteDB.setAction("uni.subjects.view");
-        remoteDB.addParam("uni_id", localDB.getUserUniId());
-        remoteDB.execute(Codes.LOAD_UNI_COURSES);
+
+        uniSubjects = Subject.Table.getSubjects(localDB.getUserUniId());
+        subjectsListView.setAdapter(new SubjectListAdapter(this, uniSubjects));
+		subjectsListView.setOnItemClickListener(listViewHandler);
+		
+		loading.dismiss();
 	}
 	
 	public void loadSubjectsCallback(JSONArray result) {

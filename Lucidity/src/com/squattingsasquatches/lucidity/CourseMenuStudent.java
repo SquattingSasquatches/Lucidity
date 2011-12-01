@@ -65,9 +65,11 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
         loading.show();
         
         if (updateCourses) {
-	        remoteDB.setAction("user.courses.view");
-	        remoteDB.addParam("user_id", localDB.getUserId());
-	        remoteDB.execute(Codes.GET_USER_COURSES);
+        	userCourses = Course.Table.getCourses(localDB.getUserId());
+    		userCourses.add(new Course(0, "Add Courses"));
+    		coursesListView.setAdapter(new CourseListAdapter(this, userCourses));
+    		coursesListView.setOnItemClickListener(listViewHandler);
+    		loading.dismiss();
         } else {
         	getCoursesCallback(localDB.getCourses());
         }
@@ -146,6 +148,7 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 				case 0:
 					// Add a Course
 					// Start SubjectsActivity
+					Log.i("OnItemClick", "Case 0");
 					nextActivity = new Intent(ctx, SubjectsActivity.class);
 					nextActivity.putExtra("com.squattingsasquatches.userId", userId);
 					startActivity(nextActivity);
