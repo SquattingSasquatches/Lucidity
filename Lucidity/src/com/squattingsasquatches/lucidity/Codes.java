@@ -32,7 +32,7 @@ public class Codes {
 	public static final int LOGIN = 53;
 	public static final int LOAD_UNIVERSITIES = 54;
 	public static final int REGISTER = 55;
-	public static final int GET_USER_COURSES = 56;
+	public static final String GET_USER_COURSES = "get_user_courses";
 	public static final int LOAD_COURSES = 57;
 	public static final int ADD_COURSES = 58;
 	public static final int LOAD_UNI_COURSES = 59;

@@ -20,6 +20,7 @@ public class InternalReceiver extends ResultReceiver {
 	{
 		super(new Handler());
 	}
+	
 	public void addParam(String key, String value) {
 		params.put(key, value);
 	}
@@ -32,10 +33,6 @@ public class InternalReceiver extends ResultReceiver {
 		params.put("action", action);
 	}
 
-
-//    public void setReceiver(Receiver receiver) {
-//        //mReceiver = receiver;
-//    }
 	public void onReceiveResult(int resultCode, Bundle resultData) {
 		// result from remote PHP query
 		Log.i("InternalReceiver.onReceiveResult", String.valueOf(resultCode));
@@ -53,6 +50,7 @@ public class InternalReceiver extends ResultReceiver {
 			}
 		} 
 	}
+	
 	public void update( JSONArray data ){}
 	
 }

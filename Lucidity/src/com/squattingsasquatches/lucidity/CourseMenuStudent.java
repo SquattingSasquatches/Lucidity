@@ -18,15 +18,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class CourseMenuStudent extends Activity implements RemoteResultReceiver.Receiver {
-	
-	
+public class CourseMenuStudent extends Activity {
 	
 	private class GetCoursesReceiver extends InternalReceiver {
+		
 		@Override
 		public void update( JSONArray data )
 		{
-			CourseMenuStudent.this.updateCourses( data );
+			CourseMenuStudent.this.displayCourses( data );
 		}
 		
 	}
@@ -50,8 +49,8 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 	@Override
 	public void onPause() {
 		super.onPause();
-		if (remoteDB != null)
-			remoteDB.unregisterReceiver();
+		/*if (remoteDB != null)
+			remoteDB.unregisterReceiver();*/
 		if (localDB != null)
 			localDB.close();
 	}
@@ -79,12 +78,12 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
         loading.show();
         
         if (updateCourses) {
-            remoteDB.setReceiver(getCoursesReceiver);
-	        remoteDB.setAction("user.courses.view");
-	        remoteDB.addParam("user_id", localDB.getUserId());
+        	getCoursesReceiver.setAction("user.courses.view");
+        	getCoursesReceiver.addParam("user_id", localDB.getUserId());
+            remoteDB.addReceiver(Codes.GET_USER_COURSES, getCoursesReceiver);
 	        remoteDB.execute(Codes.GET_USER_COURSES);
         } else {
-        	getCoursesCallback(localDB.getCourses());
+        	displayCourses(localDB.getCourses());
         }
 	}
 	
@@ -95,57 +94,7 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 		loading.dismiss();
 	}
 	
-	public void getCoursesCallback(JSONArray result) {
-		// populate coursesListView with courses
-		userCourses.clear();
-		
-		int resultLength = result.length();
-		
-		for (int i = 0; i < resultLength; ++i) {
-			try {
-				JSONObject course = result.getJSONObject(i);
-				userCourses.add(new Course(course.getInt(LocalDBAdapter.KEY_ID),
-										course.getInt(LocalDBAdapter.KEY_COURSE_NUMBER),
-										course.getString(LocalDBAdapter.KEY_NAME),
-										new Date(course.getString(LocalDBAdapter.KEY_START_DATE)),
-										new Date(course.getString(LocalDBAdapter.KEY_END_DATE)),
-										new Subject(course.getInt(LocalDBAdapter.KEY_SUBJECT_ID)),
-										new University(course.getInt(LocalDBAdapter.KEY_UNI_ID))));
-			} catch (JSONException e) {
-				Log.d("getCoursesCallback", "JSON error");
-			}
-		}
-		
-		attachCourseOnClickListener();
-	}
-	
-	/* calls the designated callback */
-    public void doCallback(int callbackCode, JSONArray result) {
-    	if (callbackCode == Codes.GET_USER_COURSES)
-    		getCoursesCallback(result);
-    	else
-    		Log.d("WTF", "How'd you get here?");
-    }
-	
-	public void onReceiveResult(int resultCode, Bundle resultData) {
-		// result from remote PHP query
-		Log.i("onReceiveResult", String.valueOf(resultCode));
-		
-		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {
-			String result = resultData.getString("result");
-			int callbackCode = resultData.getInt("callback");
-			if (result != null) {
-				try {
-					doCallback(callbackCode, new JSONArray(result));
-				} catch (JSONException e) {
-					Log.e("onReceiveResult", "error with JSONArray");
-				}
-			}
-		} else {
-			// bads!
-		}
-	}
-	public void updateCourses( JSONArray data )
+	public void displayCourses( JSONArray data )
 	{
 		userCourses.clear();
 		
@@ -168,18 +117,13 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 		
 		attachCourseOnClickListener();
 	}
+	
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Object o = coursesListView.getItemAtPosition(position);
 			Course course = (Course) o;
 			
 			switch (course.getId()) {
-				case -1:
-					// reload courses
-					loading.show();
-					userCourses.clear();
-					remoteDB.execute();
-					break;
 				case 0:
 					// Add a Course
 					// Start SubjectsActivity

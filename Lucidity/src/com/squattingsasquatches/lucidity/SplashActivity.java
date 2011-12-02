@@ -36,7 +36,6 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
 	@Override
 	public void onPause() {
 		super.onPause();
-		remoteDB.unregisterReceiver();
 		DeviceRegistrar.unregisterReceiver(this, remoteRegistration);
 	}
 	
