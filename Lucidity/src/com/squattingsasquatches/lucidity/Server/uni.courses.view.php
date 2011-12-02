@@ -14,11 +14,11 @@ class UniCoursesView extends Controller
 {
  	function execute()
  	{
- 		$this->db->query('select S.id as subject_id, S.short_name as subject_name, C.course_number, C.id as course_id from `courses` as C inner join `subjects` as S on S.id in (select subject_id from `uni_subjects` where uni_id = "' . $this->params['uni_id'] . '")');
+ 		$this->db->query('select C.course_number, C.id as course_id from `courses` as C inner join `subjects` as S on S.id = "' . $this->params['subject_id'] . '"');
  	
-	 	$records = $db->fetch_assoc_all();
+	 	$records = $this->db->fetch_assoc_all();
 	
-		$this->addData( $records );
+		$this->response->addData( $records );
 		
 		$this->db->close();
  	}
@@ -29,7 +29,7 @@ class UniCoursesView extends Controller
  
 $controller = new UniCoursesView();
 
-$controller->addValidation( 'uni_id', 'isParamSet', 'no_uni_id_supplied', true );
+$controller->addValidation( 'subject_id', 'isParamSet', 'no_subject_id_supplied', true );
 
 if( $controller->validate() ) $controller->execute();
 

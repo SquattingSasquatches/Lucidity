@@ -41,12 +41,7 @@ public class SubjectListAdapter extends BaseAdapter {
 			 convertView = mInflater.inflate(R.layout.simple_list_item, null);
 			 holder = new ViewHolder();
 			 holder.txtSubjectPrefix = (TextView) convertView.findViewById(R.id.txtItemName);
-			 holder.imgAction = (ImageView) convertView.findViewById(R.id.imgAction);
-			 
-			 //If this is the last item in the list, change the arrow to a plus. (Add a Course)
-			 if (getCount() == (getItemId(position) + 1))
-				 holder.imgAction.setImageResource(R.drawable.plus);
-			 
+			 holder.imgAction = (ImageView) convertView.findViewById(R.id.imgAction);			 
 			 convertView.setTag(holder);
 		 } else {
 			 holder = (ViewHolder) convertView.getTag();

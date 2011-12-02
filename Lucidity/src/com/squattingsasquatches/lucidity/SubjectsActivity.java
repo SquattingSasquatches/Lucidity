@@ -1,9 +1,11 @@
 package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -57,7 +59,7 @@ public class SubjectsActivity extends Activity implements RemoteResultReceiver.R
         userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
         
         TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
-        txtHeading.setText("Subjects");
+        txtHeading.setText("Choose a Subject");
         
         loading.setTitle("Please wait");
         loading.setMessage("Loading subjects... ");
@@ -70,6 +72,19 @@ public class SubjectsActivity extends Activity implements RemoteResultReceiver.R
 	}
 	
 	public void loadSubjectsCallback(JSONArray result) {
+		uniSubjects.clear();
+		
+		int resultLength = result.length();
+		
+		for (int i = 0; i < resultLength; ++i) {
+			try {
+				JSONObject subject = result.getJSONObject(i);
+				uniSubjects.add(new Subject(subject.getInt(Codes.KEY_SUBJECT_ID), subject.getString(Codes.KEY_SUBJECT_PREFIX)));
+			} catch (JSONException e) {
+				Log.d("getCoursesCallback", "JSON error");
+			}
+		}
+		
 		subjectsListView.setAdapter(new SubjectListAdapter(this, uniSubjects));
 		subjectsListView.setOnItemClickListener(listViewHandler);
 		loading.dismiss();
@@ -108,8 +123,10 @@ public class SubjectsActivity extends Activity implements RemoteResultReceiver.R
 			Subject subject = (Subject) o;
 			
 			int selected = subject.getId();
-			
-			Log.d("uni click", selected+"");
+			nextActivity = new Intent(ctx, CoursesActivity.class);
+			nextActivity.putExtra("com.squattingsasquatches.subjectId", selected);
+			startActivity(nextActivity);
+			//Log.d("uni click", selected+"");
 			// load courses with subject
 		}
 	};

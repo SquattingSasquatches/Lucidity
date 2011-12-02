@@ -41,8 +41,8 @@ public class CourseListAdapter extends BaseAdapter {
 			 holder.txtCourseName = (TextView) convertView.findViewById(R.id.txtItemName);
 			 holder.imgAction = (ImageView) convertView.findViewById(R.id.imgAction);
 			 
-			 //If this is the last item in the list, change the arrow to a plus. (Add a Course)
-			 if (getCount() == (getItemId(position) + 1))
+			 //If this is the "Add a Course" item, change the arrow to a plus.
+			 if (courses.get(position).getId() == 0)
 				 holder.imgAction.setImageResource(R.drawable.plus);
 			 
 			 convertView.setTag(holder);

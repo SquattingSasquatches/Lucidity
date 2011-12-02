@@ -46,7 +46,10 @@ public class Codes {
 	public static final String KEY_DEVICE_ID = "deviceID";
 	public static final String KEY_USERS_NAME = "usersName";
 	public static final String KEY_USER_ID = "user_id";
-	public static final String KEY_COURSE_IDS = "course_ids";
+	public static final String KEY_COURSE_ID = "course_id";
+	public static final String KEY_COURSE_NUMBER = "course_number";
+	public static final String KEY_SUBJECT_ID = "subject_id";
+	public static final String KEY_SUBJECT_PREFIX = "subject_prefix";
 	
 	
 	private Codes() {} // don't allow instantiation of this class
