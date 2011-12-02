@@ -22,6 +22,10 @@ public class Course extends DataItem {
 		this(id, 0, name, new Date(0), new Date(0), new Subject(), new University());
 	}
 	
+	public Course(int id, int courseNum, String name, Subject subject, University uni) {
+		this(id, courseNum, name, new Date(0), new Date(0), subject, uni);
+	}
+	
 	public Course(int id, int courseNum, Subject subject) {
 		this(id, courseNum, "", new Date(0), new Date(0), subject, new University());
 	}
@@ -78,7 +82,7 @@ public class Course extends DataItem {
 	@Override
 	public String toString() {
 		if (getCourseNum() > 0)
-			return getSubject().getPrefix() + " " + getCourseNum();
+			return getSubject().getPrefix() + " " + getCourseNum() + " - " + super.name;
 		return super.name;
 	}
 	

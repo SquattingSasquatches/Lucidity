@@ -35,6 +35,6 @@ public class Subject extends DataItem {
 	
 	@Override
 	public String toString() {
-		return this.prefix + " - " + super.name;
+		return this.prefix + " (" + super.name + ")";
 	}
 }

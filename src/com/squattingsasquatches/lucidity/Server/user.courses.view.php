@@ -16,7 +16,7 @@ class ViewCourses extends Controller
 	function execute()
 	{
 		
- 	$this->db->query('SELECT * FROM `user_devices` AS ud, `student_courses` AS sc, `courses` AS c WHERE ud.device_id = "' . $this->params['device_id'] . '" AND ud.user_id = sc.student_id AND c.id = sc.course_id');
+ 	$this->db->query('SELECT * `student_courses` AS sc, `courses` AS c WHERE sc.student_id = "' . $this->params['user_id'] . '" AND c.id = sc.course_id');
  	
  	$records = $this->db->fetch_assoc_all();
  	
@@ -33,7 +33,7 @@ class ViewCourses extends Controller
 $controller = new ViewCourses();
 
 
-$controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
+$controller->addValidation( 'user_id', 'isParamSet', 'no_user_id_supplied', true );
 
 
 if( $controller->validate() ) $controller->execute();

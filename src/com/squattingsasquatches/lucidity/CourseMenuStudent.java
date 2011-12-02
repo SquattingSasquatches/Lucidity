@@ -20,17 +20,6 @@ import android.widget.ListView;
 
 public class CourseMenuStudent extends Activity {
 	
-	
-	
-	private class GetCoursesReceiver extends InternalReceiver {
-		@Override
-		public void update( JSONArray data )
-		{
-			CourseMenuStudent.this.updateCourses( data );
-		}
-		
-	}
-	
 	/* DBs */
 	private RemoteDBAdapter remoteDB;
 	private LocalDBAdapter localDB;
@@ -42,7 +31,7 @@ public class CourseMenuStudent extends Activity {
 	/* Misc */
 	private Intent nextActivity;
 	private ArrayList<Course> userCourses;
-	private int deviceId;
+	private int userId;
 	private Context ctx;
 	
 	InternalReceiver getCourses;
@@ -69,7 +58,7 @@ public class CourseMenuStudent extends Activity {
         loading = new ProgressDialog(this);
         localDB = new LocalDBAdapter(this).open();
         remoteDB = new RemoteDBAdapter(this);
-        deviceId = getIntent().getIntExtra("com.squattingsasquatches.deviceId", -1);
+        userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
         
         // Receivers
         getCourses = new InternalReceiver(){
@@ -77,7 +66,7 @@ public class CourseMenuStudent extends Activity {
 				CourseMenuStudent.this.updateCourses( data );
 			}
 		};
-		getCourses.params.put("device_id", Integer.toString(deviceId) );
+		getCourses.addParam("user_id", userId);
 		
 		
 		remoteDB.addReceiver("user.courses.view", getCourses);
@@ -95,7 +84,7 @@ public class CourseMenuStudent extends Activity {
 	}
 	
 	public void attachCourseOnClickListener() {
-		userCourses.add(new Course(-1, "Add Courses"));
+		userCourses.add(new Course(-1, "Add a Course"));
 		coursesListView.setAdapter(new ListAdapter<Course>(this, userCourses));
 		coursesListView.setOnItemClickListener(listViewHandler);
 		loading.dismiss();
@@ -131,16 +120,10 @@ public class CourseMenuStudent extends Activity {
 			
 			switch (course.getId()) {
 				case -1:
-					// reload courses
-					loading.show();
-					userCourses.clear();
-					remoteDB.execute("user.courses.view");
-					break;
-				case 0:
 					// Add a Course
 					// Start SubjectsActivity
 					nextActivity = new Intent(ctx, SubjectsActivity.class);
-					nextActivity.putExtra("com.squattingsasquatches.userId", deviceId);
+					nextActivity.putExtra("com.squattingsasquatches.userId", userId);
 					startActivity(nextActivity);
 					break;
 				default:
