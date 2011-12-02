@@ -66,7 +66,7 @@ public class AddCourseSelectionActivity extends Activity {
         loading.show();
 
         //subjectCourses = Course.Table.getCourses( subjectId );
-        coursesListView.setAdapter(new SubjectCourseListAdapter(this, subjectCourses));
+        coursesListView.setAdapter(new ListAdapter<Course>(this, subjectCourses));
 		coursesListView.setOnItemClickListener(listViewHandler);
 		
 		loading.dismiss();

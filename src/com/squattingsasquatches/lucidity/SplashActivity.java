@@ -86,7 +86,7 @@ public class SplashActivity extends Activity {
 				SplashActivity.this.loadUniversitiesCallback( data );
 			}
 		};
-		userLogin.addParam("device_id", user.getDeviceId());
+		universitiesView.addParam("device_id", user.getDeviceId());
 		
 		
 		

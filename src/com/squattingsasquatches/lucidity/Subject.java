@@ -1,9 +1,7 @@
 package com.squattingsasquatches.lucidity;
 
-public class Subject {
+public class Subject extends DataItem {
 	
-	private int id;
-	private String name;
 	private String prefix;
 	
 	public Subject() {
@@ -23,25 +21,8 @@ public class Subject {
 	}
 	
 	public Subject(int id, String name, String prefix) {
-		this.setId(id);
-		this.setName(name);
+		super(id, name);
 		this.setPrefix(prefix);
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getPrefix() {
@@ -50,5 +31,10 @@ public class Subject {
 
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;
+	}
+	
+	@Override
+	public String toString() {
+		return this.prefix + " - " + super.name;
 	}
 }

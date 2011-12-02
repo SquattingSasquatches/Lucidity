@@ -10,9 +10,9 @@
 	}
 	else
 	{
-		$config['DB_USER'] = 'androiduser';
-		$config['DB_PASS'] = 'alphatest';
-		$config['DB_HOST'] = 'db4free.net';
+		$config['DB_USER'] = 'root';
+		$config['DB_PASS'] = 'lucidity';
+		$config['DB_HOST'] = 'http://192.168.1.116:80';
 		$config['DB_NAME'] = 'lucidity';
 	}
 ?>
