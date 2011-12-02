@@ -18,7 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class CourseMenuStudent extends Activity implements RemoteResultReceiver.Receiver {
+public class CourseMenuStudent extends Activity {
 	
 	
 	
@@ -45,13 +45,13 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 	private int userId;
 	private Context ctx;
 	
-	private GetCoursesReceiver getCoursesReceiver;
+	InternalReceiver getCourses;
 	
 	@Override
 	public void onPause() {
 		super.onPause();
 		if (remoteDB != null)
-			remoteDB.unregisterReceiver();
+			remoteDB.unregisterReceiver("user.courses.view");
 		if (localDB != null)
 			localDB.close();
 	}
@@ -71,20 +71,28 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
         remoteDB = new RemoteDBAdapter(this);
         userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
         
-        getCoursesReceiver = new GetCoursesReceiver();
-        
+        // Receivers
+        getCourses = new InternalReceiver(){
+			public void update( JSONArray data ){
+				CourseMenuStudent.this.updateCourses( data );
+			}
+		};
+		getCourses.params.put("user_id", Integer.toString(localDB.getUserId()) );
+		
+		
+		remoteDB.addReceiver("user.courses.view", getCourses);
+		
         loading.setTitle("Please wait");
         loading.setMessage("Loading your saved courses... ");
         loading.setCancelable(false);
         loading.show();
         
         if (updateCourses) {
-            remoteDB.setReceiver(getCoursesReceiver);
-	        remoteDB.setAction("user.courses.view");
-	        remoteDB.addParam("user_id", localDB.getUserId());
-	        remoteDB.execute(Codes.GET_USER_COURSES);
+        
+    	remoteDB.execute("user.courses.view");
+    	
         } else {
-        	getCoursesCallback(localDB.getCourses());
+        	updateCourses(localDB.getCourses());
         }
 	}
 	
@@ -95,56 +103,6 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 		loading.dismiss();
 	}
 	
-	public void getCoursesCallback(JSONArray result) {
-		// populate coursesListView with courses
-		userCourses.clear();
-		
-		int resultLength = result.length();
-		
-		for (int i = 0; i < resultLength; ++i) {
-			try {
-				JSONObject course = result.getJSONObject(i);
-				userCourses.add(new Course(course.getInt(LocalDBAdapter.KEY_ID),
-										course.getInt(LocalDBAdapter.KEY_COURSE_NUMBER),
-										course.getString(LocalDBAdapter.KEY_NAME),
-										new Date(course.getString(LocalDBAdapter.KEY_START_DATE)),
-										new Date(course.getString(LocalDBAdapter.KEY_END_DATE)),
-										new Subject(course.getInt(LocalDBAdapter.KEY_SUBJECT_ID)),
-										new University(course.getInt(LocalDBAdapter.KEY_UNI_ID))));
-			} catch (JSONException e) {
-				Log.d("getCoursesCallback", "JSON error");
-			}
-		}
-		
-		attachCourseOnClickListener();
-	}
-	
-	/* calls the designated callback */
-    public void doCallback(int callbackCode, JSONArray result) {
-    	if (callbackCode == Codes.GET_USER_COURSES)
-    		getCoursesCallback(result);
-    	else
-    		Log.d("WTF", "How'd you get here?");
-    }
-	
-	public void onReceiveResult(int resultCode, Bundle resultData) {
-		// result from remote PHP query
-		Log.i("onReceiveResult", String.valueOf(resultCode));
-		
-		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {
-			String result = resultData.getString("result");
-			int callbackCode = resultData.getInt("callback");
-			if (result != null) {
-				try {
-					doCallback(callbackCode, new JSONArray(result));
-				} catch (JSONException e) {
-					Log.e("onReceiveResult", "error with JSONArray");
-				}
-			}
-		} else {
-			// bads!
-		}
-	}
 	public void updateCourses( JSONArray data )
 	{
 		userCourses.clear();
@@ -178,7 +136,7 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 					// reload courses
 					loading.show();
 					userCourses.clear();
-					remoteDB.execute();
+					remoteDB.execute("user.courses.view");
 					break;
 				case 0:
 					// Add a Course

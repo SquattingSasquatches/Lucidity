@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-public class SplashActivity extends Activity implements RemoteResultReceiver.Receiver {
+public class SplashActivity extends Activity {
 	
 	private RemoteDBAdapter remoteDB;
 	private ViewFlipper layoutFlipper;
@@ -36,7 +36,7 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
 	@Override
 	public void onPause() {
 		super.onPause();
-		remoteDB.unregisterReceiver();
+		remoteDB.unregisterAllReceivers();
 		DeviceRegistrar.unregisterReceiver(this, remoteRegistration);
 	}
 	
@@ -54,8 +54,46 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
         remoteDB = new RemoteDBAdapter(this);
         loading = new ProgressDialog(this);
       
-        remoteDB.setReceiver(this);
         
+        
+        // Receivers
+        InternalReceiver userRegister = new InternalReceiver(){
+			public void update( JSONArray data ){
+				SplashActivity.this.registerCallback( data );
+			}
+		};
+		userRegister.params.put("name", user.getName());
+		userRegister.params.put("device_id", user.getDeviceId());
+		userRegister.params.put("c2dm_id", user.getC2dmRegistrationId());
+		userRegister.params.put("uni_id", Integer.toString(user.getUniId()));
+		
+
+		
+		
+		InternalReceiver userLogin = new InternalReceiver(){
+			public void update( JSONArray data ){
+				SplashActivity.this.loginCallback( data );
+			}
+		};
+		userLogin.params.put("device_id", user.getDeviceId());
+		
+		
+		
+		
+		InternalReceiver universitiesView = new InternalReceiver(){
+			public void update( JSONArray data ){
+				SplashActivity.this.loadUniversitiesCallback( data );
+			}
+		};
+		userLogin.params.put("device_id", user.getDeviceId());
+		
+		
+		
+		
+		remoteDB.addReceiver("user.login", userLogin);
+		remoteDB.addReceiver("user.register", userRegister);
+		remoteDB.addReceiver("unis.view", universitiesView);
+		
         loading.setTitle("Please wait");
         loading.setMessage("Registering with Lucidity server... ");
         
@@ -68,9 +106,7 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
         	 * but what if someone else happens to have that device id?
         	 */
         } else {
-        	remoteDB.setAction("user.login");
-        	remoteDB.addParam("device_id", user.getDeviceId());
-        	remoteDB.execute(Codes.LOGIN);
+        	remoteDB.execute("user.login");
         }
         
         btnRegister.setOnClickListener(registerBtnHandler);
@@ -102,8 +138,7 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
     
     public void loadUniversities() {
     	txtLoading.setText(R.string.loading_unis);
-    	remoteDB.setAction("unis.view");
-    	remoteDB.execute(Codes.LOAD_UNIVERSITIES);
+    	remoteDB.execute("unis.view");
     }
     
     /* shows registration fields or switches to CourseMenu Activity */
@@ -207,17 +242,7 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
 			user.setC2dmRegistrationId(intent.getStringExtra(Codes.KEY_C2DM_ID));
 			if (result == Codes.SUCCESS) {
 				
-				InternalReceiver userRegister = new InternalReceiver(){
-					public void update( JSONArray data ){
-						SplashActivity.this.registerCallback( data );
-					}
-				};
-				userRegister.params.put("name", user.getName());
-				userRegister.params.put("device_id", user.getDeviceId());
-				userRegister.params.put("c2dm_id", user.getC2dmRegistrationId());
-				userRegister.params.put("uni_id", Integer.toString(user.getUniId()));
 				
-				remoteDB.addReceiver("user.register", new InternalReceiver());
 		    	remoteDB.execute("user.register");
 			} else {
 				Log.i("C2DMResultHandler", "wtf");

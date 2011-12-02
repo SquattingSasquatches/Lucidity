@@ -38,7 +38,7 @@ public class AddCourseSelectionActivity extends Activity {
 	public void onPause() {
 		super.onPause();
 		if (remoteDB != null)
-			remoteDB.unregisterReceiver();
+			remoteDB.unregisterAllReceivers();
 		if (localDB != null)
 			localDB.close();
 	}

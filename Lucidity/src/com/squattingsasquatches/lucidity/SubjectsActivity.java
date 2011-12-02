@@ -17,7 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SubjectsActivity extends Activity implements RemoteResultReceiver.Receiver {
+public class SubjectsActivity extends Activity {
 
 	/* DBs */
 	private RemoteDBAdapter remoteDB;
@@ -37,7 +37,7 @@ public class SubjectsActivity extends Activity implements RemoteResultReceiver.R
 	public void onPause() {
 		super.onPause();
 		if (remoteDB != null)
-			remoteDB.unregisterReceiver();
+			remoteDB.unregisterAllReceivers();
 		if (localDB != null)
 			localDB.close();
 	}
@@ -53,7 +53,6 @@ public class SubjectsActivity extends Activity implements RemoteResultReceiver.R
         loading = new ProgressDialog(this);
         localDB = new LocalDBAdapter(this).open();
         remoteDB = new RemoteDBAdapter(this);
-        remoteDB.setReceiver(this);
         userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
         
         TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
@@ -64,9 +63,15 @@ public class SubjectsActivity extends Activity implements RemoteResultReceiver.R
         loading.setCancelable(false);
         loading.show();
         
-        remoteDB.setAction("uni.subjects.view");
-        remoteDB.addParam("uni_id", localDB.getUserUniId());
-        remoteDB.execute(Codes.LOAD_UNI_COURSES);
+        InternalReceiver uniSubjectsView = new InternalReceiver(){
+			public void update( JSONArray data ){
+				SubjectsActivity.this.loadSubjectsCallback( data );
+			}
+		};
+		uniSubjectsView.params.put("uni_id", Integer.toString(localDB.getUserUniId()));
+        
+        remoteDB.addReceiver("uni.subjects.view", uniSubjectsView);
+        remoteDB.execute("uni.subjects.view");
 	}
 	
 	public void loadSubjectsCallback(JSONArray result) {

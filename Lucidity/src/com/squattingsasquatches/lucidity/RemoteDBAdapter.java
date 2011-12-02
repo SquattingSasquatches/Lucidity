@@ -23,17 +23,25 @@ public class RemoteDBAdapter {
 	
 	
 	public void addReceiver(String name, InternalReceiver receiver) {
+		receiver.params.put("action", name);
 		receivers.put( name, receiver );
 	}
 	
 	public void unregisterReceiver(String name) {
 		try {
-			receivers.remove(null);
+			receivers.remove(name);
 		} catch(IllegalArgumentException e) {
 			Log.i("unregisterReceiver", "receiver not registered");
 		}
 	}
-	
+
+	public void unregisterAllReceivers() {
+		try {
+			receivers.clear();
+		} catch(IllegalArgumentException e) {
+			Log.i("unregisterReceiver", "receiver not registered");
+		}
+	}
 	public void execute(String name) {
 		dbService.putExtra("params", receivers.get(name).params);
 		dbService.putExtra("receiver", receivers.get(name));
