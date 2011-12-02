@@ -14,8 +14,8 @@ class UniCoursesView extends Controller
 {
  	function execute()
  	{
- 		$this->db->select('subjects', '*', 'uni_id', array( $this->params['uni_id'] ));
- 	
+ 		//$this->db->select('subjects', '*', 'uni_id', array( $this->params['uni_id'] ));
+ 		$this->db->query("SELECT s.long_name as subject_name, s.short_name as subject_prefix, subject_id FROM subjects as s, uni_subjects as US WHERE US.uni_id =" . $this->params['uni_id'] . " AND s.id = US.subject_id");
 	 	$records = $this->db->fetch_assoc_all();
 	
 		$this->response->addData( $records );
