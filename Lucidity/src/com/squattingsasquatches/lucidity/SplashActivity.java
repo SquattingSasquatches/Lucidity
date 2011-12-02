@@ -206,12 +206,19 @@ public class SplashActivity extends Activity implements RemoteResultReceiver.Rec
 			int result = intent.getIntExtra(Codes.KEY_C2DM_RESULT, Codes.ERROR);
 			user.setC2dmRegistrationId(intent.getStringExtra(Codes.KEY_C2DM_ID));
 			if (result == Codes.SUCCESS) {
-				remoteDB.setAction("user.register");
-		    	remoteDB.addParam("name", user.getName());
-		    	remoteDB.addParam("device_id", user.getDeviceId());
-		    	remoteDB.addParam("c2dm_id", user.getC2dmRegistrationId());
-		    	remoteDB.addParam("uni_id", user.getUniId());
-		    	remoteDB.execute(Codes.REGISTER);
+				
+				InternalReceiver userRegister = new InternalReceiver(){
+					public void update( JSONArray data ){
+						SplashActivity.this.registerCallback( data );
+					}
+				};
+				userRegister.params.put("name", user.getName());
+				userRegister.params.put("device_id", user.getDeviceId());
+				userRegister.params.put("c2dm_id", user.getC2dmRegistrationId());
+				userRegister.params.put("uni_id", Integer.toString(user.getUniId()));
+				
+				remoteDB.addReceiver("user.register", new InternalReceiver());
+		    	remoteDB.execute("user.register");
 			} else {
 				Log.i("C2DMResultHandler", "wtf");
 			}

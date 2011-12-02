@@ -20,6 +20,17 @@ import android.widget.ListView;
 
 public class CourseMenuStudent extends Activity implements RemoteResultReceiver.Receiver {
 	
+	
+	
+	private class GetCoursesReceiver extends InternalReceiver {
+		@Override
+		public void update( JSONArray data )
+		{
+			CourseMenuStudent.this.updateCourses( data );
+		}
+		
+	}
+	
 	/* DBs */
 	private RemoteDBAdapter remoteDB;
 	private LocalDBAdapter localDB;
@@ -33,6 +44,8 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 	private ArrayList<Course> userCourses;
 	private int userId;
 	private Context ctx;
+	
+	private GetCoursesReceiver getCoursesReceiver;
 	
 	@Override
 	public void onPause() {
@@ -56,8 +69,9 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
         loading = new ProgressDialog(this);
         localDB = new LocalDBAdapter(this).open();
         remoteDB = new RemoteDBAdapter(this);
-        remoteDB.setReceiver(this);
         userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
+        
+        getCoursesReceiver = new GetCoursesReceiver();
         
         loading.setTitle("Please wait");
         loading.setMessage("Loading your saved courses... ");
@@ -65,6 +79,7 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
         loading.show();
         
         if (updateCourses) {
+            remoteDB.setReceiver(getCoursesReceiver);
 	        remoteDB.setAction("user.courses.view");
 	        remoteDB.addParam("user_id", localDB.getUserId());
 	        remoteDB.execute(Codes.GET_USER_COURSES);
@@ -130,7 +145,29 @@ public class CourseMenuStudent extends Activity implements RemoteResultReceiver.
 			// bads!
 		}
 	}
-	
+	public void updateCourses( JSONArray data )
+	{
+		userCourses.clear();
+		
+		int resultLength = data.length();
+		
+		for (int i = 0; i < resultLength; ++i) {
+			try {
+				JSONObject course = data.getJSONObject(i);
+				CourseMenuStudent.this.userCourses.add(new Course(course.getInt(LocalDBAdapter.KEY_ID),
+										course.getInt(LocalDBAdapter.KEY_COURSE_NUMBER),
+										course.getString(LocalDBAdapter.KEY_NAME),
+										new Date(course.getString(LocalDBAdapter.KEY_START_DATE)),
+										new Date(course.getString(LocalDBAdapter.KEY_END_DATE)),
+										new Subject(course.getInt(LocalDBAdapter.KEY_SUBJECT_ID)),
+										new University(course.getInt(LocalDBAdapter.KEY_UNI_ID))));
+			} catch (JSONException e) {
+				Log.d("getCoursesCallback", "JSON error");
+			}
+		}
+		
+		attachCourseOnClickListener();
+	}
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Object o = coursesListView.getItemAtPosition(position);
