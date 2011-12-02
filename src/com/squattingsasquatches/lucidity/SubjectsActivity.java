@@ -58,7 +58,7 @@ public class SubjectsActivity extends Activity {
         userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
         
         TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
-        txtHeading.setText("Subjects");
+        txtHeading.setText("Choose a Subject");
         
         loading.setTitle("Please wait");
         loading.setMessage("Loading subjects... ");
@@ -94,36 +94,9 @@ public class SubjectsActivity extends Activity {
 			}
 		}
 		
-		subjectsListView.setAdapter(new SubjectListAdapter(this, uniSubjects));
+		subjectsListView.setAdapter(new ListAdapter<Subject>(this, uniSubjects));
 		subjectsListView.setOnItemClickListener(listViewHandler);
 		loading.dismiss();
-	}
-	
-	/* calls the designated callback */
-    public void doCallback(int callbackCode, JSONArray result) {
-    	if (callbackCode == Codes.LOAD_UNI_COURSES)
-    		loadSubjectsCallback(result);
-    	else
-    		Log.d("WTF", "How'd you get here?");
-    }
-	
-	public void onReceiveResult(int resultCode, Bundle resultData) {
-		// result from remote PHP query
-		Log.i("onReceiveResult", String.valueOf(resultCode));
-		
-		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {
-			String result = resultData.getString("result");
-			int callbackCode = resultData.getInt("callback");
-			if (result != null) {
-				try {
-					doCallback(callbackCode, new JSONArray(result));
-				} catch (JSONException e) {
-					Log.e("onReceiveResult", "error with JSONArray");
-				}
-			}
-		} else {
-			// bads!
-		}
 	}
 	
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {

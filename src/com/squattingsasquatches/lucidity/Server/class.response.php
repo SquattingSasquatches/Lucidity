@@ -11,7 +11,7 @@
  class response
  {
  	// To hold any and all errors.
- 	private $errors = array();
+ 	public $errors = array();
  	
  	// Holds the data to be transformed into the appropriate response.
  	public $data = array();

@@ -42,7 +42,7 @@ public class CourseMenuStudent extends Activity {
 	/* Misc */
 	private Intent nextActivity;
 	private ArrayList<Course> userCourses;
-	private int userId;
+	private int deviceId;
 	private Context ctx;
 	
 	InternalReceiver getCourses;
@@ -69,7 +69,7 @@ public class CourseMenuStudent extends Activity {
         loading = new ProgressDialog(this);
         localDB = new LocalDBAdapter(this).open();
         remoteDB = new RemoteDBAdapter(this);
-        userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
+        deviceId = getIntent().getIntExtra("com.squattingsasquatches.deviceId", -1);
         
         // Receivers
         getCourses = new InternalReceiver(){
@@ -77,7 +77,7 @@ public class CourseMenuStudent extends Activity {
 				CourseMenuStudent.this.updateCourses( data );
 			}
 		};
-		getCourses.params.put("user_id", Integer.toString(localDB.getUserId()) );
+		getCourses.params.put("device_id", Integer.toString(deviceId) );
 		
 		
 		remoteDB.addReceiver("user.courses.view", getCourses);
@@ -88,17 +88,15 @@ public class CourseMenuStudent extends Activity {
         loading.show();
         
         if (updateCourses) {
-        
-    	remoteDB.execute("user.courses.view");
-    	
+        	remoteDB.execute("user.courses.view");
         } else {
         	updateCourses(localDB.getCourses());
         }
 	}
 	
 	public void attachCourseOnClickListener() {
-		userCourses.add(new Course(0, "Add Courses"));
-		coursesListView.setAdapter(new CourseListAdapter(this, userCourses));
+		userCourses.add(new Course(-1, "Add Courses"));
+		coursesListView.setAdapter(new ListAdapter<Course>(this, userCourses));
 		coursesListView.setOnItemClickListener(listViewHandler);
 		loading.dismiss();
 	}
@@ -142,7 +140,7 @@ public class CourseMenuStudent extends Activity {
 					// Add a Course
 					// Start SubjectsActivity
 					nextActivity = new Intent(ctx, SubjectsActivity.class);
-					nextActivity.putExtra("com.squattingsasquatches.userId", userId);
+					nextActivity.putExtra("com.squattingsasquatches.userId", deviceId);
 					startActivity(nextActivity);
 					break;
 				default:

@@ -2,11 +2,9 @@ package com.squattingsasquatches.lucidity;
 
 import java.util.Date;
 
-public class Course {
+public class Course extends DataItem {
 	
-	private int id;
 	private int courseNum;
-	private String name;
 	private Date startDate;
 	private Date endDate;
 	private University uni;
@@ -29,21 +27,12 @@ public class Course {
 	}
 	
 	public Course(int id, int courseNum, String name, Date startDate, Date endDate, Subject subject, University uni) {
-		this.id = id;
+		super(id, name);
 		this.uni = uni;
 		this.courseNum = courseNum;
-		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.subject = subject;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public University getUni() {
@@ -52,14 +41,6 @@ public class Course {
 
 	public void setUni(University uni) {
 		this.uni = uni;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Date getStartDate() {
@@ -96,7 +77,9 @@ public class Course {
 	
 	@Override
 	public String toString() {
-		return getSubject().getPrefix() + " " + getCourseNum();
+		if (getCourseNum() > 0)
+			return getSubject().getPrefix() + " " + getCourseNum();
+		return super.name;
 	}
 	
 	@Override

@@ -10,23 +10,25 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CourseListAdapter extends BaseAdapter {
+/* could possibly make this generic by replacing Subject with a generic and .getPrefix with a .toString() method */
+
+public class ListAdapter<E extends DataItem> extends BaseAdapter {
 	
-	 private ArrayList<Course> courses;
+	 private ArrayList<E> items;
 	 
 	 private LayoutInflater mInflater;
 
-	 public CourseListAdapter(Context context, ArrayList<Course> courses) {
-		 this.courses = courses;
+	 public ListAdapter(Context context, ArrayList<E> items) {
+		 this.items = items;
 		 this.mInflater = LayoutInflater.from(context);
 	 }
 
 	 public int getCount() {
-		 return courses.size();
+		 return items.size();
 	 }
 
-	 public Course getItem(int position) {
-		 return courses.get(position);
+	 public E getItem(int position) {
+		 return items.get(position);
 	 }
 
 	 public long getItemId(int position) {
@@ -38,25 +40,25 @@ public class CourseListAdapter extends BaseAdapter {
 		 if (convertView == null) {
 			 convertView = mInflater.inflate(R.layout.simple_list_item, null);
 			 holder = new ViewHolder();
-			 holder.txtCourseName = (TextView) convertView.findViewById(R.id.txtItemName);
-			 holder.imgAction = (ImageView) convertView.findViewById(R.id.imgAction);
+			 holder.txtName = (TextView) convertView.findViewById(R.id.txtItemName);
+			 holder.imgIcon = (ImageView) convertView.findViewById(R.id.imgAction);
 			 
-			 //If this is the "Add a Course" item, change the arrow to a plus.
-			 if (courses.get(position).getId() == 0)
-				 holder.imgAction.setImageResource(R.drawable.plus);
+			 //If this is the last item in the list, change the arrow to a plus. (Add a Course)
+			 if (items.get(position).getId() == -1)
+				 holder.imgIcon.setImageResource(R.drawable.plus);
 			 
 			 convertView.setTag(holder);
 		 } else {
 			 holder = (ViewHolder) convertView.getTag();
 		 }
 	  
-		 holder.txtCourseName.setText(courses.get(position).getName());
+		 holder.txtName.setText(items.get(position).toString());
 
 		 return convertView;
 	}
 
 	static class ViewHolder {
-		TextView txtCourseName;
-		ImageView imgAction;
+		TextView txtName;
+		ImageView imgIcon;
 	}
 }
