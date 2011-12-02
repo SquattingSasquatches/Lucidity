@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/WelcomeLayoutContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+    
+    <RelativeLayout
+        android:id="@+id/WelcomeLayout"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_centerVertical="true"
+    	android:layout_centerHorizontal="true">
+    	
+    	<ImageView
+    	    android:id="@+id/logo"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:src="@drawable/logo"
+    	    android:layout_centerHorizontal="true"
+    	    android:drawingCacheQuality="high" />
+    	
+    	<ViewFlipper
+    	    android:id="@+id/ViewFlipper"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/logo"
+			android:layout_centerHorizontal="true"
+	    	android:layout_marginTop="50dp"
+	    	android:inAnimation="@anim/fadein"
+	    	android:outAnimation="@anim/fadeout">
+    	
+    	    <RelativeLayout
+    	        android:id="@+id/LoadingContainer"
+    	        android:layout_width="match_parent"
+    	        android:layout_height="wrap_content">
+    	        
+		    	<ProgressBar
+		    	    android:id="@+id/progressBar1"
+		    	    style="?android:attr/progressBarStyleLarge"
+		    	    android:layout_width="wrap_content"
+		    	    android:layout_height="wrap_content"
+		    	    android:layout_centerHorizontal="true"
+		    	    android:drawingCacheQuality="high" />
+		    	
+		    	<TextView
+		    	    android:id="@+id/txtLoading"
+		    	    android:layout_width="wrap_content"
+		    	    android:layout_height="wrap_content"
+		    	    android:layout_below="@id/progressBar1"
+		    	    android:layout_centerHorizontal="true"
+		    	    android:layout_marginTop="50dp"
+		    	    android:text="@string/checking_registration"
+		    	    android:textAppearance="?android:attr/textAppearanceMedium"
+		    	    android:textColor="#FFFFFFFF" />
+		    	
+		    </RelativeLayout>
+	    	
+	    	<RelativeLayout
+	    	    android:id="@+id/RegisterContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:gravity="center_horizontal">
+	    	    
+	    	    <EditText
+		    	    android:id="@+id/txtName"
+		    	    android:layout_height="wrap_content"
+		    	    android:layout_width="match_parent"
+		    	    android:inputType="textPersonName"
+		    	    android:drawingCacheQuality="high"
+		    	    android:layout_marginTop="20dp"
+		    	    android:layout_marginLeft="15dp"
+		    	    android:layout_marginRight="15dp"
+		    	    android:hint="Your First &amp; Last Names" />
+	    	    
+				<AutoCompleteTextView
+					android:id="@+id/acUni"
+					android:layout_height="wrap_content"
+		    	    android:layout_width="match_parent"
+		    	    android:drawingCacheQuality="high"
+		    	    android:layout_marginTop="10dp"
+		    	    android:layout_marginLeft="15dp"
+		    	    android:layout_marginRight="15dp"
+		    	    android:hint="Your University"
+		    	    android:layout_below="@id/txtName"
+		    	    android:completionThreshold="2" />
+		    	
+		    	<Button
+			        android:id="@+id/btnRegister"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_alignRight="@id/acUni"
+			        android:layout_marginTop="10dp"
+			        android:drawingCacheQuality="high"
+			        android:text="@string/register_btn"
+			        android:layout_below="@id/acUni" />
+	    	    
+	    	</RelativeLayout>
+	    	
+	    </ViewFlipper>
+    	
+	</RelativeLayout>
+	
+</RelativeLayout>
