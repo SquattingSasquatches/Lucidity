@@ -11,7 +11,7 @@ class ViewLectures extends Controller
 {
 	function execute()
 	{
-	 	$db->select('*', 'lectures', 'course_id  = ?', false, false, array( $this->params['course_id'] ) );
+	 	$this->db->select('*', 'lectures', 'course_id  = ?', false, false, array( $this->params['course_id'] ) );
 	 	
 	 	$records = $this->db->fetch_assoc_all();
 	 	

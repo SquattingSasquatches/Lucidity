@@ -56,8 +56,6 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 		$this->db->maxQueryTime = 10;
 		
 		$this->params = array_merge($this->params, $_REQUEST);
-		
-		
 	}
 	function addParam( array $param )
 	{

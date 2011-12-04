@@ -17,9 +17,9 @@ class SubjectCoursesView extends Controller
  		 
  		$this->db->select("courses", "*", "subject_id = ?", array($this->params['subject_id']));
  	
-	 	$records = $db->fetch_assoc_all();
+	 	$records = $this->db->fetch_assoc_all();
 	
-		$this->addData( $records );
+		$this->response->addData( $records );
 		
 		$this->db->close();
  	}

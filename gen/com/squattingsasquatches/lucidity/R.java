@@ -26,29 +26,30 @@ public final class R {
         public static final int plus=0x7f020008;
     }
     public static final class id {
-        public static final int ListContainer=0x7f070009;
-        public static final int LoadingContainer=0x7f070010;
-        public static final int RegisterContainer=0x7f070013;
-        public static final int ViewFlipper=0x7f07000f;
-        public static final int WelcomeLayout=0x7f07000d;
-        public static final int WelcomeLayoutContainer=0x7f07000c;
-        public static final int acUni=0x7f070015;
+        public static final int ListContainer=0x7f07000a;
+        public static final int LoadingContainer=0x7f070011;
+        public static final int RegisterContainer=0x7f070014;
+        public static final int ViewFlipper=0x7f070010;
+        public static final int WelcomeLayout=0x7f07000e;
+        public static final int WelcomeLayoutContainer=0x7f07000d;
+        public static final int acUni=0x7f070016;
         public static final int addCourseDialog=0x7f070000;
-        public static final int btnNotifications=0x7f070007;
-        public static final int btnRegister=0x7f070016;
-        public static final int btnViewSections=0x7f070003;
-        public static final int headerBorder=0x7f070008;
-        public static final int imgAction=0x7f07000b;
-        public static final int linearLayout1=0x7f070004;
-        public static final int linearLayout2=0x7f070005;
-        public static final int logo=0x7f07000e;
-        public static final int progressBar1=0x7f070011;
-        public static final int txtCourseDescription=0x7f070002;
-        public static final int txtCourseName=0x7f070001;
-        public static final int txtHeading=0x7f070006;
-        public static final int txtItemName=0x7f07000a;
-        public static final int txtLoading=0x7f070012;
-        public static final int txtName=0x7f070014;
+        public static final int btnNotifications=0x7f070008;
+        public static final int btnRegister=0x7f070017;
+        public static final int btnViewSections=0x7f070004;
+        public static final int headerBorder=0x7f070009;
+        public static final int imgAction=0x7f07000c;
+        public static final int linearLayout1=0x7f070005;
+        public static final int linearLayout2=0x7f070006;
+        public static final int logo=0x7f07000f;
+        public static final int progressBar1=0x7f070012;
+        public static final int txtCourseDescription=0x7f070003;
+        public static final int txtCourseId=0x7f070001;
+        public static final int txtCourseName=0x7f070002;
+        public static final int txtHeading=0x7f070007;
+        public static final int txtItemName=0x7f07000b;
+        public static final int txtLoading=0x7f070013;
+        public static final int txtName=0x7f070015;
     }
     public static final class layout {
         public static final int ac_list_item=0x7f030000;
