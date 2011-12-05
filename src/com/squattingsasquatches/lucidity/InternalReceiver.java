@@ -1,18 +1,17 @@
 package com.squattingsasquatches.lucidity;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import java.util.HashMap;
 import android.os.ResultReceiver;
+import org.apache.http.client.HttpResponseException;
+import java.net.HttpURLConnection;
 
 public class InternalReceiver extends ResultReceiver {
 	
-	private String result;
 	private HashMap<String, String> params;
 	//private Receiver mReceiver;
 	
@@ -44,24 +43,20 @@ public class InternalReceiver extends ResultReceiver {
 //    }
 	public void onReceiveResult(int resultCode, Bundle resultData) {
 		// result from remote PHP query		
-		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {
-			
-			result = resultData.getString("result");
-			
-			if (result != null) {
-				try {
-					update( new JSONArray(result) );
-				} catch (JSONException e) {
-
-					try {
-						update( new JSONArray("[" + result + "]") );
-					} catch (JSONException e1) {
-						Log.e("InternalReceiver.onReceiveResult", "Error converting result data to JSONArray");
-					}
-				}
-			}
+		
+		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {	
+			update( new JSONArray(resultData.getStringArrayList("result")) );
+		}
+		else if (resultCode == Codes.REMOTE_CONNECTION_ERROR) {	
+			onConnectionError( resultData.getString("connection_error_code") );
 		} 
+		else
+		{
+			onHttpError( resultData.getInt("httpstatuscode") );
+		}
 	}
 	public void update( JSONArray data ){}
+	public void onHttpError( int statusCode ){}
+	public void onConnectionError( String errorMessage ){}
 	
 }

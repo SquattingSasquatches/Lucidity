@@ -61,6 +61,12 @@ public class SplashActivity extends Activity {
 			public void update( JSONArray data ){
 				SplashActivity.this.registerCallback( data );
 			}
+			public void onHttpError( int statusCode ){
+				SplashActivity.this.onConnectionError( statusCode );
+			}
+			public void onConnectionError( String errorMessage ){
+				SplashActivity.this.onHttpError( errorMessage );
+			}
 		};
 		userRegister.addParam("name", user.getName());
 		userRegister.addParam("device_id", user.getDeviceId());
@@ -74,6 +80,12 @@ public class SplashActivity extends Activity {
 			public void update( JSONArray data ){
 				SplashActivity.this.loginCallback( data );
 			}
+			public void onHttpError( int statusCode ){
+				SplashActivity.this.onConnectionError( statusCode );
+			}
+			public void onConnectionError( String errorMessage ){
+				SplashActivity.this.onHttpError( errorMessage );
+			}
 		};
 		userLogin.addParam("device_id", user.getDeviceId());
 		
@@ -83,6 +95,12 @@ public class SplashActivity extends Activity {
 		InternalReceiver universitiesView = new InternalReceiver(){
 			public void update( JSONArray data ){
 				SplashActivity.this.loadUniversitiesCallback( data );
+			}
+			public void onHttpError( int statusCode ){
+				SplashActivity.this.onConnectionError( statusCode );
+			}
+			public void onConnectionError( String errorMessage ){
+				SplashActivity.this.onHttpError( errorMessage );
 			}
 		};
 		universitiesView.addParam("device_id", user.getDeviceId());
@@ -110,7 +128,14 @@ public class SplashActivity extends Activity {
         
         btnRegister.setOnClickListener(registerBtnHandler);
     }
-    
+    public void onConnectionError( int statusCode )
+    {
+    	txtLoading.setText(R.string.connection_error);
+    }
+    public void onHttpError( String errorMessage )
+    {
+    	txtLoading.setText(R.string.connection_error);
+    }
     /* switch to CourseMenu Activity */
     public void goToCourseList() {
     	goToCourseList(false);

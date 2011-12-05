@@ -1,6 +1,7 @@
 package com.squattingsasquatches.lucidity;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -10,12 +11,15 @@ import java.util.HashMap;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreProtocolPNames;
+import java.net.HttpURLConnection;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -59,33 +63,40 @@ public class PHPService extends IntentService {
 			httpclient.getParams().setParameter(CoreProtocolPNames.USER_AGENT, Config.USER_AGENT);
 			HttpPost httppost = new HttpPost(Config.SERVER_ADDRESS + "/" + action + ".php");
 			Log.i("wtf",Config.SERVER_ADDRESS + "/" + action + ".php");
-			httppost.setEntity(new UrlEncodedFormEntity(nvParams));
-			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
-			
-			try {
-				BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-				
-				while ((line = reader.readLine()) != null) {
-					result += line;
-				}
-				
-				Log.i("result", result);
-				
-				b.putString(Codes.KEY_RESULT, result);
-				
-                receiver.send(Codes.REMOTE_QUERY_COMPLETE, b);
-				
-			} catch (UnsupportedEncodingException e) {
-				Log.e("DBService", "Error getting http result " + e.getMessage() + ". action: " + action);
-			}
-			
-		} catch (Exception e) {
-			Log.e("DBService", "Error in http connection " + e.getMessage());
-            receiver.send(Codes.REMOTE_QUERY_ERROR, b);
-		}
 		
+				httppost.setEntity(new UrlEncodedFormEntity(nvParams));
+				HttpResponse response = httpclient.execute(httppost);
+				HttpEntity entity = response.getEntity();
+				is = entity.getContent();
+				
+				
+					BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+					
+					while ((line = reader.readLine()) != null) {
+						result += line;
+					}
+					
+					Log.i("result", result);
+					
+					b.putString(Codes.KEY_RESULT, result);
+					
+	                receiver.send(Codes.REMOTE_QUERY_COMPLETE, b);
+					
+		} catch (UnsupportedEncodingException e) {
+			Log.e("PHPService", "Unsupported Encoding: " + e.getMessage() + ". action: " + action);
+		} catch (HttpResponseException e) {
+			b.putInt("httpstatuscode", e.getStatusCode());
+			Log.e("PHPService", "HttpResponseException: " + e.getMessage());
+			receiver.send(Codes.REMOTE_QUERY_ERROR, b);
+		} catch (IOException e) {
+			b.putString("connection_error_code", e.getMessage());
+			Log.e("PHPService", "IOException: " + e.getMessage());
+			receiver.send(Codes.REMOTE_CONNECTION_ERROR, b);
+		} catch (Exception e) {
+			Log.e("PHPService", "Exception: " + e.getMessage());
+			receiver.send(Codes.REMOTE_QUERY_ERROR, b);
+		}
+	
 		this.stopSelf();
     }
 }
