@@ -1,14 +1,14 @@
 package com.squattingsasquatches.lucidity;
 
+import java.util.HashMap;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import java.util.HashMap;
 import android.os.ResultReceiver;
-import org.apache.http.client.HttpResponseException;
-import java.net.HttpURLConnection;
+import android.util.Log;
 
 public class InternalReceiver extends ResultReceiver {
 	
@@ -44,8 +44,18 @@ public class InternalReceiver extends ResultReceiver {
 	public void onReceiveResult(int resultCode, Bundle resultData) {
 		// result from remote PHP query		
 		
-		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {	
-			update( new JSONArray(resultData.getStringArrayList("result")) );
+		
+		// getStringArrayList caused null pointer exception
+		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {
+			String result = resultData.getString("result");
+			try {
+				if (result.startsWith("["))
+					update( new JSONArray(result) );
+				else
+					update( new JSONArray("[" + result + "]") );
+			} catch (JSONException e) {
+				Log.e("onReceiveResult", "Query did not return valid result");
+			}
 		}
 		else if (resultCode == Codes.REMOTE_CONNECTION_ERROR) {	
 			onConnectionError( resultData.getString("connection_error_code") );

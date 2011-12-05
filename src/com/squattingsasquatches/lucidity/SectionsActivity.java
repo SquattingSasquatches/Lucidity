@@ -134,8 +134,8 @@ public class SectionsActivity extends Activity {
 			sectionRegister.addParam("section_id", section.getId());
 			sectionRegister.addParam("user_id", localDB.getUserId());
 	        
-	        remoteDB.addReceiver("user.section.register", sectionRegister);
-	        remoteDB.execute("user.section.regitser");
+	        /*remoteDB.addReceiver("user.section.register", sectionRegister);
+	        remoteDB.execute("user.section.register");*/
 			
 			/*
 			nextActivity = new Intent(SectionsActivity.this, AddSectionActivity.class);
