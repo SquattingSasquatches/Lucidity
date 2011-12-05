@@ -73,8 +73,8 @@ public final class R {
         public static final int your_name=0x7f050003;
     }
     public static final class style {
-        public static final int AddCourseTheme=0x7f060001;
         public static final int Button=0x7f060000;
         public static final int LucidityTheme=0x7f060002;
+        public static final int TextViewStyle=0x7f060001;
     }
 }

@@ -59,7 +59,7 @@ public class LocalDBAdapter {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		userData.put(KEY_ID, user.getId());
 		userData.put(KEY_NAME, user.getName());
-		userData.put(KEY_UNI_ID, user.getUniId());
+		userData.put(KEY_UNI_ID, user.getUniversity().getId());
 		userData.put(KEY_C2DM_ID, user.getC2dmRegistrationId());
 		userData.put(KEY_C2DM_IS_REGISTERED, 1);
 		userData.put(KEY_C2DM_LAST_CHECK, dateFormat.format(new Date()));

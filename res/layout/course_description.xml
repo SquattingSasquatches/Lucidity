@@ -1,37 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="10" >
+    android:background="@drawable/bg">
 
     <TextView
         android:id="@+id/txtCourseId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_weight="1" />
+        android:textSize="52dp" />
     
     <TextView
         android:id="@+id/txtCourseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFCCCCCC"
-        android:layout_weight="1" />
+        android:textSize="24dp"
+        android:layout_below="@id/txtCourseId" />
     
     <TextView
         android:id="@+id/txtCourseDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_weight="7" />
+        android:textSize="16dp"
+        android:layout_below="@id/txtCourseName" />
     
     <Button
         android:id="@+id/btnViewSections"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="View Sections"
-        android:layout_weight="1" />        	
+        android:layout_alignParentBottom="true" />        	
 
-</LinearLayout>
+</RelativeLayout>

@@ -11,7 +11,7 @@ public class Course extends DataItem {
 	private Subject subject;
 	
 	public Course() {
-		this(0, 0);
+		this(-1, 0);
 	}
 	
 	public Course(int id, int courseNum) {

@@ -37,7 +37,7 @@
  {
  	
  	function send()
- 	{
+ 	{ 		
  		if( $this->errors )
  			echo json_encode($this->errors) ;
  		else if( $this->data )	

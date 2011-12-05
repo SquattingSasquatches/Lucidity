@@ -1045,7 +1045,6 @@ class database
                 (is_integer($resource) && isset($this->cached_results[$resource]))
 
             ) {
-
                 // this is the array that will contain the results
                 $result = array();
 
@@ -2576,7 +2575,7 @@ class database
             ));
 
         }
-
+        
         // we don't have to report any error as _connected() method already did or any of the previous checks
         return false;
 
@@ -4060,6 +4059,8 @@ class database
                     'error'     =>  mysql_error(),
 
                 ));
+                
+                echo mysql_error();
 
                 // return FALSE
                 return false;
@@ -4078,6 +4079,8 @@ class database
                     'error'     =>  mysql_error($this->link_identifier),
 
                 ));
+                
+                echo mysql_error();
 
                 // return FALSE
                 return false;

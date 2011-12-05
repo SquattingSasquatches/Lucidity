@@ -19,7 +19,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 public class SplashActivity extends Activity {
@@ -66,7 +65,7 @@ public class SplashActivity extends Activity {
 		userRegister.addParam("name", user.getName());
 		userRegister.addParam("device_id", user.getDeviceId());
 		userRegister.addParam("c2dm_id", user.getC2dmRegistrationId());
-		userRegister.addParam("uni_id", Integer.toString(user.getUniId()));
+		userRegister.addParam("uni_id", Integer.toString(user.getUniversity().getId()));
 		
 
 		
@@ -199,39 +198,6 @@ public class SplashActivity extends Activity {
     	loading.dismiss();
     	layoutFlipper.showNext();
     }
-    
-    /* calls the designated callback */
-    public void doCallback(int callbackCode, JSONArray result) {
-    	if (callbackCode == Codes.LOGIN)
-    		loginCallback(result);
-    	else if (callbackCode == Codes.REGISTER)
-    		registerCallback(result);
-    	else if (callbackCode == Codes.LOAD_UNIVERSITIES)
-    		loadUniversitiesCallback(result);
-    	else
-    		Log.d("WTF", "How'd you get here?");
-    }
-
-    /* receives result from PHPService */
-	public void onReceiveResult(int resultCode, Bundle resultData) {
-		Log.d("onReceiveResult", String.valueOf(resultCode));
-		
-		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {
-			String result = resultData.getString("result");
-			int callbackCode = resultData.getInt("callback");
-			if (result != null && !result.equals("")) {
-				if (!result.startsWith("[")) result = "[" + result + "]"; // quick fix
-				try {
-					doCallback(callbackCode, new JSONArray(result));
-				} catch (JSONException e) {
-					Log.e("onReceiveResult", "error with JSONArray");
-				}
-			}
-		} else if (resultCode == Codes.REMOTE_QUERY_ERROR) {
-			//TODO: actually handle this situation instead of just throwing up a toast
-			Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT);
-		}
-	}
 	
 	/* sends user and c2dm data to remote server */
 	private final BroadcastReceiver remoteRegistration = new BroadcastReceiver() {
@@ -241,8 +207,6 @@ public class SplashActivity extends Activity {
 			int result = intent.getIntExtra(Codes.KEY_C2DM_RESULT, Codes.ERROR);
 			user.setC2dmRegistrationId(intent.getStringExtra(Codes.KEY_C2DM_ID));
 			if (result == Codes.SUCCESS) {
-				
-				
 		    	remoteDB.execute("user.register");
 			} else {
 				Log.i("C2DMResultHandler", "wtf");
@@ -260,8 +224,8 @@ public class SplashActivity extends Activity {
         			// C2DM registration
         			// Registration with our server is now handled by remoteRegistration BroadcastReceiver
         	        user.setName(((EditText) findViewById(R.id.txtName)).getText().toString());
-        	        user.setUniId(1870); //TODO: Fix this. In adapter, use actual University objects as opposed to just Strings. Need to write custom AutoCompleteTextView
-        	        Log.d("sel uni", String.valueOf(user.getUniId()));
+        	        user.getUniversity().setId(1870); //TODO: Fix this. In adapter, use actual University objects as opposed to just Strings. Need to write custom AutoCompleteTextView
+        	        Log.d("sel uni", String.valueOf(user.getUniversity().getId()));
         			DeviceRegistrar.startRegistration(getApplicationContext(), remoteRegistration);
         			break;
         		default:

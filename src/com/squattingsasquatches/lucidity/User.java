@@ -1,47 +1,36 @@
 package com.squattingsasquatches.lucidity;
 
-public class User {
+public class User extends DataItem {
 	
-	private int id;
-	private String name;
-	private int uniId;
+	private University uni;
 	private String c2dmRegistrationId;
 	private String deviceId;
 	
 	public User() {
-		this(0, "", 0, "", "");
+		this(0, "", new University(), "", "");
 	}
 	
-	public User(int id, String name, int uniId, String c2dmRegistrationId, String deviceId) {
-		this.setId(id);
-		this.setName(name);
-		this.setUniId(uniId);
+	public User(String name) {
+		this(-1, name);
+	}
+	
+	public User(int id, String name) {
+		this(id, name, new University(), "", "");
+	}
+	
+	public User(int id, String name, University uni, String c2dmRegistrationId, String deviceId) {
+		super(id, name);
+		this.setUniversity(uni);
 		this.setC2dmRegistrationId(c2dmRegistrationId);
 		this.setDeviceId(deviceId);
 	}
 
-	public int getId() {
-		return id;
+	public University getUniversity() {
+		return uni;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public int getUniId() {
-		return uniId;
-	}
-
-	public void setUniId(int uniId) {
-		this.uniId = uniId;
+	public void setUniversity(University uni) {
+		this.uni = uni;
 	}
 
 	public String getC2dmRegistrationId() {
@@ -58,5 +47,10 @@ public class User {
 
 	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 }
