@@ -11,4 +11,5 @@
     <string name="save_new_courses">Save</string>
     <string name="add_another_course">Add More</string>
     <string name="cancel">Cancel</string>
+    <string name="connection_error">Error connecting to server!</string>
 </resources>
