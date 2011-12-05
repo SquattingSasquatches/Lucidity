@@ -50,7 +50,7 @@ public class CourseMenuStudent extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generic_list);
         
-        boolean updateCourses = getIntent().getExtras().getBoolean("updateCourses", false);
+        boolean updateCourses = getIntent().getBooleanExtra("com.squattingsasquatches.updateCourses", false);
         
         ctx = this;
         userCourses = new ArrayList<Course>();

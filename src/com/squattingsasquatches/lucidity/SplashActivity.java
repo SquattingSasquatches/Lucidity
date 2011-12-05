@@ -145,7 +145,7 @@ public class SplashActivity extends Activity {
     public void goToCourseList(boolean updateCourses) {
     	nextActivity = new Intent(this, CourseMenuStudent.class);
 		nextActivity.putExtra("com.squattingsasquatches.userId", user.getId());
-		nextActivity.putExtra("updateCourses", updateCourses);
+		nextActivity.putExtra("com.squattingsasquatches.updateCourses", updateCourses);
 		startActivity(nextActivity);
 		finish(); //just this one time
     }

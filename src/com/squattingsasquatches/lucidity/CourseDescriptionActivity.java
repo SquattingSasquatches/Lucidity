@@ -99,6 +99,7 @@ public class CourseDescriptionActivity extends Activity {
 		public void onClick(View v) {
 			nextActivity = new Intent(CourseDescriptionActivity.this, SectionsActivity.class);
 			nextActivity.putExtra("com.squattingsasquatches.courseId", courseId);
+			nextActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(nextActivity);
 		}
 		

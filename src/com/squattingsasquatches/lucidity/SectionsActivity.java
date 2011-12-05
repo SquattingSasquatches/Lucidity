@@ -134,13 +134,14 @@ public class SectionsActivity extends Activity {
 			sectionRegister.addParam("section_id", section.getId());
 			sectionRegister.addParam("user_id", localDB.getUserId());
 	        
-	        /*remoteDB.addReceiver("user.section.register", sectionRegister);
-	        remoteDB.execute("user.section.register");*/
+	        remoteDB.addReceiver("user.section.register", sectionRegister);
+	        remoteDB.execute("user.section.register");
 			
-			/*
-			nextActivity = new Intent(SectionsActivity.this, AddSectionActivity.class);
-			nextActivity.putExtra("com.squattingsasquatches.sectionId", section.getId());
-			startActivity(nextActivity);*/
+			nextActivity = new Intent(SectionsActivity.this, CourseMenuStudent.class);
+			nextActivity.putExtra("com.squattingsasquatches.userId", localDB.getUserId());
+			nextActivity.putExtra("com.squattingsasquatches.updateCourses", true);
+			startActivity(nextActivity);
+			finish();
 		}
 	};
 
