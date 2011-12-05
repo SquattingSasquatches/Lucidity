@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SectionsActivity extends Activity {
 
@@ -115,6 +116,10 @@ public class SectionsActivity extends Activity {
 		loading.dismiss();
 	}
 	
+	public void registerSectionCallback(JSONArray data) {
+		Toast.makeText(getApplicationContext(), "registered for section", Toast.LENGTH_LONG).show();
+	}
+	
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Object o = sectionsListView.getItemAtPosition(position);
@@ -123,14 +128,14 @@ public class SectionsActivity extends Activity {
 			//register user with section, return to CourseMenuActivity
 			InternalReceiver sectionRegister = new InternalReceiver(){
 				public void update( JSONArray data ){
-					SectionsActivity.this.loadSectionsCallback( data );
+					SectionsActivity.this.registerSectionCallback( data );
 				}
 			};
 			sectionRegister.addParam("section_id", section.getId());
-			sectionRegister.addParam("section_id", section.getId());
+			sectionRegister.addParam("user_id", localDB.getUserId());
 	        
-	        remoteDB.addReceiver("course.sections.view", courseSectionsView);
-	        remoteDB.execute("course.sections.view");
+	        remoteDB.addReceiver("user.section.register", sectionRegister);
+	        remoteDB.execute("user.section.regitser");
 			
 			/*
 			nextActivity = new Intent(SectionsActivity.this, AddSectionActivity.class);
