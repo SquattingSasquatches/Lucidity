@@ -15,14 +15,14 @@ class AddCourse extends Controller
 {
 	function execute()
 	{
-	 	$db->insert('courses', array('course_name' => $this->params['course_name'], 'course_department_prefix' => $this->params['course_department_prefix'],'uni_id' => $this->params['uni_id'], 'start_date' => $this->params['start_date'],'end_date' => $this->params['end_date']     ) );
+	 	$db->insert('courses', array('course_number' => $this->params['course_number'], 'subject_id' => $this->params['subject_id'], 'uni_id' => $this->params['uni_id'], 'name' => $this->params['course_name'], start_date => $this->params['start_date'], 'end_date' => $this->params['end_date'], 'course_description' => $this->params['course_description']     ) );
 		
 		$db->close();
 	
 	}
 	function isNotDuplicateCourse( $param_names )
 	{
-	 	$this->db->query('SELECT * FROM `users_devices` AS ud, `professor_courses` AS pc, WHERE ud.device_id = ? AND ud.user_id = pc.professor_id AND pc.course_id = c.course_id AND c.course_name = ?', array('device_id' => $this->params[$param_names[0]], 'course_name' => $this->params[$param_names[1]] ));
+	 	$this->db->query('select id from `courses` where course_number = ? and uni_id = ? and subject_id = ?', array('course_number' => $this->params[$param_names[0]], 'uni_id' => $this->params[$param_names[1]], 'subject_id' => $this->params[$param_names[2]] ));
 	 	
 	 	if( $this->db->found_rows ) return true;
 		
@@ -51,10 +51,13 @@ class AddCourse extends Controller
 $controller = new AddCourse();
 
 $controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
-$controller->addValidation( 'course_id', 'isParamSet', 'no_course_id_supplied', true );
-$controller->addValidation( 'course_department_prefix', 'isParamSet', 'no_course_department_prefix_supplied', true );
+$controller->addValidation( 'subject_id', 'isParamSet', 'no_subject_id_supplied', true );
+$controller->addValidation( 'course_name', 'isParamSet', 'no_course_name_supplied', true );
 $controller->addValidation( 'course_number', 'isParamSet', 'no_course_number_supplied', true );
-$controller->addValidation( array( 'device_id', 'course_name' ), 'isNotDuplicateCourse', 'course_already_exists', true );
+$controller->addValidation( 'course_description', 'isParamSet', 'no_course_description_supplied', true );
+$controller->addValidation( 'start_date', 'isParamSet', 'no_start_date_supplied', true );
+$controller->addValidation( 'end_date', 'isParamSet', 'no_end_date_supplied', true );
+$controller->addValidation( array( 'course_number', 'uni_id', 'subject_id' ), 'isNotDuplicateCourse', 'course_already_exists', true );
 $controller->addValidation( 'device_id', 'isProfessor', 'user_not_professor_of_course', true );
 
 if( $controller->validate() ) $controller->execute();

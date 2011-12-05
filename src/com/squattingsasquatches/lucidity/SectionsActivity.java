@@ -110,7 +110,7 @@ public class SectionsActivity extends Activity {
 			}
 		}
 		
-		sectionsListView.setAdapter(new ListAdapter<Section>(this, courseSections));
+		sectionsListView.setAdapter(new ExtendedListAdapter<Section>(this, courseSections));
 		sectionsListView.setOnItemClickListener(listViewHandler);
 		loading.dismiss();
 	}
@@ -121,6 +121,16 @@ public class SectionsActivity extends Activity {
 			Section section = (Section) o;
 			
 			//register user with section, return to CourseMenuActivity
+			InternalReceiver sectionRegister = new InternalReceiver(){
+				public void update( JSONArray data ){
+					SectionsActivity.this.loadSectionsCallback( data );
+				}
+			};
+			sectionRegister.addParam("section_id", section.getId());
+			sectionRegister.addParam("section_id", section.getId());
+	        
+	        remoteDB.addReceiver("course.sections.view", courseSectionsView);
+	        remoteDB.execute("course.sections.view");
 			
 			/*
 			nextActivity = new Intent(SectionsActivity.this, AddSectionActivity.class);

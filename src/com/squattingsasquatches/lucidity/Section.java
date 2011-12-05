@@ -2,7 +2,7 @@ package com.squattingsasquatches.lucidity;
 
 import android.text.format.Time;
 
-public class Section extends DataItem {
+public class Section extends ExtendedDataItem {
 	
 	private Course course;
 	private User professor;
@@ -23,6 +23,8 @@ public class Section extends DataItem {
 		this.setDays(days);
 		this.setStartTime(startTime);
 		this.setEndTime(endTime);
+		this.setItemInfo1("Instructor: " + professor.toString());
+		this.setItemInfo2("Meets: " + days + " at " + startTime.format("%l:%M %P").trim() + " - " + endTime.format("%l:%M %P").trim());
 	}
 	
 	public Course getCourse() {

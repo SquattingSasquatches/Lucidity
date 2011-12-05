@@ -14,8 +14,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:singleLine="true"
         android:ellipsize="end" />
-    
-    <!--  maybe have another TextView below the name with additional information (next meeting, next assignment due, next test, etc) -->
 
     <ImageView
         android:id="@+id/imgAction"

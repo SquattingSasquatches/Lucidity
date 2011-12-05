@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 public class ListAdapter<E extends DataItem> extends BaseAdapter {
 	
-	 private ArrayList<E> items;
-	 
-	 private LayoutInflater mInflater;
+	 protected ArrayList<E> items;
+	 protected LayoutInflater mInflater;
 
 	 public ListAdapter(Context context, ArrayList<E> items) {
 		 this.items = items;
