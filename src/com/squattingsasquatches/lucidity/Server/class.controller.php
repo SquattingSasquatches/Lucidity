@@ -71,6 +71,7 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 
 	public function validate()
 	{
+		
 		foreach( $this->validations as $validation )
 		{
 			$function = $validation->validation_function;

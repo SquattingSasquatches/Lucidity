@@ -38,7 +38,6 @@
  			die( $message_id . " error message missing." );
  			
  		$this->errors[] = $this->messages[$message_id];
- 			
  	}
  }
  class JSONresponse extends response
