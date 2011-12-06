@@ -12,6 +12,11 @@ class Register extends Controller
 		
 		$this->db->insert('user_devices', array( 'user_id' => $user_id, 'device_id' => $this->params['device_id'] ) );
 		
+		$this->db->select('*', 'users', 'id = ?', '', '', array($user_id));
+		
+		$records = $this->db->fetch_assoc_all();
+		
+		$this->response->addData( $records );
 		
 		$this->db->close();
 	

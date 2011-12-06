@@ -105,7 +105,7 @@ public class LocalDBAdapter {
 		JSONArray courses = new JSONArray();
 		Cursor result = db.query(COURSES_TABLE, null, null, null, null, null, null);
 		result.moveToFirst();
-		while (result.isAfterLast() == false) {
+		while (!result.isAfterLast()) {
             try {
 				courses.put(
 						new JSONObject("{\"" +

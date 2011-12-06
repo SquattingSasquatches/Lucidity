@@ -15,13 +15,13 @@ class RegisterCourse extends Controller
 {
 	function execute()
 	{	 	
-		$this->db->insert('student_courses', array('section_id' => $this->params['user_id'], 'section_id' => $this->params['section_id'], 'verified' => '0') );
+		$this->db->insert('student_courses', array('student_id' => $this->params['user_id'], 'section_id' => $this->params['section_id'], 'verified' => '0') );
 		
 	
 	}
 	function isNotAlreadyRegistered( $param_names )
 	{
-	 	$this->db->query('SELECT * FROM `student_courses` WHERE student_id = ? AND section_id = ?', array($this->params[$param_names[0]], $this->params[$param_names[1]] ));
+	 	$this->db->query('SELECT * FROM `student_courses` WHERE student_id = ? AND section_id = ?', array('student_id' => $this->params[$param_names[0]], 'section_id' => $this->params[$param_names[1]] ));
 	 	
 	 	if( $this->db->found_rows ) return true;
 		
@@ -31,7 +31,7 @@ class RegisterCourse extends Controller
 	{
 		$this->db->query('SELECT * FROM `users` WHERE id = ?', array('user_id' => $this->params[$param_names[0]] ));
 	 	
-	 	if( !$records = $db->fetch_assoc_all() ) return false;
+	 	if( !$records = $this->db->fetch_assoc_all() ) return false;
 	 	return true;
 	}
 	function showView()
@@ -64,11 +64,4 @@ $controller->addValidation( 'user_id', 'userExists', 'no_user_id_found', true );
 if( $controller->validate() ) $controller->execute();
 
 $controller->showView();
- 	
- 	
- 	
- 	
- 	
- 	
-	
 ?>

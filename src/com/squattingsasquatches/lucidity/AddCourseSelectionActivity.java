@@ -112,7 +112,7 @@ public class AddCourseSelectionActivity extends Activity {
 			Object o = coursesListView.getItemAtPosition(position);
 			Course course = (Course) o;
 			
-			nextActivity = new Intent(AddCourseSelectionActivity.this, CourseDescriptionActivity.class);
+			nextActivity = new Intent(AddCourseSelectionActivity.this, SectionsActivity.class);
 			nextActivity.putExtra("com.squattingsasquatches.courseId", course.getId());
 			startActivity(nextActivity);
 		}

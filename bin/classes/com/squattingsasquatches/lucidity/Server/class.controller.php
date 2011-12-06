@@ -74,6 +74,7 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 			$function = $validation->validation_function;
 			foreach( $validation->param_names as $p )
 			{
+				if ($function == 'isNotAlreadyRegistered') echo $p . ' | ';
 				if( !is_array( $p )) $p = array( $p );
 				if( !$this->$function( $p ) )
 				{
