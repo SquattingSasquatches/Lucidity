@@ -1,7 +1,6 @@
 package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,7 +8,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,8 +30,6 @@ public class SubjectsActivity extends Activity {
 	/* Misc */
 	private Intent nextActivity;
 	private ArrayList<Subject> uniSubjects;
-	private int userId;
-	private Context ctx;
 	
 	@Override
 	public void onPause() {
@@ -49,19 +45,17 @@ public class SubjectsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.generic_list);
 		
-		ctx = this;
 		uniSubjects = new ArrayList<Subject>();
 		subjectsListView = (ListView) findViewById(R.id.ListContainer);
         loading = new ProgressDialog(this);
         localDB = new LocalDBAdapter(this).open();
         remoteDB = new RemoteDBAdapter(this);
-        userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
         
         TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
         txtHeading.setText("Choose a Subject");
         
         loading.setTitle("Please wait");
-        loading.setMessage("Loading subjects... ");
+        loading.setMessage("Loading available subjects... ");
         loading.setCancelable(false);
         loading.show();
         
@@ -70,7 +64,7 @@ public class SubjectsActivity extends Activity {
 				SubjectsActivity.this.loadSubjectsCallback( data );
 			}
 		};
-		uniSubjectsView.params.put("uni_id", Integer.toString(localDB.getUserUniId()));
+		uniSubjectsView.addParam("uni_id", localDB.getUserUniId());
         
         remoteDB.addReceiver("uni.subjects.view", uniSubjectsView);
         remoteDB.execute("uni.subjects.view");
@@ -104,10 +98,10 @@ public class SubjectsActivity extends Activity {
 			Object o = subjectsListView.getItemAtPosition(position);
 			Subject subject = (Subject) o;
 			
-			int selected = subject.getId();
-			
-			Log.d("uni click", selected+"");
-			// load courses with subject
+			nextActivity = new Intent(SubjectsActivity.this, AddCourseSelectionActivity.class);
+			nextActivity.putExtra("com.squattingsasquatches.subjectId", subject.getId());
+			nextActivity.putExtra("com.squattingsasquatches.subjectPrefix", subject.getPrefix());
+			startActivity(nextActivity);
 		}
 	};
 

@@ -11,7 +11,7 @@ public class Course extends DataItem {
 	private Subject subject;
 	
 	public Course() {
-		this(0, 0);
+		this(-1, 0);
 	}
 	
 	public Course(int id, int courseNum) {
@@ -20,6 +20,10 @@ public class Course extends DataItem {
 	
 	public Course(int id, String name) {
 		this(id, 0, name, new Date(0), new Date(0), new Subject(), new University());
+	}
+	
+	public Course(int id, int courseNum, String name, Subject subject, University uni) {
+		this(id, courseNum, name, new Date(0), new Date(0), subject, uni);
 	}
 	
 	public Course(int id, int courseNum, Subject subject) {
@@ -78,7 +82,7 @@ public class Course extends DataItem {
 	@Override
 	public String toString() {
 		if (getCourseNum() > 0)
-			return getSubject().getPrefix() + " " + getCourseNum();
+			return getSubject().getPrefix() + " " + getCourseNum() + " - " + super.name;
 		return super.name;
 	}
 	

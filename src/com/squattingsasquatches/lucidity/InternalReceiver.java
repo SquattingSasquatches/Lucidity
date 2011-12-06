@@ -1,19 +1,18 @@
 package com.squattingsasquatches.lucidity;
 
+import java.util.HashMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
-
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import java.util.HashMap;
 import android.os.ResultReceiver;
+import android.util.Log;
 
 public class InternalReceiver extends ResultReceiver {
 	
-	private String result;
-	public HashMap<String, String> params;
+	private HashMap<String, String> params;
 	//private Receiver mReceiver;
 	
 	public InternalReceiver()
@@ -21,12 +20,17 @@ public class InternalReceiver extends ResultReceiver {
 		super(new Handler());
 		params = new HashMap<String, String>();
 	}
+	
 	public void addParam(String key, String value) {
 		params.put(key, value);
 	}
 	
 	public void addParam(String key, int value) {
 		params.put(key, String.valueOf(value));
+	}
+	
+	public HashMap<String, String> getParams() {
+		return params;
 	}
 	
 	public void setAction(String action) {
@@ -38,29 +42,31 @@ public class InternalReceiver extends ResultReceiver {
 //        //mReceiver = receiver;
 //    }
 	public void onReceiveResult(int resultCode, Bundle resultData) {
-		// result from remote PHP query
-		Log.i("InternalReceiver.onReceiveResult", String.valueOf(resultCode));
+		// result from remote PHP query		
 		
+		
+		// getStringArrayList caused null pointer exception
 		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {
-			
-			result = resultData.getString("result");
-			
-			if (result != null) {
-				try {
+			String result = resultData.getString("result");
+			try {
+				if (result.startsWith("["))
 					update( new JSONArray(result) );
-				} catch (JSONException e) {
-
-					try {
-						update( new JSONArray("[" + result + "]") );
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					Log.e("InternalReceiver.onReceiveResult", "error with JSONArray");
-				}
+				else
+					update( new JSONArray("[" + result + "]") );
+			} catch (JSONException e) {
+				Log.e("onReceiveResult", "Query did not return valid result");
 			}
+		}
+		else if (resultCode == Codes.REMOTE_CONNECTION_ERROR) {	
+			onConnectionError( resultData.getString("connection_error_code") );
 		} 
+		else
+		{
+			onHttpError( resultData.getInt("httpstatuscode") );
+		}
 	}
 	public void update( JSONArray data ){}
+	public void onHttpError( int statusCode ){}
+	public void onConnectionError( String errorMessage ){}
 	
 }

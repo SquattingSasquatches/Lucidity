@@ -2,5 +2,6 @@
 <resources>
     <style name="LucidityTheme" parent="@android:style/Theme.NoTitleBar">
         <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
     </style>
 </resources>

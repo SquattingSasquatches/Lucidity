@@ -36,6 +36,7 @@ public class Codes {
 	public static final int LOAD_COURSES = 57;
 	public static final int ADD_COURSES = 58;
 	public static final int LOAD_UNI_COURSES = 59;
+	public static final int REMOTE_CONNECTION_ERROR = 60;
 	
 	
 	/* String constants */

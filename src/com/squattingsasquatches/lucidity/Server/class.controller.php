@@ -58,6 +58,10 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 		$this->db->connect($config['DB_HOST'], $config['DB_USER'], $config['DB_PASS'], $config['DB_NAME']);
 		$this->db->maxQueryTime = 10;
 		
+<<<<<<< HEAD
+=======
+		$this->params = array_merge($this->params, $_REQUEST);
+>>>>>>> refs/remotes/origin/dragonbutts
 	}
 	function addParam( array $param )
 	{
@@ -77,6 +81,7 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 			$function = $validation->validation_function;
 			foreach( $validation->param_names as $p )
 			{
+				if ($function == 'isNotAlreadyRegistered') echo $p . ' | ';
 				if( !is_array( $p )) $p = array( $p );
 				if( !$this->$function( $p ) )
 				{

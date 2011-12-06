@@ -23,7 +23,7 @@ public class RemoteDBAdapter {
 	
 	
 	public void addReceiver(String name, InternalReceiver receiver) {
-		receiver.params.put("action", name);
+		receiver.addParam("action", name);
 		receivers.put( name, receiver );
 	}
 	
@@ -43,7 +43,7 @@ public class RemoteDBAdapter {
 		}
 	}
 	public void execute(String name) {
-		dbService.putExtra("params", receivers.get(name).params);
+		dbService.putExtra("params", receivers.get(name).getParams());
 		dbService.putExtra("receiver", receivers.get(name));
 		ctx.startService(dbService);
 	}
