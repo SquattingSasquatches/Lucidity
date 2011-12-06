@@ -18,6 +18,7 @@ require ( dirname( __FILE__ ) . '/db/class.database.php');
 
 include( dirname( __FILE__ ) . '/class.validation.php');
 
+
  class Controller
  {
  	protected $params = array();
@@ -28,6 +29,8 @@ include( dirname( __FILE__ ) . '/class.validation.php');
  	function __construct(){
 
 		global $config;
+		
+		$this->params = array_merge($this->params, $_REQUEST);
 			
 		if( PHP_SAPI == 'cli')
 		{
@@ -42,7 +45,7 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 		else
 		{
 			$android = stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android');
-			if( $android !== false )
+			if( $android !== false || $this->params['json'] == "1")
 				$this->response = new JSONresponse();
 			else
 		  		$this->response = new HTMLresponse();
@@ -54,9 +57,6 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 		$this->db = new database();
 		$this->db->connect($config['DB_HOST'], $config['DB_USER'], $config['DB_PASS'], $config['DB_NAME']);
 		$this->db->maxQueryTime = 10;
-		
-		$this->params = array_merge($this->params, $_REQUEST);
-		
 		
 	}
 	function addParam( array $param )

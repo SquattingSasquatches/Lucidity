@@ -8,7 +8,7 @@
 
  include( dirname( __FILE__ ) . '/class.message.php');
  
- class response
+ abstract class response
  {
  	// To hold any and all errors.
  	public $errors = array();
@@ -32,12 +32,20 @@
  	
  		$this->data = array_merge( $this->data, (array)$data );
  	}
+ 	function addError( $message_id )
+ 	{
+ 		if( !isset( $this->messages[$message_id] ) )
+ 			die( $message_id . " error message missing." );
+ 			
+ 		$this->errors[] = $this->messages[$message_id];
+ 			
+ 	}
  }
  class JSONresponse extends response
  {
  	
  	function send()
- 	{
+ 	{ 		
  		if( $this->errors )
  			echo json_encode($this->errors) ;
  		else if( $this->data )	
@@ -47,7 +55,7 @@
  	}
  	function addError( $message_id, $fatal = false)
  	{
- 		$this->errors[] = $this->messages[$message_id];
+ 		parent::addError( $message_id );
  		
  		if ( $fatal )
  		{
@@ -75,7 +83,7 @@
  	}
  	function addError( $message_id, $fatal = false)
  	{
- 		$this->errors[] = $this->messages[$message_id];
+ 		parent::addError( $message_id );
  		
  		if ( $fatal )
  		{

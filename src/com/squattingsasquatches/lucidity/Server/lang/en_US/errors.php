@@ -47,5 +47,6 @@ $this->messages['user_not_professor_of_answer']		= new Message( MessageType::Err
 $this->messages['question_not_found']				= new Message( MessageType::Error, 29, 'Selected question does not exist.');
 $this->messages['answer_not_found']					= new Message( MessageType::Error, 30, 'Selected answer does not exist.');
 $this->messages['quiz_result_not_found']			= new Message( MessageType::Error, 31, 'Selected quiz result does not exist.');
+$this->messages['no_section_id_supplied']			= new Message( MessageType::Error, 32, 'Missing parameter: section_id');
 
 ?>
