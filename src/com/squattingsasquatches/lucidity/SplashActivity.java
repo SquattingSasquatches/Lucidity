@@ -45,8 +45,6 @@ public class SplashActivity extends Activity {
 		DeviceRegistrar.unregisterReceiver(this, remoteRegistration);
 	}
 	
-	
-	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,7 +97,9 @@ public class SplashActivity extends Activity {
 		
 		menuRefresh.setOnMenuItemClickListener(new OnMenuItemClickListener(){
 			public boolean onMenuItemClick(MenuItem _menuItem){
-				
+				Intent intent = getIntent();
+				finish();
+				startActivity(intent);
 				return true;
 			}
 		});
@@ -125,6 +125,9 @@ public class SplashActivity extends Activity {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String value = input.getText().toString().trim();
 				Config.setServerAddress(value);
+				Intent intent = getIntent();
+				finish();
+				startActivity(intent);
 			}
 		});
 
