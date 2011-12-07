@@ -4,22 +4,16 @@ include('class.controller.php');
 
 class Register extends Controller
 {
+
+	public $user_id;
+
 	function execute()
 	{
 		$this->db->insert('users', array( 'name' => $this->params['name'], 'uni_id' => $this->params['uni_id'] , 'c2dm_id' => $this->params['c2dm_id']  ));
 	
-		$user_id = $this->db->insert_id();
+		$this->user_id = $this->db->insert_id();
 		
-		$this->db->insert('user_devices', array( 'user_id' => $user_id, 'device_id' => $this->params['device_id'] ) );
-		
-		$this->db->select('*', 'users', 'id = ?', '', '', array($user_id));
-		
-		$records = $this->db->fetch_assoc_all();
-		
-		$this->response->addData( $records );
-		
-		$this->db->close();
-	
+		$this->db->insert('user_devices', array( 'user_id' => $user_id, 'device_id' => $this->params['device_id'] ) );	
 	}
 	function userExists( $param_names )
 	{
@@ -34,6 +28,12 @@ class Register extends Controller
 	
 		if( $this->db->found_rows ) return false;
 		return true;
+	}
+	
+	function showView() {	
+		$this->response->addData( array('user_id' => $this->user_id) );
+		
+		$this->response->send();
 	}
 	
 }
