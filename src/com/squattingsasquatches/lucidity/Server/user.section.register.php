@@ -13,12 +13,6 @@ include('class.controller.php');
 
 class RegisterCourse extends Controller
 {
-	function execute()
-	{	 	
-		$this->db->insert('student_courses', array('student_id' => $this->params['user_id'], 'section_id' => $this->params['section_id'], 'is_verified' => '0') );
-
-				
-	}
 	function isNotAlreadyRegistered( $param_names )
 	{
 	 	$this->db->query(	'SELECT * FROM `student_courses` ' .
@@ -39,14 +33,18 @@ class RegisterCourse extends Controller
 	 	if( !$this->db->found_rows ) return false;
 	 	return true;
 	}
-	function showView()
-	{
-		$this->db->close();
-		
-		$this->response->send();
-		
+	
+	protected function onShowForm(){
+		$this->response->sendForm();
 	}
 	
+ 	protected function onValid(){
+ 		$this->db->insert('student_courses', array('student_id' => $this->params['user_id'], 'section_id' => $this->params['section_id'], 'is_verified' => '0') );
+ 		$this->db->close();
+ 	}
+ 	
+ 	protected function onInvalid(){
+ 	}
 }
 
 
@@ -59,8 +57,8 @@ $controller->addValidation( 'section_id', 'isParamSet', 'no_section_id_supplied'
 $controller->addValidation( 'user_id', 'isNotAlreadyRegistered', 'course_already_registered', true );
 $controller->addValidation( 'user_id', 'userExists', 'no_user_id_found', true );
 
-if( $controller->validate() ) 
-	$controller->execute();
+
+$controller->execute();
 
 		
 

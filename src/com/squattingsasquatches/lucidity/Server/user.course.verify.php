@@ -13,11 +13,6 @@ include('class.controller.php');
 
 class VerifyCourse extends Controller
 {
-	function execute()
-	{
-	 	$this->db->update('student_courses', array('is_verified' => '1'), 'course_id = ? AND student_id = ?', array($this->params['course_id'], $this->params['student_id']) );
-	
-	}
 	function isProfessorOfCourse( $param_names )
 	{
 		$this->db->query('SELECT * FROM `user_devices` AS ud, `professors` AS p, `courses` AS c, `professor_courses` AS pc WHERE ud.device_id = ? AND p.user_id = ud.user_id AND p.user_id = pc.professor_id AND pc.course_id = c.id  AND c.id = ?', array('device_id' => $this->params[$param_names[0]], 'course_id' => $this->params[$param_names[1]] ));
@@ -42,6 +37,13 @@ class VerifyCourse extends Controller
 		
 	}
 	
+	protected function onShowForm(){}
+ 	protected function onValid(){
+ 		$this->db->update('student_courses', array('is_verified' => '1'), 'course_id = ? AND student_id = ?', array($this->params['course_id'], $this->params['student_id']) );
+ 	}
+ 	protected function onInvalid(){
+
+ 	}
 }
 
 
@@ -55,8 +57,8 @@ $controller->addValidation( 'student_id', 'isParamSet', 'no_student_id_supplied'
 $controller->addValidation( 'device_id', 'userExists', 'no_user_id_found', true );
 $controller->addValidation( array( 'device_id', 'course_id' ), 'isProfessorOfCourse', 'user_not_professor_of_course', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
+
 
 ?>

@@ -8,20 +8,6 @@
  */
  class EditLecture extends Controller
 {
-	function execute()
-	{
-		$db->update('	lectures',
-		 
-						array( 	'course_id' 	=> 	$this->params['course_id'], 
-								'lecture_name' 	=> 	$this->params['lecture_name'] ), 
-						
-						'lecture_id = ?',
-						 
-						array( $this->params['lecture_id'] ) );
-						
-						
-		$this->db->close();
-	}
 	function lectureExists( $param_names )
 	{
 		$db->select('course_id', 'lectures', 'id = ?', false, false, array( $this->params['lecture_id'] ) );
@@ -37,13 +23,22 @@
 		
 		return true;
 	}
-	function showView()
-	{
-	 	$this->response->addData( $this->params );
-	 	
-		$this->response->send();
-	}
 	
+	protected function onShowForm(){}
+ 	protected function onValid(){
+ 		$this->db->update('	lectures',
+		 
+						array( 	'course_id' 	=> 	$this->params['course_id'], 
+								'lecture_name' 	=> 	$this->params['lecture_name'] ), 
+						
+						'lecture_id = ?',
+						 
+						array( $this->params['lecture_id'] ) );
+						
+						
+ 	}
+ 	protected function onInvalid(){
+ 	}
 }
  
  /* Main */
@@ -56,8 +51,8 @@ $controller->addValidation( 'lecture_name', 'isParamSet', 'no_lecture_name_suppl
 $controller->addValidation( 'lecture_id', 'isParamSet', 'no_lecture_id_supplied', true );
 $controller->addValidation( array( 'device_id', 'lecture_id'), 'isProfessorOfLecture', 'user_not_professor_of_lecture', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
+
  	
 ?>

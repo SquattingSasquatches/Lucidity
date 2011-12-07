@@ -13,22 +13,7 @@ include('class.controller.php');
 
 class EditQuestion extends Controller
 {
-	function execute()
-	{
-	 	$db->update('questions', 
-	 				array( 	'quiz_id' 				=> $this->params['quiz_id'], 
-							'order' 				=> $this->params['order'],
-							'text' 					=> $this->params['text'], 	
-							'correct_answer_id' 	=> $this->params['correct_answer_id'],
-							'max_num_of_answers' 	=> $this->params['max_num_of_answers']    
-							) 
-					);
-		
-		
-		$db->close();
-		
 	
-	}
 	function isNotDuplicateQuestion( $param_names )
 	{
 	 	$this->db->query('SELECT * FROM `questions` AS qu, `quizzes` as q WHERE qu.quiz_id = ? AND qu.text = ?', array('quiz_id' => $this->params[$param_names[0]], 'text' => $this->params[$param_names[1]] ));
@@ -70,13 +55,23 @@ class EditQuestion extends Controller
 		
 		return true;
 	}
-	function showView()
-	{
-		$this->response->addData( $this->params );
-	 	
-		$this->response->send();
-	}
 	
+	
+	protected function onShowForm(){}
+ 	protected function onValid(){
+ 		$db->update('questions', 
+	 				array( 	'quiz_id' 				=> $this->params['quiz_id'], 
+							'order' 				=> $this->params['order'],
+							'text' 					=> $this->params['text'], 	
+							'correct_answer_id' 	=> $this->params['correct_answer_id'],
+							'max_num_of_answers' 	=> $this->params['max_num_of_answers']    
+							) 
+					);
+		
+		
+ 	}
+ 	protected function onInvalid(){
+ 	}
 }
 
 
@@ -94,9 +89,9 @@ $controller->addValidation( 'quiz_id', 'quizExists', 'quiz_not_found', true );
 $controller->addValidation( array( 'device_id', 'course_name' ), 'isNotDuplicateQuestion', 'question_already_exists', true );
 $controller->addValidation( array( 'device_id', 'question_id' ), 'isProfessorOfQuestion', 'user_not_professor_of_question', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
+
  	
  	
  	

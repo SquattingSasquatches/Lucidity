@@ -9,17 +9,6 @@
 
 class ViewQuizResults extends Controller
 {
-	function execute()
-	{
-	 	$db->select('*', 'quiz_results', 'quiz_id  = ?', false, false, array( $this->params['quiz_id'] ) );
-	 	
-	 	$records = $this->db->fetch_assoc_all();
-	 	
-	 	$this->response->addData( $records );
-	 	
-		$this->db->close();
-	
-	}
 	
 	function isProfessorOfQuiz( $param_names )
 	{
@@ -45,6 +34,19 @@ class ViewQuizResults extends Controller
 		
 		return true;
 	}
+	
+	protected function onShowForm(){}
+ 	protected function onValid(){
+ 		$db->select('*', 'quiz_results', 'quiz_id  = ?', false, false, array( $this->params['quiz_id'] ) );
+	 	
+	 	$records = $this->db->fetch_assoc_all();
+	 	
+	 	$this->response->addData( $records );
+	 	
+ 	}
+ 	protected function onInvalid(){
+ 		
+ 	}
 }
 
 
@@ -56,9 +58,8 @@ $controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', 
 $controller->addValidation( 'quiz_id', 'isParamSet', 'no_quiz_id_supplied', true );
 $controller->addValidation( array( 'device_id', 'quiz_id'), 'isProfessorOfQuiz', 'user_not_professor_of_quiz', true );
 
+$controller->execute();
 
-if( $controller->validate() ) $controller->execute();
 
-$controller->showView();
 
 ?>

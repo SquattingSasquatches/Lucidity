@@ -12,17 +12,18 @@
  
 class CourseDescriptionView extends Controller
 {
- 	function execute()
- 	{
+ 	
+ 	
+	protected function onShowForm(){}
+ 	protected function onValid(){
  		$this->db->query('select course_number, name as course_name, description as course_description, short_name as subject_prefix from `courses` as C inner join `subjects` as S on subject_id = S.id where C.id = ' . $this->params['course_id']);
  	
 	 	$records = $this->db->fetch_assoc_all();
 	
 		$this->response->addData( $records );
-		
-		$this->db->close();
+	}
+ 	protected function onInvalid(){
  	}
- 	
 }
  
 

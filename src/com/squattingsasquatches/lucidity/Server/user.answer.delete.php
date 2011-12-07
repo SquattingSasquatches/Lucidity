@@ -7,11 +7,6 @@
  */
  class DeleteAnswer extends Controller
 {
-	function execute()
-	{
-	 	$db->delete('answers', 'id = ?', array($this->params['answer_id'] ) );
-		$this->db->close();
-	}
 	function answerExists( $param_names )
 	{
 		$db->select('id', 'answers', 'id = ?', false, false, array( $this->params['answer_id'] ) );
@@ -46,13 +41,13 @@
 		
 		return true;
 	}
-	function showView()
-	{
-	 	$this->response->addData( $this->params );
-	 	
-		$this->response->send();
-	}
 	
+	protected function onShowForm(){}
+ 	protected function onValid(){
+ 		$db->delete('answers', 'id = ?', array($this->params['answer_id'] ) );
+	}
+ 	protected function onInvalid(){
+ 	}
 }
  
  /* Main */
@@ -63,9 +58,9 @@ $controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', 
 $controller->addValidation( 'answer_id', 'isParamSet', 'no_answer_id_supplied', true );
 $controller->addValidation( array( 'device_id', 'answer_id' ), 'isProfessorOfAnswer', 'user_not_professor_of_answer', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
+
  
   
 ?>

@@ -13,9 +13,17 @@ include('class.controller.php');
 
 class AddQuizResult extends Controller
 {
-	function execute()
+	function userExists( $param_names )
 	{
-	 	$db->insert('quiz_results', 
+		$this->db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $this->params[$param_names[0]] ));
+	 	
+	 	if( !$records = $db->fetch_assoc_all() ) return false;
+	 	return true;
+	}
+	
+	protected function onShowForm(){}
+ 	protected function onValid(){
+ 		$db->insert('quiz_results', 
 	 				array( 	'student_id' 			=> $this->params['student_id'],
 	 						'question_id' 			=> $this->params['question_id'],
 	 						'quiz_id' 				=> $this->params['quiz_id'],
@@ -25,24 +33,9 @@ class AddQuizResult extends Controller
 					);
 		
 		
-		$db->close();
-		
-	
-	}
-	function userExists( $param_names )
-	{
-		$this->db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $this->params[$param_names[0]] ));
-	 	
-	 	if( !$records = $db->fetch_assoc_all() ) return false;
-	 	return true;
-	}
-	function showView()
-	{
-		$this->response->addData( $this->params );
-	 	
-		$this->response->send();
-	}
-	
+ 	}
+ 	protected function onInvalid(){
+ 	}
 }
 
 
@@ -56,9 +49,8 @@ $controller->addValidation( 'quiz_id', 'isParamSet', 'no_quiz_id_supplied', true
 $controller->addValidation( 'selected_answer_id', 'isParamSet', 'no_selected_answer_id_supplied', true );
 $controller->addValidation( 'device_id', 'userExists', 'no_user_id_found', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
  	
  	
  	

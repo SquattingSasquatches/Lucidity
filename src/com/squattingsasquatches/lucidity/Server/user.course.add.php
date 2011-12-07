@@ -11,15 +11,10 @@
  
 include('class.controller.php');
 
+
+
 class AddCourse extends Controller
 {
-	function execute()
-	{
-	 	$db->insert('courses', array('course_number' => $this->params['course_number'], 'subject_id' => $this->params['subject_id'], 'uni_id' => $this->params['uni_id'], 'name' => $this->params['course_name'], start_date => $this->params['start_date'], 'end_date' => $this->params['end_date'], 'course_description' => $this->params['course_description']     ) );
-		
-		$db->close();
-	
-	}
 	function isNotDuplicateCourse( $param_names )
 	{
 	 	$this->db->query('select id from `courses` where course_number = ? and uni_id = ? and subject_id = ?', array('course_number' => $this->params[$param_names[0]], 'uni_id' => $this->params[$param_names[1]], 'subject_id' => $this->params[$param_names[2]] ));
@@ -38,11 +33,53 @@ class AddCourse extends Controller
 	}
 	function showView()
 	{
+		$this->db->select('*', 'subjects');
+		
+		if( $records = $this->db->fetch_assoc_all() )
+			$this->response->addData( $records,'subjects' );
+		
+		
+		$this->db->select('*', 'unis');
+		
+		
+		if( $records = $this->db->fetch_assoc_all() )
+			$this->response->addData( $records, 'universities' );
+		
+		
+		
+		
 		$this->response->addData( $this->params );
 	 	
 		$this->response->send();
 	}
+	protected function onShowForm()
+	{
+		$this->db->select('*', 'subjects');
+		
+		if( $records = $this->db->fetch_assoc_all() )
+			$this->response->addFormData( $records,'subjects' );
+		
+		
+		$this->db->select('*', 'unis');
+		
+		
+		if( $records = $this->db->fetch_assoc_all() )
+			$this->response->addFormData( $records, 'universities' );
+		
+		
+		
+		
+		$this->response->addData( $this->params );
+		
+ 		$this->response->sendForm();
+	}
 	
+ 	protected function onValid(){
+ 		$db->insert('courses', array('course_number' => $this->params['course_number'], 'subject_id' => $this->params['subject_id'], 'uni_id' => $this->params['uni_id'], 'name' => $this->params['course_name'], start_date => $this->params['start_date'], 'end_date' => $this->params['end_date']     ) );
+		
+ 	}
+ 	protected function onInvalid(){
+ 	}
 }
 
 
@@ -60,9 +97,8 @@ $controller->addValidation( 'end_date', 'isParamSet', 'no_end_date_supplied', tr
 $controller->addValidation( array( 'course_number', 'uni_id', 'subject_id' ), 'isNotDuplicateCourse', 'course_already_exists', true );
 $controller->addValidation( 'device_id', 'isProfessor', 'user_not_professor_of_course', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
  	
  	
  	

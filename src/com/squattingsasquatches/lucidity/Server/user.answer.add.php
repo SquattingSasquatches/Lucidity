@@ -13,19 +13,6 @@ include('class.controller.php');
 
 class AddAnswer extends Controller
 {
-	function execute()
-	{
-	 	$db->insert('answers', 
-	 				array( 	'question_id' 			=> $this->params['question_id'],
-							'text' 					=> $this->params['text']    
-							) 
-					);
-		
-		
-		$db->close();
-		
-	
-	}
 	function isNotDuplicateAnswer( $param_names )
 	{
 	 	$this->db->query(	'SELECT * FROM ' .
@@ -64,13 +51,21 @@ class AddAnswer extends Controller
 		
 		return true;
 	}
-	function showView()
-	{
-		$this->response->addData( $this->params );
-	 	
-		$this->response->send();
-	}
 	
+	
+	protected function onShowForm(){}
+ 	protected function onValid(){
+ 		$this->db->insert('answers', 
+	 				array( 	'question_id' 			=> $this->params['question_id'],
+							'text' 					=> $this->params['text']    
+							) 
+					);
+		
+		
+ 	}
+ 	protected function onInvalid(){
+ 		$this->response->addData( $this->params );
+ 	}
 }
 
 
@@ -84,9 +79,8 @@ $controller->addValidation( 'text', 'isParamSet', 'no_text_supplied', true );
 $controller->addValidation( array( 'question_id', 'text' ), 'isNotDuplicateAnswer', 'answer_already_exists', true );
 $controller->addValidation( array( 'device_id', 'question_id' ), 'isProfessorOfQuestion', 'user_not_professor_of_question', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
  	
  	
  	

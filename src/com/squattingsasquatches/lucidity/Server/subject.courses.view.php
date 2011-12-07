@@ -12,18 +12,18 @@
  
 class SubjectCoursesView extends Controller
 {
- 	function execute()
- 	{
- 		 
+ 	
+	protected function onShowForm(){}
+ 	protected function onValid(){
  		$this->db->select("courses", "*", "subject_id = ?", array($this->params['subject_id']));
  	
 	 	$records = $this->db->fetch_assoc_all();
 	
 		$this->response->addData( $records );
 		
-		$this->db->close();
  	}
- 	
+ 	protected function onInvalid(){
+ 	}
 }
  
 
@@ -32,9 +32,9 @@ $controller = new SubjectCoursesView();
 
 $controller->addValidation( 'subject_id', 'isParamSet', 'no_subject_id_supplied', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
+
 
 	
 ?>

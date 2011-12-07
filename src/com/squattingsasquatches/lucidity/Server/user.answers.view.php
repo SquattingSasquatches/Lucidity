@@ -9,17 +9,6 @@
 
 class ViewAnswers extends Controller
 {
-	function execute()
-	{
-	 	$db->select('*', 'answers', 'question_id  = ?', false, false, array( $this->params['quuestion_id'] ) );
-	 	
-	 	$records = $this->db->fetch_assoc_all();
-	 	
-	 	$this->response->addData( $records );
-	 	
-		$this->db->close();
-	
-	}
 	
 	function isProfessorOfQuestion( $param_names )
 	{
@@ -46,6 +35,19 @@ class ViewAnswers extends Controller
 		
 		return true;
 	}
+	
+	protected function onShowForm(){}
+ 	protected function onValid(){$db->select('*', 'answers', 'question_id  = ?', false, false, array( $this->params['quuestion_id'] ) );
+	 	
+	 	$records = $this->db->fetch_assoc_all();
+	 	
+	 	$this->response->addData( $records );
+	 	
+ 		
+ 		}
+ 	protected function onInvalid(){
+ 		
+ 	}
 }
 
 
@@ -58,8 +60,8 @@ $controller->addValidation( 'question_id', 'isParamSet', 'no_question_id_supplie
 $controller->addValidation( array( 'device_id', 'question_id' ), 'isProfessorOfQuestion', 'user_not_professor_of_question', true );
 
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
+
 
 ?>
