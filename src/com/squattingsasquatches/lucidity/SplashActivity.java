@@ -51,7 +51,6 @@ public class SplashActivity extends Activity {
 		super.onCreateOptionsMenu(menu);
 		
 		int groupId = 0;
-		
 		int menuItemId = MENU_ITEM;
 		int menuItemOrder = Menu.NONE;
 		
