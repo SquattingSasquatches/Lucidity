@@ -48,5 +48,7 @@ $this->messages['question_not_found']				= new Message( MessageType::Error, 29, 
 $this->messages['answer_not_found']					= new Message( MessageType::Error, 30, 'Selected answer does not exist.');
 $this->messages['quiz_result_not_found']			= new Message( MessageType::Error, 31, 'Selected quiz result does not exist.');
 $this->messages['no_section_id_supplied']			= new Message( MessageType::Error, 32, 'Missing parameter: section_id');
+$this->messages['no_c2dm_id_supplied']				= new Message( MessageType::Error, 33, 'Missing parameter: c2dm_id');
+$this->messages['no_university_found']				= new Message( MessageType::Error, 34, 'University not found.');
 
 ?>

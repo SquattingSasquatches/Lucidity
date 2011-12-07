@@ -27,6 +27,10 @@
 		include( dirname( __FILE__ ) . '/lang/' . $this->locale . '/errors.php');
 		
  	}
+ 	function addSuccess( )
+ 	{
+ 		$this->addData( $this->messages['success'] );
+ 	}
  	function addData( $data )
  	{
  	
