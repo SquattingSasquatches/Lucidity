@@ -84,14 +84,18 @@ public class LocalDBAdapter {
 		String[] columns = {KEY_ID};
 		Cursor result = db.query(USER_TABLE, columns, null, null, null, null, null);
 		result.moveToFirst();
-		return result.getInt(0);
+		int userId = result.getInt(0);
+		result.close();
+		return userId;
 	}
 	
 	public int getUserUniId() {
 		String[] columns = {KEY_UNI_ID};
 		Cursor result = db.query(USER_TABLE, columns, null, null, null, null, null);
 		result.moveToFirst();
-		return result.getInt(0);
+		int uniId = result.getInt(0);
+		result.close();
+		return uniId;
 	}
 	
 	public long saveSectionInfo(Section section) {

@@ -4,19 +4,40 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg"
     android:orientation="vertical" >
+   	
+   	<LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_bg" >
+
+        <TextView
+            android:id="@+id/txtHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            android:id="@+id/btnNotifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawingCacheQuality="high"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="0"
+            android:textColor="#666666" />
+
+    </LinearLayout>
     
-       <LinearLayout
+    <!-- bottom border for header -->
+   	<LinearLayout
         android:id="@+id/headerBorder"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#2b80cd" />
-   	
-   	<TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Assignment Name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
    	
    	<TextView
    	    android:layout_width="match_parent"
@@ -24,13 +45,12 @@
    	    android:gravity="right"
    	    android:textStyle="bold"
    	    android:background="#FF3688d9"
-   	    android:text="Assignment Description" />
+   	    android:text="@string/assignment_descrip" />
     
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     	
     <TextView
@@ -39,13 +59,12 @@
    	    android:gravity="right"
    	    android:textStyle="bold"
    	    android:background="#FF3688d9"
-   	    android:text="Due On" />
+   	    android:text="@string/due_date" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Due Date"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

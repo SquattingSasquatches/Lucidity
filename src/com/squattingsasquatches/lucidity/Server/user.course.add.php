@@ -31,27 +31,7 @@ class AddCourse extends Controller
 		
 		return true;
 	}
-	function showView()
-	{
-		$this->db->select('*', 'subjects');
-		
-		if( $records = $this->db->fetch_assoc_all() )
-			$this->response->addData( $records,'subjects' );
-		
-		
-		$this->db->select('*', 'unis');
-		
-		
-		if( $records = $this->db->fetch_assoc_all() )
-			$this->response->addData( $records, 'universities' );
-		
-		
-		
-		
-		$this->response->addData( $this->params );
-	 	
-		$this->response->send();
-	}
+	
 	protected function onShowForm()
 	{
 		$this->db->select('*', 'subjects');
@@ -67,11 +47,6 @@ class AddCourse extends Controller
 			$this->response->addFormData( $records, 'universities' );
 		
 		
-		
-		
-		$this->response->addData( $this->params );
-		
- 		$this->response->sendForm();
 	}
 	
  	protected function onValid(){
@@ -79,6 +54,8 @@ class AddCourse extends Controller
 		
  	}
  	protected function onInvalid(){
+ 		$this->response->addData( $this->params );
+ 		$this->onShowForm();
  	}
 }
 
