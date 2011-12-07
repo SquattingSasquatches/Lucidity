@@ -32,6 +32,7 @@ public class LocalDBAdapter {
 	public static final String KEY_SUBJECT_ID = "subject_id";
 	public static final String KEY_SUBJECT_PREFIX = "subject_prefix";
 	public static final String KEY_PROFESSOR_ID = "professor_id";
+	public static final String KEY_SECTION_ID = "section_id";
 	public static final String KEY_START_TIME = "start_time";
 	public static final String KEY_END_TIME = "end_time";
 	public static final String KEY_C2DM_IS_REGISTERED = "c2dm_is_registered";
@@ -93,21 +94,40 @@ public class LocalDBAdapter {
 		return result.getInt(0);
 	}
 	
+	public long saveSectionInfo(Section section) {
+		ArrayList<Section> wrapper = new ArrayList<Section>();
+		wrapper.add(section);
+		return saveSectionInfo(wrapper);
+	}
+	
 	// save user section info to local DB
 	public long saveSectionInfo(ArrayList<Section> sections) {
 		ContentValues sectionInfo = new ContentValues();
+		String[] columns = {KEY_SECTION_ID};
+		long result = -1;
 		for (Section s : sections) {
-			sectionInfo.put(KEY_ID, s.getId());
-			sectionInfo.put(KEY_SECTION_NUMBER, s.getName());
-			sectionInfo.put(KEY_COURSE_ID, s.getCourse().getId());
-			sectionInfo.put(KEY_PROFESSOR_ID, s.getProfessor().getId());
-			sectionInfo.put(KEY_DAYS, s.getDays());
-			sectionInfo.put(KEY_LOCATION, s.getLocation());
-			sectionInfo.put(KEY_START_TIME, s.getStartTime().format("%l:%M %P").trim());
-			sectionInfo.put(KEY_END_TIME, s.getEndTime().format("%l:%M %P").trim());
-			sectionInfo.put(KEY_VERIFIED, s.getIsVerified());
+			String[] args = {String.valueOf(s.getId())};
+			Cursor sectionExists = db.query(SECTIONS_TABLE, columns, KEY_SECTION_ID + " = ?", args, null, null, null, null);
+			if (sectionExists.getCount() == 0) {
+				Log.i("saveSectionInfo", "Saving section_id " + s.getId());
+				sectionInfo = new ContentValues();
+				sectionInfo.put(KEY_SECTION_ID, s.getId());
+				sectionInfo.put(KEY_SUBJECT_PREFIX, s.getCourse().getSubject().getPrefix());
+				sectionInfo.put(KEY_COURSE_NUMBER, s.getCourse().getCourseNum());
+				sectionInfo.put(KEY_SECTION_NUMBER, s.getName());
+				sectionInfo.put(KEY_COURSE_ID, s.getCourse().getId());
+				sectionInfo.put(KEY_PROFESSOR_ID, s.getProfessor().getId());
+				sectionInfo.put(KEY_PROFESSOR_NAME, s.getProfessor().getName());
+				sectionInfo.put(KEY_DAYS, s.getDays());
+				sectionInfo.put(KEY_LOCATION, s.getLocation());
+				sectionInfo.put(KEY_START_TIME, s.getStartTime());
+				sectionInfo.put(KEY_END_TIME, s.getEndTime());
+				sectionInfo.put(KEY_VERIFIED, s.getIsVerified());
+				result = db.insert(SECTIONS_TABLE, null, sectionInfo);
+				Log.i("result", result+"");
+			}
 		}
-		return db.insert(SECTIONS_TABLE, null, sectionInfo);
+		return result;
 	}
 	
 	public JSONArray getSections() {
@@ -119,17 +139,33 @@ public class LocalDBAdapter {
 		
 		while (!result.isAfterLast()) {
             try {
+            	Log.i("json", "{\"" +
+								KEY_SECTION_ID + "\": \"" + result.getInt(0) + "\", \"" +
+								KEY_SUBJECT_PREFIX + "\": \"" + result.getString(1) + "\", \"" +
+								KEY_COURSE_NUMBER + "\": \"" + result.getInt(2) + "\", \"" +
+								KEY_SECTION_NUMBER + "\": \"" + result.getString(3) + "\", \"" +
+								KEY_COURSE_ID + "\": \"" + result.getInt(4) + "\", \"" +
+								KEY_PROFESSOR_ID + "\": \"" + result.getInt(5) + "\", \"" +
+								KEY_PROFESSOR_NAME + "\": \"" + result.getString(6) + "\", \"" +
+								KEY_DAYS + "\": \"" + result.getString(8) + "\", \"" +
+								KEY_LOCATION + "\": \"" + result.getString(7) + "\", \"" +
+								KEY_START_TIME + "\": \"" + result.getString(9) + "\", \"" +
+							    KEY_END_TIME + "\": \"" + result.getString(10) + "\", \"" +
+							    KEY_VERIFIED + "\": \"" + result.getInt(11) + "\"}");
 				sections.put(
 						new JSONObject("{\"" +
-									KEY_ID + "\": " + result.getInt(0) + ", \"" +
-									KEY_SECTION_NUMBER + "\": " + result.getString(1) + ", \"" +
-									KEY_COURSE_ID + "\": " + result.getInt(2) + ", \"" +
-									KEY_PROFESSOR_ID + "\": " + result.getInt(3) + ", \"" +
-									KEY_DAYS + "\": " + result.getString(4) + ", \"" +
-									KEY_LOCATION + "\": " + result.getString(5) + ", \"" +
-									KEY_START_TIME + "\": " + result.getString(6) + ", \"" +
-								    KEY_END_TIME + "\": " + result.getString(7) + ", \"" +
-								    KEY_VERIFIED + "\": " + result.getInt(8) + ", \""));
+									KEY_SECTION_ID + "\": \"" + result.getInt(0) + "\", \"" +
+									KEY_SUBJECT_PREFIX + "\": \"" + result.getString(1) + "\", \"" +
+									KEY_COURSE_NUMBER + "\": \"" + result.getInt(2) + "\", \"" +
+									KEY_SECTION_NUMBER + "\": \"" + result.getString(3) + "\", \"" +
+									KEY_COURSE_ID + "\": \"" + result.getInt(4) + "\", \"" +
+									KEY_PROFESSOR_ID + "\": \"" + result.getInt(5) + "\", \"" +
+									KEY_PROFESSOR_NAME + "\": \"" + result.getString(6) + "\", \"" +
+									KEY_DAYS + "\": \"" + result.getString(8) + "\", \"" +
+									KEY_LOCATION + "\": \"" + result.getString(7) + "\", \"" +
+									KEY_START_TIME + "\": \"" + result.getString(9) + "\", \"" +
+								    KEY_END_TIME + "\": \"" + result.getString(10) + "\", \"" +
+								    KEY_VERIFIED + "\": \"" + result.getInt(11) + "\"}"));
 			} catch (JSONException e) {
 				Log.d("getSections()", "JSON error");
 			} finally {
@@ -155,10 +191,13 @@ public class LocalDBAdapter {
 		private static final String DB_CREATE_SECTIONS_TABLE = 
 										"create table " +
 												SECTIONS_TABLE +
-												" (" + KEY_ID + " INTEGER not null, " +
+												" (" + KEY_SECTION_ID + " INTEGER not null, " +
+													   KEY_SUBJECT_PREFIX + " TEXT not null, " +
+													   KEY_COURSE_NUMBER + " TEXT not null, " +
 													   KEY_SECTION_NUMBER + " TEXT not null, " +
 													   KEY_COURSE_ID + " INTEGER not null, " +
 													   KEY_PROFESSOR_ID + " INTEGER not null, " +
+													   KEY_PROFESSOR_NAME + " TEXT not null, " +
 													   KEY_DAYS + " TEXT not null, " +
 													   KEY_LOCATION + " TEXT not null, " +
 													   KEY_START_TIME + " TEXT not null, " +

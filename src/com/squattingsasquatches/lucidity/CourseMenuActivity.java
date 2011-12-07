@@ -8,10 +8,8 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,7 +30,6 @@ public class CourseMenuActivity extends Activity {
 	private Intent nextActivity;
 	private ArrayList<Section> userSections;
 	private int userId;
-	private Context ctx;
 	private boolean updateCourses;
 	
 	InternalReceiver getCourses;
@@ -53,7 +50,6 @@ public class CourseMenuActivity extends Activity {
         
         updateCourses = getIntent().getBooleanExtra("com.squattingsasquatches.updateCourses", false);
         
-        ctx = this;
         userSections = new ArrayList<Section>();
         coursesListView = (ListView) findViewById(R.id.ListContainer);
         loading = new ProgressDialog(this);
@@ -100,47 +96,53 @@ public class CourseMenuActivity extends Activity {
 		for (int i = 0; i < resultLength; ++i) {
 			try {
 				JSONObject section = data.getJSONObject(i);
+				
 				userSections.add(new Section(
-									section.getInt(LocalDBAdapter.KEY_ID),
+									section.getInt(LocalDBAdapter.KEY_SECTION_ID),
 									section.getString(LocalDBAdapter.KEY_SECTION_NUMBER),
-									new Course(section.getInt(LocalDBAdapter.KEY_COURSE_ID), section.getInt(LocalDBAdapter.KEY_COURSE_NUMBER)),
+									new Course(section.getInt(LocalDBAdapter.KEY_COURSE_ID), section.getInt(LocalDBAdapter.KEY_COURSE_NUMBER),
+											new Subject(section.getString(LocalDBAdapter.KEY_SUBJECT_PREFIX))),
 									new User(section.getInt(LocalDBAdapter.KEY_PROFESSOR_ID), section.getString(LocalDBAdapter.KEY_PROFESSOR_NAME)),
 									section.getString(LocalDBAdapter.KEY_DAYS),
 									section.getString(LocalDBAdapter.KEY_LOCATION),
-									new Time(section.getString(LocalDBAdapter.KEY_START_TIME)),
-									new Time(section.getString(LocalDBAdapter.KEY_END_TIME)),
+									section.getString(LocalDBAdapter.KEY_START_TIME),
+									section.getString(LocalDBAdapter.KEY_END_TIME),
 									section.getInt(LocalDBAdapter.KEY_VERIFIED)));
 			} catch (JSONException e) {
 				Log.d("getCoursesCallback", "JSON error");
 			}
 		}
 		
-		if (updateCourses)
+		if (updateCourses && resultLength > 0)
 			localDB.saveSectionInfo(userSections);
 		
 		attachCourseOnClickListener();
 	}
+	
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Object o = coursesListView.getItemAtPosition(position);
-			Course course = (Course) o;
+			Section section = (Section) o;
 			
-			switch (course.getId()) {
+			switch (section.getId()) {
 				case -1:
 					// Add a Course
 					// Start SubjectsActivity
-					nextActivity = new Intent(ctx, SelectSubjectActivity.class);
+					nextActivity = new Intent(CourseMenuActivity.this, SelectSubjectActivity.class);
 					nextActivity.putExtra("com.squattingsasquatches.userId", userId);
 					startActivity(nextActivity);
 					break;
 				default:
-					// load selected course and start Course activity
+					// load selected course and start CourseHome activity
+					/*nextActivity = new Intent(CourseMenuActivity.this, CourseHomeActivity.class);
+					nextActivity.putExtra("com.squattingsasquatches.sectionId", section.getId());
+					startActivity(nextActivity);*/
 					break;
 			}
 		}
 	};
 	
-	/* NOT NEEDED FOR THIS ACTIVITY ANYMORE BUT COULD STILL USE IT TO VALIDATE UNIVERSITIES IN SPLASH
+	/* NOT NEEDED FOR THIS ACTIVITY ANYMORE BUT COULD STILL USE IT TO VALIDATE UNIVERSITIES IN SPLASH. ALL CAPS YELLING.
 	class ValidateStarter implements OnFocusChangeListener {
 		
         public void onFocusChange(View v, boolean hasFocus) {

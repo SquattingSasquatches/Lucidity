@@ -1,6 +1,5 @@
 package com.squattingsasquatches.lucidity;
 
-import android.text.format.Time;
 
 public class Section extends ExtendedDataItem {
 	
@@ -8,15 +7,19 @@ public class Section extends ExtendedDataItem {
 	private User professor;
 	private String location;
 	private String days;
-	private Time startTime;
-	private Time endTime;
+	private String startTime;
+	private String endTime;
 	private int isVerified;
 
 	public Section(int id, String name) {
-		this(id, name, new Course(), new User(), "", "", new Time(), new Time(), 0);
+		this(id, name, new Course(), new User(), "", "", "", "", 0);
 	}
 	
-	public Section(int id, String name, Course course, User professor, String location, String days, Time startTime, Time endTime, int isVerified) {
+	public Section(int id, String name, Course course, User professor, String location, String days, String startTime, String endTime) {
+		this(id, name, course, professor, location, days, startTime, endTime, 0);
+	}
+	
+	public Section(int id, String name, Course course, User professor, String location, String days, String startTime, String endTime, int isVerified) {
 		super(id, name);
 		this.setCourse(course);
 		this.setProfessor(professor);
@@ -26,7 +29,7 @@ public class Section extends ExtendedDataItem {
 		this.setEndTime(endTime);
 		this.setIsVerified(isVerified);
 		this.setItemInfo1("Instructor: " + professor.toString());
-		this.setItemInfo2("Meets: " + days + " at " + startTime.format("%l:%M %P").trim() + " - " + endTime.format("%l:%M %P").trim());
+		this.setItemInfo2("Meets: " + days + " at " + startTime + " - " + endTime);
 	}
 	
 	public Course getCourse() {
@@ -61,19 +64,19 @@ public class Section extends ExtendedDataItem {
 		this.days = days;
 	}
 
-	public Time getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Time startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Time getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Time endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 	
@@ -87,7 +90,9 @@ public class Section extends ExtendedDataItem {
 	
 	@Override
 	public String toString() {
-		return getCourse().getSubject().getPrefix() + " " + getCourse().getCourseNum() + "-" + getName();
+		if (getCourse().getCourseNum() > 0)
+			return getCourse().getSubject().getPrefix() + " " + getCourse().getCourseNum() + "-" + getName();
+		return getName();
 	}
 	
 }

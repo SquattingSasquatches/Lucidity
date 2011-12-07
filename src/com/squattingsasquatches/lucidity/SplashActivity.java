@@ -40,12 +40,10 @@ public class SplashActivity extends Activity {
 	private User user;
 	
 	@Override
-	public void onPause() {
-		super.onPause();
+	public void onDestroy() {
+		super.onDestroy();
 		remoteDB.unregisterAllReceivers();
 		DeviceRegistrar.unregisterReceiver(this, remoteRegistration);
-		if (localDB != null)
-			localDB.close();
 	}
 	
     /** Called when the activity is first created. */
@@ -180,9 +178,9 @@ public class SplashActivity extends Activity {
     /* switch to CourseMenu Activity and grab courses from remote DB */
     public void goToCourseList(boolean updateCourses) {
     	nextActivity = new Intent(this, CourseMenuActivity.class);
-    	Log.i("userId", user.getId() + "");
-		nextActivity.putExtra("com.squattingsasquatches.userId", user.getId());
+		nextActivity.putExtra("com.squattingsasquatches.userId", localDB.getUserId());
 		nextActivity.putExtra("com.squattingsasquatches.updateCourses", updateCourses);
+		localDB.close();
 		startActivity(nextActivity);
 		finish(); //just this one time
     }
@@ -215,7 +213,6 @@ public class SplashActivity extends Activity {
 			case Codes.SUCCESS:
 				// change to main activity
 				Log.d("Login", "SUCCESS");
-				user.setId(localDB.getUserId());
 				goToCourseList();
 				break;
 			default:
@@ -229,17 +226,16 @@ public class SplashActivity extends Activity {
     	
     	switch (resultCode) {
 			case Codes.SUCCESS:
-				
-				if (user.getDeviceId().equals("")) {
-					try {
+				try {
+					user.setId(result.getJSONObject(0).getInt("user_id"));
+					Log.e("userId-1", result.getJSONObject(0).getInt("user_id")+"");
+					if (user.getDeviceId().equals(""))
 						user.setDeviceId(result.getJSONObject(0).getString("device_id"));
-					} catch (JSONException e) {
-						Log.e("Register", "device_id not returned by remote server");
-					}
+				} catch (JSONException e) {
+					Log.e("Register", "device_id not returned by remote server");
 				}
 				
-	        	localDB.saveUserData(user);
-	        	localDB.close();
+	        	Log.e("saveUserData", ""+localDB.saveUserData(user));
 				// start course menu activity
 				Log.d("Register", "SUCCESS");
 				goToCourseList(true);
