@@ -71,9 +71,11 @@ public final class R {
         public static final int add_another_course=0x7f050009;
         public static final int add_courses=0x7f050007;
         public static final int app_name=0x7f050001;
+        public static final int assignment_descrip=0x7f05000e;
         public static final int cancel=0x7f05000a;
         public static final int checking_registration=0x7f050005;
         public static final int connection_error=0x7f05000b;
+        public static final int due_date=0x7f05000f;
         public static final int hello=0x7f050000;
         public static final int loading_unis=0x7f050006;
         public static final int my_courses=0x7f050004;
