@@ -10,12 +10,13 @@ public class Section extends ExtendedDataItem {
 	private String days;
 	private Time startTime;
 	private Time endTime;
+	private int isVerified;
 
 	public Section(int id, String name) {
-		this(id, name, new Course(), new User(), "", "", new Time(), new Time());
+		this(id, name, new Course(), new User(), "", "", new Time(), new Time(), 0);
 	}
 	
-	public Section(int id, String name, Course course, User professor, String location, String days, Time startTime, Time endTime) {
+	public Section(int id, String name, Course course, User professor, String location, String days, Time startTime, Time endTime, int isVerified) {
 		super(id, name);
 		this.setCourse(course);
 		this.setProfessor(professor);
@@ -23,6 +24,7 @@ public class Section extends ExtendedDataItem {
 		this.setDays(days);
 		this.setStartTime(startTime);
 		this.setEndTime(endTime);
+		this.setIsVerified(isVerified);
 		this.setItemInfo1("Instructor: " + professor.toString());
 		this.setItemInfo2("Meets: " + days + " at " + startTime.format("%l:%M %P").trim() + " - " + endTime.format("%l:%M %P").trim());
 	}
@@ -75,8 +77,17 @@ public class Section extends ExtendedDataItem {
 		this.endTime = endTime;
 	}
 	
+	public int getIsVerified() {
+		return isVerified;
+	}
+
+	public void setIsVerified(int isVerified) {
+		this.isVerified = isVerified;
+	}
+	
 	@Override
 	public String toString() {
 		return getCourse().getSubject().getPrefix() + " " + getCourse().getCourseNum() + "-" + getName();
 	}
+	
 }

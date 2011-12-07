@@ -21,19 +21,26 @@ public class LocalDBAdapter {
 	// db table and key constants
 	private static final String DB_NAME = "lucidity";
 	private static final String USER_TABLE = "user";
-	private static final String COURSES_TABLE = "courses";
+	private static final String SECTIONS_TABLE = "sections";
 	
-	public static final String KEY_ID = "_id";
+	public static final String KEY_ID = "id";
 	public static final String KEY_UNI_ID = "uni_id";
+	public static final String KEY_COURSE_ID = "course_id";
 	public static final String KEY_NAME = "name";
 	public static final String KEY_C2DM_ID = "c2dm_id";
-	public static final String KEY_COURSE_NUMBER = "course_number";
+	public static final String KEY_SECTION_NUMBER = "section_number";
 	public static final String KEY_SUBJECT_ID = "subject_id";
-	public static final String KEY_PROFESSORS_ID = "professors_id";
-	public static final String KEY_START_DATE = "start_date";
-	public static final String KEY_END_DATE = "end_date";
+	public static final String KEY_SUBJECT_PREFIX = "subject_prefix";
+	public static final String KEY_PROFESSOR_ID = "professor_id";
+	public static final String KEY_START_TIME = "start_time";
+	public static final String KEY_END_TIME = "end_time";
 	public static final String KEY_C2DM_IS_REGISTERED = "c2dm_is_registered";
 	public static final String KEY_C2DM_LAST_CHECK = "c2dm_last_check";
+	public static final String KEY_PROFESSOR_NAME = "professor_name";
+	public static final String KEY_COURSE_NUMBER = "course_number";
+	public static final String KEY_VERIFIED = "is_verified";
+	public static final String KEY_DAYS = "days";
+	public static final String KEY_LOCATION = "location";
 	
 	private Context ctx;
 	private SQLiteDatabase db;
@@ -86,44 +93,51 @@ public class LocalDBAdapter {
 		return result.getInt(0);
 	}
 	
-	// save user course info to local DB
-	public long saveCourseInfo(ArrayList<Course> courses) {
-		ContentValues courseInfo = new ContentValues();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		for (Course c : courses) {
-			courseInfo.put(KEY_COURSE_NUMBER, c.getCourseNum());
-			courseInfo.put(KEY_SUBJECT_ID, c.getSubject().getId());
-			courseInfo.put(KEY_UNI_ID, c.getUni().getId());
-			courseInfo.put(KEY_NAME, c.getName());
-			courseInfo.put(KEY_START_DATE, dateFormat.format(c.getStartDate()));
-			courseInfo.put(KEY_END_DATE, dateFormat.format(c.getEndDate()));
+	// save user section info to local DB
+	public long saveSectionInfo(ArrayList<Section> sections) {
+		ContentValues sectionInfo = new ContentValues();
+		for (Section s : sections) {
+			sectionInfo.put(KEY_ID, s.getId());
+			sectionInfo.put(KEY_SECTION_NUMBER, s.getName());
+			sectionInfo.put(KEY_COURSE_ID, s.getCourse().getId());
+			sectionInfo.put(KEY_PROFESSOR_ID, s.getProfessor().getId());
+			sectionInfo.put(KEY_DAYS, s.getDays());
+			sectionInfo.put(KEY_LOCATION, s.getLocation());
+			sectionInfo.put(KEY_START_TIME, s.getStartTime().format("%l:%M %P").trim());
+			sectionInfo.put(KEY_END_TIME, s.getEndTime().format("%l:%M %P").trim());
+			sectionInfo.put(KEY_VERIFIED, s.getIsVerified());
 		}
-		return db.insert(COURSES_TABLE, null, courseInfo);
+		return db.insert(SECTIONS_TABLE, null, sectionInfo);
 	}
 	
-	public JSONArray getCourses() {
-		JSONArray courses = new JSONArray();
-		Cursor result = db.query(COURSES_TABLE, null, null, null, null, null, null);
-		result.moveToFirst();
+	public JSONArray getSections() {
+		JSONArray sections = new JSONArray();
+		Cursor result = db.query(SECTIONS_TABLE, null, null, null, null, null, null);
+		
+		if (!result.moveToFirst())
+			return sections;
+		
 		while (!result.isAfterLast()) {
             try {
-				courses.put(
+				sections.put(
 						new JSONObject("{\"" +
 									KEY_ID + "\": " + result.getInt(0) + ", \"" +
-								    KEY_NAME + "\": " + result.getString(1) + ", \"" +
-									KEY_COURSE_NUMBER + "\": " + result.getInt(2) + ", \"" +
-									KEY_SUBJECT_ID + "\": " + result.getInt(3) + ", \"" +
-									KEY_UNI_ID + "\": " + result.getInt(4) + ", \"" +
-									KEY_START_DATE + "\": " + result.getString(5) + ", \"" +
-								    KEY_END_DATE + "\": " + result.getString(6)));
+									KEY_SECTION_NUMBER + "\": " + result.getString(1) + ", \"" +
+									KEY_COURSE_ID + "\": " + result.getInt(2) + ", \"" +
+									KEY_PROFESSOR_ID + "\": " + result.getInt(3) + ", \"" +
+									KEY_DAYS + "\": " + result.getString(4) + ", \"" +
+									KEY_LOCATION + "\": " + result.getString(5) + ", \"" +
+									KEY_START_TIME + "\": " + result.getString(6) + ", \"" +
+								    KEY_END_TIME + "\": " + result.getString(7) + ", \"" +
+								    KEY_VERIFIED + "\": " + result.getInt(8) + ", \""));
 			} catch (JSONException e) {
-				Log.d("getCourses()", "JSON error");
+				Log.d("getSections()", "JSON error");
 			} finally {
 				result.moveToNext();
 			}    
         }
 		result.close();
-		return courses;
+		return sections;
 	}
 	
 	public class DBHelper extends SQLiteOpenHelper {
@@ -132,22 +146,24 @@ public class LocalDBAdapter {
 		private static final String DB_CREATE_USERS_TABLE = 
 										"create table " +
 												USER_TABLE + 
-												" (" + KEY_ID + " NUMERIC not null, " +
+												" (" + KEY_ID + " INTEGER not null, " +
 													   KEY_NAME + " TEXT not null, " +
-													   KEY_UNI_ID + " NUMERIC not null, " +
+													   KEY_UNI_ID + " INTEGER not null, " +
 													   KEY_C2DM_ID + " TEXT not null, " +
-													   KEY_C2DM_IS_REGISTERED + " NUMERIC not null, " +
+													   KEY_C2DM_IS_REGISTERED + " INTEGER not null, " +
 													   KEY_C2DM_LAST_CHECK + " TEXT not null); ";
-		private static final String DB_CREATE_COURSES_TABLE = 
+		private static final String DB_CREATE_SECTIONS_TABLE = 
 										"create table " +
-												COURSES_TABLE +
-												" (" + KEY_ID + " INTEGER PRIMARY KEY not null, " +
-													   KEY_NAME + " TEXT not null, " +
-													   KEY_COURSE_NUMBER + " NUMERIC not null, " +
-													   KEY_SUBJECT_ID + " NUMERIC not null, " +
-													   KEY_UNI_ID + " NUMERIC not null, " +
-													   KEY_START_DATE + " TEXT not null, " +
-													   KEY_END_DATE + " TEXT not null);";
+												SECTIONS_TABLE +
+												" (" + KEY_ID + " INTEGER not null, " +
+													   KEY_SECTION_NUMBER + " TEXT not null, " +
+													   KEY_COURSE_ID + " INTEGER not null, " +
+													   KEY_PROFESSOR_ID + " INTEGER not null, " +
+													   KEY_DAYS + " TEXT not null, " +
+													   KEY_LOCATION + " TEXT not null, " +
+													   KEY_START_TIME + " TEXT not null, " +
+													   KEY_END_TIME + " TEXT not null, " +
+													   KEY_VERIFIED + " INTEGER not null);";
 		
 		public DBHelper(Context ctx) {
 			super(ctx, DB_NAME, null, DB_VERSION);
@@ -156,13 +172,13 @@ public class LocalDBAdapter {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(DB_CREATE_USERS_TABLE);
-			db.execSQL(DB_CREATE_COURSES_TABLE);
+			db.execSQL(DB_CREATE_SECTIONS_TABLE);
 		}
 	
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE + ";");
-			db.execSQL("DROP TABLE IF EXISTS " + COURSES_TABLE + ";");
+			db.execSQL("DROP TABLE IF EXISTS " + SECTIONS_TABLE + ";");
 			onCreate(db);
 		}
 	}

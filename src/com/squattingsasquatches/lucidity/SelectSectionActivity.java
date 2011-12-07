@@ -104,7 +104,8 @@ public class SelectSectionActivity extends Activity {
 										section.getString("location"),
 										section.getString("days"),
 										startTime,
-										endTime
+										endTime,
+										section.getInt("is_verified")
 										));
 			} catch (JSONException e) {
 				Log.d("getCoursesCallback", "JSON error");
@@ -118,6 +119,11 @@ public class SelectSectionActivity extends Activity {
 	
 	public void registerSectionCallback(JSONArray data) {
 		Toast.makeText(getApplicationContext(), "registered for section", Toast.LENGTH_LONG).show();
+		nextActivity = new Intent(SelectSectionActivity.this, CourseMenuActivity.class);
+		nextActivity.putExtra("com.squattingsasquatches.userId", localDB.getUserId());
+		nextActivity.putExtra("com.squattingsasquatches.updateCourses", true);
+		startActivity(nextActivity);
+		finish();
 	}
 	
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
@@ -138,12 +144,6 @@ public class SelectSectionActivity extends Activity {
 	        
 	        remoteDB.addReceiver("user.section.register", sectionRegister);
 	        remoteDB.execute("user.section.register");
-			
-			nextActivity = new Intent(SelectSectionActivity.this, CourseMenuActivity.class);
-			nextActivity.putExtra("com.squattingsasquatches.userId", localDB.getUserId());
-			nextActivity.putExtra("com.squattingsasquatches.updateCourses", true);
-			startActivity(nextActivity);
-			finish();
 		}
 	};
 

@@ -29,6 +29,7 @@ public class SplashActivity extends Activity {
 	
 	private static final int MENU_ITEM = Menu.FIRST;
 	private MenuItem menuRefresh, menuActivate, menuSet, menuClose, menuCourseList;
+	private LocalDBAdapter localDB;
 	private RemoteDBAdapter remoteDB;
 	private ViewFlipper layoutFlipper;
 	private Button btnRegister;
@@ -43,9 +44,9 @@ public class SplashActivity extends Activity {
 		super.onPause();
 		remoteDB.unregisterAllReceivers();
 		DeviceRegistrar.unregisterReceiver(this, remoteRegistration);
+		if (localDB != null)
+			localDB.close();
 	}
-	
-	
 	
     /** Called when the activity is first created. */
     @Override
@@ -58,6 +59,7 @@ public class SplashActivity extends Activity {
         layoutFlipper = (ViewFlipper) findViewById(R.id.ViewFlipper);
         txtUni = (AutoCompleteTextView) findViewById(R.id.acUni);
         txtLoading = (TextView) findViewById(R.id.txtLoading);
+        localDB = new LocalDBAdapter(this).open();
         remoteDB = new RemoteDBAdapter(this);
         loading = new ProgressDialog(this);
         user.setDeviceId(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)); //get device's unique ID
@@ -70,6 +72,10 @@ public class SplashActivity extends Activity {
         
         remoteDB.addReceiver("user.login", userLogin);
         remoteDB.addReceiver("unis.view", universitiesView);
+        
+        loading.setTitle("Please wait");
+        loading.setMessage("Loading your saved courses... ");
+        loading.setCancelable(false);
         
         remoteDB.execute("user.login");
     }
@@ -169,6 +175,7 @@ public class SplashActivity extends Activity {
     /* switch to CourseMenu Activity and grab courses from remote DB */
     public void goToCourseList(boolean updateCourses) {
     	nextActivity = new Intent(this, CourseMenuActivity.class);
+    	Log.i("userId", user.getId() + "");
 		nextActivity.putExtra("com.squattingsasquatches.userId", user.getId());
 		nextActivity.putExtra("com.squattingsasquatches.updateCourses", updateCourses);
 		startActivity(nextActivity);
@@ -203,6 +210,7 @@ public class SplashActivity extends Activity {
 			case Codes.SUCCESS:
 				// change to main activity
 				Log.d("Login", "SUCCESS");
+				user.setId(localDB.getUserId());
 				goToCourseList();
 				break;
 			default:
@@ -225,7 +233,6 @@ public class SplashActivity extends Activity {
 					}
 				}
 				
-	        	LocalDBAdapter localDB = new LocalDBAdapter(this).open();
 	        	localDB.saveUserData(user);
 	        	localDB.close();
 				// start course menu activity
