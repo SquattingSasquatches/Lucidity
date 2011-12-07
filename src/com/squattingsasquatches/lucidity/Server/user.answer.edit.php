@@ -13,19 +13,6 @@ include('class.controller.php');
 
 class EditAnswer extends Controller
 {
-	function execute()
-	{
-	 	$db->update('answers', 
-	 				array( 	'question_id' 			=> $this->params['question_id'],
-							'text' 					=> $this->params['text']    
-							) 
-					);
-		
-		
-		$db->close();
-		
-	
-	}
 	function isNotDuplicateAnswer( $param_names )
 	{
 	 	$this->db->query(	'SELECT * FROM ' .
@@ -74,13 +61,19 @@ class EditAnswer extends Controller
 		
 		return true;
 	}
-	function showView()
-	{
-		$this->response->addData( $this->params );
-	 	
-		$this->response->send();
-	}
 	
+	protected function onShowForm(){}
+ 	protected function onValid(){
+ 		$db->update('answers', 
+	 				array( 	'question_id' 			=> $this->params['question_id'],
+							'text' 					=> $this->params['text']    
+							) 
+					);
+		
+		
+	}
+ 	protected function onInvalid(){
+ 	}
 }
 
 
@@ -95,9 +88,8 @@ $controller->addValidation( 'text', 'isParamSet', 'no_text_supplied', true );
 $controller->addValidation( array( 'answer_id', 'text' ), 'isNotDuplicateAnswer', 'answer_already_exists', true );
 $controller->addValidation( array( 'device_id', 'answer_id' ), 'isProfessorOfAnswer', 'user_not_professor_of_answer', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
  	
  	
  	

@@ -16,17 +16,6 @@
 
 class ViewQuizzes extends Controller
 {
-	function execute()
-	{
-	 	$db->select('*', 'quizzes', 'lecture_id  = ?', false, false, array( $this->params['lecture_id'] ) );
-	 	
-	 	$records = $this->db->fetch_assoc_all();
-	 	
-	 	$this->response->addData( $records );
-	 	
-		$this->db->close();
-	
-	}
 	function isProfessorOfLecture( $param_names )
 	{
 		$this->db->query('SELECT * FROM `user_devices` AS ud, `professors` AS p, `courses` AS c, `professor_courses` AS pc, `lectures` as l, `lecture_courses` as lc WHERE ud.device_id = ? AND p.user_id = ud.user_id AND p.user_id = pc.professor_id AND pc.course_id = c.id  AND c.id = lc.course_id AND lc.lecture_id = ?', array('device_id' => $this->params[$param_names[0]], 'lecture_id' => $this->params[$param_names[1]] ));
@@ -35,6 +24,18 @@ class ViewQuizzes extends Controller
 		
 		return true;
 	}
+	
+	protected function onShowForm(){}
+ 	protected function onValid(){
+ 		$db->select('*', 'quizzes', 'lecture_id  = ?', false, false, array( $this->params['lecture_id'] ) );
+	 	
+	 	$records = $this->db->fetch_assoc_all();
+	 	
+	 	$this->response->addData( $records );
+	 	
+	}
+ 	protected function onInvalid(){
+ 	}
 }
 
 
@@ -47,9 +48,9 @@ $controller->addValidation( 'lecture_id', 'isParamSet', 'no_course_id_supplied',
 $controller->addValidation( array( 'device_id', 'lecture_id'), 'isProfessorOfLecture', 'user_not_professor_of_lecture', true );
 
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
+
 
 ?>
  

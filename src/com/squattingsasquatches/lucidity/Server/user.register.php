@@ -8,17 +8,6 @@ class Register extends Controller
 	public $user_id;
 	public $device_id;
 
-	function execute()
-	{
-		if( empty($this->params['device_id'] ) )
-			$this->params['device_id'] = $this->createRandomDeviceId();
-						
-		$this->db->insert('users', array( 'name' => $this->params['name'], 'uni_id' => $this->params['uni_id'] , 'c2dm_id' => $this->params['c2dm_id']  ));
-	
-		$this->user_id = $this->db->insert_id();
-		
-		$this->db->insert('user_devices', array( 'user_id' => $this->user_id, 'device_id' => $this->params['device_id'] ) );	
-	}
 	function createRandomDeviceId() {
 	    $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
 	    srand((double)microtime()*1000000); 
@@ -59,6 +48,19 @@ class Register extends Controller
 		$this->response->send();
 	}
 	
+	protected function onShowForm(){}
+ 	protected function onValid(){
+ 		if( empty($this->params['device_id'] ) )
+			$this->params['device_id'] = $this->createRandomDeviceId();
+						
+		$this->db->insert('users', array( 'name' => $this->params['name'], 'uni_id' => $this->params['uni_id'] , 'c2dm_id' => $this->params['c2dm_id']  ));
+	
+		$this->user_id = $this->db->insert_id();
+		
+		$this->db->insert('user_devices', array( 'user_id' => $this->user_id, 'device_id' => $this->params['device_id'] ) );	
+ 	}
+ 	protected function onInvalid(){
+ 	}
 }
 
 
@@ -73,8 +75,6 @@ $controller->addValidation( 'c2dm_id', 'isParamSet', 'no_c2dm_id_supplied', true
 $controller->addValidation( 'device_id', 'deviceDoesNotExist', 'device_id_already_exists', true );
 $controller->addValidation( 'uni_id', 'universityExists', 'no_university_found', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
- 	
 ?>

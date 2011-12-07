@@ -17,21 +17,27 @@ require ( dirname( __FILE__ ) . '/db/class.database.php');
 	
 
 include( dirname( __FILE__ ) . '/class.validation.php');
+ ini_set("error_reporting", E_ALL);
+ ini_set("display_errors", 1);
 
 
- class Controller
+ abstract class Controller
  {
  	protected $params = array();
  	protected $response;
  	protected $db;
  	protected $validations = array();
+ 	public $showform = false;
  	
  	function __construct(){
-
+ 		
 		global $config;
 		
+		// Pool all parameters into a unified array.
 		$this->params = array_merge($this->params, $_REQUEST);
-			
+		
+		
+		
 		if( PHP_SAPI == 'cli')
 		{
 			$this->response = new CLIresponse();
@@ -45,12 +51,11 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 		else
 		{
 			$android = stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android');
-			if( $android !== false || $this->params['json'] == "1")
+			if( $android !== false || ( array_key_exists('json', $this->params) && $this->params['json'] == "1"))
 				$this->response = new JSONresponse();
 			else
 		  		$this->response = new HTMLresponse();
 		}
-	
 	
 		
 		// Connect to database and set timeout.
@@ -58,21 +63,23 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 		$this->db->connect($config['DB_HOST'], $config['DB_USER'], $config['DB_PASS'], $config['DB_NAME']);
 		$this->db->maxQueryTime = 10;
 		
-
-		$this->params = array_merge($this->params, $_REQUEST);
+		
+		
+		// If it is a form being requested, bypass the operation, obtain the data necessary for the 
+		// form(specific to operation, and set in the operation file), and show it.
+		if ( (array_key_exists( 'form', $this->params ) && $this->params['form'] == true) )
+			$this->onShowForm();
 
 	}
-	function addParam( array $param )
+	public function addParam( array $param )
 	{
 		$this->params = array_merge($this->params, $param);
 	}
- 	function showView()
+ 	public function showView()
  	{
  		$this->response->send();
  	}
- 	function execute(){}
-
-	public function validate()
+	private function isValid()
 	{
 		
 		foreach( $this->validations as $validation )
@@ -92,6 +99,17 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 		}
 		return true;
 	}
+	
+ 	public function execute(){
+ 		if( $this->isValid() )
+ 			$this->onValid();
+ 		else
+ 			$this->onInvalid();
+ 			
+ 		
+ 		$this->response->send();
+ 		$this->db->close();
+ 	}
 	public function addValidation( $param_names, $function, $message_id, $fatal )
 	{
 		if( !is_array( $param_names )) $param_names = array( $param_names );
@@ -109,6 +127,9 @@ include( dirname( __FILE__ ) . '/class.validation.php');
  		}
  		return true;
  	}
+ 	abstract protected function onShowForm();
+ 	abstract protected function onValid();
+ 	abstract protected function onInvalid();
  }
  
 ?>

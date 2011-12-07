@@ -10,15 +10,6 @@ include('class.controller.php');
 
 class AddQuiz extends Controller
 {
-	function execute()
-	{
-		$db->insert('quizzes', array(	'lecture_id' => $this->params['lecture_id'], 
-										'quiz_name' => $this->params['quiz_name'], 
-										'quiz_duration' => $this->params['quiz_duration'] ) );
-									
-		
-	
-	}
 	function isNotAlreadyRegistered( $param_names )
 	{
 	 	$this->db->query('SELECT * FROM `users_devices` AS ud, `student_courses` AS sc, WHERE ud.device_id = ? AND ud.user_id = sc.student_id AND ?', array('device_id' => $this->params[$param_names[0]], 'course_id' => $this->params[$param_names[1]] ));
@@ -57,6 +48,15 @@ class AddQuiz extends Controller
 		
 	}
 	
+	protected function onShowForm(){}
+ 	protected function onValid(){	
+ 		$db->insert('quizzes', array(	'lecture_id' => $this->params['lecture_id'], 
+										'quiz_name' => $this->params['quiz_name'], 
+										'quiz_duration' => $this->params['quiz_duration'] ) );
+									
+		}
+ 	protected function onInvalid(){
+ 	}
 }
 
 
@@ -70,8 +70,7 @@ $controller->addValidation( 'quiz_name', 'isParamSet', 'no_quiz_name_supplied', 
 $controller->addValidation( 'quiz_duration', 'isParamSet', 'no_quiz_duration_supplied', true );
 $controller->addValidation( array( 'device_id', 'course_id' ), 'isProfessorOfCourse', 'user_not_professor_of_course', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
 
 ?>

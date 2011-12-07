@@ -12,17 +12,18 @@
  
 class UniCoursesView extends Controller
 {
- 	function execute()
- 	{
+ 	
+	protected function onShowForm(){}
+ 	protected function onValid(){
  		$this->db->query('select id as course_id, course_number, name as course_name from `courses` where subject_id = ' . $this->params['subject_id'] .  ' and uni_id = ' . $this->params['uni_id']);
  	
 	 	$records = $this->db->fetch_assoc_all();
 	
 		$this->response->addData( $records );
 		
-		$this->db->close();
  	}
- 	
+ 	protected function onInvalid(){
+ 	}
 }
  
 
@@ -32,9 +33,8 @@ $controller = new UniCoursesView();
 $controller->addValidation( 'uni_id', 'isParamSet', 'no_uni_id_supplied', true );
 $controller->addValidation( 'subject_id', 'isParamSet', 'no_subject_id_supplied', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
 
 	
 ?>

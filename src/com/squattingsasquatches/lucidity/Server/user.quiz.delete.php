@@ -7,11 +7,7 @@
  */
  class DeleteQuiz extends Controller
 {
-	function execute()
-	{
-		$db->delete('quizzes', 'quiz_id = ?', array( $this->params['quiz_id'] ) );
-		$this->db->close();
-	}
+	
 	
 	function quizExists( $param_names )
 	{
@@ -28,13 +24,13 @@
 		
 		return true;
 	}
-	function showView()
-	{
-	 	$this->response->addData( $this->params );
-	 	
-		$this->response->send();
-	}
 	
+	protected function onShowForm(){}
+ 	protected function onValid(){
+ 		$db->delete('quizzes', 'quiz_id = ?', array( $this->params['quiz_id'] ) );
+	}
+ 	protected function onInvalid(){
+ 	}
 }
  
  /* Main */
@@ -46,9 +42,8 @@ $controller->addValidation( 'quiz_id', 'isParamSet', 'no_quiz_id_supplied', true
 $controller->addValidation( 'quiz_id', 'quizExists', 'quiz_not_found', true );
 $controller->addValidation( array( 'device_id', 'lecture_id'), 'isProfessorOfLecture', 'user_not_professor_of_lecture', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
  
   
 ?>

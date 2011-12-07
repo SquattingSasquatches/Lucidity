@@ -12,17 +12,18 @@
  
 class UniSubjectsView extends Controller
 {
- 	function execute()
- 	{
+ 	
+	protected function onShowForm(){}
+ 	protected function onValid(){
  		//$this->db->select('subjects', '*', 'uni_id', array( $this->params['uni_id'] ));
  		$this->db->query("SELECT s.long_name as subject_name, s.short_name as subject_prefix, subject_id FROM subjects as s, uni_subjects as US WHERE US.uni_id =" . $this->params['uni_id'] . " AND s.id = US.subject_id");
 	 	$records = $this->db->fetch_assoc_all();
 	 	
 		$this->response->addData( $records );
 		
-		$this->db->close();
+	}
+ 	protected function onInvalid(){
  	}
- 	
 }
  
 
@@ -31,9 +32,8 @@ $controller = new UniSubjectsView();
 
 $controller->addValidation( 'uni_id', 'isParamSet', 'no_uni_id_supplied', true );
 
-if( $controller->validate() ) $controller->execute();
+$controller->execute();
 
-$controller->showView();
 
 	
 ?>
