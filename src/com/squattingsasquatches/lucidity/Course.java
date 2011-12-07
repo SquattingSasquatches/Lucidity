@@ -14,6 +14,10 @@ public class Course extends DataItem {
 		this(-1, 0);
 	}
 	
+	public Course(int courseNum) {
+		this(-1, courseNum);
+	}
+	
 	public Course(int id, int courseNum) {
 		this(id, courseNum, new Subject());
 	}

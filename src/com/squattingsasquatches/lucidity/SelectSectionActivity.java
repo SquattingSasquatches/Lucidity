@@ -10,7 +10,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -86,14 +85,7 @@ public class SelectSectionActivity extends Activity {
 		for (int i = 0; i < resultLength; ++i) {
 			try {
 				JSONObject section = data.getJSONObject(i);
-				String startTimePieces[] = section.getString("start_time").split(":"),
-						endTimePieces[] = section.getString("end_time").split(":");
-				Time startTime = new Time(),
-						endTime = new Time();
-				
-				startTime.set(Integer.valueOf(startTimePieces[2]), Integer.valueOf(startTimePieces[1]), Integer.valueOf(startTimePieces[0]), 0, 0, 0);
-				endTime.set(Integer.valueOf(endTimePieces[2]), Integer.valueOf(endTimePieces[1]), Integer.valueOf(endTimePieces[0]), 0, 0, 0);
-				
+
 				courseSections.add(new Section(
 										section.getInt("id"),
 										section.getString("section_name"),
@@ -103,12 +95,11 @@ public class SelectSectionActivity extends Activity {
 										new User(section.getString("professor_name")),
 										section.getString("location"),
 										section.getString("days"),
-										startTime,
-										endTime,
-										section.getInt("is_verified")
+										section.getString("start_time"),
+										section.getString("end_time")
 										));
 			} catch (JSONException e) {
-				Log.d("getCoursesCallback", "JSON error");
+				Log.d("loadSections", "JSON error");
 			}
 		}
 		
