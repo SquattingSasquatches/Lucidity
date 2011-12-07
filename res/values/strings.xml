@@ -12,4 +12,6 @@
     <string name="add_another_course">Add More</string>
     <string name="cancel">Cancel</string>
     <string name="connection_error">Error connecting to server!</string>
+    <string name="upcoming">UPCOMING</string>
+    <string name="past_due">PAST DUE</string>
 </resources>

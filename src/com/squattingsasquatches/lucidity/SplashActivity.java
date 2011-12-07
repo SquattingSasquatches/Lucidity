@@ -248,19 +248,19 @@ public class SplashActivity extends Activity {
     }
     
     public void loadUniversitiesCallback(JSONArray result) {
-    	ArrayAdapter<String> adapter;
-    	ArrayList<String> unis = new ArrayList<String>();
+    	AutoCompleteArrayAdapter<University> adapter;
+    	ArrayList<University> unis = new ArrayList<University>();
     	int resultLength = result.length();
     	
     	for (int i = 0; i < resultLength; ++i) {
     		try {
-				unis.add(result.getJSONObject(i).getString("name"));
+				unis.add(new University(result.getJSONObject(i).getInt("id"), result.getJSONObject(i).getString("name")));
 			} catch (JSONException e) {
 				Log.d("loadUniversities", "error loading univerisites");
 			}
     	}
     	
-    	adapter = new ArrayAdapter<String>(this, R.layout.ac_list_item, unis.toArray(new String[unis.size()]));
+    	adapter = new AutoCompleteArrayAdapter<University>(this, R.layout.ac_list_item, unis);
     	txtUni.setAdapter(adapter);
     	loading.dismiss();
     	layoutFlipper.showNext();

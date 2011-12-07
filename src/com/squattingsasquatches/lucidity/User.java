@@ -7,7 +7,7 @@ public class User extends DataItem {
 	private String deviceId;
 	
 	public User() {
-		this(0, "", new University(), "", "");
+		this("");
 	}
 	
 	public User(String name) {

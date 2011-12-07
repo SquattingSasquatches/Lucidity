@@ -1,12 +1,9 @@
 package com.squattingsasquatches.lucidity;
 
-public class University {
-	
-	private int id;
-	private String name;
+public class University extends DataItem {
 	
 	public University() {
-		this(0, "");
+		this(-1);
 	}
 	
 	public University(int id) {
@@ -14,28 +11,7 @@ public class University {
 	}
 	
 	public University(int id, String name) {
-		this.setId(id);
-		this.setName(name);
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		super(id, name);
 	}
 	
-	@Override
-	public String toString() {
-		return getName();
-	}
 }
