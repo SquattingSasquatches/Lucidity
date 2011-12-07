@@ -22,7 +22,6 @@
  	public $messages;
  	
  	protected $showEmptySet = false;
- 	protected $showform = false;
  	
  	function __construct( $locale = 'en_US')
  	{
@@ -61,10 +60,7 @@
  	function sendSuccess(){}
  	function send()
  	{
- 		if( $this->showform )
- 			$this->sendForm();
- 			
- 		else if( $this->showEmptySet )
+ 		if( $this->showEmptySet )
  			$this->sendEmpty();
  		
  		else if( $this->errors )

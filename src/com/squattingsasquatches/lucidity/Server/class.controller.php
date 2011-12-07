@@ -68,17 +68,15 @@ include( dirname( __FILE__ ) . '/class.validation.php');
 		// If it is a form being requested, bypass the operation, obtain the data necessary for the 
 		// form(specific to operation, and set in the operation file), and show it.
 		if ( (array_key_exists( 'form', $this->params ) && $this->params['form'] == true) )
+		{
 			$this->onShowForm();
-
+			$this->response->sendForm();
+		}
 	}
 	public function addParam( array $param )
 	{
 		$this->params = array_merge($this->params, $param);
 	}
- 	public function showView()
- 	{
- 		$this->response->send();
- 	}
 	private function isValid()
 	{
 		
