@@ -60,7 +60,7 @@ public class AutoCompleteArrayAdapter<E extends DataItem> extends ArrayAdapter<E
                 }
             }
 
-            @Override
+			@Override
             protected void publishResults(CharSequence contraint, FilterResults results) {
                 if (results != null && results.count > 0) {
                 	notifyDataSetChanged();

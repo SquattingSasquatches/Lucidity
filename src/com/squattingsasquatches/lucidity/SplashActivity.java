@@ -1,8 +1,10 @@
 package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -17,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -270,7 +271,6 @@ public class SplashActivity extends Activity {
 	private final BroadcastReceiver remoteRegistration = new BroadcastReceiver() {
 		@Override
         public void onReceive(Context context, Intent intent) {
-			Log.i("remoteRegistration", "here");
 			int result = intent.getIntExtra(Codes.KEY_C2DM_RESULT, Codes.ERROR);
 			user.setC2dmRegistrationId(intent.getStringExtra(Codes.KEY_C2DM_ID));
 			if (result == Codes.SUCCESS) {

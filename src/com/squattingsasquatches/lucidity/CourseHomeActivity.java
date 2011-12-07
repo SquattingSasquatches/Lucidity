@@ -1,9 +1,14 @@
 package com.squattingsasquatches.lucidity;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -23,14 +28,14 @@ public class CourseHomeActivity extends Activity {
 	
 	/* UI */
 	private ProgressDialog loading;
-	private ListView coursesListView;
+	private ListView upcomingListView;
+	private ListView pastDueListView;
 	
 	/* Misc */
 	private Intent nextActivity;
-	private ArrayList<Course> subjectCourses;
-	private int subjectId;
-	private String subjectPrefix;
-	private int uniId;
+	private ArrayList<Assignment> upcomingAssignments;
+	private ArrayList<Assignment> pastAssignments;
+	private int sectionId;
 	
 	@Override
 	public void onPause() {
@@ -44,74 +49,88 @@ public class CourseHomeActivity extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.generic_list);
+		setContentView(R.layout.course_home);
 		
-		subjectCourses = new ArrayList<Course>();
-		coursesListView = (ListView) findViewById(R.id.ListContainer);
+		upcomingAssignments = new ArrayList<Assignment>();
+		upcomingListView = (ListView) findViewById(R.id.ListContainer);
+		pastDueListView = (ListView) findViewById(R.id.ListContainer2);
         loading = new ProgressDialog(this);
 
         remoteDB = new RemoteDBAdapter(this);
         localDB = new LocalDBAdapter(this).open();
-        subjectId = getIntent().getIntExtra("com.squattingsasquatches.subjectId", -1);
-        subjectPrefix = getIntent().getStringExtra("com.squattingsasquatches.subjectPrefix");
-        uniId = localDB.getUserUniId();
+        sectionId = getIntent().getIntExtra("com.squattingsasquatches.sectionId", -1);
 
         TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
         txtHeading.setText("Choose a Course");
 
         loading.setTitle("Please wait");
-        loading.setMessage("Loading available courses... ");
+        loading.setMessage("Loading section info... ");
         loading.setCancelable(false);
         loading.show();
 
-        InternalReceiver subjectsCoursesView = new InternalReceiver(){
+        InternalReceiver assignmentsView = new InternalReceiver(){
 			public void update( JSONArray data ){
-				CourseHomeActivity.this.displayCourses( data );
+				CourseHomeActivity.this.displayAssignments( data );
 			}
 		};
-		subjectsCoursesView.addParam("uni_id", uniId);
-		subjectsCoursesView.addParam("subject_id", subjectId);
-		
-		Log.i("sel", uniId+" | "+subjectId);
+		assignmentsView.addParam("section_id", sectionId);
         
-        remoteDB.addReceiver("uni.courses.view", subjectsCoursesView);
-        remoteDB.execute("uni.courses.view");
+        remoteDB.addReceiver("section.assignments.view", assignmentsView);
+        remoteDB.execute("section.assignments.view");
 	}
 	
-	public void displayCourses(JSONArray data) {
-		subjectCourses.clear();
+	public void displayAssignments(JSONArray data) {
+		upcomingAssignments.clear();
 		
 		int resultLength = data.length();
 		
 		for (int i = 0; i < resultLength; ++i) {
 			try {
-				JSONObject course = data.getJSONObject(i);
-				subjectCourses.add(new Course(
-											course.getInt("course_id"),
-											course.getInt("course_number"),
-											course.getString("course_name"),
-											new Subject(subjectId, subjectPrefix),
-											new University(uniId)
-										));
+				JSONObject assignment = data.getJSONObject(i);
+				
+				Date dueDate = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).parse(assignment.getString("due_date")),
+					 rightNow = new Date();
+				
+				Assignment a = new Assignment(
+								assignment.getInt("id"),
+								assignment.getString("name"),
+								assignment.getInt("doc_id"),
+								assignment.getString("description"),
+								dueDate);
+				
+				if (rightNow.after(dueDate))
+					pastAssignments.add(a);
+				else
+					upcomingAssignments.add(a);
+				
 			} catch (JSONException e) {
-				Log.d("getCoursesCallback", "JSON error");
+				Log.d("displayAssignments", "JSON error");
+			} catch (ParseException e) {
+				Log.d("displayAssignments", "Invalid due_date returned");
 			}
 		}
 		
-		coursesListView.setAdapter(new ListAdapter<Course>(this, subjectCourses));
-		coursesListView.setOnItemClickListener(listViewHandler);
+		upcomingListView.setAdapter(new ListAdapter<Assignment>(this, upcomingAssignments));
+		pastDueListView.setAdapter(new ListAdapter<Assignment>(this, pastAssignments));
+		
+		upcomingListView.setOnItemClickListener(listViewHandler);
+		pastDueListView.setOnItemClickListener(listViewHandler);
 		
 		loading.dismiss();
 	}
 	
-	
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-			Object o = coursesListView.getItemAtPosition(position);
-			Course course = (Course) o;
+			Object o = upcomingListView.getItemAtPosition(position);
+			Assignment assignment = (Assignment) o;
+			DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
 			
-			nextActivity = new Intent(CourseHomeActivity.this, SelectCourseActivity.class);
-			nextActivity.putExtra("com.squattingsasquatches.courseId", course.getId());
+			nextActivity = new Intent(CourseHomeActivity.this, ViewAssignmentActivity.class);
+			nextActivity.putExtra("com.squattingsasquatches.assignmentId", assignment.getId());
+			nextActivity.putExtra("com.squattingsasquatches.assignmentName", assignment.getName());
+			nextActivity.putExtra("com.squattingsasquatches.assignmentDocId", assignment.getDocId());
+			nextActivity.putExtra("com.squattingsasquatches.assignmentDescription", assignment.getDescription());
+			nextActivity.putExtra("com.squattingsasquatches.assignmentDueDate", df.format(assignment.getDueDate()));
 			startActivity(nextActivity);
 		}
 	};
