@@ -1,24 +1,28 @@
 package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 public class SplashActivity extends Activity {
@@ -37,6 +41,87 @@ public class SplashActivity extends Activity {
 		super.onPause();
 		remoteDB.unregisterAllReceivers();
 		DeviceRegistrar.unregisterReceiver(this, remoteRegistration);
+	}
+	
+	private static final int MENU_ITEM = Menu.FIRST;
+	private MenuItem menuRefresh, menuActivate, menuSet, menuClose, menuCourseList;
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		super.onCreateOptionsMenu(menu);
+		
+		int groupId = 0;
+		int menuItemId = MENU_ITEM;
+		int menuItemOrder = Menu.NONE;
+		
+		menuRefresh = menu.add(groupId, menuItemId, menuItemOrder, "Refresh");
+		menuActivate = menu.add(groupId, menuItemId, menuItemOrder, "Activate New");
+		menuSet = menu.add(groupId, menuItemId, menuItemOrder, "Set Server IP");
+		menuCourseList = menu.add(groupId, menuItemId, menuItemOrder, "Courses");
+		menuClose = menu.add(groupId, menuItemId, menuItemOrder, "Close App");
+		
+		final SplashActivity thisone = this;
+		
+		menuCourseList.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+			public boolean onMenuItemClick(MenuItem _menuItem){
+				goToCourseList();
+				return true;
+			}
+		});
+		
+		menuRefresh.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+			public boolean onMenuItemClick(MenuItem _menuItem){
+				
+				return true;
+			}
+		});
+		
+		menuActivate.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+			public boolean onMenuItemClick(MenuItem _menuItem){
+				Context context = getApplicationContext();
+				CharSequence text = "Not Yet Implemented!";
+				int duration = Toast.LENGTH_SHORT;
+
+				Toast toast = Toast.makeText(context, text, duration);
+				toast.show();
+				return true;
+			}
+		});
+		
+		final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		final EditText input = new EditText(this);
+		input.setText(Config.SERVER_ADDRESS);
+		
+		alert.setView(input);
+		alert.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				String value = input.getText().toString().trim();
+				Config.setServerAddress(value);
+			}
+		});
+
+		alert.setNegativeButton("Cancel",
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					dialog.cancel();
+				}
+		});
+		
+		menuSet.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+			public boolean onMenuItemClick(MenuItem _menuItem){
+				alert.show();
+				return true;
+			}
+		});
+		
+		menuClose.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+			public boolean onMenuItemClick(MenuItem _menuItem){
+				thisone.finish();
+				return true;
+			}
+		});
+		
+		return true;
 	}
 	
     /** Called when the activity is first created. */
@@ -105,27 +190,6 @@ public class SplashActivity extends Activity {
 		};
 		universitiesView.addParam("device_id", user.getDeviceId());
 		
-		
-		
-		
-		remoteDB.addReceiver("user.login", userLogin);
-		remoteDB.addReceiver("user.register", userRegister);
-		remoteDB.addReceiver("unis.view", universitiesView);
-		
-        loading.setTitle("Please wait");
-        loading.setMessage("Registering with Lucidity server... ");
-        
-       
-        
-        if (user.getDeviceId().equals("")) {
-        	/* 
-        	 * deal with problem of device having no deviceID, maybe generate our own 64-bit number and check it against the remoteDB
-        	 * but what if someone else happens to have that device id?
-        	 */
-        } else {
-        	remoteDB.execute("user.login");
-        }
-        
         btnRegister.setOnClickListener(registerBtnHandler);
     }
     public void onConnectionError( int statusCode )
