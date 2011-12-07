@@ -17,7 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class AddCourseSelectionActivity extends Activity {
+public class SelectCourseActivity extends Activity {
 	
 	/* DBs */
 	private RemoteDBAdapter remoteDB;
@@ -68,7 +68,7 @@ public class AddCourseSelectionActivity extends Activity {
 
         InternalReceiver subjectsCoursesView = new InternalReceiver(){
 			public void update( JSONArray data ){
-				AddCourseSelectionActivity.this.displayCourses( data );
+				SelectCourseActivity.this.displayCourses( data );
 			}
 		};
 		subjectsCoursesView.addParam("uni_id", uniId);
@@ -112,7 +112,7 @@ public class AddCourseSelectionActivity extends Activity {
 			Object o = coursesListView.getItemAtPosition(position);
 			Course course = (Course) o;
 			
-			nextActivity = new Intent(AddCourseSelectionActivity.this, SectionsActivity.class);
+			nextActivity = new Intent(SelectCourseActivity.this, SelectSectionActivity.class);
 			nextActivity.putExtra("com.squattingsasquatches.courseId", course.getId());
 			startActivity(nextActivity);
 		}

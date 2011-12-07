@@ -19,7 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SectionsActivity extends Activity {
+public class SelectSectionActivity extends Activity {
 
 	/* DBs */
 	private RemoteDBAdapter remoteDB;
@@ -69,7 +69,7 @@ public class SectionsActivity extends Activity {
         
         InternalReceiver courseSectionsView = new InternalReceiver(){
 			public void update( JSONArray data ){
-				SectionsActivity.this.loadSectionsCallback( data );
+				SelectSectionActivity.this.loadSectionsCallback( data );
 			}
 		};
 		courseSectionsView.addParam("course_id", courseId);
@@ -128,7 +128,7 @@ public class SectionsActivity extends Activity {
 			//register user with section, return to CourseMenuActivity
 			InternalReceiver sectionRegister = new InternalReceiver(){
 				public void update( JSONArray data ){
-					SectionsActivity.this.registerSectionCallback( data );
+					SelectSectionActivity.this.registerSectionCallback( data );
 				}
 			};
 			sectionRegister.addParam("section_id", section.getId());
@@ -139,7 +139,7 @@ public class SectionsActivity extends Activity {
 	        remoteDB.addReceiver("user.section.register", sectionRegister);
 	        remoteDB.execute("user.section.register");
 			
-			nextActivity = new Intent(SectionsActivity.this, CourseMenuStudent.class);
+			nextActivity = new Intent(SelectSectionActivity.this, CourseMenuActivity.class);
 			nextActivity.putExtra("com.squattingsasquatches.userId", localDB.getUserId());
 			nextActivity.putExtra("com.squattingsasquatches.updateCourses", true);
 			startActivity(nextActivity);

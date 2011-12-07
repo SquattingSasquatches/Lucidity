@@ -18,7 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class CourseMenuStudent extends Activity {
+public class CourseMenuActivity extends Activity {
 	
 	/* DBs */
 	private RemoteDBAdapter remoteDB;
@@ -63,7 +63,7 @@ public class CourseMenuStudent extends Activity {
         // Receivers
         getCourses = new InternalReceiver(){
 			public void update( JSONArray data ){
-				CourseMenuStudent.this.updateCourses( data );
+				CourseMenuActivity.this.updateCourses( data );
 			}
 		};
 		getCourses.addParam("user_id", userId);
@@ -99,7 +99,7 @@ public class CourseMenuStudent extends Activity {
 		for (int i = 0; i < resultLength; ++i) {
 			try {
 				JSONObject course = data.getJSONObject(i);
-				CourseMenuStudent.this.userCourses.add(new Course(course.getInt(LocalDBAdapter.KEY_ID),
+				CourseMenuActivity.this.userCourses.add(new Course(course.getInt(LocalDBAdapter.KEY_ID),
 										course.getInt(LocalDBAdapter.KEY_COURSE_NUMBER),
 										course.getString(LocalDBAdapter.KEY_NAME),
 										new Date(course.getString(LocalDBAdapter.KEY_START_DATE)),
@@ -122,7 +122,7 @@ public class CourseMenuStudent extends Activity {
 				case -1:
 					// Add a Course
 					// Start SubjectsActivity
-					nextActivity = new Intent(ctx, SubjectsActivity.class);
+					nextActivity = new Intent(ctx, SelectSubjectActivity.class);
 					nextActivity.putExtra("com.squattingsasquatches.userId", userId);
 					startActivity(nextActivity);
 					break;

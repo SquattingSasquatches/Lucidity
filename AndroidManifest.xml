@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <service android:name=".PHPService" />
-        <activity android:name=".CourseMenuStudent"></activity>
+        <activity android:name=".CourseMenuActivity"></activity>
         <receiver
             android:name=".C2DMReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
@@ -38,8 +38,8 @@
 				<category android:name="com.squattingsasquatches.lucidity" />
 			</intent-filter>
 		</receiver>
-        <activity android:name=".SubjectsActivity"></activity>
-        <activity android:name=".CoursesActivity"></activity>
-        <activity android:name=".SectionsActivity"></activity> 
+        <activity android:name=".SelectSubjectActivity"></activity>
+        <activity android:name=".SelectCourseActivity"></activity>
+        <activity android:name=".SelectSectionActivity"></activity> 
     </application>
 </manifest>

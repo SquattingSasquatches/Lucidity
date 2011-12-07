@@ -27,6 +27,8 @@ import android.widget.ViewFlipper;
 
 public class SplashActivity extends Activity {
 	
+	private static final int MENU_ITEM = Menu.FIRST;
+	private MenuItem menuRefresh, menuActivate, menuSet, menuClose, menuCourseList;
 	private RemoteDBAdapter remoteDB;
 	private ViewFlipper layoutFlipper;
 	private Button btnRegister;
@@ -43,10 +45,36 @@ public class SplashActivity extends Activity {
 		DeviceRegistrar.unregisterReceiver(this, remoteRegistration);
 	}
 	
-	private static final int MENU_ITEM = Menu.FIRST;
-	private MenuItem menuRefresh, menuActivate, menuSet, menuClose, menuCourseList;
 	
-	@Override
+	
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.splash);
+        
+        user = new User();
+        btnRegister = (Button) findViewById(R.id.btnRegister);    
+        layoutFlipper = (ViewFlipper) findViewById(R.id.ViewFlipper);
+        txtUni = (AutoCompleteTextView) findViewById(R.id.acUni);
+        txtLoading = (TextView) findViewById(R.id.txtLoading);
+        remoteDB = new RemoteDBAdapter(this);
+        loading = new ProgressDialog(this);
+        user.setDeviceId(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)); //get device's unique ID
+        Log.i("deviceID", user.getDeviceId());
+        
+        userLogin.addParam("device_id", user.getDeviceId());
+		universitiesView.addParam("device_id", user.getDeviceId());
+		
+        btnRegister.setOnClickListener(registerBtnHandler);
+        
+        remoteDB.addReceiver("user.login", userLogin);
+        remoteDB.addReceiver("unis.view", universitiesView);
+        
+        remoteDB.execute("user.login");
+    }
+    
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu){
 		super.onCreateOptionsMenu(menu);
 		
@@ -123,75 +151,7 @@ public class SplashActivity extends Activity {
 		
 		return true;
 	}
-	
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
-        
-        user = new User();
-        btnRegister = (Button) findViewById(R.id.btnRegister);    
-        layoutFlipper = (ViewFlipper) findViewById(R.id.ViewFlipper);
-        txtUni = (AutoCompleteTextView) findViewById(R.id.acUni);
-        txtLoading = (TextView) findViewById(R.id.txtLoading);
-        remoteDB = new RemoteDBAdapter(this);
-        loading = new ProgressDialog(this);
-        user.setDeviceId(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)); //get device's unique ID
-        Log.i("deviceID", user.getDeviceId());
-        
-        
-        // Receivers
-        InternalReceiver userRegister = new InternalReceiver(){
-			public void update( JSONArray data ){
-				SplashActivity.this.registerCallback( data );
-			}
-			public void onHttpError( int statusCode ){
-				SplashActivity.this.onConnectionError( statusCode );
-			}
-			public void onConnectionError( String errorMessage ){
-				SplashActivity.this.onHttpError( errorMessage );
-			}
-		};
-		userRegister.addParam("name", user.getName());
-		userRegister.addParam("device_id", user.getDeviceId());
-		userRegister.addParam("c2dm_id", user.getC2dmRegistrationId());
-		userRegister.addParam("uni_id", Integer.toString(user.getUniversity().getId()));
-		
-
-		
-		
-		InternalReceiver userLogin = new InternalReceiver(){
-			public void update( JSONArray data ){
-				SplashActivity.this.loginCallback( data );
-			}
-			public void onHttpError( int statusCode ){
-				SplashActivity.this.onConnectionError( statusCode );
-			}
-			public void onConnectionError( String errorMessage ){
-				SplashActivity.this.onHttpError( errorMessage );
-			}
-		};
-		userLogin.addParam("device_id", user.getDeviceId());
-		
-		
-		
-		
-		InternalReceiver universitiesView = new InternalReceiver(){
-			public void update( JSONArray data ){
-				SplashActivity.this.loadUniversitiesCallback( data );
-			}
-			public void onHttpError( int statusCode ){
-				SplashActivity.this.onConnectionError( statusCode );
-			}
-			public void onConnectionError( String errorMessage ){
-				SplashActivity.this.onHttpError( errorMessage );
-			}
-		};
-		universitiesView.addParam("device_id", user.getDeviceId());
-		
-        btnRegister.setOnClickListener(registerBtnHandler);
-    }
+    
     public void onConnectionError( int statusCode )
     {
     	txtLoading.setText(R.string.connection_error);
@@ -200,6 +160,7 @@ public class SplashActivity extends Activity {
     {
     	txtLoading.setText(R.string.connection_error);
     }
+    
     /* switch to CourseMenu Activity */
     public void goToCourseList() {
     	goToCourseList(false);
@@ -207,7 +168,7 @@ public class SplashActivity extends Activity {
     
     /* switch to CourseMenu Activity and grab courses from remote DB */
     public void goToCourseList(boolean updateCourses) {
-    	nextActivity = new Intent(this, CourseMenuStudent.class);
+    	nextActivity = new Intent(this, CourseMenuActivity.class);
 		nextActivity.putExtra("com.squattingsasquatches.userId", user.getId());
 		nextActivity.putExtra("com.squattingsasquatches.updateCourses", updateCourses);
 		startActivity(nextActivity);
@@ -255,8 +216,17 @@ public class SplashActivity extends Activity {
     	
     	switch (resultCode) {
 			case Codes.SUCCESS:
+				
+				if (user.getDeviceId().equals("")) {
+					try {
+						user.setDeviceId(result.getJSONObject(0).getString("device_id"));
+					} catch (JSONException e) {
+						Log.e("Register", "device_id not returned by remote server");
+					}
+				}
+				
 	        	LocalDBAdapter localDB = new LocalDBAdapter(this).open();
-	        	//localDB.saveUserData(user); // Actually need to save newly generated user_id from remote database instead of 0.
+	        	localDB.saveUserData(user);
 	        	localDB.close();
 				// start course menu activity
 				Log.d("Register", "SUCCESS");
@@ -296,6 +266,12 @@ public class SplashActivity extends Activity {
 			int result = intent.getIntExtra(Codes.KEY_C2DM_RESULT, Codes.ERROR);
 			user.setC2dmRegistrationId(intent.getStringExtra(Codes.KEY_C2DM_ID));
 			if (result == Codes.SUCCESS) {
+				userRegister.addParam("name", user.getName());
+				userRegister.addParam("device_id", user.getDeviceId());
+				userRegister.addParam("c2dm_id", user.getC2dmRegistrationId());
+				userRegister.addParam("uni_id", Integer.toString(user.getUniversity().getId()));
+				
+				remoteDB.addReceiver("user.register", userRegister);
 		    	remoteDB.execute("user.register");
 			} else {
 				Log.i("C2DMResultHandler", "wtf");
@@ -321,4 +297,41 @@ public class SplashActivity extends Activity {
         	}
         }
     };
+    
+	// Receivers
+    private InternalReceiver userRegister = new InternalReceiver(){
+		public void update( JSONArray data ){
+			SplashActivity.this.registerCallback( data );
+		}
+		public void onHttpError( int statusCode ){
+			SplashActivity.this.onConnectionError( statusCode );
+		}
+		public void onConnectionError( String errorMessage ){
+			SplashActivity.this.onHttpError( errorMessage );
+		}
+	};	
+	
+	private InternalReceiver userLogin = new InternalReceiver(){
+		public void update( JSONArray data ){
+			SplashActivity.this.loginCallback( data );
+		}
+		public void onHttpError( int statusCode ){
+			SplashActivity.this.onConnectionError( statusCode );
+		}
+		public void onConnectionError( String errorMessage ){
+			SplashActivity.this.onHttpError( errorMessage );
+		}
+	};
+	
+	private InternalReceiver universitiesView = new InternalReceiver(){
+		public void update( JSONArray data ){
+			SplashActivity.this.loadUniversitiesCallback( data );
+		}
+		public void onHttpError( int statusCode ){
+			SplashActivity.this.onConnectionError( statusCode );
+		}
+		public void onConnectionError( String errorMessage ){
+			SplashActivity.this.onHttpError( errorMessage );
+		}
+	};
 }

@@ -17,7 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SubjectsActivity extends Activity {
+public class SelectSubjectActivity extends Activity {
 
 	/* DBs */
 	private RemoteDBAdapter remoteDB;
@@ -61,7 +61,7 @@ public class SubjectsActivity extends Activity {
         
         InternalReceiver uniSubjectsView = new InternalReceiver(){
 			public void update( JSONArray data ){
-				SubjectsActivity.this.loadSubjectsCallback( data );
+				SelectSubjectActivity.this.loadSubjectsCallback( data );
 			}
 		};
 		uniSubjectsView.addParam("uni_id", localDB.getUserUniId());
@@ -98,7 +98,7 @@ public class SubjectsActivity extends Activity {
 			Object o = subjectsListView.getItemAtPosition(position);
 			Subject subject = (Subject) o;
 			
-			nextActivity = new Intent(SubjectsActivity.this, AddCourseSelectionActivity.class);
+			nextActivity = new Intent(SelectSubjectActivity.this, SelectCourseActivity.class);
 			nextActivity.putExtra("com.squattingsasquatches.subjectId", subject.getId());
 			nextActivity.putExtra("com.squattingsasquatches.subjectPrefix", subject.getPrefix());
 			startActivity(nextActivity);
