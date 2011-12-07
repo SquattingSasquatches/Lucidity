@@ -1,7 +1,6 @@
 package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,9 +30,10 @@ public class CourseMenuActivity extends Activity {
 	
 	/* Misc */
 	private Intent nextActivity;
-	private ArrayList<Course> userCourses;
+	private ArrayList<Section> userSections;
 	private int userId;
 	private Context ctx;
+	private boolean updateCourses;
 	
 	InternalReceiver getCourses;
 	
@@ -50,10 +51,10 @@ public class CourseMenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generic_list);
         
-        boolean updateCourses = getIntent().getBooleanExtra("com.squattingsasquatches.updateCourses", false);
+        updateCourses = getIntent().getBooleanExtra("com.squattingsasquatches.updateCourses", false);
         
         ctx = this;
-        userCourses = new ArrayList<Course>();
+        userSections = new ArrayList<Section>();
         coursesListView = (ListView) findViewById(R.id.ListContainer);
         loading = new ProgressDialog(this);
         localDB = new LocalDBAdapter(this).open();
@@ -63,7 +64,7 @@ public class CourseMenuActivity extends Activity {
         // Receivers
         getCourses = new InternalReceiver(){
 			public void update( JSONArray data ){
-				CourseMenuActivity.this.updateCourses( data );
+				CourseMenuActivity.this.displayCourses( data );
 			}
 		};
 		getCourses.addParam("user_id", userId);
@@ -79,37 +80,43 @@ public class CourseMenuActivity extends Activity {
         if (updateCourses) {
         	remoteDB.execute("user.courses.view");
         } else {
-        	updateCourses(localDB.getCourses());
+        	displayCourses(localDB.getSections());
         }
 	}
 	
 	public void attachCourseOnClickListener() {
-		userCourses.add(new Course(-1, "Add a Course"));
-		coursesListView.setAdapter(new ListAdapter<Course>(this, userCourses));
+		userSections.add(new Section(-1, "Add a Course"));
+		coursesListView.setAdapter(new ListAdapter<Section>(this, userSections));
 		coursesListView.setOnItemClickListener(listViewHandler);
 		loading.dismiss();
 	}
 	
-	public void updateCourses( JSONArray data )
+	public void displayCourses( JSONArray data )
 	{
-		userCourses.clear();
+		userSections.clear();
 		
 		int resultLength = data.length();
 		
 		for (int i = 0; i < resultLength; ++i) {
 			try {
-				JSONObject course = data.getJSONObject(i);
-				CourseMenuActivity.this.userCourses.add(new Course(course.getInt(LocalDBAdapter.KEY_ID),
-										course.getInt(LocalDBAdapter.KEY_COURSE_NUMBER),
-										course.getString(LocalDBAdapter.KEY_NAME),
-										new Date(course.getString(LocalDBAdapter.KEY_START_DATE)),
-										new Date(course.getString(LocalDBAdapter.KEY_END_DATE)),
-										new Subject(course.getInt(LocalDBAdapter.KEY_SUBJECT_ID)),
-										new University(course.getInt(LocalDBAdapter.KEY_UNI_ID))));
+				JSONObject section = data.getJSONObject(i);
+				userSections.add(new Section(
+									section.getInt(LocalDBAdapter.KEY_ID),
+									section.getString(LocalDBAdapter.KEY_SECTION_NUMBER),
+									new Course(section.getInt(LocalDBAdapter.KEY_COURSE_ID), section.getInt(LocalDBAdapter.KEY_COURSE_NUMBER)),
+									new User(section.getInt(LocalDBAdapter.KEY_PROFESSOR_ID), section.getString(LocalDBAdapter.KEY_PROFESSOR_NAME)),
+									section.getString(LocalDBAdapter.KEY_DAYS),
+									section.getString(LocalDBAdapter.KEY_LOCATION),
+									new Time(section.getString(LocalDBAdapter.KEY_START_TIME)),
+									new Time(section.getString(LocalDBAdapter.KEY_END_TIME)),
+									section.getInt(LocalDBAdapter.KEY_VERIFIED)));
 			} catch (JSONException e) {
 				Log.d("getCoursesCallback", "JSON error");
 			}
 		}
+		
+		if (updateCourses)
+			localDB.saveSectionInfo(userSections);
 		
 		attachCourseOnClickListener();
 	}
