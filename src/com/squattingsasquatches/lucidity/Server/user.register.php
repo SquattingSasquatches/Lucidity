@@ -6,21 +6,34 @@ class Register extends Controller
 {
 
 	public $user_id;
+	public $device_id;
 
 	function execute()
 	{
+		if( empty($this->params['device_id'] ) )
+			$this->params['device_id'] = $this->createRandomDeviceId();
+						
 		$this->db->insert('users', array( 'name' => $this->params['name'], 'uni_id' => $this->params['uni_id'] , 'c2dm_id' => $this->params['c2dm_id']  ));
 	
 		$this->user_id = $this->db->insert_id();
 		
 		$this->db->insert('user_devices', array( 'user_id' => $this->user_id, 'device_id' => $this->params['device_id'] ) );	
 	}
-	function userExists( $param_names )
-	{
-		$this->db->query('SELECT * FROM `user_devices` AS ud WHERE ud.device_id = ?', array('device_id' => $this->params[$param_names[0]] ));
-	 	
-	 	if( !$records = $this->db->fetch_assoc_all() ) return false;
-	 	return true;
+	function createRandomDeviceId() {
+	    $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
+	    srand((double)microtime()*1000000); 
+	    $i = 0; 
+	    $pass = '' ; 
+	
+	    while ($i <= 16) { 
+	        $num = rand() % 33; 
+	        $tmp = substr($chars, $num, 1); 
+	        $pass = $pass . $tmp; 
+	        $i++; 
+	    } 
+		echo "luc-" . $pass;
+	    return "luc-" . $pass; 
+	
 	}
 	function universityExists( $param_names )
 	{
@@ -53,7 +66,7 @@ class Register extends Controller
 
 $controller = new Register();
 
-$controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
+//$controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
 $controller->addValidation( 'name', 'isParamSet', 'no_name_supplied', true );
 $controller->addValidation( 'uni_id', 'isParamSet', 'no_uni_id_supplied', true );
 $controller->addValidation( 'c2dm_id', 'isParamSet', 'no_c2dm_id_supplied', true );

@@ -15,7 +15,7 @@ class RegisterCourse extends Controller
 {
 	function execute()
 	{	 	
-		$this->db->insert('student_courses', array('student_id' => $this->params['user_id'], 'section_id' => $this->params['section_id'], 'verified' => '0') );
+		$this->db->insert('student_courses', array('student_id' => $this->params['user_id'], 'section_id' => $this->params['section_id'], 'is_verified' => '0') );
 
 				
 	}
