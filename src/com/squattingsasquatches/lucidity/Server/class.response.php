@@ -7,8 +7,8 @@
  */
 
  include( dirname( __FILE__ ) . '/class.message.php');
- ini_set("error_reporting", E_ALL);
- ini_set("display_errors", 1);
+ //ini_set("error_reporting", E_ALL);
+ //ini_set("display_errors", 1);
  abstract class response
  {
  	// To hold any and all errors.

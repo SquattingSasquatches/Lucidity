@@ -39,25 +39,25 @@ class Register extends Controller
 		return true;
 	}
 	
-	function showView() {	
-		
-		$this->response->addSuccess();
-		
-		$this->response->addData( array('user_id' => $this->user_id) );
-		
-		$this->response->send();
-	}
 	
 	protected function onShowForm(){}
  	protected function onValid(){
+ 		
  		if( empty($this->params['device_id'] ) )
+ 		{
 			$this->params['device_id'] = $this->createRandomDeviceId();
+			$this->response->addData( array('device_id' => $this->params['device_id']) );
+ 		}
 						
 		$this->db->insert('users', array( 'name' => $this->params['name'], 'uni_id' => $this->params['uni_id'] , 'c2dm_id' => $this->params['c2dm_id']  ));
 	
 		$this->user_id = $this->db->insert_id();
 		
 		$this->db->insert('user_devices', array( 'user_id' => $this->user_id, 'device_id' => $this->params['device_id'] ) );	
+		
+		$this->response->addData( array('user_id' => $this->user_id) );
+		
+		$this->response->addSuccessMessage();
  	}
  	protected function onInvalid(){
  	}

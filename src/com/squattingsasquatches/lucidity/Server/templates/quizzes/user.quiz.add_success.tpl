@@ -1,1 +1,0 @@
-Quiz successfully added!

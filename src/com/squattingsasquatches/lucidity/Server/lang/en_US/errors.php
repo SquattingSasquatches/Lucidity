@@ -51,4 +51,8 @@ $this->messages['no_section_id_supplied']			= new Message( MessageType::Error, 3
 $this->messages['no_c2dm_id_supplied']				= new Message( MessageType::Error, 33, 'Missing parameter: c2dm_id');
 $this->messages['no_university_found']				= new Message( MessageType::Error, 34, 'University not found.');
 
+$this->messages['user_not_within_radius']			= new Message( MessageType::Error, 35, 'User not within radius.');
+$this->messages['no_gps_long_supplied']				= new Message( MessageType::Error, 36, 'Missing parameter: gps_long');
+$this->messages['no_gps_lat_supplied']				= new Message( MessageType::Error, 37, 'Missing parameter: gps_lat');
+
 ?>
