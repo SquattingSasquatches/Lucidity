@@ -42,6 +42,7 @@
 		</receiver>
         <activity android:name=".SelectSubjectActivity"></activity>
         <activity android:name=".SelectCourseActivity"></activity>
-        <activity android:name=".SelectSectionActivity"></activity> 
+        <activity android:name=".SelectSectionActivity"></activity>
+        <activity android:name=".CourseHomeActivity"></activity> 
     </application>
 </manifest>

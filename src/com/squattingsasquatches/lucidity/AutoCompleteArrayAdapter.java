@@ -7,25 +7,27 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 
+
+
 public class AutoCompleteArrayAdapter<E extends DataItem> extends ArrayAdapter<E> implements Filterable {
 
-	private ArrayList<E> allItems, matchingItems;
+	private ArrayList<E> matchingItems, allItems;
 
 	@SuppressWarnings("unchecked")
-	public AutoCompleteArrayAdapter(Context ctx, int viewId, ArrayList<E> allItems) {
-		super(ctx, viewId, allItems);
-		this.allItems = allItems;
-		this.matchingItems = (ArrayList<E>) allItems.clone();
+	public AutoCompleteArrayAdapter(Context ctx, int viewId, ArrayList<E> matchingItems) {
+		super(ctx, viewId, matchingItems);
+		this.allItems = (ArrayList<E>) matchingItems.clone();
+		this.matchingItems = matchingItems;
 	}
 
 	@Override
     public int getCount() {
-        return allItems.size();
+        return matchingItems.size();
     }
 
     @Override
     public E getItem(int i) {
-        return allItems.get(i);
+        return matchingItems.get(i);
     }
     
     @Override
@@ -43,7 +45,7 @@ public class AutoCompleteArrayAdapter<E extends DataItem> extends ArrayAdapter<E
 					ArrayList<E> tmpAllData = allItems;
 					ArrayList<E> tmpDataShown = matchingItems;
 
-					tmpDataShown.clear();  
+					tmpDataShown.clear();
 
 					for (int i = 0; i < tmpAllData.size(); i++)	{
 						if (tmpAllData.get(i).toString().toLowerCase().contains(constraint.toString().toLowerCase())) {
@@ -60,9 +62,11 @@ public class AutoCompleteArrayAdapter<E extends DataItem> extends ArrayAdapter<E
                 }
             }
 
+			@SuppressWarnings("unchecked")
 			@Override
             protected void publishResults(CharSequence contraint, FilterResults results) {
                 if (results != null && results.count > 0) {
+                	matchingItems = (ArrayList<E>) results.values;
                 	notifyDataSetChanged();
                 }
             }

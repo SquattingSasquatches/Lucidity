@@ -134,53 +134,11 @@ public class CourseMenuActivity extends Activity {
 					break;
 				default:
 					// load selected course and start CourseHome activity
-					/*nextActivity = new Intent(CourseMenuActivity.this, CourseHomeActivity.class);
+					nextActivity = new Intent(CourseMenuActivity.this, CourseHomeActivity.class);
 					nextActivity.putExtra("com.squattingsasquatches.sectionId", section.getId());
-					startActivity(nextActivity);*/
+					startActivity(nextActivity);
 					break;
 			}
 		}
 	};
-	
-	/* NOT NEEDED FOR THIS ACTIVITY ANYMORE BUT COULD STILL USE IT TO VALIDATE UNIVERSITIES IN SPLASH. ALL CAPS YELLING.
-	class ValidateStarter implements OnFocusChangeListener {
-		
-        public void onFocusChange(View v, boolean hasFocus) {
-            if (!hasFocus) {
-                ((AutoCompleteTextView) v).performValidation();
-            }
-        }
-        
-    };
-	
-	class ACValidator implements AutoCompleteTextView.Validator {
-
-		public CharSequence fixText(CharSequence invalidText) {
-			return "";
-		}
-
-		public boolean isValid(CharSequence text) {
-			String courseTitle = text.toString();
-			Iterator<Course> it = availableCourses.iterator();
-			
-			// Check that the user hasn't already entered this course
-			int count = 0;
-			
-			for (int i = 0; i < 3; ++i) {
-	    		if (courseTitle.equals(acNewCourses.get(i).getText().toString()))
-	    			++count;
-	    		
-	    		if (count > 1) return false; // 1 for the text just entered
-			}
-			
-			// Check entered course against valid courses for the user's university	
-			while (it.hasNext()) {
-				if (((Course) it.next()).equals(courseTitle.toString()))
-					return true;
-			}
-			
-			return false; // Course doesn't exist
-		}
-		
-	};*/
 }

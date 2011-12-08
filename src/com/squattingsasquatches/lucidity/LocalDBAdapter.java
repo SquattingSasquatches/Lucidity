@@ -143,19 +143,6 @@ public class LocalDBAdapter {
 		
 		while (!result.isAfterLast()) {
             try {
-            	Log.i("json", "{\"" +
-								KEY_SECTION_ID + "\": \"" + result.getInt(0) + "\", \"" +
-								KEY_SUBJECT_PREFIX + "\": \"" + result.getString(1) + "\", \"" +
-								KEY_COURSE_NUMBER + "\": \"" + result.getInt(2) + "\", \"" +
-								KEY_SECTION_NUMBER + "\": \"" + result.getString(3) + "\", \"" +
-								KEY_COURSE_ID + "\": \"" + result.getInt(4) + "\", \"" +
-								KEY_PROFESSOR_ID + "\": \"" + result.getInt(5) + "\", \"" +
-								KEY_PROFESSOR_NAME + "\": \"" + result.getString(6) + "\", \"" +
-								KEY_DAYS + "\": \"" + result.getString(8) + "\", \"" +
-								KEY_LOCATION + "\": \"" + result.getString(7) + "\", \"" +
-								KEY_START_TIME + "\": \"" + result.getString(9) + "\", \"" +
-							    KEY_END_TIME + "\": \"" + result.getString(10) + "\", \"" +
-							    KEY_VERIFIED + "\": \"" + result.getInt(11) + "\"}");
 				sections.put(
 						new JSONObject("{\"" +
 									KEY_SECTION_ID + "\": \"" + result.getInt(0) + "\", \"" +
