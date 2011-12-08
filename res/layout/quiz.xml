@@ -1,0 +1,104 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+
+    <LinearLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_bg" >
+
+        <TextView
+            android:id="@+id/txtHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center_vertical" />
+        
+        <Button
+            android:id="@+id/btnCheckIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawingCacheQuality="high"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="Checked In"
+            android:enabled="false"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+    
+    <!-- bottom border for header -->
+   	<LinearLayout
+        android:id="@+id/headerBorder"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/layoutHeader"
+        android:background="#2b80cd" />
+   	
+   	<LinearLayout
+        android:id="@+id/infoBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerBorder">
+        
+   	    <TextView
+            android:id="@+id/txtQuestionCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_gravity="left" />
+   	    
+   	    <TextView
+            android:id="@+id/txtCountdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_gravity="right" />
+   	    
+   	</LinearLayout>
+   	
+   	
+   	<!-- bottom border for header -->
+   	<LinearLayout
+        android:id="@+id/infoBarBorder"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#2b80cd"
+        android:layout_below="@id/infoBar" />
+   	   	
+   	<ViewFlipper
+   	    android:id="@+id/questionContainer"
+   	    android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:inAnimation="@anim/slidein"
+		android:outAnimation="@anim/slideout"
+		android:layout_below="@id/infoBarBorder">
+        
+    </ViewFlipper>
+    
+   	<LinearLayout
+        android:id="@+id/layoutOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#AAFFFFFF"
+        android:layout_alignTop="@id/layoutHeader"
+        android:gravity="center_vertical|center_horizontal">
+        
+        <TextView
+            android:id="@+id/txtQuizInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+    </LinearLayout>
+
+</RelativeLayout>

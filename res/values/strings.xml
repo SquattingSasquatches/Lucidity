@@ -16,4 +16,6 @@
     <string name="past_due">PAST DUE</string>
     <string name="assignment_descrip">Assignment Description</string>
     <string name="due_date">Due On</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
