@@ -5,13 +5,6 @@
  * Lucidity 
  * Created by Asa Rudick, Brett Aaron, Trypp Cook
  */
- <?php
-/*
- * Created on Nov 14, 2011
- *
- * Lucidity 
- * Created by Asa Rudick, Brett Aaron, Trypp Cook
- */
  include('class.controller.php');
 
 class ViewQuizzes extends Controller

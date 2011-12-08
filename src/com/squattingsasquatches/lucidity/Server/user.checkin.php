@@ -66,6 +66,7 @@ class UserCheckin extends Controller
 			 sin($deltaLongitude / 2) * sin($deltaLongitude / 2);
 		$c = 2 * atan2(sqrt($a), sqrt(1-$a));
 		$distance = $earthMeanRadius * $c;
+		//echo $distance;
 		return $distance;
 	}
 	function userExists( $param_names )
@@ -91,7 +92,7 @@ class UserCheckin extends Controller
  		
  		$records = $this->db->fetch_assoc_all();
  		
- 		$this->db->update('users', array('in_class'), 'id = ?', array($records['user_id']));
+ 		$this->db->update('users', array('in_class' => 1), 'id = ?', array($records[0]['user_id']));
 		
  	}
  	protected function onInvalid(){

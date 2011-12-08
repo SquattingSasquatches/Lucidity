@@ -53,7 +53,9 @@ class AddQuiz extends Controller
  		$db->insert('quizzes', array(	'lecture_id' => $this->params['lecture_id'], 
 										'quiz_name' => $this->params['quiz_name'], 
 										'quiz_duration' => $this->params['quiz_duration'] ) );
-									
+		
+		
+		
 		}
  	protected function onInvalid(){
  	}
