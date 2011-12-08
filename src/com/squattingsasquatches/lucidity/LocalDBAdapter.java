@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.location.Location;
 import android.util.Log;
 
 public class LocalDBAdapter {
@@ -22,6 +23,7 @@ public class LocalDBAdapter {
 	private static final String DB_NAME = "lucidity";
 	private static final String USER_TABLE = "user";
 	private static final String SECTIONS_TABLE = "sections";
+	private static final String GPS_TABLE = "gps";
 	
 	public static final String KEY_ID = "id";
 	public static final String KEY_UNI_ID = "uni_id";
@@ -42,6 +44,10 @@ public class LocalDBAdapter {
 	public static final String KEY_VERIFIED = "is_verified";
 	public static final String KEY_DAYS = "days";
 	public static final String KEY_LOCATION = "location";
+	public static final String KEY_CHECKED_IN = "checked_in";
+	public static final String KEY_LAT = "lat";
+	public static final String KEY_LONG = "long";
+	
 	
 	private Context ctx;
 	private SQLiteDatabase db;
@@ -183,6 +189,42 @@ public class LocalDBAdapter {
 		return subjectPrefix;
 	}
 	
+	public Location getLocation(String provider) {
+		Cursor result = db.query(GPS_TABLE, new String[] {KEY_LAT, KEY_LONG}, null, null, null, null, null);
+		result.moveToFirst();
+		Location loc = new Location(provider);
+		loc.setLatitude(result.getDouble(0));
+		loc.setLongitude(result.getDouble(1));
+		result.close();
+		return loc;
+	}
+	
+	public long saveLocation(Location loc) {
+		ContentValues gpsData = new ContentValues();
+		gpsData.put(KEY_CHECKED_IN, 0);
+		gpsData.put(KEY_LAT, loc.getLatitude());
+		gpsData.put(KEY_LONG, loc.getLongitude());
+		return db.insert(GPS_TABLE, null, gpsData);
+	}
+	
+	public long saveCheckedIn(boolean checkedIn) {
+		ContentValues gpsData = new ContentValues();
+		int c = 0;
+		if (checkedIn) c = 1;
+		gpsData.put(KEY_CHECKED_IN, c);
+		return db.update(GPS_TABLE, gpsData, null, null);
+	}
+	
+	public boolean isCheckedIn() {
+		Cursor result = db.query(GPS_TABLE, new String[] {KEY_CHECKED_IN}, null, null, null, null, null);
+		result.moveToFirst();
+		boolean checkedIn = false;
+		if (result.getInt(0) == 1)
+			checkedIn = true;
+		result.close();
+		return checkedIn;
+	}
+	
 	public class DBHelper extends SQLiteOpenHelper {
 		
 		private static final int DB_VERSION = 1;
@@ -210,6 +252,12 @@ public class LocalDBAdapter {
 													   KEY_START_TIME + " TEXT not null, " +
 													   KEY_END_TIME + " TEXT not null, " +
 													   KEY_VERIFIED + " INTEGER not null);";
+		private static final String DB_CREATE_GPS_TABLE = 
+										"create table " +
+												GPS_TABLE + 
+												" (" + KEY_CHECKED_IN + " INTEGER not null, " +
+													   KEY_LAT + " NUMERIC not null, " +
+													   KEY_LONG + " NUMERIC not null); ";
 		
 		public DBHelper(Context ctx) {
 			super(ctx, DB_NAME, null, DB_VERSION);
@@ -219,12 +267,14 @@ public class LocalDBAdapter {
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(DB_CREATE_USERS_TABLE);
 			db.execSQL(DB_CREATE_SECTIONS_TABLE);
+			db.execSQL(DB_CREATE_GPS_TABLE);
 		}
 	
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE + ";");
 			db.execSQL("DROP TABLE IF EXISTS " + SECTIONS_TABLE + ";");
+			db.execSQL("DROP TABLE IF EXISTS " + GPS_TABLE + ";");
 			onCreate(db);
 		}
 	}

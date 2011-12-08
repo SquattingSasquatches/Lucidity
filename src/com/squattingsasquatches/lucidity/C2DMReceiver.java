@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 public class C2DMReceiver extends BroadcastReceiver {
 	
@@ -49,7 +48,7 @@ public class C2DMReceiver extends BroadcastReceiver {
            String activity = extras.getString("activity"),
         		   action = extras.getString("action");
            
-           
+           Log.i("C2DM", "Message received");
            if (activity != null) {
            
 	           try {
@@ -62,7 +61,9 @@ public class C2DMReceiver extends BroadcastReceiver {
 	           }
 	           
            } else if (action != null) {
-        	   ctx.sendBroadcast(new Intent("com.squattingsasquatches.lucidity." + action));
+        	   Intent i = new Intent("com.squattingsasquatches.lucidity." + action);
+        	   i.putExtras(extras);
+        	   ctx.sendBroadcast(i);
            }
        }
    }

@@ -44,6 +44,7 @@
         android:id="@+id/infoBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:layout_below="@id/headerBorder">
         
    	    <TextView
@@ -85,7 +86,7 @@
         
     </ViewFlipper>
     
-   	<LinearLayout
+   	<RelativeLayout
         android:id="@+id/layoutOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -97,8 +98,19 @@
             android:id="@+id/txtQuizInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_gravity="center_horizontal"
+            android:textColor="#FF000000"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
         
-    </LinearLayout>
+        <Button
+            android:id="@+id/btnStartQuiz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Quiz"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@id/txtQuizInfo"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+    </RelativeLayout>
 
 </RelativeLayout>
