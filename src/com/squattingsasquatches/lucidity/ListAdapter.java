@@ -43,6 +43,8 @@ public class ListAdapter<E extends DataItem> extends BaseAdapter {
 			 //If this item has id -1, change the arrow to a plus. (Add a Course)
 			 if (items.get(position).getId() == -1)
 				 holder.imgIcon.setImageResource(R.drawable.plus);
+			 if (items.get(position).getId() == -2)
+				 holder.imgIcon.setVisibility(View.GONE);
 			 
 			 convertView.setTag(holder);
 		 } else {

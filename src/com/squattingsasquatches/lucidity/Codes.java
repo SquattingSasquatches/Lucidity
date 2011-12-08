@@ -38,6 +38,8 @@ public class Codes {
 	public static final int LOAD_UNI_COURSES = 59;
 	public static final int REMOTE_CONNECTION_ERROR = 60;
 	
+	/* GPS Callback */
+	public static final int USER_NOT_WITHIN_RADIUS = 35;
 	
 	/* String constants */
 	public static final String KEY_RESULT = "result";

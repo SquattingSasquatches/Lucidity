@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 public class C2DMReceiver extends BroadcastReceiver {
 	
@@ -16,7 +17,6 @@ public class C2DMReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context ctx, Intent intent) {
 		c2dmRegistrationID = intent.getStringExtra("registration_id");
-		Log.d("C2DM onReceive", c2dmRegistrationID);
 		this.ctx = ctx;
 		if (intent.getAction().equals("com.google.android.c2dm.intent.REGISTRATION")) {
 			handleRegistration(intent);
@@ -46,17 +46,7 @@ public class C2DMReceiver extends BroadcastReceiver {
        Bundle extras = intent.getExtras();
        
        if (extras != null) {
-           String tablesToUpdate = (String) extras.get("tables"); // csv of table names
-           if (tablesToUpdate != null) {
-               updateLocalDB(ctx, tablesToUpdate);
-           }
+           Toast.makeText(ctx,  "Message Received: " + extras.getString("msg"), Toast.LENGTH_LONG).show();
        }
-   }
-
-   private void updateLocalDB(Context context, String tablesToUpdate) {
-       /* TODO: Split tablesToUpdate by comma.
-        * 		Pull releveant info (info related to user) from remote DB and mirror to local DB
-        *		If "notification", "handouts", etc. tables are present in tableToUpdate then we should notify the user after mirroring db
-        */
    }
 }
