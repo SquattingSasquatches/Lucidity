@@ -7,16 +7,16 @@
  */
 
 // Set configuration vars
-include( dirname( __FILE__ ) . '/config.php');
+include_once( dirname( __FILE__ ) . '/config.php');
 
 // Load error handler.
-include( dirname( __FILE__ ) . '/class.response.php');
+include_once( dirname( __FILE__ ) . '/class.response.php');
 
 // Load database class
-require ( dirname( __FILE__ ) . '/db/class.database.php');  
+include_once( dirname( __FILE__ ) . '/db/class.database.php');  
 	
 
-include( dirname( __FILE__ ) . '/class.validation.php');
+include_once( dirname( __FILE__ ) . '/class.validation.php');
  //ini_set("error_reporting", E_ALL);
  //ini_set("display_errors", 1);
 
