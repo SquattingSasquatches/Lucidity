@@ -47,6 +47,7 @@
         <activity android:name=".SelectSubjectActivity"></activity>
         <activity android:name=".SelectCourseActivity"></activity>
         <activity android:name=".SelectSectionActivity"></activity>
-        <activity android:name=".CourseHomeActivity"></activity> 
+        <activity android:name=".CourseHomeActivity"></activity>
+        <activity android:name=".QuizActivity"></activity> 
     </application>
 </manifest>
