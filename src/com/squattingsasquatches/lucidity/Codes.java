@@ -25,6 +25,9 @@ public class Codes {
 	public static final int NO_STUDENT_ID_SUPPLIED = 13;
 	public static final int NO_LECTURE_HALL_SUPPLIED = 14;
 	
+	/* GPS Callbacks */
+	public static final int USER_NOT_WITHIN_RADIUS = 35;
+	
 	/* App Callbacks */
 	public static final int REMOTE_QUERY_COMPLETE = 50;
 	public static final int REMOTE_QUERY_ERROR = 51;

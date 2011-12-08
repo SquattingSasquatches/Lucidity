@@ -15,10 +15,12 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +41,8 @@ public class CourseHomeActivity extends Activity {
 	private ArrayList<Assignment> upcomingAssignments;
 	private ArrayList<Assignment> pastAssignments;
 	private int sectionId;
-	
+	private User user;
+    
 	/* GPS */
 	private Location currentLocation = null;//= getLocation();
 	private boolean checkedIn = false;
@@ -57,6 +60,9 @@ public class CourseHomeActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.course_home);
+	
+		user = new User();
+		user.setDeviceId(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)); //get device's unique ID
 		
 		upcomingAssignments = new ArrayList<Assignment>();
 		upcomingListView = (ListView) findViewById(R.id.ListContainer);
@@ -75,6 +81,13 @@ public class CourseHomeActivity extends Activity {
         loading.setCancelable(false);
         loading.show();
 
+        final Button button = (Button) findViewById(R.id.btnCheckIn);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                locationCheckIn();
+            }
+        });
+        
         InternalReceiver assignmentsView = new InternalReceiver(){
 			public void update( JSONArray data ){
 				CourseHomeActivity.this.displayAssignments( data );
@@ -142,6 +155,42 @@ public class CourseHomeActivity extends Activity {
 		}
 	};
 	
+	private void gpsCheckInCallback(JSONArray data){
+		int resultCode = getResultCode(data);
+		
+		Context context = getApplicationContext();
+		int duration = Toast.LENGTH_SHORT;
+		String text;
+		
+		if(resultCode == Codes.SUCCESS){
+			text = "Successfully Checked In!";
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+			checkedIn = true;
+		} else if(resultCode == Codes.USER_NOT_WITHIN_RADIUS){
+			text = "Not Close Enough!";
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+			checkedIn = false;
+		} else { //ERROR
+			text = "Unspecified Error!";
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+			checkedIn = false;
+		}
+		
+	}
+	
+	/* get result code from a call to PHPService */
+    public int getResultCode(JSONArray result) {
+    	try {
+			return result.getJSONObject(0).getInt("id");
+		} catch (JSONException e) {
+			Log.e("getResultCode", e.getMessage());
+			return Codes.NOT_A_JSON_ARRAY;
+		}
+    }
+	
 	private Location getLocation(){
 		Criteria criteria = new Criteria();
 		
@@ -162,22 +211,20 @@ public class CourseHomeActivity extends Activity {
 	private boolean locationCheckIn(){
 		//do something together with php
 		this.currentLocation = getLocation();
-		//send
-		//receive
 		
-		Context context = getApplicationContext();
-		int duration = Toast.LENGTH_SHORT;
-		String text;
+		InternalReceiver checkInView = new InternalReceiver(){
+			public void update( JSONArray data ){
+				CourseHomeActivity.this.gpsCheckInCallback( data );
+			}
+		};
 		
-		if(checkedIn){
-			text = "Successfully Checked In!";
-			Toast toast = Toast.makeText(context, text, duration);
-			toast.show();
-		} else {
-			text = "Checking in Failed!";
-			Toast toast = Toast.makeText(context, text, duration);
-			toast.show();
-		}
+		checkInView.addParam("section_id", sectionId);
+		checkInView.addParam("device_id", user.getDeviceId());
+		checkInView.addParam("gps_lat", "" + currentLocation.getLatitude());
+		checkInView.addParam("gps_long", "" + currentLocation.getLongitude());
+    
+		remoteDB.addReceiver("user.checkin", checkInView);
+		remoteDB.execute("user.checkin");
 		
 		return false;
 	}
