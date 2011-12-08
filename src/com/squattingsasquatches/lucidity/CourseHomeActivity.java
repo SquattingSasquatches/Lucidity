@@ -155,23 +155,23 @@ public class CourseHomeActivity extends Activity {
 				else
 					upcomingAssignments.add(a);
 				
-				if (pastAssignments.size() < 1) {
+				/*if (pastAssignments.size() < 1) {
 					pastAssignments.add(new Assignment(-2, "No Past Assignments"));
 					pastDueListView.setClickable(false);
 					pastDueListView.setAdapter(new ListAdapter<Assignment>(this, pastAssignments));
-				} else {
+				} else {*/
 					pastDueListView.setAdapter(new ExtendedListAdapter<Assignment>(this, pastAssignments));
-					pastDueListView.setOnItemClickListener(listViewHandler);
-				}
+					//pastDueListView.setOnItemClickListener(listViewHandler);
+				//}
 				
-				if (upcomingAssignments.size() < 1) {
+				/*if (upcomingAssignments.size() < 1) {
 					upcomingAssignments.add(new Assignment(-2, "No Upcoming Assignments"));
 					upcomingListView.setClickable(false);
 					upcomingListView.setAdapter(new ListAdapter<Assignment>(this, upcomingAssignments));
-				} else {
+				} else {*/
 					upcomingListView.setAdapter(new ExtendedListAdapter<Assignment>(this, upcomingAssignments));
-					upcomingListView.setOnItemClickListener(listViewHandler);
-				}
+					//upcomingListView.setOnItemClickListener(listViewHandler);
+				//}
 
 			} catch (JSONException e) {
 				Log.d("displayAssignments", "JSON error");

@@ -176,13 +176,18 @@ public class QuizActivity extends Activity {
 	
 	public void loadQuestions(JSONArray data) {
 		// get resultcode and check if success possibly
-		
+		try {
+			data = data.getJSONObject(0).getJSONArray("questions");
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		int resultLength = data.length();
 		quiz = new Quiz();
 		
 		for (int i = 0; i < resultLength; ++i) {
 			try {
-				JSONObject question = data.getJSONObject(0).getJSONArray("questions").getJSONObject(i);
+				JSONObject question = data.getJSONObject(i);
 				JSONArray answers = question.getJSONArray("answers");
 				Question qToAdd = new Question(question.getInt("id"), question.getString("text"));
 				
