@@ -1,7 +1,7 @@
 package com.squattingsasquatches.lucidity;
 
-import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,8 +11,11 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -47,6 +50,7 @@ public class CourseHomeActivity extends Activity {
 	private int sectionId, courseNumber;
 	private String coursePrefix;
 	private User user;
+	private SimpleDateFormat df;
     
 	/* GPS */
 	private Location currentLocation = null;//= getLocation();
@@ -61,6 +65,16 @@ public class CourseHomeActivity extends Activity {
 			remoteDB.unregisterAllReceivers();
 		if (localDB != null)
 			localDB.close();
+		
+		unregisterReceiver(c2dmCheckOut);
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		IntentFilter intentFilter = new IntentFilter("com.squattingsasquatches.lucidity.CHECK_OUT");
+        intentFilter.setPriority(1); // throughout the ship
+        registerReceiver(c2dmCheckOut, intentFilter);
 	}
 
 	@Override
@@ -80,9 +94,10 @@ public class CourseHomeActivity extends Activity {
 
         remoteDB = new RemoteDBAdapter(this);
         localDB = new LocalDBAdapter(this).open();
-        sectionId = getIntent().getIntExtra("com.squattingsasquatches.sectionId", -1);
-        coursePrefix = getIntent().getStringExtra("com.squattingsasquatches.coursePrefix");
-        courseNumber = getIntent().getIntExtra("com.squattingsasquatches.courseNumber", -1);
+        sectionId = getIntent().getIntExtra("sectionId", -1);
+        coursePrefix = localDB.getCoursePrefix(sectionId);
+        courseNumber = localDB.getCourseNumber(sectionId);
+        df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
         txtHeading.setText(coursePrefix + " " + courseNumber);
@@ -119,8 +134,10 @@ public class CourseHomeActivity extends Activity {
 			try {
 				JSONObject assignment = data.getJSONObject(i);
 
-				Date dueDate = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(assignment.getString("due_date")),
+				Date dueDate = (Date) df.parse(assignment.getString("due_date")),
 					 rightNow = new Date();
+				
+				Log.e("date", dueDate.toLocaleString());
 
 				Assignment a = new Assignment(
 								assignment.getInt("id"),
@@ -137,11 +154,19 @@ public class CourseHomeActivity extends Activity {
 				if (pastAssignments.size() < 1) {
 					pastAssignments.add(new Assignment(-2, "No Past Assignments"));
 					pastDueListView.setClickable(false);
+					pastDueListView.setAdapter(new ListAdapter<Assignment>(this, pastAssignments));
+				} else {
+					pastDueListView.setAdapter(new ExtendedListAdapter<Assignment>(this, pastAssignments));
+					pastDueListView.setOnItemClickListener(listViewHandler);
 				}
 				
 				if (upcomingAssignments.size() < 1) {
 					upcomingAssignments.add(new Assignment(-2, "No Upcoming Assignments"));
 					upcomingListView.setClickable(false);
+					upcomingListView.setAdapter(new ListAdapter<Assignment>(this, upcomingAssignments));
+				} else {
+					upcomingListView.setAdapter(new ExtendedListAdapter<Assignment>(this, upcomingAssignments));
+					upcomingListView.setOnItemClickListener(listViewHandler);
 				}
 
 			} catch (JSONException e) {
@@ -151,12 +176,6 @@ public class CourseHomeActivity extends Activity {
 			}
 		}
 
-		upcomingListView.setAdapter(new ListAdapter<Assignment>(this, upcomingAssignments));
-		pastDueListView.setAdapter(new ListAdapter<Assignment>(this, pastAssignments));
-
-		upcomingListView.setOnItemClickListener(listViewHandler);
-		pastDueListView.setOnItemClickListener(listViewHandler);
-
 		loading.dismiss();
 	}
 
@@ -164,14 +183,13 @@ public class CourseHomeActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Object o = upcomingListView.getItemAtPosition(position);
 			Assignment assignment = (Assignment) o;
-			DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
 			
 			nextActivity = new Intent(CourseHomeActivity.this, ViewAssignmentActivity.class);
-			nextActivity.putExtra("com.squattingsasquatches.assignmentId", assignment.getId());
-			nextActivity.putExtra("com.squattingsasquatches.assignmentName", assignment.getName());
-			nextActivity.putExtra("com.squattingsasquatches.assignmentDocId", assignment.getDocId());
-			nextActivity.putExtra("com.squattingsasquatches.assignmentDescription", assignment.getDescription());
-			nextActivity.putExtra("com.squattingsasquatches.assignmentDueDate", df.format(assignment.getDueDate()));
+			nextActivity.putExtra("assignmentId", assignment.getId());
+			nextActivity.putExtra("assignmentName", assignment.getName());
+			nextActivity.putExtra("assignmentDocId", assignment.getDocId());
+			nextActivity.putExtra("assignmentDescription", assignment.getDescription());
+			nextActivity.putExtra("assignmentDueDate", df.format(assignment.getDueDate()));
 			startActivity(nextActivity);
 		}
 	};
@@ -189,13 +207,14 @@ public class CourseHomeActivity extends Activity {
 			toast.show();
 			checkedIn = true;
 			btnCheckIn.setEnabled(false);
+			btnCheckIn.setTextColor(Color.WHITE);
 			btnCheckIn.setText("Checked In");
 		} else if(resultCode == Codes.USER_NOT_WITHIN_RADIUS){
 			text = "Not Close Enough!";
 			
 			this.currentLocation = getLocation();
 			double dist = distFrom(currentLocation.getLatitude(), currentLocation.getLongitude(), 33.2143, -87.5445);
-			Toast toast = Toast.makeText(context, dist+"", Toast.LENGTH_LONG);
+			Toast toast = Toast.makeText(context, dist + "", Toast.LENGTH_LONG);
 			toast.show();
 			checkedIn = false;
 		} else { //ERROR
@@ -203,10 +222,7 @@ public class CourseHomeActivity extends Activity {
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
 			checkedIn = false;
-		}			
-		
-		loading.dismiss();
-
+		}
 	}
 	
 	public static double distFrom(double lat1, double lng1, double lat2, double lng2) {
@@ -232,11 +248,11 @@ public class CourseHomeActivity extends Activity {
 		}
     }
 
-	private void startGPS(){
+	private void startGPS() {
 		Criteria criteria = new Criteria();
 
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		criteria.setPowerRequirement(Criteria.POWER_HIGH);
+		criteria.setPowerRequirement(Criteria.POWER_MEDIUM);
 		criteria.setAltitudeRequired(false);
 		criteria.setBearingRequired(false);
 		criteria.setSpeedRequired(false);
@@ -252,29 +268,12 @@ public class CourseHomeActivity extends Activity {
 		return locationManager.getLastKnownLocation(bestProvider);
 	}
 
-	private boolean locationCheckIn(){
+	private void locationCheckIn(){
 		loading.setTitle("Please wait");
-        loading.setMessage("Loading section info... ");
+        loading.setMessage("Checking your location... ");
         loading.show();
-		//do something together with php
-		currentLocation = getLocation();
-
-		InternalReceiver checkInView = new InternalReceiver(){
-			public void update( JSONArray data ){
-				CourseHomeActivity.this.gpsCheckInCallback( data );
-			}
-		};
-		Log.i("lat", currentLocation.getLatitude()+"");
-		Log.i("long", currentLocation.getLongitude()+"");
-		checkInView.addParam("section_id", sectionId);
-		checkInView.addParam("device_id", user.getDeviceId());
-		checkInView.addParam("gps_lat", "" + currentLocation.getLatitude());
-		checkInView.addParam("gps_long", "" + currentLocation.getLongitude());
-    
-		remoteDB.addReceiver("user.checkin", checkInView);
-		remoteDB.execute("user.checkin");
-
-		return false;
+        
+        startGPS();
 	}
 	
 	private LocationListener gpsListener = new LocationListener() {
@@ -282,24 +281,43 @@ public class CourseHomeActivity extends Activity {
 		@Override
 		public void onLocationChanged(Location loc) {
 			currentLocation = loc;
+			
+			InternalReceiver checkInView = new InternalReceiver(){
+				public void update( JSONArray data ){
+					CourseHomeActivity.this.gpsCheckInCallback( data );
+				}
+			};
+			Log.i("lat", currentLocation.getLatitude()+"");
+			Log.i("long", currentLocation.getLongitude()+"");
+			checkInView.addParam("section_id", sectionId);
+			checkInView.addParam("device_id", user.getDeviceId());
+			checkInView.addParam("gps_lat", "" + currentLocation.getLatitude());
+			checkInView.addParam("gps_long", "" + currentLocation.getLongitude());
+	    
+			remoteDB.addReceiver("user.checkin", checkInView);
+			remoteDB.execute("user.checkin");
+			
+			loading.dismiss();
+			locationManager.removeUpdates(this);
 		}
 
 		@Override
-		public void onProviderDisabled(String provider) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void onProviderDisabled(String provider) {}
 
 		@Override
-		public void onProviderEnabled(String provider) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void onProviderEnabled(String provider) {}
 
 		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO Auto-generated method stub
-			
+		public void onStatusChanged(String provider, int status, Bundle extras) {}
+		
+	};
+	
+	private BroadcastReceiver c2dmCheckOut = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context ctx, Intent intent) {
+			checkedIn = false;
+			btnCheckIn.setVisibility(View.INVISIBLE);
 		}
 		
 	};

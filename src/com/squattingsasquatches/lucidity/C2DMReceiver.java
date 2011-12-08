@@ -46,7 +46,24 @@ public class C2DMReceiver extends BroadcastReceiver {
        Bundle extras = intent.getExtras();
        
        if (extras != null) {
-           Toast.makeText(ctx,  "Message Received: " + extras.getString("msg"), Toast.LENGTH_LONG).show();
+           String activity = extras.getString("activity"),
+        		   action = extras.getString("action");
+           
+           
+           if (activity != null) {
+           
+	           try {
+	        	   Intent newActivity = new Intent(ctx, Class.forName("com.squattingsasquatches.lucidity." + activity));
+	        	   newActivity.putExtras(extras);
+	        	   newActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	        	   ctx.startActivity(newActivity);
+	           } catch (ClassNotFoundException e) {
+	        	   Log.e("C2DM Message Handler", "Invalid class supplied");
+	           }
+	           
+           } else if (action != null) {
+        	   ctx.sendBroadcast(new Intent("com.squattingsasquatches.lucidity." + action));
+           }
        }
    }
 }

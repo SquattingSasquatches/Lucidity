@@ -64,8 +64,8 @@ public class SelectSectionActivity extends Activity {
         /* Misc */
 		courseSections = new ArrayList<Section>();
 		sectionsListView = (ListView) findViewById(R.id.ListContainer);
-		courseId = getIntent().getIntExtra("com.squattingsasquatches.courseId", -1);
-        
+		courseId = getIntent().getIntExtra("courseId", -1);
+		
         InternalReceiver courseSectionsView = new InternalReceiver(){
 			public void update( JSONArray data ){
 				SelectSectionActivity.this.loadSectionsCallback( data );
@@ -112,8 +112,8 @@ public class SelectSectionActivity extends Activity {
 		if (!data.isNull(0)) {
 			Toast.makeText(getApplicationContext(), "Registration successful", Toast.LENGTH_LONG).show();
 			nextActivity = new Intent(SelectSectionActivity.this, CourseMenuActivity.class);
-			nextActivity.putExtra("com.squattingsasquatches.userId", localDB.getUserId());
-			nextActivity.putExtra("com.squattingsasquatches.updateCourses", true);
+			nextActivity.putExtra("userId", localDB.getUserId());
+			nextActivity.putExtra("updateCourses", true);
 			nextActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(nextActivity);
 			finish();

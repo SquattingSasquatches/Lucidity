@@ -188,8 +188,8 @@ public class SplashActivity extends Activity {
     /* switch to CourseMenu Activity and grab courses from remote DB */
     public void goToCourseList(boolean updateCourses) {
     	nextActivity = new Intent(this, CourseMenuActivity.class);
-		nextActivity.putExtra("com.squattingsasquatches.userId", localDB.getUserId());
-		nextActivity.putExtra("com.squattingsasquatches.updateCourses", updateCourses);
+		nextActivity.putExtra("userId", localDB.getUserId());
+		nextActivity.putExtra("updateCourses", updateCourses);
 		localDB.close();
 		startActivity(nextActivity);
 		finish(); //just this one time

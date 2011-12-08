@@ -48,14 +48,14 @@ public class CourseMenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generic_list);
         
-        updateCourses = getIntent().getBooleanExtra("com.squattingsasquatches.updateCourses", false);
+        updateCourses = getIntent().getBooleanExtra("updateCourses", false);
         
         userSections = new ArrayList<Section>();
         coursesListView = (ListView) findViewById(R.id.ListContainer);
         loading = new ProgressDialog(this);
         localDB = new LocalDBAdapter(this).open();
         remoteDB = new RemoteDBAdapter(this);
-        userId = getIntent().getIntExtra("com.squattingsasquatches.userId", -1);
+        userId = getIntent().getIntExtra("userId", -1);
         
         // Receivers
         getCourses = new InternalReceiver(){
@@ -129,15 +129,13 @@ public class CourseMenuActivity extends Activity {
 					// Add a Course
 					// Start SubjectsActivity
 					nextActivity = new Intent(CourseMenuActivity.this, SelectSubjectActivity.class);
-					nextActivity.putExtra("com.squattingsasquatches.userId", userId);
+					nextActivity.putExtra("userId", userId);
 					startActivity(nextActivity);
 					break;
 				default:
 					// load selected course and start CourseHome activity
 					nextActivity = new Intent(CourseMenuActivity.this, CourseHomeActivity.class);
-					nextActivity.putExtra("com.squattingsasquatches.sectionId", section.getId());
-					nextActivity.putExtra("com.squattingsasquatches.coursePrefix", section.getCourse().getSubject().getPrefix());
-					nextActivity.putExtra("com.squattingsasquatches.courseNumber", section.getCourse().getCourseNum());
+					nextActivity.putExtra("sectionId", section.getId());
 					startActivity(nextActivity);
 					break;
 			}

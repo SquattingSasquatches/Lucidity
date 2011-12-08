@@ -1,5 +1,6 @@
 package com.squattingsasquatches.lucidity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Assignment extends ExtendedDataItem{
@@ -19,7 +20,8 @@ public class Assignment extends ExtendedDataItem{
 		this.setDocId(d_id);
 		this.setDueDate(due);
 		if(this.getDueDate() != null){
-			this.setItemInfo1("Due Date: " + due_date.getDay() + "/" + due_date.getMonth() + "/" + due_date.getYear());
+			SimpleDateFormat df = new SimpleDateFormat("h:mm:ss a 'on' EEE, MMM d, yyyy");
+			this.setItemInfo1("Due: " + df.format(due_date));
 		}
 		if(doc_id != 0){
 			this.setItemInfo2("Document Available!");

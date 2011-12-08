@@ -52,8 +52,8 @@ public class ViewAssignmentActivity extends Activity {
 
         remoteDB = new RemoteDBAdapter(this);
         localDB = new LocalDBAdapter(this).open();
-        subjectId = getIntent().getIntExtra("com.squattingsasquatches.subjectId", -1);
-        subjectPrefix = getIntent().getStringExtra("com.squattingsasquatches.subjectPrefix");
+        subjectId = getIntent().getIntExtra("subjectId", -1);
+        subjectPrefix = getIntent().getStringExtra("subjectPrefix");
         uniId = localDB.getUserUniId();
 
         TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
@@ -111,7 +111,7 @@ public class ViewAssignmentActivity extends Activity {
 			Course course = (Course) o;
 			
 			//nextActivity = new Intent(SelectCourseActivity.this, SelectSectionActivity.class);
-			//nextActivity.putExtra("com.squattingsasquatches.courseId", course.getId());
+			//nextActivity.putExtra("courseId", course.getId());
 			//startActivity(nextActivity);
 		}
 	};

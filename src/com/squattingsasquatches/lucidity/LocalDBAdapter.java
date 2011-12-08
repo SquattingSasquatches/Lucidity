@@ -167,6 +167,22 @@ public class LocalDBAdapter {
 		return sections;
 	}
 	
+	public int getCourseNumber(int sectionId) {
+		Cursor result = db.query(SECTIONS_TABLE, new String[] {KEY_COURSE_NUMBER}, KEY_SECTION_ID + " = ?", new String[] {String.valueOf(sectionId)}, null, null, null);
+		result.moveToFirst();
+		int courseNum = result.getInt(0);
+		result.close();
+		return courseNum;
+	}
+	
+	public String getCoursePrefix(int sectionId) {
+		Cursor result = db.query(SECTIONS_TABLE, new String[] {KEY_SUBJECT_PREFIX}, KEY_SECTION_ID + " = ?", new String[] {String.valueOf(sectionId)}, null, null, null);
+		result.moveToFirst();
+		String subjectPrefix = result.getString(0);
+		result.close();
+		return subjectPrefix;
+	}
+	
 	public class DBHelper extends SQLiteOpenHelper {
 		
 		private static final int DB_VERSION = 1;

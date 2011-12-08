@@ -40,29 +40,61 @@
         android:layout_height="1dp"
         android:background="#2b80cd" />
    	
-   	<TextView
-   	    android:layout_width="match_parent"
-   	    android:layout_height="wrap_content"
-   	    android:gravity="right"
-   	    android:textStyle="bold"
-   	    android:background="#FF3688d9"
-   	    android:padding="5dp"
-   	    android:text="@string/upcoming" />
+   	<LinearLayout
+        android:id="@+id/headerBorder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+   	
+   		<LinearLayout
+	        android:id="@+id/headerBorder"
+	        android:layout_width="match_parent"
+	        android:layout_height="1dp"
+	        android:background="#2577c8"
+	        android:layout_weight="1" />
+   	
+	   	<TextView
+	   	    android:layout_width="wrap_content"
+	   	    android:layout_height="wrap_content"
+	   	    android:gravity="right"
+	   	    android:textStyle="bold"
+	   	    android:padding="10dp"
+	   	    android:textAppearance="?android:attr/textAppearanceMedium"
+	   	    android:text="@string/upcoming" />
+	   	
+	</LinearLayout>
     
     <ListView
     	android:id="@+id/ListContainer"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_weight="1" />
+    
+    <LinearLayout
+        android:id="@+id/headerBorder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+   	
+   		<LinearLayout
+	        android:id="@+id/headerBorder"
+	        android:layout_width="match_parent"
+	        android:layout_height="1dp"
+	        android:background="#2577c8"
+	        android:layout_weight="1" />
 	
-    <TextView
-   	    android:layout_width="match_parent"
-   	    android:layout_height="wrap_content"
-   	    android:gravity="right"
-   	    android:textStyle="bold"
-   	    android:background="#FF3688d9"
-   	    android:padding="5dp"
-   	    android:text="@string/past_due" />
+	    <TextView
+	   	    android:layout_width="wrap_content"
+	   	    android:layout_height="wrap_content"
+	   	    android:gravity="right"
+	   	    android:textStyle="bold"
+	   	    android:padding="10dp"
+	   	    android:textAppearance="?android:attr/textAppearanceMedium"
+	   	    android:text="@string/past_due" />
+	    
+	</LinearLayout>
     
     <ListView
     	android:id="@+id/ListContainer2"

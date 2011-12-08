@@ -99,8 +99,8 @@ public class SelectSubjectActivity extends Activity {
 			Subject subject = (Subject) o;
 			
 			nextActivity = new Intent(SelectSubjectActivity.this, SelectCourseActivity.class);
-			nextActivity.putExtra("com.squattingsasquatches.subjectId", subject.getId());
-			nextActivity.putExtra("com.squattingsasquatches.subjectPrefix", subject.getPrefix());
+			nextActivity.putExtra("subjectId", subject.getId());
+			nextActivity.putExtra("subjectPrefix", subject.getPrefix());
 			startActivity(nextActivity);
 		}
 	};
