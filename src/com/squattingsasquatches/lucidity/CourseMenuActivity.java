@@ -134,9 +134,9 @@ public class CourseMenuActivity extends Activity {
 					break;
 				default:
 					// load selected course and start CourseHome activity
-					/*nextActivity = new Intent(CourseMenuActivity.this, CourseHomeActivity.class);
+					nextActivity = new Intent(CourseMenuActivity.this, CourseHomeActivity.class);
 					nextActivity.putExtra("com.squattingsasquatches.sectionId", section.getId());
-					startActivity(nextActivity);*/
+					startActivity(nextActivity);
 					break;
 			}
 		}

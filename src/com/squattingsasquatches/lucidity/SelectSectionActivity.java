@@ -109,12 +109,17 @@ public class SelectSectionActivity extends Activity {
 	}
 	
 	public void registerSectionCallback(JSONArray data) {
-		Toast.makeText(getApplicationContext(), "registered for section", Toast.LENGTH_LONG).show();
-		nextActivity = new Intent(SelectSectionActivity.this, CourseMenuActivity.class);
-		nextActivity.putExtra("com.squattingsasquatches.userId", localDB.getUserId());
-		nextActivity.putExtra("com.squattingsasquatches.updateCourses", true);
-		startActivity(nextActivity);
-		finish();
+		if (!data.isNull(0)) {
+			Toast.makeText(getApplicationContext(), "Registration successful", Toast.LENGTH_LONG).show();
+			nextActivity = new Intent(SelectSectionActivity.this, CourseMenuActivity.class);
+			nextActivity.putExtra("com.squattingsasquatches.userId", localDB.getUserId());
+			nextActivity.putExtra("com.squattingsasquatches.updateCourses", true);
+			nextActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(nextActivity);
+			finish();
+		} else {
+			Log.e("RegisterSectionCallback", "Error while registering");
+		}
 	}
 	
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {

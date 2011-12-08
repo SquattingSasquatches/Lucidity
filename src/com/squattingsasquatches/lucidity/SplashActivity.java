@@ -238,7 +238,7 @@ public class SplashActivity extends Activity {
 			case Codes.SUCCESS:
 				try {
 					user.setId(result.getJSONObject(0).getInt("user_id"));
-					Log.e("userId-1", result.getJSONObject(0).getInt("user_id")+"");
+					Log.e("userId", result.getJSONObject(0).getInt("user_id")+"");
 					if (user.getDeviceId().equals(""))
 						user.setDeviceId(result.getJSONObject(0).getString("device_id"));
 				} catch (JSONException e) {
