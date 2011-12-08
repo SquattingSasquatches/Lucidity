@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -50,6 +51,8 @@ public class CourseHomeActivity extends Activity {
 	/* GPS */
 	private Location currentLocation = null;//= getLocation();
 	private boolean checkedIn = false;
+	private LocationManager locationManager;
+	private String bestProvider;
 
 	@Override
 	public void onPause() {
@@ -229,7 +232,7 @@ public class CourseHomeActivity extends Activity {
 		}
     }
 
-	private Location getLocation(){
+	private void startGPS(){
 		Criteria criteria = new Criteria();
 
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
@@ -239,10 +242,13 @@ public class CourseHomeActivity extends Activity {
 		criteria.setSpeedRequired(false);
 		criteria.setCostAllowed(true);
 
-		String serviceString = Context.LOCATION_SERVICE;
-		LocationManager locationManager = (LocationManager)getSystemService(serviceString);
-		String bestProvider = locationManager.getBestProvider(criteria, true);
-
+		locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		bestProvider = locationManager.getBestProvider(criteria, true);
+		
+		locationManager.requestLocationUpdates(bestProvider, 0, 0, gpsListener);
+	}
+	
+	private Location getLocation() {
 		return locationManager.getLastKnownLocation(bestProvider);
 	}
 
@@ -251,7 +257,7 @@ public class CourseHomeActivity extends Activity {
         loading.setMessage("Loading section info... ");
         loading.show();
 		//do something together with php
-		this.currentLocation = getLocation();
+		currentLocation = getLocation();
 
 		InternalReceiver checkInView = new InternalReceiver(){
 			public void update( JSONArray data ){
@@ -270,5 +276,32 @@ public class CourseHomeActivity extends Activity {
 
 		return false;
 	}
+	
+	private LocationListener gpsListener = new LocationListener() {
+
+		@Override
+		public void onLocationChanged(Location loc) {
+			currentLocation = loc;
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
 
 }
