@@ -25,12 +25,30 @@ class AddQuizResult extends Controller
  	protected function onValid(){
  		$db->insert('quiz_results', 
 	 				array( 	'student_id' 			=> $this->params['student_id'],
-	 						'question_id' 			=> $this->params['question_id'],
 	 						'quiz_id' 				=> $this->params['quiz_id'],
-	 						'selected_answer_id'	=> $this->params['selected_answer_id'],
-							'answer_text' 			=> $this->params['answer_text']    // For fill in the blank support. Might need to move this to a pairing table.
+	 						'grade'					=> 0
+							//'answer_text' 			=> $this->params['answer_text']    // For fill in the blank support. Might need to move this to a pairing table.
 							) 
 					);
+		
+		$quiz_result_id = $db->insert_id;
+		
+		$total = 0;
+		$correct = 0;
+		
+		foreach( $this->params['question_results'] as $question_result )
+		{
+			$this->db->insert('question_results', $question_result);
+			$this->db->select('correct_answer_id', 'questions', 'question_id = ?', array( $question_result['question_id'] ) );
+			$row = $this->db->fetch_assoc();
+			if( $row['correct_answer_id'] == $question_result['selected_answer_id'])
+				$correct++;
+			$total++;
+		}
+		
+		$grade = $correct/$total;
+		
+		$this->db->update('quiz_results', array( 'grade' => $grade ), 'id = ?', array($quiz_result_id));
 		
 		
  	}
