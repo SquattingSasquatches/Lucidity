@@ -1,0 +1,1 @@
+Course successfully added! <a href="user.courses.view.php?device_id={$data[0].device_id}">View courses</a> <a href="user.course.add.php">Add another course</a> 
