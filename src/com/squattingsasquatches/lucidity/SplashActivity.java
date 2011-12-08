@@ -1,6 +1,7 @@
 package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +20,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,9 +40,12 @@ public class SplashActivity extends Activity {
 	private Button btnRegister;
 	private Intent nextActivity;
 	private ProgressDialog loading;
+	private TextView txtName;
 	private AutoCompleteTextView txtUni;
 	private TextView txtLoading;
 	private User user;
+	private University selectedUni;
+	private ArrayList<University> unis;
 	
 	@Override
 	public void onDestroy() {
@@ -54,8 +61,10 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.splash);
         
         user = new User();
+        selectedUni = new University();
         btnRegister = (Button) findViewById(R.id.btnRegister);    
         layoutFlipper = (ViewFlipper) findViewById(R.id.ViewFlipper);
+        txtName = (EditText) findViewById(R.id.txtName);
         txtUni = (AutoCompleteTextView) findViewById(R.id.acUni);
         txtLoading = (TextView) findViewById(R.id.txtLoading);
         localDB = new LocalDBAdapter(this).open();
@@ -250,7 +259,7 @@ public class SplashActivity extends Activity {
     
     public void loadUniversitiesCallback(JSONArray result) {
     	AutoCompleteArrayAdapter<University> adapter;
-    	ArrayList<University> unis = new ArrayList<University>();
+    	unis = new ArrayList<University>();
     	int resultLength = result.length();
     	
     	for (int i = 0; i < resultLength; ++i) {
@@ -263,6 +272,9 @@ public class SplashActivity extends Activity {
     	
     	adapter = new AutoCompleteArrayAdapter<University>(this, R.layout.ac_list_item, unis);
     	txtUni.setAdapter(adapter);
+    	txtUni.setOnItemClickListener(uniClickListener);
+    	txtUni.setValidator(new ACValidator());
+    	txtUni.setOnFocusChangeListener(new ValidateStarter());
     	loading.dismiss();
     	layoutFlipper.showNext();
     }
@@ -293,17 +305,35 @@ public class SplashActivity extends Activity {
         public void onClick(View v) {
         	switch (v.getId()) {
         		case R.id.btnRegister:
+        			txtUni.performValidation();
+        			
+        			if (txtUni.getText().toString().equals("") || txtName.getText().toString().equals("")) {
+        				
+        				if (txtName.getText().toString().equals(""))
+        					Toast.makeText(SplashActivity.this, "Please enter your name.", Toast.LENGTH_LONG).show();
+        				
+        				break;
+        			}
+        			
         	        loading.show();
         			// C2DM registration
         			// Registration with our server is now handled by remoteRegistration BroadcastReceiver
-        	        user.setName(((EditText) findViewById(R.id.txtName)).getText().toString());
-        	        user.getUniversity().setId(1870); //TODO: Fix this. In adapter, use actual University objects as opposed to just Strings. Need to write custom AutoCompleteTextView
-        	        Log.d("sel uni", String.valueOf(user.getUniversity().getId()));
+        	        user.setName(txtName.getText().toString());
+        	        user.getUniversity().setId(selectedUni.getId());
         			DeviceRegistrar.startRegistration(getApplicationContext(), remoteRegistration);
         			break;
         		default:
         	}
         }
+    };
+    
+    private OnItemClickListener uniClickListener = new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> parentView, View selectedView, int position, long id) {
+			selectedUni = (University) parentView.getAdapter().getItem(position);
+		}
+    	
     };
     
 	// Receivers
@@ -341,5 +371,37 @@ public class SplashActivity extends Activity {
 		public void onConnectionError( String errorMessage ){
 			SplashActivity.this.onHttpError( errorMessage );
 		}
+	};
+	
+	class ValidateStarter implements OnFocusChangeListener {
+		
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (!hasFocus) {
+                ((AutoCompleteTextView) v).performValidation();
+            }
+        }
+        
+    };
+	
+	class ACValidator implements AutoCompleteTextView.Validator {
+
+		public CharSequence fixText(CharSequence invalidText) {
+			Toast.makeText(SplashActivity.this, "Invalid University entered. Please try again.", Toast.LENGTH_LONG).show();
+			return "";
+		}
+
+		public boolean isValid(CharSequence text) {
+			String universityName = text.toString();
+			Iterator<University> it = unis.iterator();
+			
+			// Check entered text against valid universities
+			while (it.hasNext()) {
+				if ((((University) it.next()).getName()).equals(universityName))
+					return true;
+			}
+			
+			return false; // University isn't valid
+		}
+		
 	};
 }
