@@ -6,12 +6,15 @@
     <TextView
         android:id="@+id/txtQuestion"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ListView
     	android:id="@+id/answersContainer"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_weight="1" />
+		android:layout_weight="1"
+		android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

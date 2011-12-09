@@ -24,7 +24,7 @@ public class Assignment extends ExtendedDataItem{
 			this.setItemInfo1("Due: " + df.format(due_date));
 		}
 		if(doc_id != 0){
-			this.setItemInfo2("Document Available!");
+			this.setItemInfo2("Document Available");
 		}
 		
 	}

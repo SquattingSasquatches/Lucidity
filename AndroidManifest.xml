@@ -39,9 +39,10 @@
 				<category android:name="com.squattingsasquatches.lucidity" />
 			</intent-filter>
 		</receiver>
-		<receiver android:name=".CourseHomeActivity">
+		<receiver android:name=".QuizBegin">
 			<intent-filter>
-				<action android:name="com.squattingsasquatches.CHECK_OUT"></action>
+				<action android:name="com.squattingsasquatches.lucidity.QUIZ_BEGIN" />
+				<category android:name="com.squattingsasquatches.lucidity" />
 			</intent-filter>
 		</receiver>
         <activity android:name=".SelectSubjectActivity"></activity>
