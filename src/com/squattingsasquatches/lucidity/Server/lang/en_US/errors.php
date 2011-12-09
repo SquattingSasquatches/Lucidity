@@ -54,5 +54,6 @@ $this->messages['no_university_found']				= new Message( MessageType::Error, 34,
 $this->messages['user_not_within_radius']			= new Message( MessageType::Error, 35, 'User not within radius.');
 $this->messages['no_gps_long_supplied']				= new Message( MessageType::Error, 36, 'Missing parameter: gps_long');
 $this->messages['no_gps_lat_supplied']				= new Message( MessageType::Error, 37, 'Missing parameter: gps_lat');
+$this->messages['quiz_time_limit_exceeded']			= new Message( MessageType::Error, 38, 'Quiz not submitted within time limit.');
 
 ?>
