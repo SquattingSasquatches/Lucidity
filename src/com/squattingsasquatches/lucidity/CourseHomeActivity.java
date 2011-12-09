@@ -48,9 +48,7 @@ public class CourseHomeActivity extends Activity {
 	private User user;
 	private SimpleDateFormat df;
 	private InternalReceiver checkInView;
-	
-	/* GPS */
-	private CheckInManager gps;
+	private String deviceId;
 	
 	@Override
 	public void onPause() {
@@ -59,19 +57,19 @@ public class CourseHomeActivity extends Activity {
 			remoteDB.unregisterAllReceivers();
 		if (localDB != null)
 			localDB.close();
+		
 		try {
 			unregisterReceiver(c2dmCheckOut);
-		} catch (IllegalArgumentException e) {
-			//Log.i(""
-		}
+		} catch (IllegalArgumentException e) {}
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		IntentFilter intentFilter = new IntentFilter("com.squattingsasquatches.lucidity.LOCATION_FOUND");
+		IntentFilter intentFilter = new IntentFilter("com.squattingsasquatches.lucidity.LOCATION_UPDATED");
         intentFilter.setPriority(1); // throughout the ship
         registerReceiver(gpsReceiver, intentFilter);
+        updateCheckInBtn();
 	}
 
 	@Override
@@ -84,18 +82,19 @@ public class CourseHomeActivity extends Activity {
 
 		upcomingAssignments = new ArrayList<Assignment>();
 		pastAssignments = new ArrayList<Assignment>();
+		
 		upcomingListView = (ListView) findViewById(R.id.ListContainer);
 		pastDueListView = (ListView) findViewById(R.id.ListContainer2);
 		btnCheckIn = (Button) findViewById(R.id.btnCheckIn);
+		
         loading = new ProgressDialog(this);
-        
-        gps = new CheckInManager(this);
         remoteDB = new RemoteDBAdapter(this);
         localDB = new LocalDBAdapter(this).open();
         sectionId = getIntent().getIntExtra("sectionId", -1);
         coursePrefix = localDB.getCoursePrefix(sectionId);
         courseNumber = localDB.getCourseNumber(sectionId);
         df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
         txtHeading.setText(coursePrefix + " " + courseNumber);
@@ -123,6 +122,7 @@ public class CourseHomeActivity extends Activity {
 			}
 		};
 		assignmentsView.addParam("section_id", sectionId);
+		assignmentsView.addParam("device_id", deviceId);
         
         remoteDB.addReceiver("section.assignments.view", assignmentsView);
         remoteDB.execute("section.assignments.view");
@@ -140,8 +140,6 @@ public class CourseHomeActivity extends Activity {
 
 				Date dueDate = (Date) df.parse(assignment.getString("due_date")),
 					 rightNow = new Date();
-				
-				Log.e("date", dueDate.toLocaleString());
 
 				Assignment a = new Assignment(
 								assignment.getInt("id"),
@@ -150,35 +148,35 @@ public class CourseHomeActivity extends Activity {
 								assignment.getString("descrip"),
 								dueDate);
 
-				if (rightNow.after(dueDate))
-					pastAssignments.add(a);
-				else
+				if (dueDate.after(rightNow))
 					upcomingAssignments.add(a);
+				else
+					pastAssignments.add(a);
 				
-				/*if (pastAssignments.size() < 1) {
-					pastAssignments.add(new Assignment(-2, "No Past Assignments"));
-					pastDueListView.setClickable(false);
-					pastDueListView.setAdapter(new ListAdapter<Assignment>(this, pastAssignments));
-				} else {*/
-					pastDueListView.setAdapter(new ExtendedListAdapter<Assignment>(this, pastAssignments));
-					//pastDueListView.setOnItemClickListener(listViewHandler);
-				//}
-				
-				/*if (upcomingAssignments.size() < 1) {
-					upcomingAssignments.add(new Assignment(-2, "No Upcoming Assignments"));
-					upcomingListView.setClickable(false);
-					upcomingListView.setAdapter(new ListAdapter<Assignment>(this, upcomingAssignments));
-				} else {*/
-					upcomingListView.setAdapter(new ExtendedListAdapter<Assignment>(this, upcomingAssignments));
-					//upcomingListView.setOnItemClickListener(listViewHandler);
-				//}
-
 			} catch (JSONException e) {
 				Log.d("displayAssignments", "JSON error");
 			} catch (ParseException e) {
 				Log.d("displayAssignments", "Invalid due_date returned");
 			}
 		}
+		
+		if (pastAssignments.size() < 1) {
+			pastAssignments.add(new Assignment(-2, "No Past Assignments"));
+			pastDueListView.setClickable(false);
+			pastDueListView.setAdapter(new ListAdapter<Assignment>(this, pastAssignments));
+		} else {
+			pastDueListView.setAdapter(new ExtendedListAdapter<Assignment>(this, pastAssignments));
+			pastDueListView.setOnItemClickListener(listViewHandler);
+		}
+		
+		if (upcomingAssignments.size() < 1) {
+			upcomingAssignments.add(new Assignment(-2, "No Upcoming Assignments"));
+			upcomingListView.setClickable(false);
+			upcomingListView.setAdapter(new ListAdapter<Assignment>(this, upcomingAssignments));
+		} else {
+			upcomingListView.setAdapter(new ExtendedListAdapter<Assignment>(this, upcomingAssignments));
+			upcomingListView.setOnItemClickListener(listViewHandler);
+		}		
 
 		loading.dismiss();
 	}
@@ -206,24 +204,21 @@ public class CourseHomeActivity extends Activity {
 		String text;
 
 		if(resultCode == Codes.SUCCESS){
-			text = "Successfully Checked In!";
+			text = "Successfully checked in!";
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
-			gps.setCheckedIn(true);
-			localDB.saveCheckedIn(gps.isCheckedIn());
-			btnCheckIn.setEnabled(false);
-			btnCheckIn.setTextColor(Color.WHITE);
-			btnCheckIn.setText("Checked In");
+			CheckInManager.saveCheckedIn(true);
+			updateCheckInBtn();
 		} else if(resultCode == Codes.USER_NOT_WITHIN_RADIUS){
-			text = "Not Close Enough!";
+			text = "You must be in the classroom to check in.";
 			Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
 			toast.show();
-			gps.setCheckedIn(false);
+			CheckInManager.saveCheckedIn(false);
 		} else { //ERROR
-			text = "Unspecified Error!";
+			text = "An error was encountered while attempting to check in.";
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
-			gps.setCheckedIn(false);
+			CheckInManager.saveCheckedIn(false);
 		}
 		
 		loading.dismiss();
@@ -238,20 +233,33 @@ public class CourseHomeActivity extends Activity {
 			return Codes.NOT_A_JSON_ARRAY;
 		}
     }
+    
+    public void updateCheckInBtn() {
+    	if (CheckInManager.isCheckedIn()) {
+    		btnCheckIn.setEnabled(false);
+			btnCheckIn.setTextColor(Color.WHITE);
+			btnCheckIn.setText("Checked In");
+    	} else {
+    		btnCheckIn.setEnabled(true);
+			btnCheckIn.setTextColor(Color.parseColor("#FF666666"));
+			btnCheckIn.setText("Check In");
+    	}
+    }
 
 	private void locationCheckIn(){
 		loading.setTitle("Please wait");
         loading.setMessage("Checking your location... ");
         loading.show();
         
-        gps.startGPS();
+        CheckInManager.startGPS(this);
 	}
 	
 	private BroadcastReceiver c2dmCheckOut = new BroadcastReceiver() {
 
 		@Override
 		public void onReceive(Context ctx, Intent intent) {
-			gps.setCheckedIn(false);
+			CheckInManager.saveCheckedIn(false);
+			CheckInManager.stopUpdating();
 			btnCheckIn.setVisibility(View.INVISIBLE);
 		}
 		
@@ -263,8 +271,8 @@ public class CourseHomeActivity extends Activity {
 		public void onReceive(Context ctx, Intent intent) {
 			checkInView.addParam("section_id", sectionId);
 			checkInView.addParam("device_id", user.getDeviceId());
-			checkInView.addParam("gps_lat", "" + gps.getLocation().getLatitude());
-			checkInView.addParam("gps_long", "" + gps.getLocation().getLongitude());
+			checkInView.addParam("gps_lat", "" + CheckInManager.getLatitude());
+			checkInView.addParam("gps_long", "" + CheckInManager.getLongitude());
 	    
 			remoteDB.addReceiver("user.checkin", checkInView);
 			remoteDB.execute("user.checkin");

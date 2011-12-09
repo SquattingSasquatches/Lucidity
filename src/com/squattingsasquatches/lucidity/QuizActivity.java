@@ -10,8 +10,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -34,71 +34,65 @@ public class QuizActivity extends Activity {
 	/* UI */
 	private ProgressDialog loading;
 	private ViewFlipper questionViewFlipper;
-	private TextView txtQuestionCount, txtCountdown, txtQuestion, txtQuizInfo, txtHeading;
+	private TextView txtQuestionCount, txtCountdown, txtQuestion, txtNumQuestionsInfo, txtTimeLimitInfo, txtHeading;
 	private ListView answersListView;
 	private Button btnStartQuiz;
+	private Countdown countdown;
 	
 	/* Misc */
-	private InternalReceiver submitAnswer, loadQuestions, loadQuiz;
-	private Intent nextActivity;
+	private InternalReceiver submitAnswers, loadQuestions, loadQuiz;
 	private Quiz quiz;
-	private int userId,
-				quizId,
-				questionId,
+	private int quizId,
 				curQuestion,
 				numQuestions,
 				quizDuration;
 	private String deviceId;
 	private ArrayList<Answer> studentAnswers;
 	
+	
 	InternalReceiver getCourses;
 	
 	@Override
-	public void onPause() {
+	public void onPause() throws IllegalArgumentException {
 		super.onPause();
 		if (remoteDB != null)
 			remoteDB.unregisterAllReceivers();
 		if (localDB != null)
 			localDB.close();
 	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-	}
-	
+
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quiz);
         
-        quizId = getIntent().getIntExtra("quizId", -1);
+        quizId = getIntent().getIntExtra("quizId", -1); // coming from CourseHomeActivity (not yet implemented)
         if (quizId == -1)
-        	quizId = Integer.valueOf(getIntent().getStringExtra("quizId"));
-        
-        txtHeading = (TextView) findViewById(R.id.txtHeading);
+        	quizId = Integer.valueOf(getIntent().getStringExtra("quizId")); // coming from C2DMReceiver
         
         studentAnswers = new ArrayList<Answer>();
+        txtHeading = (TextView) findViewById(R.id.txtHeading);
         questionViewFlipper = (ViewFlipper) findViewById(R.id.questionContainer);
         btnStartQuiz = (Button) findViewById(R.id.btnStartQuiz);
-        txtQuizInfo = (TextView) findViewById(R.id.txtQuizInfo);
+        txtNumQuestionsInfo = (TextView) findViewById(R.id.txtNumQuestionsInfo);
+        txtTimeLimitInfo = (TextView) findViewById(R.id.txtTimeLimitInfo);
         txtQuestionCount = (TextView) findViewById(R.id.txtQuestionCount);
         txtCountdown = (TextView) findViewById(R.id.txtCountdown);
         loading = new ProgressDialog(this);
         localDB = new LocalDBAdapter(this).open();
         remoteDB = new RemoteDBAdapter(this);
         
-        userId = localDB.getUserId();
         deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         
         // Receivers
-        /*submitAnswer = new InternalReceiver() {
+        submitAnswers = new InternalReceiver() {
 			public void update(JSONArray data){
-				QuizActivity.this.nextQuestion(data);
+				finish();
 			}
 		};
-		submitAnswer.addParam("user_id", userId);
-		remoteDB.addReceiver("user.answer.submit", submitAnswer); // or whatever*/
+		submitAnswers.addParam("device_id", deviceId);
+		submitAnswers.addParam("quiz_id", quizId);
+		
 		
 		loadQuestions = new InternalReceiver() {
 			public void update(JSONArray data) {
@@ -128,26 +122,35 @@ public class QuizActivity extends Activity {
 	}
 	
 	public void startQuiz() {
-		if (localDB.isCheckedIn()) {
-			loading.setTitle("Please wait");
-	        loading.setMessage("Starting quiz... ");
-	        loading.setCancelable(false);
-	        loading.show();
-	        
-	        remoteDB.execute("user.quiz.take");
-		} else {
-			Toast.makeText(this, "Quiz has started but you are not checked in.", Toast.LENGTH_LONG).show();
-		}
+		loading.setTitle("Please wait");
+        loading.setMessage("Starting quiz... ");
+        loading.setCancelable(false);
+        loading.show();
+        
+        remoteDB.execute("user.quiz.take");
 	}
 	
 	public void endQuiz() {
 		Toast.makeText(QuizActivity.this, "Quiz complete.", Toast.LENGTH_LONG).show();
+		countdown.cancel();
 		// send studentAnswers to remoteDB
-		finish();
+		int numAnswered = studentAnswers.size();
+		for (int i = 0; i < numQuestions; ++i) {
+			Answer a;
+			
+			if (i < numAnswered)
+				a = studentAnswers.get(i);
+			else
+				a = new Answer(-1, "DID NOT ANSWER", quiz.getQuestions().get(i).getId());
+			
+			submitAnswers.addParam("question_results[" + i + "][question_id]", a.getQuestionId());
+			submitAnswers.addParam("question_results[" + i + "][selected_answer_id]", a.getId());
+		}
+		remoteDB.addReceiver("user.quizresult.add", submitAnswers);
+		remoteDB.execute("user.quizresult.add");
 	}
 	
 	public void nextQuestion() {
-		Log.i("q", curQuestion + "|" + numQuestions);
 		if (curQuestion == numQuestions) {
 			endQuiz();
 		} else {		
@@ -162,8 +165,8 @@ public class QuizActivity extends Activity {
 			txtHeading.setText(quiz.getString("name"));
 			numQuestions = quiz.getInt("num_of_questions");
 			quizDuration = quiz.getInt("duration");
-			txtQuizInfo.setText("This quiz has " + numQuestions + " question(s).\n" +
-						"You will have " + quizDuration/60 + " minute(s) to complete it.");
+			txtNumQuestionsInfo.setText("This quiz has " + numQuestions + " question(s).");
+			txtTimeLimitInfo.setText("You will have " + quizDuration/60 + " minute(s) to complete it.");
 			
 			btnStartQuiz.setOnClickListener(startQuiz);
 			loading.dismiss();
@@ -175,25 +178,27 @@ public class QuizActivity extends Activity {
 	}
 	
 	public void loadQuestions(JSONArray data) {
-		// get resultcode and check if success possibly
+		
+		countdown = new Countdown(quizDuration * 1000, 1000);
+		JSONArray questions = new JSONArray();
+		
 		try {
-			data = data.getJSONObject(0).getJSONArray("questions");
-		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			questions = data.getJSONObject(0).getJSONArray("questions");
+		} catch (JSONException e) {
+			Log.e("loadQuestions", "Invalid JSON returned by quiz.take");
 		}
-		int resultLength = data.length();
+		
+		int numQuestions = questions.length();
 		quiz = new Quiz();
 		
-		for (int i = 0; i < resultLength; ++i) {
+		for (int i = 0; i < numQuestions; ++i) {
 			try {
-				JSONObject question = data.getJSONObject(i);
+				JSONObject question = questions.getJSONObject(i);
 				JSONArray answers = question.getJSONArray("answers");
 				Question qToAdd = new Question(question.getInt("id"), question.getString("text"));
 				
-				curQuestion = 1;
-				
 				int numAnswers = question.getInt("num_of_answers");
+				curQuestion = 1;
 				
 				for (int k = 0; k < numAnswers; ++k) {
 					JSONObject answer = answers.getJSONObject(k);
@@ -214,7 +219,7 @@ public class QuizActivity extends Activity {
 			answersListView = (ListView) questionView.findViewById(R.id.answersContainer);
 			
 			txtQuestion.setText(q.getName());
-			answersListView.setAdapter(new AnswersListAdapter<Answer>(this, q.getAnswers()));
+			answersListView.setAdapter(new ListAdapter<Answer>(this, q.getAnswers(), R.layout.answers_list_item));
 			answersListView.setOnItemClickListener(answerClickHandler);
 			
 			questionViewFlipper.addView(questionView);
@@ -226,6 +231,7 @@ public class QuizActivity extends Activity {
 		overlay.setVisibility(View.GONE);
 		
 		loading.dismiss();
+		countdown.start();
 	}
 	
 	private OnItemClickListener answerClickHandler = new OnItemClickListener() {
@@ -258,6 +264,25 @@ public class QuizActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			remoteDB.execute("user.quiz.take");
+		}
+		
+	};
+	
+	private class Countdown extends CountDownTimer {
+
+		public Countdown(long millisInFuture, long countDownInterval) {
+			super(millisInFuture, countDownInterval);
+		}
+
+		@Override
+		public void onFinish() {
+			txtCountdown.setText("Time's up!");
+			endQuiz();
+		}
+
+		@Override
+		public void onTick(long millisUntilFinished) {
+			txtCountdown.setText(millisUntilFinished/1000 + " seconds remaining");
 		}
 		
 	};

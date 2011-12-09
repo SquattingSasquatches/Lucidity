@@ -1,5 +1,6 @@
 package com.squattingsasquatches.lucidity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -7,20 +8,27 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
-public class CheckInManager {
+public final class CheckInManager {
 	
-	private Location currentLocation = null;
-	private boolean checkedIn = false;
-	private LocationManager locationManager;
-	private String bestProvider;
-	private Context ctx;
+	private static LocalDBAdapter localDB;
+	private static Location currentLocation;
+	private static boolean checkedIn;
+	private static LocationManager locationManager;
+	private static String bestProvider;
+	private static Context ctx;
 	
-	public CheckInManager(Context ctx) {
-		this.ctx = ctx;
+	private CheckInManager() {
+		throw new AssertionError();
 	}
 	
-	public void startGPS() {
+	public static void startGPS(Context ctx) {
+		CheckInManager.ctx = ctx;
+		CheckInManager.localDB = new LocalDBAdapter(ctx).open();
+		CheckInManager.checkedIn = localDB.isCheckedIn();
+		CheckInManager.localDB.close();
+		
 		Criteria criteria = new Criteria();
 
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
@@ -33,48 +41,46 @@ public class CheckInManager {
 		locationManager = (LocationManager) ctx.getSystemService(Context.LOCATION_SERVICE);
 		bestProvider = locationManager.getBestProvider(criteria, true);
 		
-		locationManager.requestLocationUpdates(bestProvider, 0, 0, gpsListener);
+		locationManager.requestLocationUpdates(bestProvider, 60 * 1000, 10, gpsListener);
 	}
 	
-	public Location getLocation() {
-		return currentLocation;
+	public static double getLatitude() {
+		return currentLocation.getLatitude();
 	}
 	
-	public static double distFrom(double lat1, double lng1, double lat2, double lng2) {
-	    double earthRadius = 6370990.56;
-	    double dLat = Math.toRadians(lat2-lat1);
-	    double dLng = Math.toRadians(lng2-lng1);
-	    double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-	               Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-	               Math.sin(dLng/2) * Math.sin(dLng/2);
-	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-	    double dist = earthRadius * c;
-
-	    return dist;
+	public static double getLongitude() {
+		return currentLocation.getLongitude();
 	}
 	
-	public boolean isCheckedIn() {
+	public static boolean isCheckedIn() {
 		return checkedIn;
 	}
 
-	public void setCheckedIn(boolean checkedIn) {
-		this.checkedIn = checkedIn;
+	public static void saveCheckedIn(boolean checkedIn) {
+		CheckInManager.checkedIn = checkedIn;
+		
+		localDB = new LocalDBAdapter(ctx).open();
+		localDB.saveCheckedIn(checkedIn);
+		localDB.close();
 	}
 	
-	private void saveLocation(Location loc) {
-		LocalDBAdapter localDB = new LocalDBAdapter(ctx).open();
+	private static void saveLocation(Location loc) {
+		localDB = new LocalDBAdapter(ctx).open();
 		localDB.saveLocation(loc);
 		localDB.close();
 	}
-
-	private LocationListener gpsListener = new LocationListener() {
+	
+	public static void stopUpdating() {
+		locationManager.removeUpdates(gpsListener);
+	}
+	
+	private static LocationListener gpsListener = new LocationListener() {
 
 		@Override
 		public void onLocationChanged(Location loc) {
 			currentLocation = loc;
 			saveLocation(currentLocation);
-			locationManager.removeUpdates(this);
-			ctx.sendBroadcast(new Intent("com.squattingsasquatches.lucidity.LOCATION_FOUND"));
+			ctx.sendBroadcast(new Intent("com.squattingsasquatches.lucidity.LOCATION_UPDATED"));
 		}
 
 		@Override

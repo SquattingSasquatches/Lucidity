@@ -33,7 +33,7 @@ import android.widget.ViewFlipper;
 public class SplashActivity extends Activity {
 	
 	private static final int MENU_ITEM = Menu.FIRST;
-	private MenuItem menuRefresh, menuActivate, menuSet, menuClose, menuCourseList;
+	private MenuItem menuActivate, menuSet;
 	private LocalDBAdapter localDB;
 	private RemoteDBAdapter remoteDB;
 	private ViewFlipper layoutFlipper;
@@ -96,38 +96,12 @@ public class SplashActivity extends Activity {
 		int menuItemId = MENU_ITEM;
 		int menuItemOrder = Menu.NONE;
 		
-		menuRefresh = menu.add(groupId, menuItemId, menuItemOrder, "Refresh");
-		menuActivate = menu.add(groupId, menuItemId, menuItemOrder, "Activate New");
+		menuActivate = menu.add(groupId, menuItemId, menuItemOrder, "Activate New Device");
 		menuSet = menu.add(groupId, menuItemId, menuItemOrder, "Set Server IP");
-		menuCourseList = menu.add(groupId, menuItemId, menuItemOrder, "Courses");
-		menuClose = menu.add(groupId, menuItemId, menuItemOrder, "Close App");
-		
-		final SplashActivity thisone = this;
-		
-		menuCourseList.setOnMenuItemClickListener(new OnMenuItemClickListener(){
-			public boolean onMenuItemClick(MenuItem _menuItem){
-				goToCourseList();
-				return true;
-			}
-		});
-		
-		menuRefresh.setOnMenuItemClickListener(new OnMenuItemClickListener(){
-			public boolean onMenuItemClick(MenuItem _menuItem){
-				Intent intent = getIntent();
-				finish();
-				startActivity(intent);
-				return true;
-			}
-		});
 		
 		menuActivate.setOnMenuItemClickListener(new OnMenuItemClickListener(){
 			public boolean onMenuItemClick(MenuItem _menuItem){
-				Context context = getApplicationContext();
-				CharSequence text = "Not Yet Implemented!";
-				int duration = Toast.LENGTH_SHORT;
-
-				Toast toast = Toast.makeText(context, text, duration);
-				toast.show();
+				Toast.makeText(SplashActivity.this, "Not yet implemented...", Toast.LENGTH_LONG).show();
 				return true;
 			}
 		});
@@ -136,34 +110,27 @@ public class SplashActivity extends Activity {
 		final EditText input = new EditText(this);
 		input.setText(Config.SERVER_ADDRESS);
 		
-		alert.setView(input);
-		alert.setPositiveButton("Set", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				String value = input.getText().toString().trim();
-				Config.setServerAddress(value);
-				Intent intent = getIntent();
-				finish();
-				startActivity(intent);
-			}
-		});
-
-		alert.setNegativeButton("Cancel",
-			new DialogInterface.OnClickListener() {
+		alert
+			.setView(input)
+			.setPositiveButton("Set", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
-					dialog.cancel();
+					String value = input.getText().toString().trim();
+					Config.setServerAddress(value);
+					Intent intent = getIntent();
+					startActivity(intent);
+					finish();
 				}
-		});
+			})
+			.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						dialog.cancel();
+					}
+			});
 		
 		menuSet.setOnMenuItemClickListener(new OnMenuItemClickListener(){
 			public boolean onMenuItemClick(MenuItem _menuItem){
 				alert.show();
-				return true;
-			}
-		});
-		
-		menuClose.setOnMenuItemClickListener(new OnMenuItemClickListener(){
-			public boolean onMenuItemClick(MenuItem _menuItem){
-				thisone.finish();
 				return true;
 			}
 		});

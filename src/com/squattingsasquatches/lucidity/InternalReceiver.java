@@ -37,15 +37,7 @@ public class InternalReceiver extends ResultReceiver {
 		params.put("action", action);
 	}
 
-
-//    public void setReceiver(Receiver receiver) {
-//        //mReceiver = receiver;
-//    }
 	public void onReceiveResult(int resultCode, Bundle resultData) {
-		// result from remote PHP query		
-		
-		
-		// getStringArrayList caused null pointer exception
 		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {
 			String result = resultData.getString("result");
 			try {

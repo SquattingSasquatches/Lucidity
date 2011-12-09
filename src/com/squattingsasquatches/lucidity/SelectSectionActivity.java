@@ -135,8 +135,6 @@ public class SelectSectionActivity extends Activity {
 			};
 			sectionRegister.addParam("section_id", section.getId());
 			sectionRegister.addParam("user_id", localDB.getUserId());
-			
-			Log.e("registering", section.getId() + " | " + localDB.getUserId());
 	        
 	        remoteDB.addReceiver("user.section.register", sectionRegister);
 	        remoteDB.execute("user.section.register");

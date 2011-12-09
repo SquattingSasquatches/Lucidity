@@ -11,14 +11,14 @@ import android.widget.TextView;
 public class ExtendedListAdapter<E extends ExtendedDataItem> extends ListAdapter<E> {
 	
 	public ExtendedListAdapter(Context context, ArrayList<E> items) {
-		super(context, items);
+		super(context, items, R.layout.extended_list_item);
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.extended_list_item, null);
+			convertView = mInflater.inflate(itemLayout, null);
 			holder = new ViewHolder();
 			holder.txtName = (TextView) convertView.findViewById(R.id.txtItemName);
 			holder.txtItemInfo1 = (TextView) convertView.findViewById(R.id.txtItemInfoLine1);
@@ -28,6 +28,8 @@ public class ExtendedListAdapter<E extends ExtendedDataItem> extends ListAdapter
 			//If this item has id -1, change the arrow to a plus. (Add a Course)
 			if (items.get(position).getId() == -1)
 				holder.imgIcon.setImageResource(R.drawable.plus);
+			else if (items.get(position).getId() == -2)
+				 holder.imgIcon.setVisibility(View.GONE);
 			 
 			convertView.setTag(holder);
 		} else {

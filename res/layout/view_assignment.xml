@@ -1,9 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
-    android:orientation="vertical" >
+    android:background="@drawable/bg">
    	
    	<LinearLayout
         android:id="@+id/linearLayout2"
@@ -37,34 +36,84 @@
         android:id="@+id/headerBorder"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#2b80cd" />
+        android:background="#2b80cd"
+        android:layout_below="@id/linearLayout2" />
    	
-   	<TextView
-   	    android:layout_width="match_parent"
-   	    android:layout_height="wrap_content"
-   	    android:gravity="right"
-   	    android:textStyle="bold"
-   	    android:background="#FF3688d9"
-   	    android:text="@string/assignment_descrip" />
+   	<LinearLayout
+        android:id="@+id/descriptionHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_below="@id/headerBorder">
+   	
+   		<LinearLayout
+	        android:id="@+id/headerBorder"
+	        android:layout_width="match_parent"
+	        android:layout_height="1dp"
+	        android:background="#2577c8"
+	        android:layout_weight="1" />
+   	
+	   	<TextView
+	   	    android:layout_width="wrap_content"
+	   	    android:layout_height="wrap_content"
+	   	    android:gravity="right"
+	   	    android:textStyle="bold"
+	   	    android:padding="10dp"
+	   	    android:textAppearance="?android:attr/textAppearanceMedium"
+	   	    android:text="@string/assignment_descrip" />
+	   	
+	</LinearLayout>
     
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/txtDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:padding="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@id/descriptionHeader" />
     	
-    <TextView
-   	    android:layout_width="match_parent"
-   	    android:layout_height="wrap_content"
-   	    android:gravity="right"
-   	    android:textStyle="bold"
-   	    android:background="#FF3688d9"
-   	    android:text="@string/due_date" />
+    <LinearLayout
+        android:id="@+id/descriptionHeader2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_below="@id/txtDescription">
+   	
+   		<LinearLayout
+	        android:id="@+id/headerBorder"
+	        android:layout_width="match_parent"
+	        android:layout_height="1dp"
+	        android:background="#2577c8"
+	        android:layout_weight="1" />
+   	
+	   	<TextView
+	   	    android:layout_width="wrap_content"
+	   	    android:layout_height="wrap_content"
+	   	    android:gravity="right"
+	   	    android:textStyle="bold"
+	   	    android:padding="10dp"
+	   	    android:textAppearance="?android:attr/textAppearanceMedium"
+	   	    android:text="@string/due_date" />
+	   	
+	</LinearLayout>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/txtDueDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-</LinearLayout>
+        android:padding="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@id/descriptionHeader2" />
+    
+    <Button
+        android:id="@+id/btnViewDocument"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/view_document"
+        android:layout_alignParentBottom="true" />
+        
+</RelativeLayout>

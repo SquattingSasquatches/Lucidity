@@ -1,19 +1,17 @@
 package com.squattingsasquatches.lucidity;
 
-import java.util.ArrayList;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ViewAssignmentActivity extends Activity {
 	
@@ -22,15 +20,12 @@ public class ViewAssignmentActivity extends Activity {
 	private LocalDBAdapter localDB;
 	
 	/* UI */
-	private ProgressDialog loading;
-	private ListView coursesListView;
+	private TextView txtHeading, txtDescription, txtDueDate;
+	private Button btnViewDocument;
 	
 	/* Misc */
-	//private Intent nextActivity;
-	private ArrayList<Course> subjectCourses;
-	private int subjectId;
-	private String subjectPrefix;
-	private int uniId;
+	private Assignment assignment;
+	private SimpleDateFormat df;
 	
 	@Override
 	public void onPause() {
@@ -44,75 +39,45 @@ public class ViewAssignmentActivity extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.generic_list);
+		setContentView(R.layout.view_assignment);
 		
-		subjectCourses = new ArrayList<Course>();
-		coursesListView = (ListView) findViewById(R.id.ListContainer);
-        loading = new ProgressDialog(this);
+		txtHeading = (TextView) findViewById(R.id.txtHeading);
+		txtDescription = (TextView) findViewById(R.id.txtDescription);
+		txtDueDate = (TextView) findViewById(R.id.txtDueDate);
+		btnViewDocument = (Button) findViewById(R.id.btnViewDocument);
 
         remoteDB = new RemoteDBAdapter(this);
         localDB = new LocalDBAdapter(this).open();
-        subjectId = getIntent().getIntExtra("subjectId", -1);
-        subjectPrefix = getIntent().getStringExtra("subjectPrefix");
-        uniId = localDB.getUserUniId();
-
-        TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
-        txtHeading.setText("Choose a Course");
-
-        loading.setTitle("Please wait");
-        loading.setMessage("Loading available courses... ");
-        loading.setCancelable(false);
-        loading.show();
-
-        InternalReceiver subjectsCoursesView = new InternalReceiver(){
-			public void update( JSONArray data ){
-				ViewAssignmentActivity.this.displayCourses( data );
-			}
-		};
-		subjectsCoursesView.addParam("uni_id", uniId);
-		subjectsCoursesView.addParam("subject_id", subjectId);
-		
-		Log.i("sel", uniId+" | "+subjectId);
         
-        remoteDB.addReceiver("uni.courses.view", subjectsCoursesView);
-        remoteDB.execute("uni.courses.view");
-	}
-	
-	public void displayCourses(JSONArray data) {
-		subjectCourses.clear();
-		
-		int resultLength = data.length();
-		
-		for (int i = 0; i < resultLength; ++i) {
-			try {
-				JSONObject course = data.getJSONObject(i);
-				subjectCourses.add(new Course(
-											course.getInt("course_id"),
-											course.getInt("course_number"),
-											course.getString("course_name"),
-											new Subject(subjectId, subjectPrefix),
-											new University(uniId)
-										));
-			} catch (JSONException e) {
-				Log.d("getCoursesCallback", "JSON error");
-			}
-		}
-		
-		coursesListView.setAdapter(new ListAdapter<Course>(this, subjectCourses));
-		coursesListView.setOnItemClickListener(listViewHandler);
-		
-		loading.dismiss();
-	}
-	
-	
-	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
-		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-			Object o = coursesListView.getItemAtPosition(position);
-			Course course = (Course) o;
+        df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
+        try {
+			assignment = new Assignment(
+									getIntent().getIntExtra("assignmentId", -1),
+									getIntent().getStringExtra("assignmentName"),
+									getIntent().getIntExtra("assignmentDocId", -1),
+									getIntent().getStringExtra("assignmentDescription"),
+									(Date) df.parse(getIntent().getStringExtra("assignmentDueDate")));
 			
-			//nextActivity = new Intent(SelectCourseActivity.this, SelectSectionActivity.class);
-			//nextActivity.putExtra("courseId", course.getId());
-			//startActivity(nextActivity);
+			txtHeading.setText(assignment.getName());
+	        txtDescription.setText(assignment.getDescription());
+	        
+	        df = new SimpleDateFormat("h:mm:ss a 'on' EEE, MMM d, yyyy");
+	        
+	        txtDueDate.setText(df.format(assignment.getDueDate()));
+		} catch (ParseException e) {
+			Log.e("ViewAssignment", "ParseException on assignment due date");
 		}
+        
+        btnViewDocument.setOnClickListener(viewDocument);
+	}
+	
+	private OnClickListener viewDocument = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			Toast.makeText(ViewAssignmentActivity.this, "Not yet implemented", Toast.LENGTH_LONG).show();
+		}
+		
 	};
 }

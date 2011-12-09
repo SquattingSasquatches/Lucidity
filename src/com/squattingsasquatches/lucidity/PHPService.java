@@ -1,7 +1,5 @@
 package com.squattingsasquatches.lucidity;
 
-
-
 import java.io.BufferedReader;
 
 import java.io.IOException;
@@ -50,150 +48,84 @@ import android.os.ResultReceiver;
 
 import android.util.Log;
 
-
-
 public class PHPService extends IntentService {
 
- 
-
     public PHPService() {
-
         super("PHPService");
-
     }
 
-    
-
     @SuppressWarnings("unchecked")
-
 	@Override
-
     protected void onHandleIntent(Intent intent) {
-
     	HashMap<String, String> params = (HashMap<String, String>) intent.getSerializableExtra("params");
-
-    	
-
     	final ResultReceiver receiver = intent.getParcelableExtra("receiver");
-
     	Bundle b = new Bundle();
-
-    	
-
     	InputStream is;
-
     	String action = params.get("action"),
-
     			result = "",
-
     			line = "";
-
-        
-
+       
     	ArrayList<NameValuePair> nvParams = new ArrayList<NameValuePair>();
 
-				
-
 		if (action == null) {
-
 			Log.e("query()", "No action specified");
-
 			return;
-
 		}
-
 		
-
 		for (HashMap.Entry<String, String> p : params.entrySet()) {
-
 			if (!p.getKey().equals("action"))
-
 				nvParams.add(new BasicNameValuePair(p.getKey(), p.getValue()));
-
 		}
-
 		
+		Log.i("action", action);
 
 		try {
-
 			HttpClient httpclient = new DefaultHttpClient();
-
 			httpclient.getParams().setParameter(CoreProtocolPNames.USER_AGENT, Config.USER_AGENT);
-
+			
 			HttpPost httppost = new HttpPost(Config.SERVER_ADDRESS + "/" + action + ".php");
+			httppost.setEntity(new UrlEncodedFormEntity(nvParams));
+			
+			HttpResponse response = httpclient.execute(httppost);
+			HttpEntity entity = response.getEntity();
 
-			Log.i("wtf",Config.SERVER_ADDRESS + "/" + action + ".php");
+			is = entity.getContent();
+			
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
 
-		
+			while ((line = reader.readLine()) != null) {
+				result += line;
+			}
 
-				httppost.setEntity(new UrlEncodedFormEntity(nvParams));
-
-				HttpResponse response = httpclient.execute(httppost);
-
-				HttpEntity entity = response.getEntity();
-
-				is = entity.getContent();
-
-				
-
-				
-
-					BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-
-					
-
-					while ((line = reader.readLine()) != null) {
-
-						result += line;
-
-					}
-
-					
-
-					Log.i("result", result);
-
-					
-
-					b.putString(Codes.KEY_RESULT, result);
-
-					
-
-	                receiver.send(Codes.REMOTE_QUERY_COMPLETE, b);
-
-					
-
+			b.putString(Codes.KEY_RESULT, result);
+			receiver.send(Codes.REMOTE_QUERY_COMPLETE, b);
+			
+			Log.i("result", result);
+			
 		} catch (UnsupportedEncodingException e) {
-
+			
 			Log.e("PHPService", "Unsupported Encoding: " + e.getMessage() + ". action: " + action);
-
+			
 		} catch (HttpResponseException e) {
 
 			b.putInt("httpstatuscode", e.getStatusCode());
-
 			Log.e("PHPService", "HttpResponseException: " + e.getMessage());
-
 			receiver.send(Codes.REMOTE_QUERY_ERROR, b);
 
 		} catch (IOException e) {
 
 			b.putString("connection_error_code", e.getMessage());
-
 			Log.e("PHPService", "IOException: " + e.getMessage());
-
 			receiver.send(Codes.REMOTE_CONNECTION_ERROR, b);
 
 		} catch (Exception e) {
 
 			Log.e("PHPService", "Exception: " + e.getMessage());
-
 			receiver.send(Codes.REMOTE_QUERY_ERROR, b);
 
-		}
-
-	
+		}	
 
 		this.stopSelf();
 
     }
-
 }
