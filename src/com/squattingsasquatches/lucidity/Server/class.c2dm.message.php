@@ -46,7 +46,6 @@ class c2dmMessage
 		
 		$records = $db->fetch_assoc_all();
 		
-		print_r( $records );
 		
 		echo $db->found_rows;
 		
@@ -94,8 +93,8 @@ class c2dmMessage
 	
 	    $response = curl_exec($ch);
 	
-	    var_dump(curl_getinfo($ch)); //for debugging the request
-	    var_dump($response);
+	    //var_dump(curl_getinfo($ch)); //for debugging the request
+	    //var_dump($response);
 	
 	    curl_close($ch);
 	
@@ -161,7 +160,7 @@ class c2dmMessage
 	        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	        curl_setopt($ch, CURLOPT_POST, true);
 	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	        print_r( $data );
+	        
 	        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 	
 	
@@ -171,8 +170,7 @@ class c2dmMessage
 			
 			if( strpos($response, "Error 401") !== false )
 			{
-				echo __LINE__;
-				$auth_token = c2dmMessage::getNewAuthCode();
+				$auth_token = self::getNewAuthCode();
 			}
 			else
 				$resend = false;

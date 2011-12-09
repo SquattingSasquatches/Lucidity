@@ -12,7 +12,14 @@ class EditQuiz extends Controller
 {
 	function isProfessorOfQuiz( $param_names )
 	{
-		$this->db->query('SELECT * FROM `user_devices` AS ud, `quizzes` AS q, `lectures` AS l, `professors` AS p, `courses` AS c, `professor_courses` AS pc WHERE ud.device_id = ? AND p.user_id = ud.user_id AND p.user_id = pc.professor_id AND pc.course_id = c.id  AND c.id = l.course_id AND l.id = q.lecture_id AND q.id = ?', array('device_id' => $this->params['device_id'], 'quiz_id' => $this->params['quiz_id'] ));
+		$this->db->query(	'SELECT * ' .
+							'FROM `quizzes` AS q, ' .
+							'`user_devices` AS ud, ' .
+							'`professors` AS p  ' .
+							'WHERE p.user_id = ud.user_id ' .
+							'AND ud.device_id = ? ' .
+							'AND q.id = ?',
+							array('device_id' => $this->params['device_id'], 'quiz_id' => $this->params['quiz_id'] ));
  	
 		if( !$this->db->found_rows ) return false;
 		
