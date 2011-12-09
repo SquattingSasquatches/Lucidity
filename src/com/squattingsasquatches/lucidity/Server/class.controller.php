@@ -120,7 +120,7 @@ include_once( dirname( __FILE__ ) . '/class.validation.php');
  		
  		foreach( $param_names as $param_name )
  		{
- 			if (!isset( $this->params[$param_name] ))
+ 			if (!isset( $this->params[$param_name] ) && !isset( $this->params[$param_name . "[0]"]) && !isset( $this->params[$param_name . "[0][0]"]))
  				return false;
  		}
  		return true;

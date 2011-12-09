@@ -55,5 +55,9 @@ $this->messages['user_not_within_radius']			= new Message( MessageType::Error, 3
 $this->messages['no_gps_long_supplied']				= new Message( MessageType::Error, 36, 'Missing parameter: gps_long');
 $this->messages['no_gps_lat_supplied']				= new Message( MessageType::Error, 37, 'Missing parameter: gps_lat');
 $this->messages['quiz_time_limit_exceeded']			= new Message( MessageType::Error, 38, 'Quiz not submitted within time limit.');
+$this->messages['quiz_time_limit_exceeded']			= new Message( MessageType::Error, 38, 'Quiz not submitted within time limit.');
+$this->messages['user_not_student_of_section']		= new Message( MessageType::Error, 39, 'Permission denied: User is not a student of the section.');
+$this->messages['quiz_not_accessible']				= new Message( MessageType::Error, 40, 'Permission denied: Quiz not currently accessible.');
 
+$this->messages['no_question_results_supplied']		= new Message( MessageType::Error, 41, 'Missing parameter: question_results');
 ?>

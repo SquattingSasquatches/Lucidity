@@ -18,11 +18,11 @@ class TakeQuiz extends Controller
 							'`sections` AS s, ' .
 							'`user_devices` AS ud, ' .
 							'`users` AS u, ' .
-							'`student_courses` AS sc, ' .
-							'WHERE u.user_id = ud.user_id ' .
+							'`student_courses` AS sc ' .
+							'WHERE u.id = ud.user_id ' .
 							'AND ud.device_id = ? ' .
-							'AND l.lecture_id = q.lecture_id ' .
-							'AND sc.student_id = u.user_id ' .
+							'AND l.id = q.lecture_id ' .
+							'AND sc.student_id = u.id ' .
 							'AND sc.section_id = l.section_id ' .
 							'AND l.section_id = s.id ' .
 							'AND q.id = ?',
@@ -38,7 +38,7 @@ class TakeQuiz extends Controller
 	 	
 	 	$row = $this->db->fetch_assoc();
 	 	
-	 	$this->db->select('id, num_of_answers, quiz_id, text, order', 'questions', 'quiz_id  = ?', false, false, array( $this->params['quiz_id'] ) );
+	 	$this->db->select('id, num_of_answers, quiz_id, text, position', 'questions', 'quiz_id  = ?', false, false, array( $this->params['quiz_id'] ) );
 	 	
 	 	$row['questions'] = $this->db->fetch_assoc_all();
 	 	

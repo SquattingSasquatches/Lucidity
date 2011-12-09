@@ -31,13 +31,14 @@ class BeginQuiz extends Controller {
 	
 	function quizExists( $param_names )
 	{
-		$db->select('lecture_id', 'quizzes', 'quiz_id = ?', false, false, array( $this->params['quiz_id'] ) );
+		$this->db->select('lecture_id', 'quizzes', 'id = ?', false, false, array( $this->params['quiz_id'] ) );
  	
-	 	if( !$db->found_rows ) return false;
+	 	if( !$this->db->found_rows ) return false;
 	 	return true;
 	}
 	protected function onValid() {
 
+		$this->db->query('UPDATE quizzes SET start_time = NOW() WHERE id = ?',array($this->params['quiz_id']));
 		$this->db->query('SELECT section_id FROM quizzes AS q, lectures AS l WHERE q.id = ? AND q.lecture_id = l.id', array (
 			$this->params['quiz_id']
 		));
@@ -46,8 +47,9 @@ class BeginQuiz extends Controller {
 		$data['quizId'] = $this->params['quiz_id'];
 		$data['sectionId'] = $row['section_id'];
 		$data['action'] = 'QUIZ_BEGIN';
-
+		$this->db->close();
 		c2dmMessage :: sendToSection($row['section_id'], $data);
+		
 
 	}
 	protected function onInvalid() {
@@ -59,6 +61,7 @@ class BeginQuiz extends Controller {
 $controller = new BeginQuiz();
 
 $controller->addValidation('quiz_id', 'isParamSet', 'no_quiz_id_supplied', true);
+$controller->addValidation('device_id', 'isParamSet', 'no_device_id_supplied', true);
 $controller->addValidation( 'quiz_id', 'quizExists', 'quiz_not_found', true );
 $controller->addValidation( array( 'device_id', 'quiz_id'), 'isProfessorOfQuiz', 'user_not_professor_of_quiz', true );
 
