@@ -1,4 +1,5 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.objects;
+
 
 public class ExtendedDataItem extends DataItem {
 	

@@ -1,6 +1,5 @@
 package com.squattingsasquatches.lucidity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -8,7 +7,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.widget.Toast;
 
 public final class CheckInManager {
 	
@@ -23,10 +21,10 @@ public final class CheckInManager {
 		throw new AssertionError();
 	}
 	
-	public static void startGPS(Context ctx) {
+	public static void startGPS(Context ctx, int sectionId) {
 		CheckInManager.ctx = ctx;
 		CheckInManager.localDB = new LocalDBAdapter(ctx).open();
-		CheckInManager.checkedIn = localDB.isCheckedIn();
+		CheckInManager.checkedIn = localDB.isCheckedIn(sectionId);
 		CheckInManager.localDB.close();
 		
 		Criteria criteria = new Criteria();
@@ -56,11 +54,11 @@ public final class CheckInManager {
 		return checkedIn;
 	}
 
-	public static void saveCheckedIn(boolean checkedIn) {
+	public static void saveCheckedIn(boolean checkedIn, int sectionId) {
 		CheckInManager.checkedIn = checkedIn;
 		
 		localDB = new LocalDBAdapter(ctx).open();
-		localDB.saveCheckedIn(checkedIn);
+		localDB.saveCheckedIn(checkedIn, sectionId);
 		localDB.close();
 	}
 	

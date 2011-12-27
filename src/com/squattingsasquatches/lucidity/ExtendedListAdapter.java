@@ -2,6 +2,8 @@ package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
 
+import com.squattingsasquatches.lucidity.objects.ExtendedDataItem;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;

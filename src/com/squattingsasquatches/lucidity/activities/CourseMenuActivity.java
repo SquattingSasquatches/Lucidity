@@ -1,4 +1,4 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.activities;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
+import com.squattingsasquatches.lucidity.InternalReceiver;
+import com.squattingsasquatches.lucidity.ListAdapter;
+import com.squattingsasquatches.lucidity.LocalDBAdapter;
+import com.squattingsasquatches.lucidity.R;
+import com.squattingsasquatches.lucidity.R.id;
+import com.squattingsasquatches.lucidity.R.layout;
+import com.squattingsasquatches.lucidity.objects.Course;
+import com.squattingsasquatches.lucidity.objects.Section;
+import com.squattingsasquatches.lucidity.objects.Subject;
+import com.squattingsasquatches.lucidity.objects.User;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,35 +26,24 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class CourseMenuActivity extends Activity {
+public class CourseMenuActivity extends LucidityActivity {
 	
-	/* DBs */
-	private RemoteDBAdapter remoteDB;
-	private LocalDBAdapter localDB;
 	
 	/* UI */
 	private ProgressDialog loading;
 	private ListView coursesListView;
 	
 	/* Misc */
-	private Intent nextActivity;
 	private ArrayList<Section> userSections;
 	private int userId;
 	private boolean updateCourses;
 	
 	InternalReceiver getCourses;
 	
-	@Override
-	public void onPause() {
-		super.onPause();
-		if (remoteDB != null)
-			remoteDB.unregisterReceiver("user.courses.view");
-		if (localDB != null)
-			localDB.close();
-	}
 	
-	@Override
-    public void onCreate(Bundle savedInstanceState) {
+	
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.generic_list);
         
@@ -53,12 +52,12 @@ public class CourseMenuActivity extends Activity {
         userSections = new ArrayList<Section>();
         coursesListView = (ListView) findViewById(R.id.ListContainer);
         loading = new ProgressDialog(this);
-        localDB = new LocalDBAdapter(this).open();
-        remoteDB = new RemoteDBAdapter(this);
+        
         userId = getIntent().getIntExtra("userId", -1);
         
         // Receivers
         getCourses = new InternalReceiver(){
+			@Override
 			public void update( JSONArray data ){
 				CourseMenuActivity.this.displayCourses( data );
 			}
@@ -98,16 +97,16 @@ public class CourseMenuActivity extends Activity {
 				JSONObject section = data.getJSONObject(i);
 				
 				userSections.add(new Section(
-									section.getInt(LocalDBAdapter.KEY_SECTION_ID),
-									section.getString(LocalDBAdapter.KEY_SECTION_NUMBER),
-									new Course(section.getInt(LocalDBAdapter.KEY_COURSE_ID), section.getInt(LocalDBAdapter.KEY_COURSE_NUMBER),
-											new Subject(section.getString(LocalDBAdapter.KEY_SUBJECT_PREFIX))),
-									new User(section.getInt(LocalDBAdapter.KEY_PROFESSOR_ID), section.getString(LocalDBAdapter.KEY_PROFESSOR_NAME)),
-									section.getString(LocalDBAdapter.KEY_DAYS),
-									section.getString(LocalDBAdapter.KEY_LOCATION),
-									section.getString(LocalDBAdapter.KEY_START_TIME),
-									section.getString(LocalDBAdapter.KEY_END_TIME),
-									section.getInt(LocalDBAdapter.KEY_VERIFIED)));
+									section.getInt(Section.Keys.id),
+									section.getString(Section.Keys.name),
+									new Course(section.getInt(Section.Keys.courseId), section.getInt(Section.Keys.courseNumber),
+											new Subject(section.getString(Section.Keys.subjectPrefix))),
+									new User(section.getInt(Section.Keys.professorId), section.getString(Section.Keys.professorName)),
+									section.getString(Section.Keys.days),
+									section.getString(Section.Keys.location),
+									section.getString(Section.Keys.startTime),
+									section.getString(Section.Keys.endTime),
+									section.getInt(Section.Keys.verified)));
 			} catch (JSONException e) {
 				Log.d("getCoursesCallback", "JSON error");
 			}
@@ -120,6 +119,7 @@ public class CourseMenuActivity extends Activity {
 	}
 	
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
+		@Override
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Object o = coursesListView.getItemAtPosition(position);
 			Section section = (Section) o;

@@ -1,5 +1,8 @@
 package com.squattingsasquatches.lucidity;
 
+
+import com.squattingsasquatches.lucidity.activities.QuizActivity;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

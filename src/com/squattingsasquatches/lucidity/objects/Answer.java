@@ -1,4 +1,4 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.objects;
 
 public class Answer extends DataItem {
 	

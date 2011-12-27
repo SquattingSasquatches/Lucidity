@@ -1,4 +1,4 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.activities;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -6,7 +6,18 @@ import java.util.Iterator;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.app.Activity;
+import com.squattingsasquatches.lucidity.AutoCompleteArrayAdapter;
+import com.squattingsasquatches.lucidity.Codes;
+import com.squattingsasquatches.lucidity.Config;
+import com.squattingsasquatches.lucidity.DeviceRegistrar;
+import com.squattingsasquatches.lucidity.InternalReceiver;
+import com.squattingsasquatches.lucidity.R;
+import com.squattingsasquatches.lucidity.R.id;
+import com.squattingsasquatches.lucidity.R.layout;
+import com.squattingsasquatches.lucidity.R.string;
+import com.squattingsasquatches.lucidity.objects.University;
+import com.squattingsasquatches.lucidity.objects.User;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -30,15 +41,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends LucidityActivity {
 	
 	private static final int MENU_ITEM = Menu.FIRST;
-	private MenuItem menuActivate, menuSet;
-	private LocalDBAdapter localDB;
-	private RemoteDBAdapter remoteDB;
+	private MenuItem menuActivate, menuSet, menuSettings;
 	private ViewFlipper layoutFlipper;
 	private Button btnRegister;
-	private Intent nextActivity;
 	private ProgressDialog loading;
 	private TextView txtName;
 	private AutoCompleteTextView txtUni;
@@ -50,14 +58,14 @@ public class SplashActivity extends Activity {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		remoteDB.unregisterAllReceivers();
 		DeviceRegistrar.unregisterReceiver(this, remoteRegistration);
 	}
 	
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.splash);
         
         user = new User();
@@ -67,14 +75,14 @@ public class SplashActivity extends Activity {
         txtName = (EditText) findViewById(R.id.txtName);
         txtUni = (AutoCompleteTextView) findViewById(R.id.acUni);
         txtLoading = (TextView) findViewById(R.id.txtLoading);
-        localDB = new LocalDBAdapter(this).open();
-        remoteDB = new RemoteDBAdapter(this);
         loading = new ProgressDialog(this);
+        
         user.setDeviceId(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID)); //get device's unique ID
+        
         Log.i("deviceID", user.getDeviceId());
         
-        userLogin.addParam("device_id", user.getDeviceId());
-		universitiesView.addParam("device_id", user.getDeviceId());
+        userLogin.addParam( "device_id", user.getDeviceId() );
+		universitiesView.addParam( "device_id", user.getDeviceId() );
 		
         btnRegister.setOnClickListener(registerBtnHandler);
         
@@ -85,7 +93,8 @@ public class SplashActivity extends Activity {
         loading.setMessage("Loading your saved courses... ");
         loading.setCancelable(false);
         
-        remoteDB.execute("user.login");
+        //remoteDB.execute("user.login");
+        remoteDB.execute("unis.view");
     }
     
     @Override
@@ -98,8 +107,20 @@ public class SplashActivity extends Activity {
 		
 		menuActivate = menu.add(groupId, menuItemId, menuItemOrder, "Activate New Device");
 		menuSet = menu.add(groupId, menuItemId, menuItemOrder, "Set Server IP");
+		menuSettings = menu.add(groupId, menuItemId, menuItemOrder, "Settings");
+		
+		menuSettings.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+			@Override
+			public boolean onMenuItemClick(MenuItem _menuItem){
+				Intent settingsActivity = new Intent(getBaseContext(),
+                        SettingsScreen.class);
+				startActivity(settingsActivity);
+				return false;
+			}
+		});
 		
 		menuActivate.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+			@Override
 			public boolean onMenuItemClick(MenuItem _menuItem){
 				Toast.makeText(SplashActivity.this, "Not yet implemented...", Toast.LENGTH_LONG).show();
 				return true;
@@ -113,6 +134,7 @@ public class SplashActivity extends Activity {
 		alert
 			.setView(input)
 			.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+				@Override
 				public void onClick(DialogInterface dialog, int whichButton) {
 					String value = input.getText().toString().trim();
 					Config.setServerAddress(value);
@@ -123,12 +145,14 @@ public class SplashActivity extends Activity {
 			})
 			.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
+					@Override
 					public void onClick(DialogInterface dialog, int whichButton) {
 						dialog.cancel();
 					}
 			});
 		
 		menuSet.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+			@Override
 			public boolean onMenuItemClick(MenuItem _menuItem){
 				alert.show();
 				return true;
@@ -141,10 +165,17 @@ public class SplashActivity extends Activity {
     public void onConnectionError( int statusCode )
     {
     	txtLoading.setText(R.string.connection_error);
+    	
     }
     public void onHttpError( String errorMessage )
     {
-    	txtLoading.setText(R.string.connection_error);
+//    	localDB.close();
+//    	
+//    	txtLoading.setText(R.string.connection_error);
+//    	
+//    	nextActivity = new Intent(this, UniversitySelectActivity.class);
+//		
+//		startActivityForResult(nextActivity, selectedUni.id );
     }
     
     /* switch to CourseMenu Activity */
@@ -236,7 +267,7 @@ public class SplashActivity extends Activity {
 				Log.d("loadUniversities", "error loading univerisites");
 			}
     	}
-    	
+    	localDB.saveUniversities(unis);
     	adapter = new AutoCompleteArrayAdapter<University>(this, R.layout.ac_list_item, unis);
     	txtUni.setAdapter(adapter);
     	txtUni.setOnItemClickListener(uniClickListener);
@@ -269,7 +300,8 @@ public class SplashActivity extends Activity {
 	
 	/* starts registration */
 	private final View.OnClickListener registerBtnHandler = new View.OnClickListener() {
-        public void onClick(View v) {
+        @Override
+		public void onClick(View v) {
         	switch (v.getId()) {
         		case R.id.btnRegister:
         			txtUni.performValidation();
@@ -305,36 +337,45 @@ public class SplashActivity extends Activity {
     
 	// Receivers
     private InternalReceiver userRegister = new InternalReceiver(){
+		@Override
 		public void update( JSONArray data ){
 			SplashActivity.this.registerCallback( data );
 		}
+		@Override
 		public void onHttpError( int statusCode ){
 			SplashActivity.this.onConnectionError( statusCode );
 		}
+		@Override
 		public void onConnectionError( String errorMessage ){
 			SplashActivity.this.onHttpError( errorMessage );
 		}
 	};	
 	
 	private InternalReceiver userLogin = new InternalReceiver(){
+		@Override
 		public void update( JSONArray data ){
 			SplashActivity.this.loginCallback( data );
 		}
+		@Override
 		public void onHttpError( int statusCode ){
 			SplashActivity.this.onConnectionError( statusCode );
 		}
+		@Override
 		public void onConnectionError( String errorMessage ){
 			SplashActivity.this.onHttpError( errorMessage );
 		}
 	};
 	
 	private InternalReceiver universitiesView = new InternalReceiver(){
+		@Override
 		public void update( JSONArray data ){
 			SplashActivity.this.loadUniversitiesCallback( data );
 		}
+		@Override
 		public void onHttpError( int statusCode ){
 			SplashActivity.this.onConnectionError( statusCode );
 		}
+		@Override
 		public void onConnectionError( String errorMessage ){
 			SplashActivity.this.onHttpError( errorMessage );
 		}
@@ -342,28 +383,41 @@ public class SplashActivity extends Activity {
 	
 	class ValidateStarter implements OnFocusChangeListener {
 		
-        public void onFocusChange(View v, boolean hasFocus) {
+        @Override
+		public void onFocusChange(View v, boolean hasFocus) {
             if (!hasFocus) {
                 ((AutoCompleteTextView) v).performValidation();
             }
         }
         
     };
-	
+    @Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	
+        super.onActivityResult(requestCode, resultCode, data);
+       
+        if( requestCode == 1 )
+        {
+        	Bundle extras = data.getExtras();
+        	selectedUni = new University(extras.getInt("id"), extras.getString("name"));
+        }
+    }
 	class ACValidator implements AutoCompleteTextView.Validator {
 
+		@Override
 		public CharSequence fixText(CharSequence invalidText) {
 			Toast.makeText(SplashActivity.this, "Invalid University entered. Please try again.", Toast.LENGTH_LONG).show();
 			return "";
 		}
 
+		@Override
 		public boolean isValid(CharSequence text) {
 			String universityName = text.toString();
 			Iterator<University> it = unis.iterator();
 			
 			// Check entered text against valid universities
 			while (it.hasNext()) {
-				if ((((University) it.next()).getName()).equals(universityName))
+				if ((it.next().getName()).equals(universityName))
 					return true;
 			}
 			

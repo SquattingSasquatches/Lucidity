@@ -1,4 +1,4 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.activities;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
+import com.squattingsasquatches.lucidity.ExtendedListAdapter;
+import com.squattingsasquatches.lucidity.InternalReceiver;
+import com.squattingsasquatches.lucidity.R;
+import com.squattingsasquatches.lucidity.R.id;
+import com.squattingsasquatches.lucidity.R.layout;
+import com.squattingsasquatches.lucidity.objects.Course;
+import com.squattingsasquatches.lucidity.objects.Section;
+import com.squattingsasquatches.lucidity.objects.Subject;
+import com.squattingsasquatches.lucidity.objects.User;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,38 +27,25 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SelectSectionActivity extends Activity {
+public class SelectSectionActivity extends LucidityActivity {
 
-	/* DBs */
-	private RemoteDBAdapter remoteDB;
-	private LocalDBAdapter localDB;
 	
 	/* UI */
 	private ProgressDialog loading;
 	private ListView sectionsListView;
 	
 	/* Misc */
-	private Intent nextActivity;
 	private ArrayList<Section> courseSections;
 	private int courseId;
 	
-	@Override
-	public void onPause() {
-		super.onPause();
-		if (remoteDB != null)
-			remoteDB.unregisterAllReceivers();
-		if (localDB != null)
-			localDB.close();
-	}
+
 	
-	@Override
-    public void onCreate(Bundle savedInstanceState) {
+
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.generic_list);
 		
-		/* DB */
-		remoteDB = new RemoteDBAdapter(this);
-		localDB = new LocalDBAdapter(this).open();
 		
 		/* UI */
 		loading = new ProgressDialog(this);
@@ -67,6 +63,7 @@ public class SelectSectionActivity extends Activity {
 		courseId = getIntent().getIntExtra("courseId", -1);
 		
         InternalReceiver courseSectionsView = new InternalReceiver(){
+			@Override
 			public void update( JSONArray data ){
 				SelectSectionActivity.this.loadSectionsCallback( data );
 			}
@@ -123,12 +120,14 @@ public class SelectSectionActivity extends Activity {
 	}
 	
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
+		@Override
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Object o = sectionsListView.getItemAtPosition(position);
 			Section section = (Section) o;
 			
 			//register user with section, return to CourseMenuActivity
 			InternalReceiver sectionRegister = new InternalReceiver(){
+				@Override
 				public void update( JSONArray data ){
 					SelectSectionActivity.this.registerSectionCallback( data );
 				}

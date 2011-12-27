@@ -1,4 +1,4 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.activities;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
+import com.squattingsasquatches.lucidity.InternalReceiver;
+import com.squattingsasquatches.lucidity.ListAdapter;
+import com.squattingsasquatches.lucidity.R;
+import com.squattingsasquatches.lucidity.R.id;
+import com.squattingsasquatches.lucidity.R.layout;
+import com.squattingsasquatches.lucidity.objects.Subject;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,28 +23,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SelectSubjectActivity extends Activity {
+public class SelectSubjectActivity extends LucidityActivity {
 
-	/* DBs */
-	private RemoteDBAdapter remoteDB;
-	private LocalDBAdapter localDB;
-	
 	/* UI */
 	private ProgressDialog loading;
 	private ListView subjectsListView;
 	
 	/* Misc */
-	private Intent nextActivity;
 	private ArrayList<Subject> uniSubjects;
-	
-	@Override
-	public void onPause() {
-		super.onPause();
-		if (remoteDB != null)
-			remoteDB.unregisterAllReceivers();
-		if (localDB != null)
-			localDB.close();
-	}
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,8 +40,6 @@ public class SelectSubjectActivity extends Activity {
 		uniSubjects = new ArrayList<Subject>();
 		subjectsListView = (ListView) findViewById(R.id.ListContainer);
         loading = new ProgressDialog(this);
-        localDB = new LocalDBAdapter(this).open();
-        remoteDB = new RemoteDBAdapter(this);
         
         TextView txtHeading = (TextView) findViewById(R.id.txtHeading);
         txtHeading.setText("Choose a Subject");
@@ -60,6 +50,7 @@ public class SelectSubjectActivity extends Activity {
         loading.show();
         
         InternalReceiver uniSubjectsView = new InternalReceiver(){
+			@Override
 			public void update( JSONArray data ){
 				SelectSubjectActivity.this.loadSubjectsCallback( data );
 			}
@@ -94,6 +85,7 @@ public class SelectSubjectActivity extends Activity {
 	}
 	
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
+		@Override
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Object o = subjectsListView.getItemAtPosition(position);
 			Subject subject = (Subject) o;

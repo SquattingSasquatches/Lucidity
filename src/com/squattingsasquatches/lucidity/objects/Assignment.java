@@ -1,7 +1,8 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.objects;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 
 public class Assignment extends ExtendedDataItem{
 	

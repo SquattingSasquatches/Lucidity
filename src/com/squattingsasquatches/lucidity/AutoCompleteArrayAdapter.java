@@ -2,6 +2,8 @@ package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
 
+import com.squattingsasquatches.lucidity.objects.DataItem;
+
 import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;

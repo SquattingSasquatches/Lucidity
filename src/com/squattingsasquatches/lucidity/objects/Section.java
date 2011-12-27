@@ -1,4 +1,7 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.objects;
+
+import com.squattingsasquatches.lucidity.objects.User.Keys;
+
 
 
 public class Section extends ExtendedDataItem {
@@ -94,5 +97,40 @@ public class Section extends ExtendedDataItem {
 			return getCourse().getSubject().getPrefix() + " " + getCourse().getCourseNum() + "-" + getName();
 		return getName();
 	}
+
+	public static final class Keys
+	{
+		public static final String id 				= 	"id";
+		public static final String name 			= 	"section_name";
+		public static final String courseId 		= 	"course_id";
+		public static final String courseNumber 	= 	"course_number";
+		public static final String sectionNumber 	= 	"section_number";
+		public static final String subjectPrefix 	= 	"subject_prefix";
+		public static final String professorId 		= 	"professor_id";
+		public static final String professorName 	= 	"professor_name";
+		public static final String days 			= 	"days";
+		public static final String location 		= 	"location";
+		public static final String startTime 		= 	"start_time";
+		public static final String endTime 			= 	"end_time";
+		public static final String verified 		= 	"verified";
+		public static final String checkedIn 		= 	"checked_in";
+	}
+	
+	public static final String tableName = "sections";
+	
+	public static final String schema = tableName + 
+												" (" + Keys.id + " INTEGER not null, " +
+													Keys.name + " TEXT not null, " +
+													Keys.subjectPrefix + " TEXT not null, " +
+													Keys.courseId + " INTEGER not null, " +
+													Keys.courseNumber + " TEXT not null, " +
+													Keys.sectionNumber + " TEXT not null, " +
+													Keys.professorId + " INTEGER not null, " +
+													Keys.professorName + " TEXT not null, " +
+													Keys.days + " TEXT not null, " +
+													Keys.location + " TEXT not null, " +
+													Keys.startTime + " TEXT not null, " +
+													Keys.endTime + " TEXT not null, " +
+													Keys.verified + " INTEGER not null);";
 	
 }

@@ -2,6 +2,8 @@ package com.squattingsasquatches.lucidity;
 
 import java.util.ArrayList;
 
+import com.squattingsasquatches.lucidity.objects.DataItem;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,19 +28,23 @@ public class ListAdapter<E extends DataItem> extends BaseAdapter {
 		 this.itemLayout = itemLayout;
 	 }
 
-	 public int getCount() {
+	 @Override
+	public int getCount() {
 		 return items.size();
 	 }
 
-	 public E getItem(int position) {
+	 @Override
+	public E getItem(int position) {
 		 return items.get(position);
 	 }
 
-	 public long getItemId(int position) {
+	 @Override
+	public long getItemId(int position) {
 		 return position;
 	 }
 
-	 public View getView(int position, View convertView, ViewGroup parent) {
+	 @Override
+	public View getView(int position, View convertView, ViewGroup parent) {
 		 ViewHolder holder;
 		 if (convertView == null) {
 			 convertView = mInflater.inflate(itemLayout, null);

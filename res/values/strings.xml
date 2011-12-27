@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="hello">Hello World, LucidityActivity!</string>
     <string name="app_name">Lucidity</string>
     <string name="register_btn">REGISTER</string>
@@ -20,4 +21,12 @@
     <string name="no">No</string>
     <string name="view_document">View Document</string>
     <string name="start_quiz">Start Quiz</string>
+    <string name="university_select_set">Set</string>
+    <string name="university_server_not_found">Unable to connect to the university\'s Lucidity server. Pick another?</string>
+
+    <string-array name="master_servers">
+        <item>192.168.1.4</item>
+        <item>192.168.1.3</item>
+    </string-array>
+
 </resources>

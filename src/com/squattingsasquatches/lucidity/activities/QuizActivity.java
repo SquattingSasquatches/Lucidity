@@ -1,4 +1,4 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.activities;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
+import com.squattingsasquatches.lucidity.InternalReceiver;
+import com.squattingsasquatches.lucidity.ListAdapter;
+import com.squattingsasquatches.lucidity.R;
+import com.squattingsasquatches.lucidity.R.drawable;
+import com.squattingsasquatches.lucidity.R.id;
+import com.squattingsasquatches.lucidity.R.layout;
+import com.squattingsasquatches.lucidity.R.string;
+import com.squattingsasquatches.lucidity.objects.Answer;
+import com.squattingsasquatches.lucidity.objects.Question;
+import com.squattingsasquatches.lucidity.objects.Quiz;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -25,11 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-public class QuizActivity extends Activity {
-	
-	/* DBs */
-	private RemoteDBAdapter remoteDB;
-	private LocalDBAdapter localDB;
+public class QuizActivity extends LucidityActivity {
 	
 	/* UI */
 	private ProgressDialog loading;
@@ -52,40 +58,33 @@ public class QuizActivity extends Activity {
 	
 	InternalReceiver getCourses;
 	
-	@Override
-	public void onPause() throws IllegalArgumentException {
-		super.onPause();
-		if (remoteDB != null)
-			remoteDB.unregisterAllReceivers();
-		if (localDB != null)
-			localDB.close();
-	}
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.quiz);
         
         quizId = getIntent().getIntExtra("quizId", -1); // coming from CourseHomeActivity (not yet implemented)
+        
         if (quizId == -1)
         	quizId = Integer.valueOf(getIntent().getStringExtra("quizId")); // coming from C2DMReceiver
         
-        studentAnswers = new ArrayList<Answer>();
-        txtHeading = (TextView) findViewById(R.id.txtHeading);
-        questionViewFlipper = (ViewFlipper) findViewById(R.id.questionContainer);
-        btnStartQuiz = (Button) findViewById(R.id.btnStartQuiz);
-        txtNumQuestionsInfo = (TextView) findViewById(R.id.txtNumQuestionsInfo);
-        txtTimeLimitInfo = (TextView) findViewById(R.id.txtTimeLimitInfo);
-        txtQuestionCount = (TextView) findViewById(R.id.txtQuestionCount);
-        txtCountdown = (TextView) findViewById(R.id.txtCountdown);
-        loading = new ProgressDialog(this);
-        localDB = new LocalDBAdapter(this).open();
-        remoteDB = new RemoteDBAdapter(this);
+        studentAnswers = 		new ArrayList<Answer>();
+        txtHeading = 			(TextView) findViewById(R.id.txtHeading);
+        questionViewFlipper = 	(ViewFlipper) findViewById(R.id.questionContainer);
+        btnStartQuiz = 			(Button) findViewById(R.id.btnStartQuiz);
+        txtNumQuestionsInfo = 	(TextView) findViewById(R.id.txtNumQuestionsInfo);
+        txtTimeLimitInfo = 		(TextView) findViewById(R.id.txtTimeLimitInfo);
+        txtQuestionCount = 		(TextView) findViewById(R.id.txtQuestionCount);
+        txtCountdown = 			(TextView) findViewById(R.id.txtCountdown);
+        loading = 				new ProgressDialog(this);
         
         deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         
         // Receivers
         submitAnswers = new InternalReceiver() {
+			@Override
 			public void update(JSONArray data){
 				finish();
 			}
@@ -95,6 +94,7 @@ public class QuizActivity extends Activity {
 		
 		
 		loadQuestions = new InternalReceiver() {
+			@Override
 			public void update(JSONArray data) {
 				QuizActivity.this.loadQuestions(data);
 			}
@@ -104,6 +104,7 @@ public class QuizActivity extends Activity {
 		remoteDB.addReceiver("user.quiz.take", loadQuestions);
 		
 		loadQuiz = new InternalReceiver() {
+			@Override
 			public void update(JSONArray data) {
 				QuizActivity.this.loadQuiz(data);
 			}
@@ -235,6 +236,7 @@ public class QuizActivity extends Activity {
 	}
 	
 	private OnItemClickListener answerClickHandler = new OnItemClickListener() {
+		@Override
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Object o = answersListView.getItemAtPosition(position);
 			final Answer answer = (Answer) o;
@@ -243,12 +245,14 @@ public class QuizActivity extends Activity {
 			alertDialog.setTitle("Are you sure?");
 			alertDialog.setMessage("Do you want to submit your answer?");
 			alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					studentAnswers.add(answer);
 					nextQuestion();
 				}
 			});
 			alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.cancel();
 				}

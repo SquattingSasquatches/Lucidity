@@ -37,6 +37,7 @@ public class InternalReceiver extends ResultReceiver {
 		params.put("action", action);
 	}
 
+	@Override
 	public void onReceiveResult(int resultCode, Bundle resultData) {
 		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {
 			String result = resultData.getString("result");

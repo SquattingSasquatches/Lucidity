@@ -1,6 +1,7 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.objects;
 
 import java.util.Date;
+
 
 public class Course extends DataItem {
 	

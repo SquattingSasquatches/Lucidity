@@ -1,10 +1,13 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.activities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import android.app.Activity;
+import com.squattingsasquatches.lucidity.R;
+import com.squattingsasquatches.lucidity.R.id;
+import com.squattingsasquatches.lucidity.R.layout;
+import com.squattingsasquatches.lucidity.objects.Assignment;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,11 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ViewAssignmentActivity extends Activity {
-	
-	/* DBs */
-	private RemoteDBAdapter remoteDB;
-	private LocalDBAdapter localDB;
+public class ViewAssignmentActivity extends LucidityActivity {
 	
 	/* UI */
 	private TextView txtHeading, txtDescription, txtDueDate;
@@ -27,17 +26,8 @@ public class ViewAssignmentActivity extends Activity {
 	private Assignment assignment;
 	private SimpleDateFormat df;
 	
-	@Override
-	public void onPause() {
-		super.onPause();
-		if (remoteDB != null)
-			remoteDB.unregisterAllReceivers();
-		if (localDB != null)
-			localDB.close();
-	}
-	
-	@Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_assignment);
 		
@@ -46,8 +36,6 @@ public class ViewAssignmentActivity extends Activity {
 		txtDueDate = (TextView) findViewById(R.id.txtDueDate);
 		btnViewDocument = (Button) findViewById(R.id.btnViewDocument);
 
-        remoteDB = new RemoteDBAdapter(this);
-        localDB = new LocalDBAdapter(this).open();
         
         df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         
@@ -57,7 +45,7 @@ public class ViewAssignmentActivity extends Activity {
 									getIntent().getStringExtra("assignmentName"),
 									getIntent().getIntExtra("assignmentDocId", -1),
 									getIntent().getStringExtra("assignmentDescription"),
-									(Date) df.parse(getIntent().getStringExtra("assignmentDueDate")));
+									df.parse(getIntent().getStringExtra("assignmentDueDate")));
 			
 			txtHeading.setText(assignment.getName());
 	        txtDescription.setText(assignment.getDescription());

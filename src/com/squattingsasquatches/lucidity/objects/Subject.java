@@ -1,4 +1,4 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.objects;
 
 public class Subject extends DataItem {
 	
@@ -36,5 +36,12 @@ public class Subject extends DataItem {
 	@Override
 	public String toString() {
 		return this.prefix + " (" + super.name + ")";
+	}
+	
+	public static class Keys
+	{
+		public static String id 			= 	"id";
+		public static String name 			= 	"name";
+		public static String prefix 		= 	"prefix";
 	}
 }

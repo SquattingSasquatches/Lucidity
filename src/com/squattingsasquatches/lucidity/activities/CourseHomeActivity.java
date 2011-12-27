@@ -1,4 +1,4 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.activities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,7 +9,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
+import com.squattingsasquatches.lucidity.CheckInManager;
+import com.squattingsasquatches.lucidity.Codes;
+import com.squattingsasquatches.lucidity.ExtendedListAdapter;
+import com.squattingsasquatches.lucidity.InternalReceiver;
+import com.squattingsasquatches.lucidity.ListAdapter;
+import com.squattingsasquatches.lucidity.R;
+import com.squattingsasquatches.lucidity.R.id;
+import com.squattingsasquatches.lucidity.R.layout;
+import com.squattingsasquatches.lucidity.objects.Assignment;
+import com.squattingsasquatches.lucidity.objects.User;
+
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,11 +37,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CourseHomeActivity extends Activity {
+public class CourseHomeActivity extends LucidityActivity {
 
-	/* DBs */
-	private RemoteDBAdapter remoteDB;
-	private LocalDBAdapter localDB;
 
 	/* UI */
 	private ProgressDialog loading;
@@ -40,7 +47,6 @@ public class CourseHomeActivity extends Activity {
 	private Button btnCheckIn;
 
 	/* Misc */
-	private Intent nextActivity;
 	private ArrayList<Assignment> upcomingAssignments;
 	private ArrayList<Assignment> pastAssignments;
 	private int sectionId, courseNumber;
@@ -53,10 +59,6 @@ public class CourseHomeActivity extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
-		if (remoteDB != null)
-			remoteDB.unregisterAllReceivers();
-		if (localDB != null)
-			localDB.close();
 		
 		try {
 			unregisterReceiver(c2dmCheckOut);
@@ -72,8 +74,8 @@ public class CourseHomeActivity extends Activity {
         updateCheckInBtn();
 	}
 
-	@Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.course_home);
 
@@ -88,8 +90,6 @@ public class CourseHomeActivity extends Activity {
 		btnCheckIn = (Button) findViewById(R.id.btnCheckIn);
 		
         loading = new ProgressDialog(this);
-        remoteDB = new RemoteDBAdapter(this);
-        localDB = new LocalDBAdapter(this).open();
         sectionId = getIntent().getIntExtra("sectionId", -1);
         coursePrefix = localDB.getCoursePrefix(sectionId);
         courseNumber = localDB.getCourseNumber(sectionId);
@@ -100,6 +100,7 @@ public class CourseHomeActivity extends Activity {
         txtHeading.setText(coursePrefix + " " + courseNumber);
         
         checkInView = new InternalReceiver(){
+			@Override
 			public void update( JSONArray data ){
 				CourseHomeActivity.this.gpsCheckInCallback( data );
 			}
@@ -111,12 +112,14 @@ public class CourseHomeActivity extends Activity {
         loading.show();
 
         btnCheckIn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            @Override
+			public void onClick(View v) {
                 locationCheckIn();
             }
         });
         
         InternalReceiver assignmentsView = new InternalReceiver(){
+			@Override
 			public void update( JSONArray data ){
 				CourseHomeActivity.this.displayAssignments( data );
 			}
@@ -138,7 +141,7 @@ public class CourseHomeActivity extends Activity {
 			try {
 				JSONObject assignment = data.getJSONObject(i);
 
-				Date dueDate = (Date) df.parse(assignment.getString("due_date")),
+				Date dueDate = df.parse(assignment.getString("due_date")),
 					 rightNow = new Date();
 
 				Assignment a = new Assignment(
@@ -182,6 +185,7 @@ public class CourseHomeActivity extends Activity {
 	}
 
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
+		@Override
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Object o = upcomingListView.getItemAtPosition(position);
 			Assignment assignment = (Assignment) o;
@@ -207,18 +211,18 @@ public class CourseHomeActivity extends Activity {
 			text = "Successfully checked in!";
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
-			CheckInManager.saveCheckedIn(true);
+			CheckInManager.saveCheckedIn(true, sectionId);
 			updateCheckInBtn();
 		} else if(resultCode == Codes.USER_NOT_WITHIN_RADIUS){
 			text = "You must be in the classroom to check in.";
 			Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
 			toast.show();
-			CheckInManager.saveCheckedIn(false);
+			CheckInManager.saveCheckedIn(false, sectionId);
 		} else { //ERROR
 			text = "An error was encountered while attempting to check in.";
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
-			CheckInManager.saveCheckedIn(false);
+			CheckInManager.saveCheckedIn(false, sectionId);
 		}
 		
 		loading.dismiss();
@@ -251,14 +255,14 @@ public class CourseHomeActivity extends Activity {
         loading.setMessage("Checking your location... ");
         loading.show();
         
-        CheckInManager.startGPS(this);
+        CheckInManager.startGPS(this, sectionId);
 	}
 	
 	private BroadcastReceiver c2dmCheckOut = new BroadcastReceiver() {
 
 		@Override
 		public void onReceive(Context ctx, Intent intent) {
-			CheckInManager.saveCheckedIn(false);
+			CheckInManager.saveCheckedIn(false, sectionId);
 			CheckInManager.stopUpdating();
 			btnCheckIn.setVisibility(View.INVISIBLE);
 		}

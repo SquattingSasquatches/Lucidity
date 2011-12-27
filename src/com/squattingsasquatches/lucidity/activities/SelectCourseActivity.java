@@ -1,4 +1,4 @@
-package com.squattingsasquatches.lucidity;
+package com.squattingsasquatches.lucidity.activities;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
+import com.squattingsasquatches.lucidity.InternalReceiver;
+import com.squattingsasquatches.lucidity.ListAdapter;
+import com.squattingsasquatches.lucidity.R;
+import com.squattingsasquatches.lucidity.R.id;
+import com.squattingsasquatches.lucidity.R.layout;
+import com.squattingsasquatches.lucidity.objects.Course;
+import com.squattingsasquatches.lucidity.objects.Subject;
+import com.squattingsasquatches.lucidity.objects.University;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,34 +25,23 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SelectCourseActivity extends Activity {
+public class SelectCourseActivity extends LucidityActivity {
 	
-	/* DBs */
-	private RemoteDBAdapter remoteDB;
-	private LocalDBAdapter localDB;
 	
 	/* UI */
 	private ProgressDialog loading;
 	private ListView coursesListView;
 	
 	/* Misc */
-	private Intent nextActivity;
 	private ArrayList<Course> subjectCourses;
 	private int subjectId;
 	private String subjectPrefix;
 	private int uniId;
+	private InternalReceiver subjectsCoursesView;
 	
-	@Override
-	public void onPause() {
-		super.onPause();
-		if (remoteDB != null)
-			remoteDB.unregisterAllReceivers();
-		if (localDB != null)
-			localDB.close();
-	}
 	
-	@Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.generic_list);
 		
@@ -52,8 +49,6 @@ public class SelectCourseActivity extends Activity {
 		coursesListView = (ListView) findViewById(R.id.ListContainer);
         loading = new ProgressDialog(this);
 
-        remoteDB = new RemoteDBAdapter(this);
-        localDB = new LocalDBAdapter(this).open();
         subjectId = getIntent().getIntExtra("subjectId", -1);
         subjectPrefix = getIntent().getStringExtra("subjectPrefix");
         uniId = localDB.getUserUniId();
@@ -66,7 +61,8 @@ public class SelectCourseActivity extends Activity {
         loading.setCancelable(false);
         loading.show();
 
-        InternalReceiver subjectsCoursesView = new InternalReceiver(){
+        subjectsCoursesView = new InternalReceiver(){
+			@Override
 			public void update( JSONArray data ){
 				SelectCourseActivity.this.displayCourses( data );
 			}
@@ -108,6 +104,7 @@ public class SelectCourseActivity extends Activity {
 	
 	
 	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
+		@Override
 		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 			Object o = coursesListView.getItemAtPosition(position);
 			Course course = (Course) o;
