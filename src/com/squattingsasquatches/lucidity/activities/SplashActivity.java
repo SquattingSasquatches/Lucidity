@@ -93,8 +93,8 @@ public class SplashActivity extends LucidityActivity {
         loading.setMessage("Loading your saved courses... ");
         loading.setCancelable(false);
         
-        //remoteDB.execute("user.login");
-        remoteDB.execute("unis.view");
+        remoteDB.execute("user.login");
+        //remoteDB.execute("unis.view");
     }
     
     @Override
