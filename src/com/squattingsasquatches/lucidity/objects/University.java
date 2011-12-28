@@ -46,7 +46,7 @@ public class University extends DataItem {
 	}
 
 	public static University get(int id) {
-		Cursor result = LucidityDatabase.db.query(tableName, null, "id = ?",
+		Cursor result = LucidityDatabase.db().query(tableName, null, "id = ?",
 				new String[] { Keys.id }, null, null, null);
 
 		if (result.getCount() == 0)
@@ -57,8 +57,8 @@ public class University extends DataItem {
 
 	public static ArrayList<University> getAll() {
 		ArrayList<University> universities = new ArrayList<University>();
-		Cursor result = LucidityDatabase.db.query(tableName, null, null, null,
-				null, null, null);
+		Cursor result = LucidityDatabase.db().query(tableName, null, null,
+				null, null, null, null);
 
 		if (result.getCount() == 0)
 			return universities;
@@ -76,7 +76,7 @@ public class University extends DataItem {
 		values.put("id", university.id);
 		values.put("name", university.name);
 		values.put("manualFlag", university.manualFlag);
-		LucidityDatabase.db.update(tableName, values, "id = ?",
+		LucidityDatabase.db().update(tableName, values, "id = ?",
 				new String[] { String.valueOf(university.id) });
 	}
 
@@ -85,7 +85,7 @@ public class University extends DataItem {
 		values.put("id", university.id);
 		values.put("name", university.name);
 		values.put("manualFlag", university.manualFlag);
-		LucidityDatabase.db.insert(tableName, null, values);
+		LucidityDatabase.db().insert(tableName, null, values);
 	}
 
 	public static void insert(ArrayList<University> universities) {

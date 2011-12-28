@@ -128,7 +128,7 @@ public class User extends DataItem {
 		ContentValues data = new ContentValues();
 		data.put(Keys.latitude, loc.getLatitude());
 		data.put(Keys.longitude, loc.getLongitude());
-		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
+		LucidityDatabase.db().update(tableName, data, Keys.id + " = ?",
 				new String[] { String.valueOf(User.getStoredId()) });
 
 	}
@@ -136,14 +136,14 @@ public class User extends DataItem {
 	public static void setStoredLatitude(double latitude) {
 		ContentValues data = new ContentValues();
 		data.put(Keys.latitude, latitude);
-		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
+		LucidityDatabase.db().update(tableName, data, Keys.id + " = ?",
 				new String[] { String.valueOf(User.getStoredId()) });
 	}
 
 	public static void setStoredLongitude(double longitude) {
 		ContentValues data = new ContentValues();
 		data.put(Keys.longitude, longitude);
-		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
+		LucidityDatabase.db().update(tableName, data, Keys.id + " = ?",
 				new String[] { String.valueOf(User.getStoredId()) });
 	}
 
@@ -151,7 +151,7 @@ public class User extends DataItem {
 		ContentValues data = new ContentValues();
 		data.put(Keys.latitude, latitude);
 		data.put(Keys.longitude, longitude);
-		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
+		LucidityDatabase.db().update(tableName, data, Keys.id + " = ?",
 				new String[] { String.valueOf(User.getStoredId()) });
 	}
 
@@ -176,8 +176,9 @@ public class User extends DataItem {
 			userData.put(Keys.c2dmIsRegistered, 1);
 			userData.put(Keys.c2dmLastCheck, dateFormat.format(new Date()));
 
-			LucidityDatabase.db.update(User.tableName, userData, Keys.id
-					+ " = ?", new String[] { String.valueOf(user.getId()) });
+			LucidityDatabase.db().update(User.tableName, userData,
+					Keys.id + " = ?",
+					new String[] { String.valueOf(user.getId()) });
 		}
 
 		// Doesn't exist? Insert away!
@@ -188,11 +189,11 @@ public class User extends DataItem {
 		userData.put(Keys.c2dmIsRegistered, 1);
 		userData.put(Keys.c2dmLastCheck, dateFormat.format(new Date()));
 
-		LucidityDatabase.db.insert(tableName, null, userData);
+		LucidityDatabase.db().insert(tableName, null, userData);
 	}
 
 	public static boolean userExists() {
-		Cursor result = LucidityDatabase.db.query(tableName,
+		Cursor result = LucidityDatabase.db().query(tableName,
 				new String[] { User.Keys.id }, null, null, null, null, null);
 		result.moveToFirst();
 		return (result.getCount() > 0);
@@ -209,7 +210,7 @@ public class User extends DataItem {
 		values.put(Keys.deviceId, user.deviceId);
 		values.put(Keys.longitude, user.longitude);
 		values.put(Keys.latitude, user.latitude);
-		LucidityDatabase.db.update(tableName, values, "id = ?",
+		LucidityDatabase.db().update(tableName, values, "id = ?",
 				new String[] { String.valueOf(user.id) });
 	}
 
@@ -224,11 +225,11 @@ public class User extends DataItem {
 		values.put(Keys.deviceId, user.deviceId);
 		values.put(Keys.longitude, user.longitude);
 		values.put(Keys.latitude, user.latitude);
-		LucidityDatabase.db.insert(tableName, null, values);
+		LucidityDatabase.db().insert(tableName, null, values);
 	}
 
 	public static void delete(int id) {
-		LucidityDatabase.db.delete(tableName, "id = ?",
+		LucidityDatabase.db().delete(tableName, "id = ?",
 				new String[] { Keys.id });
 	}
 

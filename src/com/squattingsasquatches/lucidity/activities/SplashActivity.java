@@ -52,6 +52,7 @@ public class SplashActivity extends LucidityActivity {
 	private User user;
 	private University selectedUni;
 	private ArrayList<University> unis;
+	private ArrayList<University> unisToSave;
 
 	@Override
 	public void onDestroy() {
@@ -248,6 +249,12 @@ public class SplashActivity extends LucidityActivity {
 			}
 
 			User.save(user);
+
+			new Thread(new Runnable() {
+				public void run() {
+					University.insert(unisToSave);
+				}
+			}).start();
 			// start course menu activity
 			Log.d("Register", "SUCCESS");
 			goToCourseList(true);
@@ -273,7 +280,7 @@ public class SplashActivity extends LucidityActivity {
 				Log.d("loadUniversities", "error loading univerisites");
 			}
 		}
-		// ;
+		unisToSave = (ArrayList<University>) unis.clone();
 		adapter = new AutoCompleteArrayAdapter<University>(this,
 				R.layout.ac_list_item, unis);
 		txtUni.setAdapter(adapter);
@@ -282,13 +289,6 @@ public class SplashActivity extends LucidityActivity {
 		txtUni.setOnFocusChangeListener(new ValidateStarter());
 		loading.dismiss();
 		layoutFlipper.showNext();
-		final ArrayList<University> unisCopy = (ArrayList<University>) unis
-				.clone();
-		new Thread(new Runnable() {
-			public void run() {
-				University.insert(unisCopy);
-			}
-		}).start();
 	}
 
 	/* sends user and c2dm data to remote server */
