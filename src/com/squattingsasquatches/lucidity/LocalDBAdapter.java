@@ -286,11 +286,11 @@ public class LocalDBAdapter {
 			userData.put(User.Keys.c2dmLastCheck, dateFormat.format(new Date()));
 			return db.insert(User.tableName, null, userData);
 		}
-		
+
 		// Delete it if the user ids have changed.
-		if( result.getInt(0) != user.getId() )
-		{
-			db.delete(User.tableName, User.Keys.id + " = ?", new String[]{String.valueOf(result.getInt(0))});
+		if (result.getInt(0) != user.getId()) {
+			db.delete(User.tableName, User.Keys.id + " = ?",
+					new String[] { String.valueOf(result.getInt(0)) });
 		}
 		userData.put(User.Keys.name, user.getName());
 		userData.put(User.Keys.universityId, user.getUniversity().getId());

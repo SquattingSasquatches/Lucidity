@@ -1,6 +1,9 @@
 package com.squattingsasquatches.lucidity.objects;
 
+import java.util.ArrayList;
+
 import com.squattingsasquatches.lucidity.LucidityDatabase;
+import android.database.Cursor;
 import com.squattingsasquatches.lucidity.activities.LucidityActivity;
 import android.content.ContentValues;
 
@@ -25,6 +28,11 @@ public class University extends DataItem {
 		super(id, name);
 		this.manualFlag = manualFlag;
 	}
+	public University(Cursor result)
+	{
+		super( result.getInt(0), result.getString(1) );
+		this.manualFlag = result.getInt(2);
+	}
 	public int getManualFlag()
 	{
 		return this.manualFlag;
@@ -33,18 +41,45 @@ public class University extends DataItem {
 	{
 		this.manualFlag = flag;
 	}
-	public void getUniversityById(int id)
+	public static University get(int id)
 	{
-		LucidityDatabase.db.query(tableName, new String[]{Keys.id}, "id = ?", null, null, null, null);
+		Cursor result = LucidityDatabase.db.query(tableName, null, "id = ?", new String[]{Keys.id}, null, null, null);
+		return new University( result );
 	}
-	public void getAllUniversities()
+	public static ArrayList<University> getAll()
 	{
-		LucidityDatabase.db.query(tableName, null, null, null, null, null, null);
+		ArrayList<University> universities = new ArrayList<University>();
+		Cursor result = LucidityDatabase.db.query(tableName, null, null, null, null, null, null);
+		
+		if (result.getCount() == 0)
+			return universities;
+		
+		while (!result.isAfterLast()) {
+			universities.add(new University(result));
+			result.moveToNext();
+		}
+		
+		return universities;
 	}
-	public void insertUniversity()
+	public static void update( University university )
 	{
 		ContentValues values = new ContentValues();
+		values.put("id", university.id);
+		values.put("name", university.name);
+		values.put("manualFlag", university.manualFlag);
+		LucidityDatabase.db.update(tableName, values, "id = ?", new String[]{ String.valueOf( university.id )  } );
+	}
+	public static void insert( University university )
+	{
+		ContentValues values = new ContentValues();
+		values.put("id", university.id);
+		values.put("name", university.name);
+		values.put("manualFlag", university.manualFlag);
 		LucidityDatabase.db.insert(tableName, null, values);
+	}
+	public static void delete( int id )
+	{
+		LucidityDatabase.db.delete(tableName, "id = ?", new String[]{Keys.id});
 	}
 	public static final class Keys
 	{
@@ -59,5 +94,13 @@ public class University extends DataItem {
 			" (" + 	Keys.id + " INTEGER not null, " +
 					Keys.name + " TEXT not null, " +
 					Keys.manualFlag + " INTEGER not null); ";
+
+	public static String getTablename() {
+		return tableName;
+	}
+
+	public static String getSchema() {
+		return schema;
+	}
 	
 }
