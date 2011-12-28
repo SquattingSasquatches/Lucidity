@@ -8,6 +8,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import com.squattingsasquatches.lucidity.objects.Section;
+import com.squattingsasquatches.lucidity.objects.User;
+
 public final class CheckInManager {
 
 	private static String bestProvider;
@@ -37,7 +40,6 @@ public final class CheckInManager {
 		}
 
 	};
-	private static LocalDBAdapter localDB;
 
 	private static LocationManager locationManager;
 
@@ -55,23 +57,22 @@ public final class CheckInManager {
 
 	public static void saveCheckedIn(boolean checkedIn, int sectionId) {
 		CheckInManager.checkedIn = checkedIn;
-
-		localDB = new LocalDBAdapter(ctx).open();
-		localDB.saveCheckedIn(checkedIn, sectionId);
-		localDB.close();
+		Section.setStoredCheckedIn(checkedIn, sectionId);
 	}
 
 	private static void saveLocation(Location loc) {
-		localDB = new LocalDBAdapter(ctx).open();
-		localDB.saveLocation(loc);
-		localDB.close();
+		User.setStoredLocation(loc);
 	}
 
 	public static void startGPS(Context ctx, int sectionId) {
 		CheckInManager.ctx = ctx;
-		CheckInManager.localDB = new LocalDBAdapter(ctx).open();
-		CheckInManager.checkedIn = localDB.isCheckedIn(sectionId);
-		CheckInManager.localDB.close();
+
+		int c = Section.getStoredCheckedIn(sectionId);
+
+		CheckInManager.checkedIn = true;
+
+		if (c == 0)
+			CheckInManager.checkedIn = false;
 
 		Criteria criteria = new Criteria();
 
