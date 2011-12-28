@@ -7,7 +7,6 @@ import java.util.Date;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.location.Location;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -94,20 +93,17 @@ public class User extends DataItem {
 
 	// Only gets the first user, since there should only be one.
 	public static User get() {
-		Log.i("get()", "Begin...");
 		Cursor result = LucidityDatabase.db.query(tableName, null, null, null,
 				null, null, null);
 
 		if (result.getCount() == 0)
 			return null;
 
-		Log.i("get()", "Found rows...");
 		result.moveToFirst();
 		return new User(result);
 	}
 
 	public static int getStoredId() {
-		Log.i("getStoredId", "Begin...");
 		User u = User.get();
 		if (u != null)
 			return u.getId();
@@ -128,38 +124,35 @@ public class User extends DataItem {
 		return "";
 	}
 
-	public static void update(User user) {
-		ContentValues values = new ContentValues();
-		values.put(Keys.id, user.id);
-		values.put(Keys.name, user.name);
-		values.put(Keys.universityId, user.uni.id);
-		values.put(Keys.c2dmId, user.c2dmRegistrationId);
-		values.put(Keys.c2dmIsRegistered, user.c2dmIsRegistered);
-		values.put(Keys.c2dmLastCheck, user.c2dmLastCheck);
-		values.put(Keys.deviceId, user.deviceId);
-		values.put(Keys.longitude, user.longitude);
-		values.put(Keys.latitude, user.latitude);
-		LucidityDatabase.db.update(tableName, values, "id = ?",
-				new String[] { String.valueOf(user.id) });
+	public static void setStoredLocation(Location loc) {
+		ContentValues data = new ContentValues();
+		data.put(Keys.latitude, loc.getLatitude());
+		data.put(Keys.longitude, loc.getLongitude());
+		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
+				new String[] { String.valueOf(User.getStoredId()) });
+
 	}
 
-	public static void insert(User user) {
-		ContentValues values = new ContentValues();
-		values.put(Keys.id, user.id);
-		values.put(Keys.name, user.name);
-		values.put(Keys.universityId, user.uni.id);
-		values.put(Keys.c2dmId, user.c2dmRegistrationId);
-		values.put(Keys.c2dmIsRegistered, user.c2dmIsRegistered);
-		values.put(Keys.c2dmLastCheck, user.c2dmLastCheck);
-		values.put(Keys.deviceId, user.deviceId);
-		values.put(Keys.longitude, user.longitude);
-		values.put(Keys.latitude, user.latitude);
-		LucidityDatabase.db.insert(tableName, null, values);
+	public static void setStoredLatitude(double latitude) {
+		ContentValues data = new ContentValues();
+		data.put(Keys.latitude, latitude);
+		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
+				new String[] { String.valueOf(User.getStoredId()) });
 	}
 
-	public static void delete(int id) {
-		LucidityDatabase.db.delete(tableName, "id = ?",
-				new String[] { Keys.id });
+	public static void setStoredLongitude(double longitude) {
+		ContentValues data = new ContentValues();
+		data.put(Keys.longitude, longitude);
+		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
+				new String[] { String.valueOf(User.getStoredId()) });
+	}
+
+	public static void setStoredLocation(double latitude, double longitude) {
+		ContentValues data = new ContentValues();
+		data.put(Keys.latitude, latitude);
+		data.put(Keys.longitude, longitude);
+		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
+				new String[] { String.valueOf(User.getStoredId()) });
 	}
 
 	public static void save(User user) {
@@ -205,6 +198,40 @@ public class User extends DataItem {
 		return (result.getCount() > 0);
 	}
 
+	public static void update(User user) {
+		ContentValues values = new ContentValues();
+		values.put(Keys.id, user.id);
+		values.put(Keys.name, user.name);
+		values.put(Keys.universityId, user.uni.id);
+		values.put(Keys.c2dmId, user.c2dmRegistrationId);
+		values.put(Keys.c2dmIsRegistered, user.c2dmIsRegistered);
+		values.put(Keys.c2dmLastCheck, user.c2dmLastCheck);
+		values.put(Keys.deviceId, user.deviceId);
+		values.put(Keys.longitude, user.longitude);
+		values.put(Keys.latitude, user.latitude);
+		LucidityDatabase.db.update(tableName, values, "id = ?",
+				new String[] { String.valueOf(user.id) });
+	}
+
+	public static void insert(User user) {
+		ContentValues values = new ContentValues();
+		values.put(Keys.id, user.id);
+		values.put(Keys.name, user.name);
+		values.put(Keys.universityId, user.uni.id);
+		values.put(Keys.c2dmId, user.c2dmRegistrationId);
+		values.put(Keys.c2dmIsRegistered, user.c2dmIsRegistered);
+		values.put(Keys.c2dmLastCheck, user.c2dmLastCheck);
+		values.put(Keys.deviceId, user.deviceId);
+		values.put(Keys.longitude, user.longitude);
+		values.put(Keys.latitude, user.latitude);
+		LucidityDatabase.db.insert(tableName, null, values);
+	}
+
+	public static void delete(int id) {
+		LucidityDatabase.db.delete(tableName, "id = ?",
+				new String[] { Keys.id });
+	}
+
 	public static String toJSON() {
 		Type t = new TypeToken<User>() {
 		}.getType();
@@ -217,28 +244,6 @@ public class User extends DataItem {
 		}.getType();
 		Gson g = new Gson();
 		return g.toJson(user, t);
-	}
-
-	public static void setStoredLatitude(double latitude) {
-		ContentValues data = new ContentValues();
-		data.put(Keys.latitude, latitude);
-		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
-				new String[] { String.valueOf(User.getStoredId()) });
-	}
-
-	public static void setStoredLongitude(double longitude) {
-		ContentValues data = new ContentValues();
-		data.put(Keys.longitude, longitude);
-		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
-				new String[] { String.valueOf(User.getStoredId()) });
-	}
-
-	public static void setStoredLocation(double latitude, double longitude) {
-		ContentValues data = new ContentValues();
-		data.put(Keys.latitude, latitude);
-		data.put(Keys.longitude, longitude);
-		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
-				new String[] { String.valueOf(User.getStoredId()) });
 	}
 
 	@Override
@@ -324,12 +329,4 @@ public class User extends DataItem {
 		this.deviceId = deviceId;
 	}
 
-	public static void setStoredLocation(Location loc) {
-		ContentValues data = new ContentValues();
-		data.put(Keys.latitude, loc.getLatitude());
-		data.put(Keys.longitude, loc.getLongitude());
-		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
-				new String[] { String.valueOf(User.getStoredId()) });
-
-	}
 }

@@ -35,6 +35,7 @@ import com.squattingsasquatches.lucidity.Config;
 import com.squattingsasquatches.lucidity.DeviceRegistrar;
 import com.squattingsasquatches.lucidity.InternalReceiver;
 import com.squattingsasquatches.lucidity.R;
+import com.squattingsasquatches.lucidity.objects.LucidityUser;
 import com.squattingsasquatches.lucidity.objects.University;
 import com.squattingsasquatches.lucidity.objects.User;
 
@@ -65,7 +66,7 @@ public class SplashActivity extends LucidityActivity {
 
 		setContentView(R.layout.splash);
 
-		user = new User();
+		user = new LucidityUser();
 		selectedUni = new University();
 		btnRegister = (Button) findViewById(R.id.btnRegister);
 		layoutFlipper = (ViewFlipper) findViewById(R.id.ViewFlipper);
@@ -246,7 +247,7 @@ public class SplashActivity extends LucidityActivity {
 				Log.e("Register", "device_id not returned by remote server");
 			}
 
-			User.insert(user);
+			User.save(user);
 			// start course menu activity
 			Log.d("Register", "SUCCESS");
 			goToCourseList(true);
@@ -272,7 +273,7 @@ public class SplashActivity extends LucidityActivity {
 				Log.d("loadUniversities", "error loading univerisites");
 			}
 		}
-		University.insert(unis);
+		// ;
 		adapter = new AutoCompleteArrayAdapter<University>(this,
 				R.layout.ac_list_item, unis);
 		txtUni.setAdapter(adapter);
@@ -281,6 +282,13 @@ public class SplashActivity extends LucidityActivity {
 		txtUni.setOnFocusChangeListener(new ValidateStarter());
 		loading.dismiss();
 		layoutFlipper.showNext();
+		final ArrayList<University> unisCopy = (ArrayList<University>) unis
+				.clone();
+		new Thread(new Runnable() {
+			public void run() {
+				University.insert(unisCopy);
+			}
+		}).start();
 	}
 
 	/* sends user and c2dm data to remote server */

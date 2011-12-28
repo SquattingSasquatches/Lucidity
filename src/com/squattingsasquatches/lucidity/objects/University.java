@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -89,6 +90,9 @@ public class University extends DataItem {
 
 	public static void insert(ArrayList<University> universities) {
 		for (University u : universities) {
+
+			Log.d("University.insert()",
+					"Name: " + u.getName() + " id: " + u.getId());
 			insert(u);
 		}
 	}
