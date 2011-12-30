@@ -160,12 +160,12 @@ public class User extends DataItem {
 				new String[] { String.valueOf(User.getStoredId()) });
 	}
 
-	public static long save(User user) {
+	public static void save(User user) {
 
-		ContentValues userData = new ContentValues();
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss");
 		Log.i("User save()", "Saving...");
+
 		// If the user exists, don't insert!
 		if (userExists()) {
 			User u = get();
@@ -176,48 +176,29 @@ public class User extends DataItem {
 						new String[] { String.valueOf(user.getId()) });
 				Log.i("User save()",
 						"User has different id. Deleting/Inserting...");
-				userData.put(Keys.id, user.getId());
-				userData.put(Keys.name, user.getName());
-				userData.put(Keys.universityId, user.getUniversity().getId());
-				userData.put(Keys.c2dmId, user.getC2dmRegistrationId());
-				userData.put(Keys.c2dmIsRegistered, 1);
-				userData.put(Keys.c2dmLastCheck, dateFormat.format(new Date()));
-				userData.put(Keys.deviceId, user.deviceId);
-				userData.put(Keys.longitude, user.longitude);
-				userData.put(Keys.latitude, user.latitude);
 
-				return LucidityDatabase.db().insert(tableName, null, userData);
+				user.setC2dmIsRegistered(1);
+				user.setC2dmLastCheck(dateFormat.format(new Date()));
+				User.insert(user);
+				return;
 
 			} else {
 				Log.i("User save()", "Updating...");
-				userData.put(Keys.name, user.getName());
-				userData.put(Keys.universityId, user.getUniversity().getId());
-				userData.put(Keys.c2dmId, user.getC2dmRegistrationId());
-				userData.put(Keys.c2dmIsRegistered, 1);
-				userData.put(Keys.c2dmLastCheck, dateFormat.format(new Date()));
-				userData.put(Keys.deviceId, user.deviceId);
-				userData.put(Keys.longitude, user.longitude);
-				userData.put(Keys.latitude, user.latitude);
 
-				return LucidityDatabase.db().update(User.tableName, userData,
-						Keys.id + " = ?",
-						new String[] { String.valueOf(user.getId()) });
+				user.setC2dmIsRegistered(1);
+				user.setC2dmLastCheck(dateFormat.format(new Date()));
+				User.update(user);
+				return;
 			}
 		}
 
 		// Doesn't exist? Insert away!
 		Log.i("User save()", "User not found! Inserting...");
-		userData.put(Keys.id, user.getId());
-		userData.put(Keys.name, user.getName());
-		userData.put(Keys.universityId, user.getUniversity().getId());
-		userData.put(Keys.c2dmId, user.getC2dmRegistrationId());
-		userData.put(Keys.c2dmIsRegistered, 1);
-		userData.put(Keys.c2dmLastCheck, dateFormat.format(new Date()));
-		userData.put(Keys.deviceId, user.deviceId);
-		userData.put(Keys.longitude, user.longitude);
-		userData.put(Keys.latitude, user.latitude);
 
-		return LucidityDatabase.db().insert(User.tableName, null, userData);
+		user.setC2dmIsRegistered(1);
+		user.setC2dmLastCheck(dateFormat.format(new Date()));
+		User.insert(user);
+		return;
 	}
 
 	public static boolean userExists() {
@@ -231,30 +212,29 @@ public class User extends DataItem {
 
 	public static void update(User user) {
 		ContentValues values = new ContentValues();
-		values.put(Keys.id, user.id);
-		values.put(Keys.name, user.name);
-		values.put(Keys.universityId, user.uni.id);
-		values.put(Keys.c2dmId, user.c2dmRegistrationId);
-		values.put(Keys.c2dmIsRegistered, user.c2dmIsRegistered);
-		values.put(Keys.c2dmLastCheck, user.c2dmLastCheck);
-		values.put(Keys.deviceId, user.deviceId);
-		values.put(Keys.longitude, user.longitude);
-		values.put(Keys.latitude, user.latitude);
+		values.put(Keys.name, user.getName());
+		values.put(Keys.universityId, user.getUniversity().getId());
+		values.put(Keys.c2dmId, user.getC2dmRegistrationId());
+		values.put(Keys.c2dmIsRegistered, user.getC2dmIsRegistered());
+		values.put(Keys.c2dmLastCheck, user.getC2dmLastCheck());
+		values.put(Keys.deviceId, user.getDeviceId());
+		values.put(Keys.longitude, user.getLongitude());
+		values.put(Keys.latitude, user.getLatitude());
 		LucidityDatabase.db().update(tableName, values, "id = ?",
 				new String[] { String.valueOf(user.id) });
 	}
 
 	public static void insert(User user) {
 		ContentValues values = new ContentValues();
-		values.put(Keys.id, user.id);
-		values.put(Keys.name, user.name);
-		values.put(Keys.universityId, user.uni.id);
-		values.put(Keys.c2dmId, user.c2dmRegistrationId);
-		values.put(Keys.c2dmIsRegistered, user.c2dmIsRegistered);
-		values.put(Keys.c2dmLastCheck, user.c2dmLastCheck);
-		values.put(Keys.deviceId, user.deviceId);
-		values.put(Keys.longitude, user.longitude);
-		values.put(Keys.latitude, user.latitude);
+		values.put(Keys.id, user.getId());
+		values.put(Keys.name, user.getName());
+		values.put(Keys.universityId, user.getUniversity().getId());
+		values.put(Keys.c2dmId, user.getC2dmRegistrationId());
+		values.put(Keys.c2dmIsRegistered, user.getC2dmIsRegistered());
+		values.put(Keys.c2dmLastCheck, user.getC2dmLastCheck());
+		values.put(Keys.deviceId, user.getDeviceId());
+		values.put(Keys.longitude, user.getLongitude());
+		values.put(Keys.latitude, user.getLatitude());
 		LucidityDatabase.db().insert(tableName, null, values);
 	}
 

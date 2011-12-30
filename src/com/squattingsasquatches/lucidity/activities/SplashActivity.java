@@ -255,6 +255,7 @@ public class SplashActivity extends LucidityActivity {
 			new Thread(new Runnable() {
 				public void run() {
 					University.insert(unisToSave);
+					LucidityDatabase.close();
 				}
 			}).start();
 			// start course menu activity

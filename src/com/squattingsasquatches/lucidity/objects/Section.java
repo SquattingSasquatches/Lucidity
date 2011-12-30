@@ -113,41 +113,42 @@ public class Section extends ExtendedDataItem {
 
 	public static void insert(Section section) {
 		ContentValues values = new ContentValues();
-		values.put(Keys.id, section.id);
-		values.put(Keys.name, section.name);
-		values.put(Keys.courseId, section.course.id);
-		values.put(Keys.courseNumber, section.course.getCourseNum());
-		values.put(Keys.sectionNumber, section.sectionNumber);
-		values.put(Keys.subjectPrefix, section.course.getSubject().getPrefix());
-		values.put(Keys.professorId, section.professor.id);
-		values.put(Keys.professorName, section.professor.name);
-		values.put(Keys.days, section.days);
-		values.put(Keys.location, section.location);
-		values.put(Keys.startTime, section.startTime);
-		values.put(Keys.endTime, section.endTime);
-		values.put(Keys.verified, section.isVerified);
-		values.put(Keys.checkedIn, section.checkedIn);
+		values.put(Keys.id, section.getId());
+		values.put(Keys.name, section.getName());
+		values.put(Keys.courseId, section.getCourse().getId());
+		values.put(Keys.courseNumber, section.getCourse().getCourseNum());
+		values.put(Keys.sectionNumber, section.getSectionNumber());
+		values.put(Keys.subjectPrefix, section.getCourse().getSubject()
+				.getPrefix());
+		values.put(Keys.professorId, section.getProfessor().getId());
+		values.put(Keys.professorName, section.getProfessor().getName());
+		values.put(Keys.days, section.getDays());
+		values.put(Keys.location, section.getLocation());
+		values.put(Keys.startTime, section.getStartTime());
+		values.put(Keys.endTime, section.getEndTime());
+		values.put(Keys.verified, section.getIsVerified());
+		values.put(Keys.checkedIn, section.getCheckedIn());
 		LucidityDatabase.db().insert(tableName, null, values);
 	}
 
 	public static void update(Section section) {
 		ContentValues values = new ContentValues();
-		values.put(Keys.id, section.id);
-		values.put(Keys.name, section.name);
-		values.put(Keys.courseId, section.course.id);
-		values.put(Keys.courseNumber, section.course.getCourseNum());
-		values.put(Keys.sectionNumber, section.sectionNumber);
-		values.put(Keys.subjectPrefix, section.course.getSubject().getPrefix());
-		values.put(Keys.professorId, section.professor.id);
-		values.put(Keys.professorName, section.professor.name);
-		values.put(Keys.days, section.days);
-		values.put(Keys.location, section.location);
-		values.put(Keys.startTime, section.startTime);
-		values.put(Keys.endTime, section.endTime);
-		values.put(Keys.verified, section.isVerified);
-		values.put(Keys.checkedIn, section.checkedIn);
+		values.put(Keys.name, section.getName());
+		values.put(Keys.courseId, section.getCourse().getId());
+		values.put(Keys.courseNumber, section.getCourse().getCourseNum());
+		values.put(Keys.sectionNumber, section.getSectionNumber());
+		values.put(Keys.subjectPrefix, section.getCourse().getSubject()
+				.getPrefix());
+		values.put(Keys.professorId, section.getProfessor().getId());
+		values.put(Keys.professorName, section.getProfessor().getName());
+		values.put(Keys.days, section.getDays());
+		values.put(Keys.location, section.getLocation());
+		values.put(Keys.startTime, section.getStartTime());
+		values.put(Keys.endTime, section.getEndTime());
+		values.put(Keys.verified, section.getIsVerified());
+		values.put(Keys.checkedIn, section.getCheckedIn());
 		LucidityDatabase.db().update(tableName, values, "id = ?",
-				new String[] { String.valueOf(section.id) });
+				new String[] { String.valueOf(section.getId()) });
 	}
 
 	private int checkedIn;

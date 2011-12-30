@@ -13,6 +13,8 @@ import com.squattingsasquatches.lucidity.LucidityDatabase;
 public class University extends DataItem {
 
 	private int manualFlag = 0;
+	private String serverAddress;
+	private int serverPort = 80;
 
 	public University() {
 		this(-1);
@@ -34,6 +36,8 @@ public class University extends DataItem {
 	public University(Cursor result) {
 		super(result.getInt(0), result.getString(1));
 		this.manualFlag = result.getInt(2);
+		this.serverAddress = result.getString(3);
+		this.serverPort = result.getInt(4);
 		result.close();
 	}
 
@@ -73,29 +77,27 @@ public class University extends DataItem {
 
 	public static void update(University university) {
 		ContentValues values = new ContentValues();
-		values.put("id", university.id);
-		values.put("name", university.name);
-		values.put("manualFlag", university.manualFlag);
+		values.put(Keys.name, university.getName());
+		values.put(Keys.manualFlag, university.getManualFlag());
+		values.put(Keys.serverAddress, university.getServerAddress());
+		values.put(Keys.serverPort, university.getServerPort());
 		LucidityDatabase.db().update(tableName, values, "id = ?",
-				new String[] { String.valueOf(university.id) });
+				new String[] { String.valueOf(university.getId()) });
 	}
 
 	public static void insert(University university) {
 
 		ContentValues values = new ContentValues();
-		values.put("id", university.id);
-		values.put("name", university.name);
-		values.put("manualFlag", university.manualFlag);
+		values.put(Keys.id, university.getId());
+		values.put(Keys.name, university.getName());
+		values.put(Keys.manualFlag, university.getManualFlag());
+		values.put(Keys.serverAddress, university.getServerAddress());
+		values.put(Keys.serverPort, university.getServerPort());
 		LucidityDatabase.db().insert(tableName, null, values);
 	}
 
 	public static void insert(ArrayList<University> universities) {
 		for (University u : universities) {
-
-			/*
-			 * Log.d("University.insert()", "Name: " + u.getName() + " id: " +
-			 * u.getId());
-			 */
 			insert(u);
 		}
 	}
@@ -130,13 +132,16 @@ public class University extends DataItem {
 		public static final String id = "id";
 		public static final String name = "name";
 		public static final String manualFlag = "manualFlag";
+		public static final String serverAddress = "serverAddress";
+		public static final String serverPort = "serverPort";
 	}
 
 	public static final String tableName = "universities";
 
 	public static final String schema = tableName + " (" + Keys.id
 			+ " INTEGER not null, " + Keys.name + " TEXT not null, "
-			+ Keys.manualFlag + " INTEGER not null); ";
+			+ Keys.manualFlag + " INTEGER not null, " + Keys.serverAddress
+			+ " TEXT not null " + Keys.serverPort + " INTEGER not null ); ";
 
 	public static String getTablename() {
 		return tableName;
@@ -144,6 +149,22 @@ public class University extends DataItem {
 
 	public static String getSchema() {
 		return schema;
+	}
+
+	public String getServerAddress() {
+		return serverAddress;
+	}
+
+	public void setServerAddress(String serverAddress) {
+		this.serverAddress = serverAddress;
+	}
+
+	public int getServerPort() {
+		return serverPort;
+	}
+
+	public void setServerPort(int serverPort) {
+		this.serverPort = serverPort;
 	}
 
 }
