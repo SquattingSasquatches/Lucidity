@@ -141,7 +141,7 @@ public class University extends DataItem {
 	public static final String schema = tableName + " (" + Keys.id
 			+ " INTEGER not null, " + Keys.name + " TEXT not null, "
 			+ Keys.manualFlag + " INTEGER not null, " + Keys.serverAddress
-			+ " TEXT not null " + Keys.serverPort + " INTEGER not null ); ";
+			+ " TEXT not null, " + Keys.serverPort + " INTEGER not null ); ";
 
 	public static String getTablename() {
 		return tableName;

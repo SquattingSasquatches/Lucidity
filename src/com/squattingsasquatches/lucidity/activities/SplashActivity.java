@@ -36,7 +36,6 @@ import com.squattingsasquatches.lucidity.DeviceRegistrar;
 import com.squattingsasquatches.lucidity.InternalReceiver;
 import com.squattingsasquatches.lucidity.LucidityDatabase;
 import com.squattingsasquatches.lucidity.R;
-import com.squattingsasquatches.lucidity.objects.LucidityUser;
 import com.squattingsasquatches.lucidity.objects.University;
 import com.squattingsasquatches.lucidity.objects.User;
 
@@ -69,7 +68,7 @@ public class SplashActivity extends LucidityActivity {
 
 		setContentView(R.layout.splash);
 
-		user = new LucidityUser();
+		user = new User();
 		selectedUni = new University();
 		btnRegister = (Button) findViewById(R.id.btnRegister);
 		layoutFlipper = (ViewFlipper) findViewById(R.id.ViewFlipper);

@@ -60,4 +60,5 @@ $this->messages['user_not_student_of_section']		= new Message( MessageType::Erro
 $this->messages['quiz_not_accessible']				= new Message( MessageType::Error, 40, 'Permission denied: Quiz not currently accessible.');
 
 $this->messages['no_question_results_supplied']		= new Message( MessageType::Error, 41, 'Missing parameter: question_results');
+$this->messages['no_university_found']				= new Message( MessageType::Error, 42, 'University does not exist.');
 ?>

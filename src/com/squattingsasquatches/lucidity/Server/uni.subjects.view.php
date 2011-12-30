@@ -12,7 +12,15 @@
  
 class UniSubjectsView extends Controller
 {
- 	
+ 	protected function universityExists( $param_names )
+ 	{
+ 		$this->db->query('SELECT * FROM `universities` WHERE id = ?', array($this->params['uni_id']));
+ 		
+ 		if( $this->db->found_rows ) return true;
+ 		return false;
+ 		
+ 		
+ 	}
 	protected function onShowForm(){}
  	protected function onValid(){
  		//$this->db->select('subjects', '*', 'uni_id', array( $this->params['uni_id'] ));
@@ -31,6 +39,9 @@ class UniSubjectsView extends Controller
 $controller = new UniSubjectsView();
 
 $controller->addValidation( 'uni_id', 'isParamSet', 'no_uni_id_supplied', true );
+
+// TODO: Remove upon migrating to server-dependent subjects.
+$controller->addValidation( 'uni_id', 'universityExists', 'no_university_found', true );
 
 $controller->execute();
 
