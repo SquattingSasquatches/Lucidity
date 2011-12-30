@@ -2,6 +2,9 @@
 
 include('class.controller.php');
 
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
+
 class Register extends Controller
 {
 
@@ -20,7 +23,6 @@ class Register extends Controller
 	        $pass = $pass . $tmp; 
 	        $i++; 
 	    } 
-		echo "luc-" . $pass;
 	    return "luc-" . $pass; 
 	
 	}
@@ -33,6 +35,8 @@ class Register extends Controller
 	}
 	function deviceDoesNotExist( $param_names )
 	{
+		if( empty($this->params['device_id']) ) return true;
+		
 		$this->db->select('user_id','user_devices', 'device_id = ?', false, false, array($this->params[$param_names[0]]) );
 	
 		if( $this->db->found_rows ) return false;
@@ -54,7 +58,7 @@ class Register extends Controller
 		$this->user_id = $this->db->insert_id();
 		
 		$this->db->insert('user_devices', array( 'user_id' => $this->user_id, 'device_id' => $this->params['device_id'] ) );	
-		
+
 		$this->response->addData( array('user_id' => $this->user_id) );
 		
 		$this->response->addSuccessMessage();

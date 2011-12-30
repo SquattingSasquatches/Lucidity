@@ -91,8 +91,8 @@ public class CourseMenuActivity extends LucidityActivity {
 
 				userSections
 						.add(new Section(
-								section.getInt(Section.Keys.id),
-								section.getString(Section.Keys.name),
+								section.getInt("section_id"),
+								section.getString("section_number"),
 								new Course(
 										section.getInt(Section.Keys.courseId),
 										section.getInt(Section.Keys.courseNumber),
@@ -105,10 +105,11 @@ public class CourseMenuActivity extends LucidityActivity {
 										.getString(Section.Keys.location),
 								section.getString(Section.Keys.startTime),
 								section.getString(Section.Keys.endTime),
-								section.getInt(Section.Keys.verified), section
+								section.getInt("is_verified"), section
 										.getInt(Section.Keys.checkedIn)));
 			} catch (JSONException e) {
 				Log.d("getCoursesCallback", "JSON error");
+				e.printStackTrace();
 			}
 		}
 

@@ -26,6 +26,11 @@ public class RemoteDBAdapter {
 	}
 
 	public void execute(String name) {
+		Log.i("Executing...", name);
+		HashMap<String, String> params = receivers.get(name).getParams();
+		for (HashMap.Entry<String, String> entry : params.entrySet()) {
+			Log.i(entry.getKey(), entry.getValue());
+		}
 		dbService.putExtra("params", receivers.get(name).getParams());
 		dbService.putExtra("receiver", receivers.get(name));
 		ctx.startService(dbService);

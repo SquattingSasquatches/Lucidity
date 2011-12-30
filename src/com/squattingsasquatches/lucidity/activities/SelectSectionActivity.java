@@ -69,12 +69,12 @@ public class SelectSectionActivity extends LucidityActivity {
 
 	public void loadSectionsCallback(JSONArray data) {
 		courseSections.clear();
-
+		JSONObject section;
 		int resultLength = data.length();
 
 		for (int i = 0; i < resultLength; ++i) {
 			try {
-				JSONObject section = data.getJSONObject(i);
+				section = data.getJSONObject(i);
 
 				courseSections.add(new Section(section.getInt("id"), section
 						.getString("section_name"), new Course(section
@@ -84,10 +84,11 @@ public class SelectSectionActivity extends LucidityActivity {
 								.getString("location"), section
 								.getString("days"), section
 								.getString("start_time"), section
-								.getString("end_time"), null, section
-								.getInt("verified"), 0));
+								.getString("end_time"), null, 0, 0));
+
 			} catch (JSONException e) {
 				Log.d("loadSections", "JSON error");
+				e.printStackTrace();
 			}
 		}
 

@@ -72,7 +72,7 @@ public class SelectSubjectActivity extends LucidityActivity {
 						subject.getString("subject_name"), subject
 								.getString("subject_prefix")));
 			} catch (JSONException e) {
-				Log.d("getCoursesCallback", "JSON error");
+				Log.d("loadSubjectsCallback", "JSON error");
 			}
 		}
 

@@ -7,6 +7,7 @@ import java.util.Date;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.location.Location;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,11 +29,11 @@ public class User extends DataItem {
 	}
 
 	private University uni;
-	private String deviceId;
+	private String deviceId = "";
 
-	private String c2dmRegistrationId;
-	private int c2dmIsRegistered;
-	private String c2dmLastCheck;
+	private String c2dmRegistrationId = "";
+	private int c2dmIsRegistered = 0;
+	private String c2dmLastCheck = "";
 
 	private double longitude, latitude;
 
@@ -72,7 +73,8 @@ public class User extends DataItem {
 				result.getInt(2)), result.getString(3), result.getDouble(4),
 				result.getDouble(5), result.getString(6), result.getInt(7),
 				result.getString(8));
-
+		Log.i("User()", "" + result.getInt(2));
+		result.close();
 	}
 
 	public University getUniversity() {
@@ -81,6 +83,7 @@ public class User extends DataItem {
 
 	public void setUniversity(University uni) {
 		this.uni = uni;
+		Log.i("setUniversity", "" + uni.getId());
 	}
 
 	public String getC2dmRegistrationId() {
@@ -93,11 +96,12 @@ public class User extends DataItem {
 
 	// Only gets the first user, since there should only be one.
 	public static User get() {
-		Cursor result = LucidityDatabase.db.query(tableName, null, null, null,
-				null, null, null);
+		Cursor result = LucidityDatabase.db().query(User.tableName, null, null,
+				null, null, null, null);
 
-		if (result.getCount() == 0)
+		if (result.getCount() == 0) {
 			return null;
+		}
 
 		result.moveToFirst();
 		return new User(result);
@@ -112,8 +116,9 @@ public class User extends DataItem {
 
 	public static int getStoredUniversityId() {
 		User u = User.get();
-		if (u != null)
-			return u.getUni().getId();
+		if (u != null) {
+			return u.getUniversity().getId();
+		}
 		return 0;
 	}
 
@@ -155,48 +160,73 @@ public class User extends DataItem {
 				new String[] { String.valueOf(User.getStoredId()) });
 	}
 
-	public static void save(User user) {
+	public static long save(User user) {
 
 		ContentValues userData = new ContentValues();
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss");
-
+		Log.i("User save()", "Saving...");
 		// If the user exists, don't insert!
 		if (userExists()) {
 			User u = get();
 
+			Log.i("User save()", "User exists.");
 			if (u.getId() != user.getId()) {
-				LucidityDatabase.db.delete(User.tableName, Keys.id + " = ?",
+				LucidityDatabase.db().delete(User.tableName, Keys.id + " = ?",
+						new String[] { String.valueOf(user.getId()) });
+				Log.i("User save()",
+						"User has different id. Deleting/Inserting...");
+				userData.put(Keys.id, user.getId());
+				userData.put(Keys.name, user.getName());
+				userData.put(Keys.universityId, user.getUniversity().getId());
+				userData.put(Keys.c2dmId, user.getC2dmRegistrationId());
+				userData.put(Keys.c2dmIsRegistered, 1);
+				userData.put(Keys.c2dmLastCheck, dateFormat.format(new Date()));
+				userData.put(Keys.deviceId, user.deviceId);
+				userData.put(Keys.longitude, user.longitude);
+				userData.put(Keys.latitude, user.latitude);
+
+				return LucidityDatabase.db().insert(tableName, null, userData);
+
+			} else {
+				Log.i("User save()", "Updating...");
+				userData.put(Keys.name, user.getName());
+				userData.put(Keys.universityId, user.getUniversity().getId());
+				userData.put(Keys.c2dmId, user.getC2dmRegistrationId());
+				userData.put(Keys.c2dmIsRegistered, 1);
+				userData.put(Keys.c2dmLastCheck, dateFormat.format(new Date()));
+				userData.put(Keys.deviceId, user.deviceId);
+				userData.put(Keys.longitude, user.longitude);
+				userData.put(Keys.latitude, user.latitude);
+
+				return LucidityDatabase.db().update(User.tableName, userData,
+						Keys.id + " = ?",
 						new String[] { String.valueOf(user.getId()) });
 			}
-
-			userData.put(Keys.name, user.getName());
-			userData.put(Keys.universityId, user.getUniversity().getId());
-			userData.put(Keys.c2dmId, user.getC2dmRegistrationId());
-			userData.put(Keys.c2dmIsRegistered, 1);
-			userData.put(Keys.c2dmLastCheck, dateFormat.format(new Date()));
-
-			LucidityDatabase.db().update(User.tableName, userData,
-					Keys.id + " = ?",
-					new String[] { String.valueOf(user.getId()) });
 		}
 
 		// Doesn't exist? Insert away!
+		Log.i("User save()", "User not found! Inserting...");
 		userData.put(Keys.id, user.getId());
 		userData.put(Keys.name, user.getName());
 		userData.put(Keys.universityId, user.getUniversity().getId());
 		userData.put(Keys.c2dmId, user.getC2dmRegistrationId());
 		userData.put(Keys.c2dmIsRegistered, 1);
 		userData.put(Keys.c2dmLastCheck, dateFormat.format(new Date()));
+		userData.put(Keys.deviceId, user.deviceId);
+		userData.put(Keys.longitude, user.longitude);
+		userData.put(Keys.latitude, user.latitude);
 
-		LucidityDatabase.db().insert(tableName, null, userData);
+		return LucidityDatabase.db().insert(User.tableName, null, userData);
 	}
 
 	public static boolean userExists() {
 		Cursor result = LucidityDatabase.db().query(tableName,
 				new String[] { User.Keys.id }, null, null, null, null, null);
-		result.moveToFirst();
-		return (result.getCount() > 0);
+
+		boolean test = (result.getCount() > 0);
+		result.close();
+		return test;
 	}
 
 	public static void update(User user) {
@@ -273,14 +303,6 @@ public class User extends DataItem {
 			+ Keys.latitude + " NUMERIC not null, " + Keys.c2dmId
 			+ " TEXT not null, " + Keys.c2dmIsRegistered
 			+ " INTEGER not null, " + Keys.c2dmLastCheck + " TEXT not null); ";
-
-	public University getUni() {
-		return uni;
-	}
-
-	public void setUni(University uni) {
-		this.uni = uni;
-	}
 
 	public int getC2dmIsRegistered() {
 		return c2dmIsRegistered;

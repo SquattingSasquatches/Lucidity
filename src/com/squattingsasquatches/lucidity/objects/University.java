@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -35,6 +34,7 @@ public class University extends DataItem {
 	public University(Cursor result) {
 		super(result.getInt(0), result.getString(1));
 		this.manualFlag = result.getInt(2);
+		result.close();
 	}
 
 	public int getManualFlag() {
@@ -67,7 +67,7 @@ public class University extends DataItem {
 			universities.add(new University(result));
 			result.moveToNext();
 		}
-
+		result.close();
 		return universities;
 	}
 
@@ -81,6 +81,7 @@ public class University extends DataItem {
 	}
 
 	public static void insert(University university) {
+
 		ContentValues values = new ContentValues();
 		values.put("id", university.id);
 		values.put("name", university.name);
@@ -91,14 +92,16 @@ public class University extends DataItem {
 	public static void insert(ArrayList<University> universities) {
 		for (University u : universities) {
 
-			Log.d("University.insert()",
-					"Name: " + u.getName() + " id: " + u.getId());
+			/*
+			 * Log.d("University.insert()", "Name: " + u.getName() + " id: " +
+			 * u.getId());
+			 */
 			insert(u);
 		}
 	}
 
 	public static void delete(int id) {
-		LucidityDatabase.db.delete(tableName, "id = ?",
+		LucidityDatabase.db().delete(tableName, "id = ?",
 				new String[] { Keys.id });
 	}
 

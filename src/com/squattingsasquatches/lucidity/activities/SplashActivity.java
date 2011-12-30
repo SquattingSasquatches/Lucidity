@@ -34,6 +34,7 @@ import com.squattingsasquatches.lucidity.Codes;
 import com.squattingsasquatches.lucidity.Config;
 import com.squattingsasquatches.lucidity.DeviceRegistrar;
 import com.squattingsasquatches.lucidity.InternalReceiver;
+import com.squattingsasquatches.lucidity.LucidityDatabase;
 import com.squattingsasquatches.lucidity.R;
 import com.squattingsasquatches.lucidity.objects.LucidityUser;
 import com.squattingsasquatches.lucidity.objects.University;
@@ -57,6 +58,7 @@ public class SplashActivity extends LucidityActivity {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		LucidityDatabase.close();
 		DeviceRegistrar.unregisterReceiver(this, remoteRegistration);
 	}
 
@@ -247,7 +249,7 @@ public class SplashActivity extends LucidityActivity {
 			} catch (JSONException e) {
 				Log.e("Register", "device_id not returned by remote server");
 			}
-
+			user.setUniversity(selectedUni);
 			User.save(user);
 
 			new Thread(new Runnable() {
@@ -336,7 +338,7 @@ public class SplashActivity extends LucidityActivity {
 				// Registration with our server is now handled by
 				// remoteRegistration BroadcastReceiver
 				user.setName(txtName.getText().toString());
-				user.getUniversity().setId(selectedUni.getId());
+				user.setUniversity(selectedUni);
 				DeviceRegistrar.startRegistration(getApplicationContext(),
 						remoteRegistration);
 				break;

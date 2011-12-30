@@ -42,7 +42,7 @@ public class Section extends ExtendedDataItem {
 			+ " INTEGER not null);";
 
 	public static void delete(int id) {
-		LucidityDatabase.db.delete(tableName, "id = ?",
+		LucidityDatabase.db().delete(tableName, "id = ?",
 				new String[] { Keys.id });
 	}
 
@@ -52,7 +52,7 @@ public class Section extends ExtendedDataItem {
 		if (checkedIn)
 			c = 1;
 		data.put(Keys.checkedIn, c);
-		LucidityDatabase.db.update(tableName, data, Keys.id + " = ?",
+		LucidityDatabase.db().update(tableName, data, Keys.id + " = ?",
 				new String[] { String.valueOf(id) });
 
 	}
@@ -62,15 +62,15 @@ public class Section extends ExtendedDataItem {
 	}
 
 	public static Section get(int id) {
-		Cursor result = LucidityDatabase.db.query(tableName, null, "id = ?",
+		Cursor result = LucidityDatabase.db().query(tableName, null, "id = ?",
 				new String[] { Keys.id }, null, null, null);
 		return new Section(result);
 	}
 
 	public static ArrayList<Section> getAll() {
 		ArrayList<Section> sections = new ArrayList<Section>();
-		Cursor result = LucidityDatabase.db.query(tableName, null, null, null,
-				null, null, null);
+		Cursor result = LucidityDatabase.db().query(tableName, null, null,
+				null, null, null, null);
 
 		if (result.getCount() == 0)
 			return sections;
@@ -80,6 +80,7 @@ public class Section extends ExtendedDataItem {
 			result.moveToNext();
 		}
 
+		result.close();
 		return sections;
 	}
 
@@ -126,7 +127,7 @@ public class Section extends ExtendedDataItem {
 		values.put(Keys.endTime, section.endTime);
 		values.put(Keys.verified, section.isVerified);
 		values.put(Keys.checkedIn, section.checkedIn);
-		LucidityDatabase.db.insert(tableName, null, values);
+		LucidityDatabase.db().insert(tableName, null, values);
 	}
 
 	public static void update(Section section) {
@@ -145,7 +146,7 @@ public class Section extends ExtendedDataItem {
 		values.put(Keys.endTime, section.endTime);
 		values.put(Keys.verified, section.isVerified);
 		values.put(Keys.checkedIn, section.checkedIn);
-		LucidityDatabase.db.update(tableName, values, "id = ?",
+		LucidityDatabase.db().update(tableName, values, "id = ?",
 				new String[] { String.valueOf(section.id) });
 	}
 
@@ -184,6 +185,7 @@ public class Section extends ExtendedDataItem {
 				.getColumnIndex(Keys.endTime)), c.getInt(c
 				.getColumnIndex(Keys.verified)), c.getInt(c
 				.getColumnIndex(Keys.checkedIn)));
+		c.close();
 
 	}
 

@@ -19,7 +19,7 @@ public class LucidityDatabase {
 		return dbHelper.getWritableDatabase();
 	}
 
-	public void close() {
+	public static void close() {
 		dbHelper.close();
 	}
 }
