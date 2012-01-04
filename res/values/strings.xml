@@ -3,7 +3,7 @@
 
     <string name="hello">Hello World, LucidityActivity!</string>
     <string name="app_name">Lucidity</string>
-    <string name="register_btn">REGISTER</string>
+    <string name="register_btn">Register</string>
     <string name="your_name">Your Name</string>
     <string name="my_courses">My Courses</string>
     <string name="checking_registration">Checking registration status...</string>
@@ -28,5 +28,7 @@
         <item>192.168.1.4</item>
         <item>192.168.1.3</item>
     </string-array>
+
+    <string name="login_btn">Sign in</string>
 
 </resources>

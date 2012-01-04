@@ -20,6 +20,6 @@ public class LucidityDatabase {
 	}
 
 	public static void close() {
-		dbHelper.close();
+		// dbHelper.close();
 	}
 }

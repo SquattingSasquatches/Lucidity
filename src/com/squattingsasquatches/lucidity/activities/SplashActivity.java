@@ -12,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -44,15 +45,16 @@ public class SplashActivity extends LucidityActivity {
 	private static final int MENU_ITEM = Menu.FIRST;
 	private MenuItem menuActivate, menuSet, menuSettings;
 	private ViewFlipper layoutFlipper;
-	private Button btnRegister;
+	private Button btnRegister, btnSelectRegister, btnSelectLogin, btnLogin;
 	private ProgressDialog loading;
 	private TextView txtName;
 	private AutoCompleteTextView txtUni;
 	private TextView txtLoading;
-	private User user;
 	private University selectedUni;
 	private ArrayList<University> unis;
-	private ArrayList<University> unisToSave;
+	private boolean firstRun = true;
+
+	// private ArrayList<University> unisToSave;
 
 	@Override
 	public void onDestroy() {
@@ -64,38 +66,67 @@ public class SplashActivity extends LucidityActivity {
 	/** Called when the activity is first created. */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		try {
+			super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.splash);
+			setContentView(R.layout.splash);
 
-		user = new User();
-		selectedUni = new University();
-		btnRegister = (Button) findViewById(R.id.btnRegister);
-		layoutFlipper = (ViewFlipper) findViewById(R.id.ViewFlipper);
-		txtName = (EditText) findViewById(R.id.txtName);
-		txtUni = (AutoCompleteTextView) findViewById(R.id.acUni);
-		txtLoading = (TextView) findViewById(R.id.txtLoading);
-		loading = new ProgressDialog(this);
+			// Load default universities if the University table is empty.
 
-		user.setDeviceId(Settings.Secure.getString(getContentResolver(),
-				Settings.Secure.ANDROID_ID)); // get device's unique ID
+			btnRegister = (Button) findViewById(R.id.btnRegister);
+			btnSelectRegister = (Button) findViewById(R.id.btnSelectRegister);
+			btnSelectLogin = (Button) findViewById(R.id.btnSelectLogin);
+			btnLogin = (Button) findViewById(R.id.btnLogin);
 
-		Log.i("deviceID", user.getDeviceId());
+			layoutFlipper = (ViewFlipper) findViewById(R.id.ViewFlipper);
 
-		userLogin.addParam("device_id", user.getDeviceId());
-		universitiesView.addParam("device_id", user.getDeviceId());
+			txtName = (EditText) findViewById(R.id.txtName);
+			txtLoading = (TextView) findViewById(R.id.txtLoading);
 
-		btnRegister.setOnClickListener(registerBtnHandler);
+			loading = new ProgressDialog(this);
 
-		remoteDB.addReceiver("user.login", userLogin);
-		remoteDB.addReceiver("unis.view", universitiesView);
+			selectedUni = new University();
 
-		loading.setTitle("Please wait");
-		loading.setMessage("Loading your saved courses... ");
-		loading.setCancelable(false);
+			if (University.isEmpty()) {
 
-		remoteDB.execute("user.login");
-		// remoteDB.execute("unis.view");
+				loading.setTitle("Please wait");
+				loading.setMessage("Loading default universities... ");
+				loading.setCancelable(false);
+				loading.show();
+
+				try {
+					unis = University.loadDefault(this);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				loading.dismiss();
+			}
+
+			if (user.getDeviceId().equals("")) {
+				firstRun = true;
+
+			}
+
+			// get device's unique ID
+			user.setDeviceId(Settings.Secure.getString(getContentResolver(),
+					Settings.Secure.ANDROID_ID));
+
+			if (firstRun || user.getUniversity().getServerAddress().equals("")) {
+				// Show Login/Register option.
+				showSelectionScreen();
+			} else {
+				login();
+			}
+		} catch (CursorIndexOutOfBoundsException e) {
+			// TODO Auto-generated catch block
+			Log.i("SplashActivity.onCreate()", "Error: " + e.getMessage());
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			Log.i("SplashActivity.onCreate()", "Error: " + e.getMessage());
+			e.printStackTrace();
+
+		}
 	}
 
 	@Override
@@ -174,13 +205,6 @@ public class SplashActivity extends LucidityActivity {
 	}
 
 	public void onHttpError(String errorMessage) {
-		// localDB.close();
-		//
-		// txtLoading.setText(R.string.connection_error);
-		//
-		// nextActivity = new Intent(this, UniversitySelectActivity.class);
-		//
-		// startActivityForResult(nextActivity, selectedUni.id );
 	}
 
 	/* switch to CourseMenu Activity */
@@ -207,24 +231,48 @@ public class SplashActivity extends LucidityActivity {
 		}
 	}
 
-	public void loadUniversities() {
-		txtLoading.setText(R.string.loading_unis);
-		remoteDB.execute("unis.view");
+	public void showRegistration() {
+
+		layoutFlipper.showNext();
+
+	}
+
+	public void showSelectionScreen() {
+		btnSelectRegister.setOnClickListener(selectRegisterBtnHandler);
+		btnSelectLogin.setOnClickListener(selectLoginBtnHandler);
+		layoutFlipper.showNext();
+	}
+
+	public void login() {
+
+		loading.setTitle("Please wait");
+		loading.setMessage("Logging in... ");
+		loading.setCancelable(false);
+		loading.show();
+
+		userLogin.addParam("device_id", user.getDeviceId());
+
+		remoteDB.addReceiver("user.login", userLogin);
+		remoteDB.execute("user.login");
 	}
 
 	/* shows registration fields or switches to CourseMenu Activity */
 	public void loginCallback(JSONArray result) {
 		int resultCode = getResultCode(result);
 
+		loading.dismiss();
+
 		switch (resultCode) {
 		case Codes.NO_USER_ID_FOUND:
 			// Device not registered
-			// load universities for registration
-			loadUniversities();
+			// Show registration form.
+
+			showRegistration();
 			break;
 		case Codes.SUCCESS:
 			// change to main activity
 			Log.d("Login", "SUCCESS");
+			User.save(user);
 			goToCourseList();
 			break;
 		default:
@@ -235,63 +283,71 @@ public class SplashActivity extends LucidityActivity {
 
 	/* saves users data to localDB and moves to CourseMenu Activity */
 	public void registerCallback(JSONArray result) {
+
+		loading.dismiss();
+
 		int resultCode = getResultCode(result);
 
 		switch (resultCode) {
 		case Codes.SUCCESS:
 			try {
 				user.setId(result.getJSONObject(0).getInt("user_id"));
-				Log.e("userId", result.getJSONObject(0).getInt("user_id") + "");
+				// Log.e("userId", result.getJSONObject(0).getInt("user_id") +
+				// "");
 				if (user.getDeviceId().equals(""))
 					user.setDeviceId(result.getJSONObject(0).getString(
 							"device_id"));
 			} catch (JSONException e) {
-				Log.e("Register", "device_id not returned by remote server");
+				// Log.e("Register", "device_id not returned by remote server");
 			}
-			user.setUniversity(selectedUni);
 			User.save(user);
 
-			new Thread(new Runnable() {
-				public void run() {
-					University.insert(unisToSave);
-					LucidityDatabase.close();
-				}
-			}).start();
 			// start course menu activity
 			Log.d("Register", "SUCCESS");
 			goToCourseList(true);
+			break;
+		case Codes.DEVICE_ID_ALREADY_EXISTS:
+			Toast.makeText(SplashActivity.this, "Device already registered.",
+					Toast.LENGTH_LONG).show();
+			break;
+		case Codes.NO_DEVICE_ID_SUPPLIED:
+			Toast.makeText(SplashActivity.this, "No device id supplied.",
+					Toast.LENGTH_LONG).show();
+			break;
+		case Codes.NO_NAME_SUPPLIED:
+			Toast.makeText(SplashActivity.this, "No name supplied.",
+					Toast.LENGTH_LONG).show();
 			break;
 		default:
 			Log.d("Register", "Error while registering. Error code: "
 					+ resultCode);
 		}
 
-		loading.dismiss();
 	}
 
-	public void loadUniversitiesCallback(JSONArray result) {
-		AutoCompleteArrayAdapter<University> adapter;
-		unis = new ArrayList<University>();
-		int resultLength = result.length();
-
-		for (int i = 0; i < resultLength; ++i) {
-			try {
-				unis.add(new University(result.getJSONObject(i).getInt("id"),
-						result.getJSONObject(i).getString("name")));
-			} catch (JSONException e) {
-				Log.d("loadUniversities", "error loading univerisites");
-			}
-		}
-		unisToSave = (ArrayList<University>) unis.clone();
-		adapter = new AutoCompleteArrayAdapter<University>(this,
-				R.layout.ac_list_item, unis);
-		txtUni.setAdapter(adapter);
-		txtUni.setOnItemClickListener(uniClickListener);
-		txtUni.setValidator(new ACValidator());
-		txtUni.setOnFocusChangeListener(new ValidateStarter());
-		loading.dismiss();
-		layoutFlipper.showNext();
-	}
+	// public void loadUniversities(JSONArray result) {
+	// unis = new ArrayList<University>();
+	// int resultLength = result.length();
+	//
+	// for (int i = 0; i < resultLength; ++i) {
+	// try {
+	// unis.add(new University(result.getJSONObject(i).getInt("id"),
+	// result.getJSONObject(i).getString("name")));
+	// } catch (JSONException e) {
+	// Log.d("loadUniversities", "error loading univerisites");
+	// }
+	// }
+	// unisToSave = (ArrayList<University>) unis.clone();
+	// AutoCompleteArrayAdapter<University> adapter;
+	// adapter = new AutoCompleteArrayAdapter<University>(this,
+	// R.layout.ac_list_item, unis);
+	// txtUni.setAdapter(adapter);
+	// txtUni.setOnItemClickListener(uniClickListener);
+	// txtUni.setValidator(new ACValidator());
+	// txtUni.setOnFocusChangeListener(new ValidateStarter());
+	// loading.dismiss();
+	// layoutFlipper.showNext();
+	// }
 
 	/* sends user and c2dm data to remote server */
 	private final BroadcastReceiver remoteRegistration = new BroadcastReceiver() {
@@ -318,40 +374,107 @@ public class SplashActivity extends LucidityActivity {
 	private final View.OnClickListener registerBtnHandler = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.btnRegister:
-				txtUni.performValidation();
 
-				if (txtUni.getText().toString().equals("")
-						|| txtName.getText().toString().equals("")) {
+			txtUni.performValidation();
 
-					if (txtName.getText().toString().equals(""))
-						Toast.makeText(SplashActivity.this,
-								"Please enter your name.", Toast.LENGTH_LONG)
-								.show();
+			if (txtUni.getText().toString().equals("")
+					|| txtName.getText().toString().equals("")) {
 
-					break;
+				if (txtName.getText().toString().equals("")) {
+					Toast.makeText(SplashActivity.this,
+							"Please enter your name.", Toast.LENGTH_LONG)
+							.show();
+
+					return;
 				}
 
-				loading.show();
-				// C2DM registration
-				// Registration with our server is now handled by
-				// remoteRegistration BroadcastReceiver
-				user.setName(txtName.getText().toString());
-				user.setUniversity(selectedUni);
-				DeviceRegistrar.startRegistration(getApplicationContext(),
-						remoteRegistration);
-				break;
-			default:
+				if (txtUni.getText().toString().equals(""))
+					Toast.makeText(SplashActivity.this,
+							"Please enter a university.", Toast.LENGTH_LONG)
+							.show();
+
+				return;
+
 			}
+
+			loading.setTitle("Please wait");
+			loading.setMessage("Registering... ");
+			loading.setCancelable(false);
+
+			loading.show();
+			user.setName(txtName.getText().toString());
+			user.setUniversity(selectedUni);
+			Log.i("onClick", "uni id: " + selectedUni.getId());
+
+			remoteDB.setServerPort(selectedUni.getServerPort());
+			remoteDB.setServerAddress(selectedUni.getServerAddress());
+
+			// C2DM registration
+			// Registration with our server is now handled by
+			// remoteRegistration BroadcastReceiver
+			DeviceRegistrar.startRegistration(getApplicationContext(),
+					remoteRegistration);
+
+		}
+	};
+	private final View.OnClickListener selectLoginBtnHandler = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+
+			AutoCompleteArrayAdapter<University> adapter;
+			adapter = new AutoCompleteArrayAdapter<University>(
+					SplashActivity.this, R.layout.ac_list_item, unis);
+
+			txtUni = (AutoCompleteTextView) findViewById(R.id.autocompleteUniversities);
+			txtUni.setAdapter(adapter);
+			txtUni.setOnItemClickListener(uniClickListener);
+			txtUni.setValidator(new ACValidator());
+			txtUni.setOnFocusChangeListener(new ValidateStarter());
+
+			btnLogin.setOnClickListener(loginBtnHandler);
+			layoutFlipper.showNext();
+
+		}
+	};
+	private View.OnClickListener selectRegisterBtnHandler = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			AutoCompleteArrayAdapter<University> adapter;
+			adapter = new AutoCompleteArrayAdapter<University>(
+					SplashActivity.this, R.layout.ac_list_item, unis);
+
+			txtUni = (AutoCompleteTextView) findViewById(R.id.acUni);
+			txtUni.setAdapter(adapter);
+			txtUni.setOnItemClickListener(uniClickListener);
+			txtUni.setValidator(new ACValidator());
+			txtUni.setOnFocusChangeListener(new ValidateStarter());
+
+			btnRegister.setOnClickListener(registerBtnHandler);
+			layoutFlipper.showNext();
+			layoutFlipper.showNext();
 		}
 	};
 
+	private final View.OnClickListener loginBtnHandler = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			loading.setTitle("Please wait");
+			loading.setMessage("Signing in... ");
+			loading.setCancelable(false);
+
+			loading.show();
+			user.setUniversity(selectedUni);
+			remoteDB.setServerPort(selectedUni.getServerPort());
+			remoteDB.setServerAddress(selectedUni.getServerAddress());
+			login();
+		}
+	};
 	private OnItemClickListener uniClickListener = new OnItemClickListener() {
 
 		@Override
 		public void onItemClick(AdapterView<?> parentView, View selectedView,
 				int position, long id) {
+			Log.i("uniClickListener", "" + position);
 			selectedUni = (University) parentView.getAdapter()
 					.getItem(position);
 		}
@@ -367,16 +490,29 @@ public class SplashActivity extends LucidityActivity {
 
 		@Override
 		public void onHttpError(int statusCode) {
+			loading.dismiss();
+			Toast.makeText(SplashActivity.this, "HTTP error: " + statusCode,
+					Toast.LENGTH_LONG).show();
 			SplashActivity.this.onConnectionError(statusCode);
 		}
 
 		@Override
 		public void onConnectionError(String errorMessage) {
+			loading.dismiss();
+			Toast.makeText(SplashActivity.this, "Unable to connect.",
+					Toast.LENGTH_LONG).show();
 			SplashActivity.this.onHttpError(errorMessage);
 		}
 	};
 
 	private InternalReceiver userLogin = new InternalReceiver() {
+		// @Override
+		// public boolean validate()
+		// {
+		// if( this.params.get("device_id").equals("") ) return false;
+		// if( User.)
+		// return true;
+		// }
 		@Override
 		public void update(JSONArray data) {
 			SplashActivity.this.loginCallback(data);
@@ -393,22 +529,18 @@ public class SplashActivity extends LucidityActivity {
 		}
 	};
 
-	private InternalReceiver universitiesView = new InternalReceiver() {
-		@Override
-		public void update(JSONArray data) {
-			SplashActivity.this.loadUniversitiesCallback(data);
-		}
-
-		@Override
-		public void onHttpError(int statusCode) {
-			SplashActivity.this.onConnectionError(statusCode);
-		}
-
-		@Override
-		public void onConnectionError(String errorMessage) {
-			SplashActivity.this.onHttpError(errorMessage);
-		}
-	};
+	/*
+	 * private InternalReceiver universitiesView = new InternalReceiver() {
+	 * 
+	 * @Override public void update(JSONArray data) { //
+	 * SplashActivity.this.loadUniversities(data); }
+	 * 
+	 * @Override public void onHttpError(int statusCode) {
+	 * SplashActivity.this.onConnectionError(statusCode); }
+	 * 
+	 * @Override public void onConnectionError(String errorMessage) {
+	 * SplashActivity.this.onHttpError(errorMessage); } };
+	 */
 
 	class ValidateStarter implements OnFocusChangeListener {
 
@@ -421,17 +553,20 @@ public class SplashActivity extends LucidityActivity {
 
 	};
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-		super.onActivityResult(requestCode, resultCode, data);
-
-		if (requestCode == 1) {
-			Bundle extras = data.getExtras();
-			selectedUni = new University(extras.getInt("id"),
-					extras.getString("name"));
-		}
-	}
+	// @Override
+	// protected void onActivityResult(int requestCode, int resultCode, Intent
+	// data) {
+	//
+	// super.onActivityResult(requestCode, resultCode, data);
+	//
+	// if (requestCode == 1) {
+	// Bundle extras = data.getExtras();
+	// selectedUni = new University(extras.getInt("id"),
+	// extras.getString("name"),
+	// extras.getString("serveraddress"), extras.getInt("port"),
+	// extras.getInt("manualFlag"));
+	// }
+	// }
 
 	class ACValidator implements AutoCompleteTextView.Validator {
 

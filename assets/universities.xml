@@ -1,0 +1,2165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  Default universities -->
+<universities>
+	<university id="1" name="A.T. Still University of Health Sciences" serveraddress="" port="0" />
+	<university id="2" name="Abilene Christian University" serveraddress="" port="0" />
+	<university id="3" name="Abraham Baldwin Agricultural College" serveraddress="" port="0" />
+	<university id="4" name="Academy of Art University" serveraddress="" port="0" />
+	<university id="5" name="Academy of Oriental Medicine at Austin" serveraddress="" port="0" />
+	<university id="6" name="Adams State College" serveraddress="" port="0" />
+	<university id="7" name="Adelphi University" serveraddress="" port="0" />
+	<university id="8" name="Adler Graduate School" serveraddress="" port="0" />
+	<university id="9" name="Adler School of Professional Psychology" serveraddress="" port="0" />
+	<university id="10" name="Adrian College" serveraddress="" port="0" />
+	<university id="11" name="Agnes Scott College" serveraddress="" port="0" />
+	<university id="12" name="AIB College of Business" serveraddress="" port="0" />
+	<university id="13" name="Air Force Institute of Technology" serveraddress="" port="0" />
+	<university id="14" name="Air University" serveraddress="" port="0" />
+	<university id="15" name="Alabama A&amp;M University" serveraddress="" port="0" />
+	<university id="16" name="Alabama State University" serveraddress="" port="0" />
+	<university id="17" name="Alaska Bible College" serveraddress="" port="0" />
+	<university id="18" name="Alaska Pacific University" serveraddress="" port="0" />
+	<university id="19" name="Albany College of Pharmacy &amp; Health Sciences" serveraddress="" port="0" />
+	<university id="20" name="Albany Medical College" serveraddress="" port="0" />
+	<university id="21" name="Albany State University" serveraddress="" port="0" />
+	<university id="22" name="Albertus Magnus College" serveraddress="" port="0" />
+	<university id="23" name="Albion College" serveraddress="" port="0" />
+	<university id="24" name="Albright College" serveraddress="" port="0" />
+	<university id="25" name="Alcorn State University" serveraddress="" port="0" />
+	<university id="26" name="Alderson-Broaddus College" serveraddress="" port="0" />
+	<university id="27" name="Alfred University" serveraddress="" port="0" />
+	<university id="28" name="Alice Lloyd College" serveraddress="" port="0" />
+	<university id="29" name="Allegheny College" serveraddress="" port="0" />
+	<university id="30" name="Allen College" serveraddress="" port="0" />
+	<university id="31" name="Allen University" serveraddress="" port="0" />
+	<university id="32" name="Alliant International University" serveraddress="" port="0" />
+	<university id="33" name="Alma College" serveraddress="" port="0" />
+	<university id="34" name="Alvernia University" serveraddress="" port="0" />
+	<university id="35" name="Alverno College" serveraddress="" port="0" />
+	<university id="36" name="Ambassador University" serveraddress="" port="0" />
+	<university id="37" name="Amberton University" serveraddress="" port="0" />
+	<university id="38" name="American Academy of Art" serveraddress="" port="0" />
+	<university id="39" name="American College" serveraddress="" port="0" />
+	<university id="40" name="American College of Education" serveraddress="" port="0" />
+	<university id="41" name="American Conservatory Theater" serveraddress="" port="0" />
+	<university id="42" name="American Film Institute" serveraddress="" port="0" />
+	<university id="43" name="American Indian College of the Assemblies of God" serveraddress="" port="0" />
+	<university id="44" name="American InterContinental University" serveraddress="" port="0" />
+	<university id="45" name="American International College" serveraddress="" port="0" />
+	<university id="46" name="American Jewish University" serveraddress="" port="0" />
+	<university id="47" name="American Military University" serveraddress="" port="0" />
+	<university id="48" name="American Public University" serveraddress="" port="0" />
+	<university id="49" name="American University" serveraddress="" port="0" />
+	<university id="50" name="American University of Puerto Rico" serveraddress="" port="0" />
+	<university id="51" name="Amherst College" serveraddress="" port="0" />
+	<university id="52" name="Amridge University" serveraddress="" port="0" />
+	<university id="53" name="Anderson University" serveraddress="" port="0" />
+	<university id="54" name="Anderson University" serveraddress="" port="0" />
+	<university id="55" name="Andover Newton Theological School" serveraddress="" port="0" />
+	<university id="56" name="Andrews University" serveraddress="" port="0" />
+	<university id="57" name="Angelo State University" serveraddress="" port="0" />
+	<university id="58" name="Anna Maria College" serveraddress="" port="0" />
+	<university id="59" name="Antioch College" serveraddress="" port="0" />
+	<university id="60" name="Antioch University-Midwest" serveraddress="" port="0" />
+	<university id="61" name="Antioch University-New England" serveraddress="" port="0" />
+	<university id="62" name="Antioch University-Los Angeles" serveraddress="" port="0" />
+	<university id="63" name="Antioch University-Santa Barbara" serveraddress="" port="0" />
+	<university id="64" name="Antioch University-Seattle" serveraddress="" port="0" />
+	<university id="65" name="Appalachian Bible College" serveraddress="" port="0" />
+	<university id="66" name="Appalachian State University" serveraddress="" port="0" />
+	<university id="67" name="Aquinas College" serveraddress="" port="0" />
+	<university id="68" name="Aquinas College" serveraddress="" port="0" />
+	<university id="69" name="Aquinas Institute of Theology" serveraddress="" port="0" />
+	<university id="70" name="Arcadia University" serveraddress="" port="0" />
+	<university id="71" name="Argosy University" serveraddress="" port="0" />
+	<university id="72" name="Arizona State University" serveraddress="" port="0" />
+	<university id="73" name="Arizona State University-Downtown Phoenix Campus" serveraddress="" port="0" />
+	<university id="74" name="Arizona State-Polytechnic Campus" serveraddress="" port="0" />
+	<university id="75" name="Arizona State University-West Campus" serveraddress="" port="0" />
+	<university id="76" name="Arkansas Baptist College" serveraddress="" port="0" />
+	<university id="77" name="Arkansas State University" serveraddress="" port="0" />
+	<university id="78" name="Arkansas Tech University" serveraddress="" port="0" />
+	<university id="79" name="Arlington Baptist College" serveraddress="" port="0" />
+	<university id="80" name="Armstrong Atlantic State University" serveraddress="" port="0" />
+	<university id="81" name="Art Academy of Cincinnati" serveraddress="" port="0" />
+	<university id="82" name="Art Center College of Design" serveraddress="" port="0" />
+	<university id="83" name="Art Center Design College" serveraddress="" port="0" />
+	<university id="84" name="Art Institute of Atlanta" serveraddress="" port="0" />
+	<university id="85" name="Art Institute of Colorado" serveraddress="" port="0" />
+	<university id="86" name="Art Institute of Dallas" serveraddress="" port="0" />
+	<university id="87" name="Art Institute of Houston" serveraddress="" port="0" />
+	<university id="88" name="Art Institute of Pittsburgh" serveraddress="" port="0" />
+	<university id="89" name="Art Institute of Portland" serveraddress="" port="0" />
+	<university id="90" name="Art Institute of Seattle" serveraddress="" port="0" />
+	<university id="91" name="Asbury Theological Seminary" serveraddress="" port="0" />
+	<university id="92" name="Asbury University" serveraddress="" port="0" />
+	<university id="93" name="Ashford University" serveraddress="" port="0" />
+	<university id="94" name="Ashland University" serveraddress="" port="0" />
+	<university id="95" name="Assemblies of God Theological Seminary" serveraddress="" port="0" />
+	<university id="96" name="Associated Mennonite Biblical Seminary" serveraddress="" port="0" />
+	<university id="97" name="Assumption College" serveraddress="" port="0" />
+	<university id="98" name="Athenaeum of Ohio" serveraddress="" port="0" />
+	<university id="99" name="Athens State University" serveraddress="" port="0" />
+	<university id="100" name="Atlanta Christian College" serveraddress="" port="0" />
+	<university id="101" name="Atlantic Union College" serveraddress="" port="0" />
+	<university id="102" name="Auburn University" serveraddress="" port="0" />
+	<university id="103" name="Auburn University at Montgomery" serveraddress="" port="0" />
+	<university id="104" name="Augsburg College" serveraddress="" port="0" />
+	<university id="105" name="Augusta State University" serveraddress="" port="0" />
+	<university id="106" name="Augustana College" serveraddress="" port="0" />
+	<university id="107" name="Augustana College" serveraddress="" port="0" />
+	<university id="108" name="Aurora University" serveraddress="" port="0" />
+	<university id="109" name="Austin College" serveraddress="" port="0" />
+	<university id="110" name="Austin Graduate School of Theology" serveraddress="" port="0" />
+	<university id="111" name="Austin Peay State University" serveraddress="" port="0" />
+	<university id="112" name="Austin Presbyterian Theological Seminary" serveraddress="" port="0" />
+	<university id="113" name="Ave Maria University" serveraddress="" port="0" />
+	<university id="114" name="Averett University" serveraddress="" port="0" />
+	<university id="115" name="Avila University" serveraddress="" port="0" />
+	<university id="116" name="Azusa Pacific University" serveraddress="" port="0" />
+	<university id="117" name="Daemen College" serveraddress="" port="0" />
+	<university id="118" name="Dakota State University" serveraddress="" port="0" />
+	<university id="119" name="Dakota Wesleyan University" serveraddress="" port="0" />
+	<university id="120" name="Dallas Baptist University" serveraddress="" port="0" />
+	<university id="121" name="Dallas Christian College" serveraddress="" port="0" />
+	<university id="122" name="Dallas Theological Seminary" serveraddress="" port="0" />
+	<university id="123" name="Dalton State College" serveraddress="" port="0" />
+	<university id="124" name="Daniel Webster College" serveraddress="" port="0" />
+	<university id="125" name="Dartmouth College" serveraddress="" port="0" />
+	<university id="126" name="Davenport University" serveraddress="" port="0" />
+	<university id="127" name="Davidson College" serveraddress="" port="0" />
+	<university id="128" name="Davis College" serveraddress="" port="0" />
+	<university id="129" name="Davis &amp; Elkins College" serveraddress="" port="0" />
+	<university id="130" name="Daytona State College" serveraddress="" port="0" />
+	<university id="131" name="Dean College" serveraddress="" port="0" />
+	<university id="132" name="Defiance College" serveraddress="" port="0" />
+	<university id="133" name="Delaware State University" serveraddress="" port="0" />
+	<university id="134" name="Delaware Valley College" serveraddress="" port="0" />
+	<university id="135" name="Delta State University" serveraddress="" port="0" />
+	<university id="136" name="Denison University" serveraddress="" port="0" />
+	<university id="137" name="Denver Seminary" serveraddress="" port="0" />
+	<university id="138" name="DePaul University" serveraddress="" port="0" />
+	<university id="139" name="DePauw University" serveraddress="" port="0" />
+	<university id="140" name="Des Moines University-Osteopathic Medical Center" serveraddress="" port="0" />
+	<university id="141" name="DeSales University" serveraddress="" port="0" />
+	<university id="142" name="DeVry University" serveraddress="" port="0" />
+	<university id="143" name="DeVry University-Addison" serveraddress="" port="0" />
+	<university id="144" name="DeVry University-Arlington" serveraddress="" port="0" />
+	<university id="145" name="DeVry University-Chicago" serveraddress="" port="0" />
+	<university id="146" name="DeVry University-Georgia" serveraddress="" port="0" />
+	<university id="147" name="DeVry University-Irving" serveraddress="" port="0" />
+	<university id="148" name="DeVry University-Kansas City" serveraddress="" port="0" />
+	<university id="149" name="DeVry University-Long Beach" serveraddress="" port="0" />
+	<university id="150" name="DeVry University-Orlando" serveraddress="" port="0" />
+	<university id="151" name="DeVry University-Phoenix" serveraddress="" port="0" />
+	<university id="152" name="DeVry University-Pomona" serveraddress="" port="0" />
+	<university id="153" name="Dickinson College" serveraddress="" port="0" />
+	<university id="154" name="Dickinson State University" serveraddress="" port="0" />
+	<university id="155" name="Dillard University" serveraddress="" port="0" />
+	<university id="156" name="Divine Word College" serveraddress="" port="0" />
+	<university id="157" name="Dixie State College" serveraddress="" port="0" />
+	<university id="158" name="Doane College" serveraddress="" port="0" />
+	<university id="159" name="Dominican College" serveraddress="" port="0" />
+	<university id="160" name="Dominican House of Studies" serveraddress="" port="0" />
+	<university id="161" name="Dominican School of Philosophy &amp; Theology" serveraddress="" port="0" />
+	<university id="162" name="Dominican University" serveraddress="" port="0" />
+	<university id="163" name="Dominican University of California" serveraddress="" port="0" />
+	<university id="164" name="Donnelly College" serveraddress="" port="0" />
+	<university id="165" name="Dordt College" serveraddress="" port="0" />
+	<university id="166" name="Dowling College" serveraddress="" port="0" />
+	<university id="167" name="Drake University" serveraddress="" port="0" />
+	<university id="168" name="Drew University" serveraddress="" port="0" />
+	<university id="169" name="Drexel University" serveraddress="" port="0" />
+	<university id="170" name="Drury University" serveraddress="" port="0" />
+	<university id="171" name="Duke University" serveraddress="" port="0" />
+	<university id="172" name="Dunwoody College of Technology" serveraddress="" port="0" />
+	<university id="173" name="Duquesne University" serveraddress="" port="0" />
+	<university id="174" name="D?Youville College" serveraddress="" port="0" />
+	<university id="175" name="Earlham College" serveraddress="" port="0" />
+	<university id="176" name="East Carolina University" serveraddress="" port="0" />
+	<university id="177" name="East Central University" serveraddress="" port="0" />
+	<university id="178" name="East Stroudsburg State University of Pennsylvania" serveraddress="" port="0" />
+	<university id="179" name="East Tennessee State University" serveraddress="" port="0" />
+	<university id="180" name="East Texas Baptist University" serveraddress="" port="0" />
+	<university id="181" name="East-West University" serveraddress="" port="0" />
+	<university id="182" name="Eastern University" serveraddress="" port="0" />
+	<university id="183" name="Eastern Connecticut State University" serveraddress="" port="0" />
+	<university id="184" name="Eastern Illinois University" serveraddress="" port="0" />
+	<university id="185" name="Eastern Kentucky University" serveraddress="" port="0" />
+	<university id="186" name="Eastern Mennonite University" serveraddress="" port="0" />
+	<university id="187" name="Eastern Michigan University" serveraddress="" port="0" />
+	<university id="188" name="Eastern Nazarene College" serveraddress="" port="0" />
+	<university id="189" name="Eastern New Mexico University" serveraddress="" port="0" />
+	<university id="190" name="Eastern Oregon University" serveraddress="" port="0" />
+	<university id="191" name="Eastern Virginia Medical School" serveraddress="" port="0" />
+	<university id="192" name="Eastern Washington University" serveraddress="" port="0" />
+	<university id="193" name="Eckerd College" serveraddress="" port="0" />
+	<university id="194" name="ECPI University" serveraddress="" port="0" />
+	<university id="195" name="Eden Theological Seminary" serveraddress="" port="0" />
+	<university id="196" name="Edgewood College" serveraddress="" port="0" />
+	<university id="197" name="Edinboro University of Pennsylvania" serveraddress="" port="0" />
+	<university id="198" name="Edison State College" serveraddress="" port="0" />
+	<university id="199" name="EDP College" serveraddress="" port="0" />
+	<university id="200" name="Edward Waters College" serveraddress="" port="0" />
+	<university id="201" name="Elizabeth City State University" serveraddress="" port="0" />
+	<university id="202" name="Elizabethtown College" serveraddress="" port="0" />
+	<university id="203" name="Ellis University" serveraddress="" port="0" />
+	<university id="204" name="Elmhurst College" serveraddress="" port="0" />
+	<university id="205" name="Elmira College" serveraddress="" port="0" />
+	<university id="206" name="Elms College" serveraddress="" port="0" />
+	<university id="207" name="Elon University" serveraddress="" port="0" />
+	<university id="208" name="Embry-Riddle Aeronautical University" serveraddress="" port="0" />
+	<university id="209" name="Emerson College" serveraddress="" port="0" />
+	<university id="210" name="Emmanuel College" serveraddress="" port="0" />
+	<university id="211" name="Emmanuel College" serveraddress="" port="0" />
+	<university id="212" name="Emmanuel School of Religion" serveraddress="" port="0" />
+	<university id="213" name="Emmaus Bible College" serveraddress="" port="0" />
+	<university id="214" name="Emporia State University" serveraddress="" port="0" />
+	<university id="215" name="Emory &amp; Henry College" serveraddress="" port="0" />
+	<university id="216" name="Emory University" serveraddress="" port="0" />
+	<university id="217" name="Endicott College" serveraddress="" port="0" />
+	<university id="218" name="Erikson Institute" serveraddress="" port="0" />
+	<university id="219" name="Erskine College" serveraddress="" port="0" />
+	<university id="220" name="Escuela de Artes Pl?sticas de Puerto Rico" serveraddress="" port="0" />
+	<university id="221" name="Eureka College" serveraddress="" port="0" />
+	<university id="222" name="Evangel University" serveraddress="" port="0" />
+	<university id="223" name="Evangelical Theological Seminary" serveraddress="" port="0" />
+	<university id="224" name="Everglades University" serveraddress="" port="0" />
+	<university id="225" name="Evergreen State College" serveraddress="" port="0" />
+	<university id="226" name="Excelsior College" serveraddress="" port="0" />
+	<university id="227" name="Fairfield University" serveraddress="" port="0" />
+	<university id="228" name="Fairleigh Dickinson University" serveraddress="" port="0" />
+	<university id="229" name="Fairmont State University" serveraddress="" port="0" />
+	<university id="230" name="Faith Baptist Bible College &amp; Theological Seminary" serveraddress="" port="0" />
+	<university id="231" name="Fashion Institute of Design &amp; Merchandising" serveraddress="" port="0" />
+	<university id="232" name="Faulkner University" serveraddress="" port="0" />
+	<university id="233" name="Fayetteville State University" serveraddress="" port="0" />
+	<university id="234" name="Felician College" serveraddress="" port="0" />
+	<university id="235" name="Ferris State University" serveraddress="" port="0" />
+	<university id="236" name="Ferrum College" serveraddress="" port="0" />
+	<university id="237" name="Fielding Graduate University" serveraddress="" port="0" />
+	<university id="238" name="Finlandia University" serveraddress="" port="0" />
+	<university id="239" name="Fisher College" serveraddress="" port="0" />
+	<university id="240" name="Fisk University" serveraddress="" port="0" />
+	<university id="241" name="Fitchburg State University" serveraddress="" port="0" />
+	<university id="242" name="Five Towns College" serveraddress="" port="0" />
+	<university id="243" name="Flagler College" serveraddress="" port="0" />
+	<university id="244" name="Florida Agricultural &amp; Mechanical University" serveraddress="" port="0" />
+	<university id="245" name="Florida Atlantic University" serveraddress="" port="0" />
+	<university id="246" name="Florida Christian College" serveraddress="" port="0" />
+	<university id="247" name="Florida College" serveraddress="" port="0" />
+	<university id="248" name="Florida Gulf Coast University" serveraddress="" port="0" />
+	<university id="249" name="Florida Hospital College of Health Sciences" serveraddress="" port="0" />
+	<university id="250" name="Florida Institute of Technology" serveraddress="" port="0" />
+	<university id="251" name="Florida International University" serveraddress="" port="0" />
+	<university id="252" name="Florida Memorial University" serveraddress="" port="0" />
+	<university id="253" name="Florida National College" serveraddress="" port="0" />
+	<university id="254" name="Florida Southern College" serveraddress="" port="0" />
+	<university id="255" name="Florida State College at Jacksonville" serveraddress="" port="0" />
+	<university id="256" name="Florida State University" serveraddress="" port="0" />
+	<university id="257" name="Fontbonne University" serveraddress="" port="0" />
+	<university id="258" name="Fordham University" serveraddress="" port="0" />
+	<university id="259" name="Forest Institute of Professional Psychology" serveraddress="" port="0" />
+	<university id="260" name="Fort Hays State University" serveraddress="" port="0" />
+	<university id="261" name="Fort Lewis College" serveraddress="" port="0" />
+	<university id="262" name="Fort Valley State University" serveraddress="" port="0" />
+	<university id="263" name="Framingham State University" serveraddress="" port="0" />
+	<university id="264" name="Francis Marion University" serveraddress="" port="0" />
+	<university id="265" name="Franciscan School of Theology" serveraddress="" port="0" />
+	<university id="266" name="Franciscan University of Steubenville" serveraddress="" port="0" />
+	<university id="267" name="Frank Lloyd Wright School of Architecture" serveraddress="" port="0" />
+	<university id="268" name="Franklin &amp; Marshall College" serveraddress="" port="0" />
+	<university id="269" name="Franklin College" serveraddress="" port="0" />
+	<university id="270" name="Franklin Pierce University" serveraddress="" port="0" />
+	<university id="271" name="Franklin University" serveraddress="" port="0" />
+	<university id="272" name="Franklin W. Olin College of Engineering" serveraddress="" port="0" />
+	<university id="273" name="Free Will Baptist Bible College" serveraddress="" port="0" />
+	<university id="274" name="Freed-Hardeman University" serveraddress="" port="0" />
+	<university id="275" name="Fresno Pacific University" serveraddress="" port="0" />
+	<university id="276" name="Friends University" serveraddress="" port="0" />
+	<university id="277" name="Frontier School of Midwifery &amp; Family Nursing" serveraddress="" port="0" />
+	<university id="278" name="Frostburg State University" serveraddress="" port="0" />
+	<university id="279" name="Fuller Theological Seminary" serveraddress="" port="0" />
+	<university id="280" name="Furman University" serveraddress="" port="0" />
+	<university id="281" name="Future Generations Graduate School" serveraddress="" port="0" />
+	<university id="282" name="Gainesville State College" serveraddress="" port="0" />
+	<university id="283" name="Gallaudet University" serveraddress="" port="0" />
+	<university id="284" name="Gannon University" serveraddress="" port="0" />
+	<university id="285" name="Gardner-Webb University" serveraddress="" port="0" />
+	<university id="286" name="Garrett-Evangelical Theological Seminary" serveraddress="" port="0" />
+	<university id="287" name="Geneva College" serveraddress="" port="0" />
+	<university id="288" name="George Fox University" serveraddress="" port="0" />
+	<university id="289" name="George Mason University" serveraddress="" port="0" />
+	<university id="290" name="George Washington University" serveraddress="" port="0" />
+	<university id="291" name="George Washington University-Virginia Campus" serveraddress="" port="0" />
+	<university id="292" name="Georgetown College" serveraddress="" port="0" />
+	<university id="293" name="Georgetown University" serveraddress="" port="0" />
+	<university id="294" name="Georgia College &amp; State University" serveraddress="" port="0" />
+	<university id="295" name="Georgia Gwinnett College" serveraddress="" port="0" />
+	<university id="296" name="Georgia Health Sciences University" serveraddress="" port="0" />
+	<university id="297" name="Georgia Institute of Technology" serveraddress="" port="0" />
+	<university id="298" name="Georgia Southern University" serveraddress="" port="0" />
+	<university id="299" name="Georgia Southwestern State University" serveraddress="" port="0" />
+	<university id="300" name="Georgia State University" serveraddress="" port="0" />
+	<university id="301" name="Georgian Court University" serveraddress="" port="0" />
+	<university id="302" name="Gettysburg College" serveraddress="" port="0" />
+	<university id="303" name="Glenville State College" serveraddress="" port="0" />
+	<university id="304" name="Global University" serveraddress="" port="0" />
+	<university id="305" name="God's Bible School &amp; College" serveraddress="" port="0" />
+	<university id="306" name="Goddard College" serveraddress="" port="0" />
+	<university id="307" name="Golden Gate Baptist Theological Seminary" serveraddress="" port="0" />
+	<university id="308" name="Golden Gate University" serveraddress="" port="0" />
+	<university id="309" name="Goldey-Beacom College" serveraddress="" port="0" />
+	<university id="310" name="Goldfarb School of Nursing at Barnes-Jewish College" serveraddress="" port="0" />
+	<university id="311" name="Gonzaga University" serveraddress="" port="0" />
+	<university id="312" name="Goodwin College" serveraddress="" port="0" />
+	<university id="313" name="Gordon College" serveraddress="" port="0" />
+	<university id="314" name="Gordon College" serveraddress="" port="0" />
+	<university id="315" name="Gordon-Conwell Theological Seminary" serveraddress="" port="0" />
+	<university id="316" name="Goshen College" serveraddress="" port="0" />
+	<university id="317" name="Goucher College" serveraddress="" port="0" />
+	<university id="318" name="Governors State University" serveraddress="" port="0" />
+	<university id="319" name="Grace Bible College" serveraddress="" port="0" />
+	<university id="320" name="Grace College &amp; Seminary" serveraddress="" port="0" />
+	<university id="321" name="Grace University" serveraddress="" port="0" />
+	<university id="322" name="Graceland University" serveraddress="" port="0" />
+	<university id="323" name="Graduate Institute of Applied Linguistics" serveraddress="" port="0" />
+	<university id="324" name="Graduate Theological Union" serveraddress="" port="0" />
+	<university id="325" name="Grambling State University" serveraddress="" port="0" />
+	<university id="326" name="Grand Canyon University" serveraddress="" port="0" />
+	<university id="327" name="Grand Valley State University" serveraddress="" port="0" />
+	<university id="328" name="Grand View University" serveraddress="" port="0" />
+	<university id="329" name="Granite State College" serveraddress="" port="0" />
+	<university id="330" name="Gratz College" serveraddress="" port="0" />
+	<university id="331" name="Great Basin College" serveraddress="" port="0" />
+	<university id="332" name="Great Lakes Christian College" serveraddress="" port="0" />
+	<university id="333" name="Green Mountain College" serveraddress="" port="0" />
+	<university id="334" name="Greensboro College" serveraddress="" port="0" />
+	<university id="335" name="Greenville College" serveraddress="" port="0" />
+	<university id="336" name="Grinnell College" serveraddress="" port="0" />
+	<university id="337" name="Grove City College" serveraddress="" port="0" />
+	<university id="338" name="Guilford College" serveraddress="" port="0" />
+	<university id="339" name="Gulf Coast Community College" serveraddress="" port="0" />
+	<university id="340" name="Gustavus Adolphus College" serveraddress="" port="0" />
+	<university id="341" name="Gwynedd Mercy College" serveraddress="" port="0" />
+	<university id="342" name="Idaho State University" serveraddress="" port="0" />
+	<university id="343" name="Iliff School of Theology" serveraddress="" port="0" />
+	<university id="344" name="Illinois College" serveraddress="" port="0" />
+	<university id="345" name="Illinois College of Optometry" serveraddress="" port="0" />
+	<university id="346" name="Illinois Institute of Art" serveraddress="" port="0" />
+	<university id="347" name="Illinois Institute of Art-Schaumburg" serveraddress="" port="0" />
+	<university id="348" name="Illinois Institute of Technology" serveraddress="" port="0" />
+	<university id="349" name="Illinois State University" serveraddress="" port="0" />
+	<university id="350" name="Illinois Wesleyan University" serveraddress="" port="0" />
+	<university id="351" name="Immaculata University" serveraddress="" port="0" />
+	<university id="352" name="Indian River State College" serveraddress="" port="0" />
+	<university id="353" name="Indiana Institute of Technology" serveraddress="" port="0" />
+	<university id="354" name="Indiana State University" serveraddress="" port="0" />
+	<university id="355" name="Indiana University-Bloomington" serveraddress="" port="0" />
+	<university id="356" name="Indiana University-East" serveraddress="" port="0" />
+	<university id="357" name="Indiana University-Kokomo" serveraddress="" port="0" />
+	<university id="358" name="Indiana University-Northwest" serveraddress="" port="0" />
+	<university id="359" name="Indiana University-South Bend" serveraddress="" port="0" />
+	<university id="360" name="Indiana University-Southeast" serveraddress="" port="0" />
+	<university id="361" name="Indiana University System" serveraddress="" port="0" />
+	<university id="362" name="Indiana University/Purdue University at Columbus" serveraddress="" port="0" />
+	<university id="363" name="Indiana University/Purdue University at Fort Wayne" serveraddress="" port="0" />
+	<university id="364" name="Indiana University/Purdue University at Indianapolis" serveraddress="" port="0" />
+	<university id="365" name="Indiana University of Pennsylvania" serveraddress="" port="0" />
+	<university id="366" name="Indiana Wesleyan University" serveraddress="" port="0" />
+	<university id="367" name="Institute for Clinical Social Work" serveraddress="" port="0" />
+	<university id="368" name="Institute for the Psychological Sciences" serveraddress="" port="0" />
+	<university id="369" name="Institute of American Indian Arts" serveraddress="" port="0" />
+	<university id="370" name="Institute of Transpersonal Psychology" serveraddress="" port="0" />
+	<university id="371" name="Institute of World Politics" serveraddress="" port="0" />
+	<university id="372" name="Interdenominational Theological Center" serveraddress="" port="0" />
+	<university id="373" name="Iona College" serveraddress="" port="0" />
+	<university id="374" name="Iowa State University" serveraddress="" port="0" />
+	<university id="375" name="Iowa Wesleyan College" serveraddress="" port="0" />
+	<university id="376" name="Irell &amp; Manella Graduate School of Biological Sciences" serveraddress="" port="0" />
+	<university id="377" name="Ithaca College" serveraddress="" port="0" />
+	<university id="378" name="Jackson State University" serveraddress="" port="0" />
+	<university id="379" name="Jacksonville University" serveraddress="" port="0" />
+	<university id="380" name="Jacksonville State University" serveraddress="" port="0" />
+	<university id="381" name="James Madison University" serveraddress="" port="0" />
+	<university id="382" name="Jamestown College" serveraddress="" port="0" />
+	<university id="383" name="Jarvis Christian College" serveraddress="" port="0" />
+	<university id="384" name="Jefferson College of Health Sciences" serveraddress="" port="0" />
+	<university id="385" name="The Jewish Theological Seminary of America" serveraddress="" port="0" />
+	<university id="386" name="John Brown University" serveraddress="" port="0" />
+	<university id="387" name="John Carroll University" serveraddress="" port="0" />
+	<university id="388" name="John F. Kennedy University" serveraddress="" port="0" />
+	<university id="389" name="John Marshall Law School" serveraddress="" port="0" />
+	<university id="390" name="Johns Hopkins University" serveraddress="" port="0" />
+	<university id="391" name="Johnson Bible College" serveraddress="" port="0" />
+	<university id="392" name="Johnson C. Smith University" serveraddress="" port="0" />
+	<university id="393" name="Johnson State College" serveraddress="" port="0" />
+	<university id="394" name="Johnson &amp; Wales University" serveraddress="" port="0" />
+	<university id="395" name="Jones International University" serveraddress="" port="0" />
+	<university id="396" name="Judson College" serveraddress="" port="0" />
+	<university id="397" name="Judson University" serveraddress="" port="0" />
+	<university id="398" name="The Juilliard School" serveraddress="" port="0" />
+	<university id="399" name="Juniata College" serveraddress="" port="0" />
+	<university id="400" name="La Roche College" serveraddress="" port="0" />
+	<university id="401" name="La Salle University" serveraddress="" port="0" />
+	<university id="402" name="La Sierra University" serveraddress="" port="0" />
+	<university id="403" name="Labour? College" serveraddress="" port="0" />
+	<university id="404" name="Lafayette College" serveraddress="" port="0" />
+	<university id="405" name="LaGrange College" serveraddress="" port="0" />
+	<university id="406" name="Laguna College of Art &amp; Design" serveraddress="" port="0" />
+	<university id="407" name="Lake Erie College" serveraddress="" port="0" />
+	<university id="408" name="Lake Erie College of Osteopathic Medicine" serveraddress="" port="0" />
+	<university id="409" name="Lake Forest College" serveraddress="" port="0" />
+	<university id="410" name="Lake Forest Graduate School of Management" serveraddress="" port="0" />
+	<university id="411" name="Lake Superior State University" serveraddress="" port="0" />
+	<university id="412" name="Lakeland College" serveraddress="" port="0" />
+	<university id="413" name="Lakeview College of Nursing" serveraddress="" port="0" />
+	<university id="414" name="Lamar University" serveraddress="" port="0" />
+	<university id="415" name="Lambuth University" serveraddress="" port="0" />
+	<university id="416" name="Lancaster Bible College" serveraddress="" port="0" />
+	<university id="417" name="Lancaster General College of Nursing &amp; Health" serveraddress="" port="0" />
+	<university id="418" name="Lancaster Theological Seminary" serveraddress="" port="0" />
+	<university id="419" name="Lander University" serveraddress="" port="0" />
+	<university id="420" name="Lane College" serveraddress="" port="0" />
+	<university id="421" name="Langston University" serveraddress="" port="0" />
+	<university id="422" name="Lasell College" serveraddress="" port="0" />
+	<university id="423" name="Lawrence Technological University" serveraddress="" port="0" />
+	<university id="424" name="Lawrence University" serveraddress="" port="0" />
+	<university id="425" name="Le Moyne College" serveraddress="" port="0" />
+	<university id="426" name="Lebanon Valley College" serveraddress="" port="0" />
+	<university id="427" name="Lee University" serveraddress="" port="0" />
+	<university id="428" name="Lees-McRae College" serveraddress="" port="0" />
+	<university id="429" name="Lehigh University" serveraddress="" port="0" />
+	<university id="430" name="LeMoyne-Owen College" serveraddress="" port="0" />
+	<university id="431" name="Lenoir-Rhyne University" serveraddress="" port="0" />
+	<university id="432" name="Lesley University" serveraddress="" port="0" />
+	<university id="433" name="LeTourneau University" serveraddress="" port="0" />
+	<university id="434" name="Lewis &amp; Clark College" serveraddress="" port="0" />
+	<university id="435" name="Lewis-Clark State College" serveraddress="" port="0" />
+	<university id="436" name="Lewis University" serveraddress="" port="0" />
+	<university id="437" name="Lexington College" serveraddress="" port="0" />
+	<university id="438" name="Liberty University" serveraddress="" port="0" />
+	<university id="439" name="Life Pacific College" serveraddress="" port="0" />
+	<university id="440" name="Life University" serveraddress="" port="0" />
+	<university id="441" name="LIM College" serveraddress="" port="0" />
+	<university id="442" name="Limestone College" serveraddress="" port="0" />
+	<university id="443" name="Lincoln Christian University" serveraddress="" port="0" />
+	<university id="444" name="Lincoln College" serveraddress="" port="0" />
+	<university id="445" name="Lincoln College of New England" serveraddress="" port="0" />
+	<university id="446" name="Lincoln Memorial University" serveraddress="" port="0" />
+	<university id="447" name="Lincoln University" serveraddress="" port="0" />
+	<university id="448" name="Lincoln University" serveraddress="" port="0" />
+	<university id="449" name="Lindenwood University" serveraddress="" port="0" />
+	<university id="450" name="Lindsey Wilson College" serveraddress="" port="0" />
+	<university id="451" name="Linfield College" serveraddress="" port="0" />
+	<university id="452" name="Lipscomb University" serveraddress="" port="0" />
+	<university id="453" name="Livingstone College" serveraddress="" port="0" />
+	<university id="454" name="Lock Haven University of Pennsylvania" serveraddress="" port="0" />
+	<university id="455" name="Logan University" serveraddress="" port="0" />
+	<university id="456" name="Loma Linda University" serveraddress="" port="0" />
+	<university id="457" name="Long Island University" serveraddress="" port="0" />
+	<university id="458" name="Long Island University-Arnold &amp; Marie Schwartz College of Pharmacy &amp; Health Sciences" serveraddress="" port="0" />
+	<university id="459" name="Long Island University-Brentwood Campus" serveraddress="" port="0" />
+	<university id="460" name="Long Island University-Brooklyn Campus" serveraddress="" port="0" />
+	<university id="461" name="Long Island University-C.W. Post Campus" serveraddress="" port="0" />
+	<university id="462" name="Long Island University at Riverhead" serveraddress="" port="0" />
+	<university id="463" name="Long Island University-Rockland Graduate Campus" serveraddress="" port="0" />
+	<university id="464" name="Long Island University-Westchester Graduate Campus" serveraddress="" port="0" />
+	<university id="465" name="Longwood University" serveraddress="" port="0" />
+	<university id="466" name="Longy School of Music" serveraddress="" port="0" />
+	<university id="467" name="Loras College" serveraddress="" port="0" />
+	<university id="468" name="Louisiana College" serveraddress="" port="0" />
+	<university id="469" name="Louisiana State University" serveraddress="" port="0" />
+	<university id="470" name="Louisiana State University-Alexandria" serveraddress="" port="0" />
+	<university id="471" name="Louisiana State University-Law Center" serveraddress="" port="0" />
+	<university id="472" name="Louisiana State University Health Sciences Center-New Orleans" serveraddress="" port="0" />
+	<university id="473" name="Louisiana State University Health Sciences Center-Shreveport" serveraddress="" port="0" />
+	<university id="474" name="Louisiana State University-Shreveport" serveraddress="" port="0" />
+	<university id="475" name="Louisiana State University System" serveraddress="" port="0" />
+	<university id="476" name="Louisiana Tech University" serveraddress="" port="0" />
+	<university id="477" name="Louisville Presbyterian Theological Seminary" serveraddress="" port="0" />
+	<university id="478" name="Lourdes College" serveraddress="" port="0" />
+	<university id="479" name="Loyola University Maryland" serveraddress="" port="0" />
+	<university id="480" name="Loyola Marymount University" serveraddress="" port="0" />
+	<university id="481" name="Loyola University Chicago" serveraddress="" port="0" />
+	<university id="482" name="Loyola University New Orleans" serveraddress="" port="0" />
+	<university id="483" name="Lubbock Christian University" serveraddress="" port="0" />
+	<university id="484" name="Luther College" serveraddress="" port="0" />
+	<university id="485" name="Luther Seminary" serveraddress="" port="0" />
+	<university id="486" name="Lutheran School of Theology at Chicago" serveraddress="" port="0" />
+	<university id="487" name="Lutheran Theological Seminary at Gettysburg" serveraddress="" port="0" />
+	<university id="488" name="Lutheran Theological Seminary at Philadelphia" serveraddress="" port="0" />
+	<university id="489" name="Lycoming College" serveraddress="" port="0" />
+	<university id="490" name="Lyme Academy College of Fine Arts" serveraddress="" port="0" />
+	<university id="491" name="Lynchburg College" serveraddress="" port="0" />
+	<university id="492" name="Lyndon State College" serveraddress="" port="0" />
+	<university id="493" name="Lynn University" serveraddress="" port="0" />
+	<university id="494" name="Lyon College" serveraddress="" port="0" />
+	<university id="495" name="Naropa University" serveraddress="" port="0" />
+	<university id="496" name="National American University" serveraddress="" port="0" />
+	<university id="497" name="National College of Natural Medicine" serveraddress="" port="0" />
+	<university id="498" name="National Defense Intelligence College" serveraddress="" port="0" />
+	<university id="499" name="National Defense University" serveraddress="" port="0" />
+	<university id="500" name="National Graduate School of Quality Management" serveraddress="" port="0" />
+	<university id="501" name="National Hispanic University" serveraddress="" port="0" />
+	<university id="502" name="National Labor College" serveraddress="" port="0" />
+	<university id="503" name="National-Louis University" serveraddress="" port="0" />
+	<university id="504" name="National Theatre Conservatory" serveraddress="" port="0" />
+	<university id="505" name="National University" serveraddress="" port="0" />
+	<university id="506" name="National University of Health Sciences" serveraddress="" port="0" />
+	<university id="507" name="Navajo Technical College" serveraddress="" port="0" />
+	<university id="508" name="Naval Postgraduate School" serveraddress="" port="0" />
+	<university id="509" name="Nazarene Bible College" serveraddress="" port="0" />
+	<university id="510" name="Nazareth College" serveraddress="" port="0" />
+	<university id="511" name="Nebraska Christian College" serveraddress="" port="0" />
+	<university id="512" name="Nebraska Methodist College" serveraddress="" port="0" />
+	<university id="513" name="Nebraska Wesleyan University" serveraddress="" port="0" />
+	<university id="514" name="Neumann University" serveraddress="" port="0" />
+	<university id="515" name="New College of Florida" serveraddress="" port="0" />
+	<university id="516" name="New England College" serveraddress="" port="0" />
+	<university id="517" name="New England College of Business &amp; Finance" serveraddress="" port="0" />
+	<university id="518" name="New England College of Optometry" serveraddress="" port="0" />
+	<university id="519" name="New England Conservatory of Music" serveraddress="" port="0" />
+	<university id="520" name="New England Institute of Art" serveraddress="" port="0" />
+	<university id="521" name="New England Institute of Technology" serveraddress="" port="0" />
+	<university id="522" name="New Hope Christian College" serveraddress="" port="0" />
+	<university id="523" name="New Jersey City University" serveraddress="" port="0" />
+	<university id="524" name="New Jersey Institute of Technology" serveraddress="" port="0" />
+	<university id="525" name="New Mexico Highlands University" serveraddress="" port="0" />
+	<university id="526" name="New Mexico Institute of Mining &amp; Technology" serveraddress="" port="0" />
+	<university id="527" name="New Mexico State University" serveraddress="" port="0" />
+	<university id="528" name="New Orleans Baptist Theological Seminary" serveraddress="" port="0" />
+	<university id="529" name="The New School" serveraddress="" port="0" />
+	<university id="530" name="New York Chiropractic College" serveraddress="" port="0" />
+	<university id="531" name="New York Institute of Technology" serveraddress="" port="0" />
+	<university id="532" name="New York Medical College" serveraddress="" port="0" />
+	<university id="533" name="New York University" serveraddress="" port="0" />
+	<university id="534" name="Newberry College" serveraddress="" port="0" />
+	<university id="535" name="Newbury College" serveraddress="" port="0" />
+	<university id="536" name="Newman University" serveraddress="" port="0" />
+	<university id="537" name="Niagara University" serveraddress="" port="0" />
+	<university id="538" name="Nichols College" serveraddress="" port="0" />
+	<university id="539" name="Nicholls State University" serveraddress="" port="0" />
+	<university id="540" name="Norfolk State University" serveraddress="" port="0" />
+	<university id="541" name="North Carolina A&amp;T State University" serveraddress="" port="0" />
+	<university id="542" name="North Carolina Central University" serveraddress="" port="0" />
+	<university id="543" name="North Carolina Wesleyan College" serveraddress="" port="0" />
+	<university id="544" name="North Central University" serveraddress="" port="0" />
+	<university id="545" name="North Central College" serveraddress="" port="0" />
+	<university id="546" name="North Carolina State University" serveraddress="" port="0" />
+	<university id="547" name="North Dakota State University" serveraddress="" port="0" />
+	<university id="548" name="North Georgia College &amp; State University" serveraddress="" port="0" />
+	<university id="549" name="North Greenville University" serveraddress="" port="0" />
+	<university id="550" name="North Park University" serveraddress="" port="0" />
+	<university id="551" name="Northcentral University" serveraddress="" port="0" />
+	<university id="552" name="Northeastern Illinois University" serveraddress="" port="0" />
+	<university id="553" name="Northeastern Ohio Universities College of Medicine" serveraddress="" port="0" />
+	<university id="554" name="Northeastern Seminary at Roberts Wesleyan College" serveraddress="" port="0" />
+	<university id="555" name="Northeastern State University" serveraddress="" port="0" />
+	<university id="556" name="Northeastern State University-Broken Arrow" serveraddress="" port="0" />
+	<university id="557" name="Northeastern State University-Muskogee" serveraddress="" port="0" />
+	<university id="558" name="Northeastern University" serveraddress="" port="0" />
+	<university id="559" name="Northern Arizona University" serveraddress="" port="0" />
+	<university id="560" name="Northern Baptist Theological Seminary" serveraddress="" port="0" />
+	<university id="561" name="Northern Illinois University" serveraddress="" port="0" />
+	<university id="562" name="Northern Kentucky University" serveraddress="" port="0" />
+	<university id="563" name="Northern Michigan University" serveraddress="" port="0" />
+	<university id="564" name="Northern New Mexico College" serveraddress="" port="0" />
+	<university id="565" name="Northern State University" serveraddress="" port="0" />
+	<university id="566" name="Northland College" serveraddress="" port="0" />
+	<university id="567" name="Northwest Christian University" serveraddress="" port="0" />
+	<university id="568" name="Northwest Florida State College" serveraddress="" port="0" />
+	<university id="569" name="Northwest Indian College" serveraddress="" port="0" />
+	<university id="570" name="Northwest Missouri State University" serveraddress="" port="0" />
+	<university id="571" name="Northwest Nazarene University" serveraddress="" port="0" />
+	<university id="572" name="Northwest University" serveraddress="" port="0" />
+	<university id="573" name="Northwestern College" serveraddress="" port="0" />
+	<university id="574" name="Northwestern College" serveraddress="" port="0" />
+	<university id="575" name="Northwestern Health Sciences University" serveraddress="" port="0" />
+	<university id="576" name="Northwestern Oklahoma State University" serveraddress="" port="0" />
+	<university id="577" name="Northwestern State University of Louisiana" serveraddress="" port="0" />
+	<university id="578" name="Northwestern University" serveraddress="" port="0" />
+	<university id="579" name="Northwood University" serveraddress="" port="0" />
+	<university id="580" name="Norwich University" serveraddress="" port="0" />
+	<university id="581" name="Notre Dame College" serveraddress="" port="0" />
+	<university id="582" name="Notre Dame de Namur University" serveraddress="" port="0" />
+	<university id="583" name="Notre Dame Seminary" serveraddress="" port="0" />
+	<university id="584" name="Nova Southeastern University" serveraddress="" port="0" />
+	<university id="585" name="Nyack College" serveraddress="" port="0" />
+	<university id="586" name="Pace University" serveraddress="" port="0" />
+	<university id="587" name="Pacific Lutheran University" serveraddress="" port="0" />
+	<university id="588" name="Pacific Northwest College of Art" serveraddress="" port="0" />
+	<university id="589" name="Pacific Oaks College" serveraddress="" port="0" />
+	<university id="590" name="Pacific School of Religion" serveraddress="" port="0" />
+	<university id="591" name="Pacific Union College" serveraddress="" port="0" />
+	<university id="592" name="Pacific University" serveraddress="" port="0" />
+	<university id="593" name="Pacifica Graduate Institute" serveraddress="" port="0" />
+	<university id="594" name="Paine College" serveraddress="" port="0" />
+	<university id="595" name="Palm Beach Atlantic University" serveraddress="" port="0" />
+	<university id="596" name="Palm Beach State College" serveraddress="" port="0" />
+	<university id="597" name="Palmer College of Chiropractic" serveraddress="" port="0" />
+	<university id="598" name="Palo Alto University" serveraddress="" port="0" />
+	<university id="599" name="Pardee RAND Graduate School" serveraddress="" port="0" />
+	<university id="600" name="Park University" serveraddress="" port="0" />
+	<university id="601" name="Parker University" serveraddress="" port="0" />
+	<university id="602" name="Patten College" serveraddress="" port="0" />
+	<university id="603" name="Paul Quinn College" serveraddress="" port="0" />
+	<university id="604" name="Paul Smith's College" serveraddress="" port="0" />
+	<university id="605" name="Peace College" serveraddress="" port="0" />
+	<university id="606" name="Peirce College" serveraddress="" port="0" />
+	<university id="607" name="Peninsula College" serveraddress="" port="0" />
+	<university id="608" name="Pennsylvania College of Art &amp; Design" serveraddress="" port="0" />
+	<university id="609" name="Pennsylvania College of Technology" serveraddress="" port="0" />
+	<university id="610" name="Pennsylvania State University" serveraddress="" port="0" />
+	<university id="611" name="Pennsylvania State University-Abington" serveraddress="" port="0" />
+	<university id="612" name="Pennsylvania State University-Altoona" serveraddress="" port="0" />
+	<university id="613" name="Pennsylvania State University-Beaver" serveraddress="" port="0" />
+	<university id="614" name="Pennsylvania State University-Berks" serveraddress="" port="0" />
+	<university id="615" name="Pennsylvania State University-Brandywine" serveraddress="" port="0" />
+	<university id="616" name="Pennsylvania State University-Dickinson School of Law" serveraddress="" port="0" />
+	<university id="617" name="Pennsylvania State University-DuBois" serveraddress="" port="0" />
+	<university id="618" name="Pennsylvania State University-Erie, The Behrend College" serveraddress="" port="0" />
+	<university id="619" name="Pennsylvania State University-Fayette, The Eberly Campus" serveraddress="" port="0" />
+	<university id="620" name="Pennsylvania State University-Great Valley School of Graduate Professional Studies" serveraddress="" port="0" />
+	<university id="621" name="Pennsylvania State University-Greater Allegheny" serveraddress="" port="0" />
+	<university id="622" name="Pennsylvania State University-Harrisburg" serveraddress="" port="0" />
+	<university id="623" name="Pennsylvania State University-Hazleton" serveraddress="" port="0" />
+	<university id="624" name="Pennsylvania State University-Lehigh Valley" serveraddress="" port="0" />
+	<university id="625" name="Pennsylvania State University-Milton S. Hershey Medical Center" serveraddress="" port="0" />
+	<university id="626" name="Pennsylvania State University-Mont Alto" serveraddress="" port="0" />
+	<university id="627" name="Pennsylvania State University-New Kensington" serveraddress="" port="0" />
+	<university id="628" name="Pennsylvania State University-Schuylkill" serveraddress="" port="0" />
+	<university id="629" name="Pennsylvania State University-Shenango" serveraddress="" port="0" />
+	<university id="630" name="Pennsylvania State University-Wilkes-Barre" serveraddress="" port="0" />
+	<university id="631" name="Pennsylvania State University-Worthington Scranton" serveraddress="" port="0" />
+	<university id="632" name="Pennsylvania State University-York" serveraddress="" port="0" />
+	<university id="633" name="Pensacola State College" serveraddress="" port="0" />
+	<university id="634" name="Pentecostal Theological Seminary" serveraddress="" port="0" />
+	<university id="635" name="Pepperdine University" serveraddress="" port="0" />
+	<university id="636" name="Peru State College" serveraddress="" port="0" />
+	<university id="637" name="Pfeiffer University" serveraddress="" port="0" />
+	<university id="638" name="Philadelphia Biblical University" serveraddress="" port="0" />
+	<university id="639" name="Philadelphia College of Osteopathic Medicine" serveraddress="" port="0" />
+	<university id="640" name="Philadelphia College of Textiles &amp; Science" serveraddress="" port="0" />
+	<university id="641" name="Philander Smith College" serveraddress="" port="0" />
+	<university id="642" name="Phillips Graduate Institute" serveraddress="" port="0" />
+	<university id="643" name="Phillips Theological Seminary" serveraddress="" port="0" />
+	<university id="644" name="Phillips University" serveraddress="" port="0" />
+	<university id="645" name="Piedmont College" serveraddress="" port="0" />
+	<university id="646" name="Pine Manor College" serveraddress="" port="0" />
+	<university id="647" name="Pittsburg State University" serveraddress="" port="0" />
+	<university id="648" name="Pittsburgh Theological Seminary" serveraddress="" port="0" />
+	<university id="649" name="Plymouth State University" serveraddress="" port="0" />
+	<university id="650" name="Point Loma Nazarene University" serveraddress="" port="0" />
+	<university id="651" name="Point Park University" serveraddress="" port="0" />
+	<university id="652" name="Polk State College" serveraddress="" port="0" />
+	<university id="653" name="Polytechnic Institute of New York University" serveraddress="" port="0" />
+	<university id="654" name="Ponce School of Medicine &amp; Health Sciences" serveraddress="" port="0" />
+	<university id="655" name="Pontifical College Josephinum" serveraddress="" port="0" />
+	<university id="656" name="Pontificia Universidad Cat?lica de Puerto Rico" serveraddress="" port="0" />
+	<university id="657" name="Portland State University" serveraddress="" port="0" />
+	<university id="658" name="Post University" serveraddress="" port="0" />
+	<university id="659" name="Potomac College" serveraddress="" port="0" />
+	<university id="660" name="Prairie View A&amp;M University" serveraddress="" port="0" />
+	<university id="661" name="Pratt Institute" serveraddress="" port="0" />
+	<university id="662" name="Prescott College" serveraddress="" port="0" />
+	<university id="663" name="Presentation College" serveraddress="" port="0" />
+	<university id="664" name="Princeton Theological Seminary" serveraddress="" port="0" />
+	<university id="665" name="Princeton University" serveraddress="" port="0" />
+	<university id="666" name="Principia College" serveraddress="" port="0" />
+	<university id="667" name="Presbyterian College" serveraddress="" port="0" />
+	<university id="668" name="Providence College" serveraddress="" port="0" />
+	<university id="669" name="Purdue University" serveraddress="" port="0" />
+	<university id="670" name="Purdue University-Calumet" serveraddress="" port="0" />
+	<university id="671" name="Purdue University-North Central" serveraddress="" port="0" />
+	<university id="672" name="Purdue University College of Technology-Anderson/Muncie" serveraddress="" port="0" />
+	<university id="673" name="Purdue University College of Technology-Columbus/Greensburg" serveraddress="" port="0" />
+	<university id="674" name="Purdue University College of Technology-Indianapolis" serveraddress="" port="0" />
+	<university id="675" name="Purdue University College of Technology-Kokomo" serveraddress="" port="0" />
+	<university id="676" name="Purdue University College of Technology-Lafayette" serveraddress="" port="0" />
+	<university id="677" name="Purdue University College of Technology-New Albany" serveraddress="" port="0" />
+	<university id="678" name="Purdue University College of Technology-Richmond" serveraddress="" port="0" />
+	<university id="679" name="Purdue University College of Technology-South Bend/Elkhart" serveraddress="" port="0" />
+	<university id="680" name="Sacred Heart Major Seminary" serveraddress="" port="0" />
+	<university id="681" name="Sacred Heart School of Theology" serveraddress="" port="0" />
+	<university id="682" name="Sacred Heart University" serveraddress="" port="0" />
+	<university id="683" name="The Sage Colleges" serveraddress="" port="0" />
+	<university id="684" name="Saginaw Valley State University" serveraddress="" port="0" />
+	<university id="685" name="Saint Ambrose University" serveraddress="" port="0" />
+	<university id="686" name="Saint Andrews Presbyterian College" serveraddress="" port="0" />
+	<university id="687" name="Saint Anselm College" serveraddress="" port="0" />
+	<university id="688" name="Saint Anthony College of Nursing" serveraddress="" port="0" />
+	<university id="689" name="Saint Augustine College" serveraddress="" port="0" />
+	<university id="690" name="Saint Augustine's College" serveraddress="" port="0" />
+	<university id="691" name="Saint Bonaventure University" serveraddress="" port="0" />
+	<university id="692" name="Saint Catherine University" serveraddress="" port="0" />
+	<university id="693" name="Saint Catharine College" serveraddress="" port="0" />
+	<university id="694" name="Saint Charles Borromeo Seminary" serveraddress="" port="0" />
+	<university id="695" name="Saint Cloud State University" serveraddress="" port="0" />
+	<university id="696" name="Saint Edward's University" serveraddress="" port="0" />
+	<university id="697" name="Saint Francis College" serveraddress="" port="0" />
+	<university id="698" name="Saint Francis Medical Center College of Nursing" serveraddress="" port="0" />
+	<university id="699" name="Saint Francis University" serveraddress="" port="0" />
+	<university id="700" name="Saint Gregory the Great Seminary" serveraddress="" port="0" />
+	<university id="701" name="Saint Gregory's University" serveraddress="" port="0" />
+	<university id="702" name="Saint John Fisher College" serveraddress="" port="0" />
+	<university id="703" name="Saint John Vianney College Seminary" serveraddress="" port="0" />
+	<university id="704" name="Saint John's College-Annapolis" serveraddress="" port="0" />
+	<university id="705" name="Saint John's College-Santa Fe" serveraddress="" port="0" />
+	<university id="706" name="Saint John's College" serveraddress="" port="0" />
+	<university id="707" name="Saint John's Seminary" serveraddress="" port="0" />
+	<university id="708" name="Saint John's Seminary" serveraddress="" port="0" />
+	<university id="709" name="Saint John's University" serveraddress="" port="0" />
+	<university id="710" name="Saint John's University" serveraddress="" port="0" />
+	<university id="711" name="Saint Johns River State College" serveraddress="" port="0" />
+	<university id="712" name="Saint Joseph College" serveraddress="" port="0" />
+	<university id="713" name="Saint Joseph Seminary College" serveraddress="" port="0" />
+	<university id="714" name="Saint Joseph's College" serveraddress="" port="0" />
+	<university id="715" name="Saint Joseph's College" serveraddress="" port="0" />
+	<university id="716" name="Saint Joseph's College of Maine" serveraddress="" port="0" />
+	<university id="717" name="Saint Joseph's Seminary" serveraddress="" port="0" />
+	<university id="718" name="Saint Joseph's University" serveraddress="" port="0" />
+	<university id="719" name="Saint Lawrence University" serveraddress="" port="0" />
+	<university id="720" name="Saint Leo University" serveraddress="" port="0" />
+	<university id="721" name="Saint Louis College of Pharmacy" serveraddress="" port="0" />
+	<university id="722" name="Saint Louis University" serveraddress="" port="0" />
+	<university id="723" name="Saint Luke's College of Health Sciences" serveraddress="" port="0" />
+	<university id="724" name="Saint Martin's University" serveraddress="" port="0" />
+	<university id="725" name="Saint Mary Seminary &amp; Graduate School of Theology" serveraddress="" port="0" />
+	<university id="726" name="Saint Mary-of-the-Woods College" serveraddress="" port="0" />
+	<university id="727" name="Saint Mary's College" serveraddress="" port="0" />
+	<university id="728" name="Saint Mary's College of California" serveraddress="" port="0" />
+	<university id="729" name="Saint Mary's College of Maryland" serveraddress="" port="0" />
+	<university id="730" name="Saint Mary's Seminary &amp; University" serveraddress="" port="0" />
+	<university id="731" name="Saint Mary's University of Minnesota" serveraddress="" port="0" />
+	<university id="732" name="Saint Mary's University" serveraddress="" port="0" />
+	<university id="733" name="Saint Meinrad Seminary &amp; School of Theology" serveraddress="" port="0" />
+	<university id="734" name="Saint Michael's College" serveraddress="" port="0" />
+	<university id="735" name="Saint Norbert College" serveraddress="" port="0" />
+	<university id="736" name="Saint Olaf College" serveraddress="" port="0" />
+	<university id="737" name="Saint Patrick's Seminary &amp; University" serveraddress="" port="0" />
+	<university id="738" name="Saint Paul School of Theology" serveraddress="" port="0" />
+	<university id="739" name="Saint Paul's College" serveraddress="" port="0" />
+	<university id="740" name="Saint Peter's College" serveraddress="" port="0" />
+	<university id="741" name="Saint Petersburg College" serveraddress="" port="0" />
+	<university id="742" name="Saint Thomas Aquinas College" serveraddress="" port="0" />
+	<university id="743" name="Saint Thomas University" serveraddress="" port="0" />
+	<university id="744" name="Saint Vincent College" serveraddress="" port="0" />
+	<university id="745" name="Saint Vincent de Paul Regional Seminary" serveraddress="" port="0" />
+	<university id="746" name="Saint Vincent's College" serveraddress="" port="0" />
+	<university id="747" name="Saint Xavier University" serveraddress="" port="0" />
+	<university id="748" name="Salem College" serveraddress="" port="0" />
+	<university id="749" name="Salem International University" serveraddress="" port="0" />
+	<university id="750" name="Salem State University" serveraddress="" port="0" />
+	<university id="751" name="Salisbury University" serveraddress="" port="0" />
+	<university id="752" name="Salish Kootenai College" serveraddress="" port="0" />
+	<university id="753" name="Salus University" serveraddress="" port="0" />
+	<university id="754" name="Salve Regina University" serveraddress="" port="0" />
+	<university id="755" name="Sam Houston State University" serveraddress="" port="0" />
+	<university id="756" name="Samford University" serveraddress="" port="0" />
+	<university id="757" name="Samuel Merritt University" serveraddress="" port="0" />
+	<university id="758" name="San Diego Christian College" serveraddress="" port="0" />
+	<university id="759" name="San Diego State University" serveraddress="" port="0" />
+	<university id="760" name="San Francisco Art Institute" serveraddress="" port="0" />
+	<university id="761" name="San Francisco Conservatory of Music" serveraddress="" port="0" />
+	<university id="762" name="San Francisco State University" serveraddress="" port="0" />
+	<university id="763" name="San Francisco Theological Seminary" serveraddress="" port="0" />
+	<university id="764" name="San Joaquin College of Law" serveraddress="" port="0" />
+	<university id="765" name="San Jos? State University" serveraddress="" port="0" />
+	<university id="766" name="San Juan Bautista School of Medicine" serveraddress="" port="0" />
+	<university id="767" name="Santa Clara University" serveraddress="" port="0" />
+	<university id="768" name="Santa Fe College" serveraddress="" port="0" />
+	<university id="769" name="Santa Fe University of Art &amp; Design" serveraddress="" port="0" />
+	<university id="770" name="Sarah Lawrence College" serveraddress="" port="0" />
+	<university id="771" name="Savannah College of Art &amp; Design" serveraddress="" port="0" />
+	<university id="772" name="Savannah State University" serveraddress="" port="0" />
+	<university id="773" name="Saybrook University" serveraddress="" port="0" />
+	<university id="774" name="School for International Training" serveraddress="" port="0" />
+	<university id="775" name="School of the Art Institute of Chicago" serveraddress="" port="0" />
+	<university id="776" name="School of Visual Arts" serveraddress="" port="0" />
+	<university id="777" name="Schreiner University" serveraddress="" port="0" />
+	<university id="778" name="Scripps Research Institute" serveraddress="" port="0" />
+	<university id="779" name="Seattle Pacific University" serveraddress="" port="0" />
+	<university id="780" name="Seattle University" serveraddress="" port="0" />
+	<university id="781" name="Seminario Evang?lico de Puerto Rico" serveraddress="" port="0" />
+	<university id="782" name="Seminary of the Immaculate Conception" serveraddress="" port="0" />
+	<university id="783" name="Seminary of the Southwest" serveraddress="" port="0" />
+	<university id="784" name="Seminole State College of Florida" serveraddress="" port="0" />
+	<university id="785" name="Seton Hall University" serveraddress="" port="0" />
+	<university id="786" name="Seton Hill University" serveraddress="" port="0" />
+	<university id="787" name="Shaw University" serveraddress="" port="0" />
+	<university id="788" name="Shawnee State University" serveraddress="" port="0" />
+	<university id="789" name="Shenandoah University" serveraddress="" port="0" />
+	<university id="790" name="Shepherd University" serveraddress="" port="0" />
+	<university id="791" name="Sherman College of Chiropractic" serveraddress="" port="0" />
+	<university id="792" name="Shimer College" serveraddress="" port="0" />
+	<university id="793" name="Shippensburg University of Pennsylvania" serveraddress="" port="0" />
+	<university id="794" name="Shorter College" serveraddress="" port="0" />
+	<university id="795" name="Siegal College of Judaic Studies" serveraddress="" port="0" />
+	<university id="796" name="Siena College" serveraddress="" port="0" />
+	<university id="797" name="Siena Heights University" serveraddress="" port="0" />
+	<university id="798" name="Sierra Nevada College" serveraddress="" port="0" />
+	<university id="799" name="Silver Lake College" serveraddress="" port="0" />
+	<university id="800" name="Simmons College" serveraddress="" port="0" />
+	<university id="801" name="Sinte Gleska University" serveraddress="" port="0" />
+	<university id="802" name="Simpson University" serveraddress="" port="0" />
+	<university id="803" name="Simpson College" serveraddress="" port="0" />
+	<university id="804" name="Sioux Falls Seminary" serveraddress="" port="0" />
+	<university id="805" name="Sistema Universitario Ana G. M?ndez" serveraddress="" port="0" />
+	<university id="806" name="Universidad del Este" serveraddress="" port="0" />
+	<university id="807" name="Universidad Metropolitana" serveraddress="" port="0" />
+	<university id="808" name="Universidad del Turabo" serveraddress="" port="0" />
+	<university id="809" name="Sitting Bull College" serveraddress="" port="0" />
+	<university id="810" name="Skidmore College" serveraddress="" port="0" />
+	<university id="811" name="Slippery Rock University of Pennsylvania" serveraddress="" port="0" />
+	<university id="812" name="Smith College" serveraddress="" port="0" />
+	<university id="813" name="Soka University of America" serveraddress="" port="0" />
+	<university id="814" name="Somerset Christian College" serveraddress="" port="0" />
+	<university id="815" name="Sonoma State University" serveraddress="" port="0" />
+	<university id="816" name="Soujourner-Douglass College" serveraddress="" port="0" />
+	<university id="817" name="South Carolina State University" serveraddress="" port="0" />
+	<university id="818" name="South College" serveraddress="" port="0" />
+	<university id="819" name="South Dakota School of Mines &amp; Technology" serveraddress="" port="0" />
+	<university id="820" name="South Dakota State University" serveraddress="" port="0" />
+	<university id="821" name="South Florida Bible College &amp; Theological Seminary" serveraddress="" port="0" />
+	<university id="822" name="South Texas College of Law" serveraddress="" port="0" />
+	<university id="823" name="South University" serveraddress="" port="0" />
+	<university id="824" name="Southeast Missouri State University" serveraddress="" port="0" />
+	<university id="825" name="Southeastern Baptist Theological Seminary" serveraddress="" port="0" />
+	<university id="826" name="Southeastern Bible College" serveraddress="" port="0" />
+	<university id="827" name="Southeastern University" serveraddress="" port="0" />
+	<university id="828" name="Southeastern Louisiana University" serveraddress="" port="0" />
+	<university id="829" name="Southeastern Oklahoma State University" serveraddress="" port="0" />
+	<university id="830" name="Southern Adventist University" serveraddress="" port="0" />
+	<university id="831" name="Southern Arkansas University" serveraddress="" port="0" />
+	<university id="832" name="Southern Baptist Theological Seminary" serveraddress="" port="0" />
+	<university id="833" name="Southern California College of Optometry" serveraddress="" port="0" />
+	<university id="834" name="Southern California Institute of Architecture" serveraddress="" port="0" />
+	<university id="835" name="Southern California University of Health Sciences" serveraddress="" port="0" />
+	<university id="836" name="Southern College of Optometry" serveraddress="" port="0" />
+	<university id="837" name="Southern Connecticut State University" serveraddress="" port="0" />
+	<university id="838" name="Southern Illinois University-Carbondale" serveraddress="" port="0" />
+	<university id="839" name="Southern Illinois University-Edwardsville" serveraddress="" port="0" />
+	<university id="840" name="Southern Illinois University System" serveraddress="" port="0" />
+	<university id="841" name="Southern Methodist University" serveraddress="" port="0" />
+	<university id="842" name="Southern Nazarene University" serveraddress="" port="0" />
+	<university id="843" name="Southern New Hampshire University" serveraddress="" port="0" />
+	<university id="844" name="Southern Oregon University" serveraddress="" port="0" />
+	<university id="845" name="Southern Polytechnic State University" serveraddress="" port="0" />
+	<university id="846" name="Southern University and A&amp;M College at Baton Rouge" serveraddress="" port="0" />
+	<university id="847" name="Southern University at New Orleans" serveraddress="" port="0" />
+	<university id="848" name="Southern University at Shreveport" serveraddress="" port="0" />
+	<university id="849" name="Southern University System" serveraddress="" port="0" />
+	<university id="850" name="Southern Utah University" serveraddress="" port="0" />
+	<university id="851" name="Southern Vermont College" serveraddress="" port="0" />
+	<university id="852" name="Southern Wesleyan University" serveraddress="" port="0" />
+	<university id="853" name="Southwest Baptist University" serveraddress="" port="0" />
+	<university id="854" name="Southwest College of Naturopathic Medicine &amp; Health Sciences" serveraddress="" port="0" />
+	<university id="855" name="Southwest Minnesota State University" serveraddress="" port="0" />
+	<university id="856" name="Southwestern Adventist University" serveraddress="" port="0" />
+	<university id="857" name="Southwestern Assemblies of God University" serveraddress="" port="0" />
+	<university id="858" name="Southwestern Baptist Theological Seminary" serveraddress="" port="0" />
+	<university id="859" name="Southwestern Christian College" serveraddress="" port="0" />
+	<university id="860" name="Southwestern Christian University" serveraddress="" port="0" />
+	<university id="861" name="Southwestern College" serveraddress="" port="0" />
+	<university id="862" name="Southwestern College" serveraddress="" port="0" />
+	<university id="863" name="Southwestern College" serveraddress="" port="0" />
+	<university id="864" name="Southwestern Oklahoma State University" serveraddress="" port="0" />
+	<university id="865" name="Southwestern University" serveraddress="" port="0" />
+	<university id="866" name="Spalding University" serveraddress="" port="0" />
+	<university id="867" name="Spelman College" serveraddress="" port="0" />
+	<university id="868" name="Spertus Institute of Jewish Studies" serveraddress="" port="0" />
+	<university id="869" name="Spring Arbor University" serveraddress="" port="0" />
+	<university id="870" name="Spring Hill College" serveraddress="" port="0" />
+	<university id="871" name="Springfield College" serveraddress="" port="0" />
+	<university id="872" name="Stanford University" serveraddress="" port="0" />
+	<university id="873" name="State College of Florida, Manatee-Sarasota" serveraddress="" port="0" />
+	<university id="874" name="State University of New York System" serveraddress="" port="0" />
+	<university id="875" name="Albany" serveraddress="" port="0" />
+	<university id="876" name="Alfred State University" serveraddress="" port="0" />
+	<university id="877" name="Binghamton" serveraddress="" port="0" />
+	<university id="878" name="Buffalo" serveraddress="" port="0" />
+	<university id="879" name="Buffalo State College" serveraddress="" port="0" />
+	<university id="880" name="Stony Brook" serveraddress="" port="0" />
+	<university id="881" name="College at Brockport" serveraddress="" port="0" />
+	<university id="882" name="College at Cortland" serveraddress="" port="0" />
+	<university id="883" name="College at Fredonia" serveraddress="" port="0" />
+	<university id="884" name="College at Geneseo" serveraddress="" port="0" />
+	<university id="885" name="College at New Paltz" serveraddress="" port="0" />
+	<university id="886" name="College at Old Westbury" serveraddress="" port="0" />
+	<university id="887" name="College at Oneonta" serveraddress="" port="0" />
+	<university id="888" name="College at Oswego" serveraddress="" port="0" />
+	<university id="889" name="College at Plattsburgh" serveraddress="" port="0" />
+	<university id="890" name="College at Potsdam" serveraddress="" port="0" />
+	<university id="891" name="College at Purchase" serveraddress="" port="0" />
+	<university id="892" name="College of Agriculture &amp; Technology at Cobleskill" serveraddress="" port="0" />
+	<university id="893" name="College of Agriculture &amp; Technology at Morrisville (Morrisville State College)" serveraddress="" port="0" />
+	<university id="894" name="College of Environmental Science &amp; Forestry" serveraddress="" port="0" />
+	<university id="895" name="College of Optometry" serveraddress="" port="0" />
+	<university id="896" name="College of Technology at Canton" serveraddress="" port="0" />
+	<university id="897" name="College of Technology at Delhi" serveraddress="" port="0" />
+	<university id="898" name="Downstate Medical Center" serveraddress="" port="0" />
+	<university id="899" name="Empire State College" serveraddress="" port="0" />
+	<university id="900" name="Farmingdale State College" serveraddress="" port="0" />
+	<university id="901" name="Fashion Institute of Technology" serveraddress="" port="0" />
+	<university id="902" name="Institute of Technology at Utica/Rome" serveraddress="" port="0" />
+	<university id="903" name="Maritime College at Fort Schuyler" serveraddress="" port="0" />
+	<university id="904" name="Upstate Medical University" serveraddress="" port="0" />
+	<university id="905" name="Stephen F. Austin State University" serveraddress="" port="0" />
+	<university id="906" name="Stephens College" serveraddress="" port="0" />
+	<university id="907" name="Sterling College" serveraddress="" port="0" />
+	<university id="908" name="Sterling College" serveraddress="" port="0" />
+	<university id="909" name="Stetson University" serveraddress="" port="0" />
+	<university id="910" name="Stevens Institute of Technology" serveraddress="" port="0" />
+	<university id="911" name="Stevenson University" serveraddress="" port="0" />
+	<university id="912" name="Stillman College" serveraddress="" port="0" />
+	<university id="913" name="Stonehill College" serveraddress="" port="0" />
+	<university id="914" name="Strayer University" serveraddress="" port="0" />
+	<university id="915" name="Suffolk University" serveraddress="" port="0" />
+	<university id="916" name="Sul Ross State University" serveraddress="" port="0" />
+	<university id="917" name="Sullivan University" serveraddress="" port="0" />
+	<university id="918" name="Susquehanna University" serveraddress="" port="0" />
+	<university id="919" name="Swarthmore College" serveraddress="" port="0" />
+	<university id="920" name="Sweet Briar College" serveraddress="" port="0" />
+	<university id="921" name="Syracuse University" serveraddress="" port="0" />
+	<university id="922" name="University of the Pacific" serveraddress="" port="0" />
+	<university id="923" name="University of Pennsylvania" serveraddress="" port="0" />
+	<university id="924" name="University of Phoenix" serveraddress="" port="0" />
+	<university id="925" name="University of Pikeville" serveraddress="" port="0" />
+	<university id="926" name="University of Pittsburgh" serveraddress="" port="0" />
+	<university id="927" name="University of Pittsburgh-Bradford" serveraddress="" port="0" />
+	<university id="928" name="University of Pittsburgh-Greensburg" serveraddress="" port="0" />
+	<university id="929" name="University of Pittsburgh-Johnstown" serveraddress="" port="0" />
+	<university id="930" name="University of Portland" serveraddress="" port="0" />
+	<university id="931" name="University of Puerto Rico-Aguadilla" serveraddress="" port="0" />
+	<university id="932" name="University of Puerto Rico-Arecibo" serveraddress="" port="0" />
+	<university id="933" name="University of Puerto Rico-Bayam?n" serveraddress="" port="0" />
+	<university id="934" name="University of Puerto Rico-Carolina" serveraddress="" port="0" />
+	<university id="935" name="University of Puerto Rico-Cayey" serveraddress="" port="0" />
+	<university id="936" name="University of Puerto Rico-Ciencias M?dicas" serveraddress="" port="0" />
+	<university id="937" name="University of Puerto Rico-Humacao" serveraddress="" port="0" />
+	<university id="938" name="University of Puerto Rico-Mayag&amp;uuml;ez" serveraddress="" port="0" />
+	<university id="939" name="University of Puerto Rico-Ponce" serveraddress="" port="0" />
+	<university id="940" name="University of Puerto Rico-R&amp;iacute;o Piedras" serveraddress="" port="0" />
+	<university id="941" name="University of Puerto Rico System" serveraddress="" port="0" />
+	<university id="942" name="University of Puerto Rico-Utuado" serveraddress="" port="0" />
+	<university id="943" name="University of Puget Sound" serveraddress="" port="0" />
+	<university id="944" name="University of Redlands" serveraddress="" port="0" />
+	<university id="945" name="University of Rhode Island" serveraddress="" port="0" />
+	<university id="946" name="University of Richmond" serveraddress="" port="0" />
+	<university id="947" name="University of Rio Grande" serveraddress="" port="0" />
+	<university id="948" name="University of Rochester" serveraddress="" port="0" />
+	<university id="949" name="University of the Rockies" serveraddress="" port="0" />
+	<university id="950" name="University of St. Francis" serveraddress="" port="0" />
+	<university id="951" name="University of Saint Francis" serveraddress="" port="0" />
+	<university id="952" name="University of Saint Mary" serveraddress="" port="0" />
+	<university id="953" name="University of San Diego" serveraddress="" port="0" />
+	<university id="954" name="University of San Francisco" serveraddress="" port="0" />
+	<university id="955" name="University of Science &amp; Arts of Oklahoma" serveraddress="" port="0" />
+	<university id="956" name="University of the Sciences in Philadelphia" serveraddress="" port="0" />
+	<university id="957" name="University of Scranton" serveraddress="" port="0" />
+	<university id="958" name="University of Sioux Falls" serveraddress="" port="0" />
+	<university id="959" name="University of Southern California" serveraddress="" port="0" />
+	<university id="960" name="University of Southern Maine" serveraddress="" port="0" />
+	<university id="961" name="University of Southern Nevada" serveraddress="" port="0" />
+	<university id="962" name="University of South Carolina" serveraddress="" port="0" />
+	<university id="963" name="University of South Carolina-Aiken" serveraddress="" port="0" />
+	<university id="964" name="University of South Carolina-Beaufort" serveraddress="" port="0" />
+	<university id="965" name="University of South Carolina System" serveraddress="" port="0" />
+	<university id="966" name="University of South Carolina-Upstate" serveraddress="" port="0" />
+	<university id="967" name="University of South Dakota" serveraddress="" port="0" />
+	<university id="968" name="University of South Florida" serveraddress="" port="0" />
+	<university id="969" name="University of South Florida-Saint Petersburg" serveraddress="" port="0" />
+	<university id="970" name="University of Southern Mississippi" serveraddress="" port="0" />
+	<university id="971" name="University of Saint Thomas" serveraddress="" port="0" />
+	<university id="972" name="University of Saint Thomas" serveraddress="" port="0" />
+	<university id="973" name="University of South Alabama" serveraddress="" port="0" />
+	<university id="974" name="University of Southern Indiana" serveraddress="" port="0" />
+	<university id="975" name="University of Tampa" serveraddress="" port="0" />
+	<university id="976" name="University of Tennessee" serveraddress="" port="0" />
+	<university id="977" name="University of Tennessee-Chattanooga" serveraddress="" port="0" />
+	<university id="978" name="University of Tennessee Health Science Center" serveraddress="" port="0" />
+	<university id="979" name="University of Tennessee-Martin" serveraddress="" port="0" />
+	<university id="980" name="University of Tennessee System" serveraddress="" port="0" />
+	<university id="981" name="University of Texas-Arlington" serveraddress="" port="0" />
+	<university id="982" name="University of Texas-Austin" serveraddress="" port="0" />
+	<university id="983" name="University of Texas-Brownsville" serveraddress="" port="0" />
+	<university id="984" name="University of Texas-Dallas" serveraddress="" port="0" />
+	<university id="985" name="University of Texas-El Paso" serveraddress="" port="0" />
+	<university id="986" name="University of Texas Health Science Center at Houston" serveraddress="" port="0" />
+	<university id="987" name="University of Texas Health Science Center at San Antonio" serveraddress="" port="0" />
+	<university id="988" name="University of Texas Health Science Center at Tyler" serveraddress="" port="0" />
+	<university id="989" name="University of Texas M.D. Anderson Cancer Center" serveraddress="" port="0" />
+	<university id="990" name="University of Texas Medical Branch at Galveston" serveraddress="" port="0" />
+	<university id="991" name="University of Texas-Pan American" serveraddress="" port="0" />
+	<university id="992" name="University of Texas of the Permian Basin" serveraddress="" port="0" />
+	<university id="993" name="University of Texas-San Antonio" serveraddress="" port="0" />
+	<university id="994" name="University of Texas Southwestern Medical Center at Dallas" serveraddress="" port="0" />
+	<university id="995" name="University of Texas System" serveraddress="" port="0" />
+	<university id="996" name="University of Texas-Tyler" serveraddress="" port="0" />
+	<university id="997" name="University of the Arts" serveraddress="" port="0" />
+	<university id="998" name="University of the Cumberlands" serveraddress="" port="0" />
+	<university id="999" name="University of the Incarnate Word" serveraddress="" port="0" />
+	<university id="1000" name="University of the South" serveraddress="" port="0" />
+	<university id="1001" name="University of the Southwest" serveraddress="" port="0" />
+	<university id="1002" name="University of Toledo" serveraddress="" port="0" />
+	<university id="1003" name="University of Toledo Health Science Campus" serveraddress="" port="0" />
+	<university id="1004" name="University of Tulsa" serveraddress="" port="0" />
+	<university id="1005" name="University of Utah" serveraddress="" port="0" />
+	<university id="1006" name="University of Vermont" serveraddress="" port="0" />
+	<university id="1007" name="University of the Virgin Islands" serveraddress="" port="0" />
+	<university id="1008" name="University of Virginia" serveraddress="" port="0" />
+	<university id="1009" name="University of Virginia's College at Wise" serveraddress="" port="0" />
+	<university id="1010" name="University of Washington" serveraddress="" port="0" />
+	<university id="1011" name="University of Washington-Bothell" serveraddress="" port="0" />
+	<university id="1012" name="University of Washington-Tacoma" serveraddress="" port="0" />
+	<university id="1013" name="University of West Alabama" serveraddress="" port="0" />
+	<university id="1014" name="University of West Florida" serveraddress="" port="0" />
+	<university id="1015" name="University of West Georgia" serveraddress="" port="0" />
+	<university id="1016" name="University of Western States" serveraddress="" port="0" />
+	<university id="1017" name="University of the West" serveraddress="" port="0" />
+	<university id="1018" name="University of Wisconsin-Eau Claire" serveraddress="" port="0" />
+	<university id="1019" name="University of Wisconsin-Green Bay" serveraddress="" port="0" />
+	<university id="1020" name="University of Wisconsin-La Crosse" serveraddress="" port="0" />
+	<university id="1021" name="University of Wisconsin-Madison" serveraddress="" port="0" />
+	<university id="1022" name="University of Wisconsin-Milwaukee" serveraddress="" port="0" />
+	<university id="1023" name="University of Wisconsin-Oshkosh" serveraddress="" port="0" />
+	<university id="1024" name="University of Wisconsin-Parkside" serveraddress="" port="0" />
+	<university id="1025" name="University of Wisconsin-Platteville" serveraddress="" port="0" />
+	<university id="1026" name="University of Wisconsin-River Falls" serveraddress="" port="0" />
+	<university id="1027" name="University of Wisconsin-Stevens Point" serveraddress="" port="0" />
+	<university id="1028" name="University of Wisconsin-Stout" serveraddress="" port="0" />
+	<university id="1029" name="University of Wisconsin-Superior" serveraddress="" port="0" />
+	<university id="1030" name="University of Wisconsin System" serveraddress="" port="0" />
+	<university id="1031" name="University of Wisconsin-Whitewater" serveraddress="" port="0" />
+	<university id="1032" name="University of Wyoming" serveraddress="" port="0" />
+	<university id="1033" name="Xavier University" serveraddress="" port="0" />
+	<university id="1034" name="Xavier University of Louisiana" serveraddress="" port="0" />
+	<university id="1035" name="Yale University" serveraddress="" port="0" />
+	<university id="1036" name="Yeshiva University" serveraddress="" port="0" />
+	<university id="1037" name="York College" serveraddress="" port="0" />
+	<university id="1038" name="York College of Pennsylvania" serveraddress="" port="0" />
+	<university id="1039" name="Young Harris College" serveraddress="" port="0" />
+	<university id="1040" name="Youngstown State University" serveraddress="" port="0" />
+	<university id="1041" name="Babson College" serveraddress="" port="0" />
+	<university id="1042" name="Bacone College" serveraddress="" port="0" />
+	<university id="1043" name="Baldwin-Wallace College" serveraddress="" port="0" />
+	<university id="1044" name="Ball State University" serveraddress="" port="0" />
+	<university id="1045" name="Baltimore International College" serveraddress="" port="0" />
+	<university id="1046" name="Baker College" serveraddress="" port="0" />
+	<university id="1047" name="Baker University" serveraddress="" port="0" />
+	<university id="1048" name="Bangor Theological Seminary" serveraddress="" port="0" />
+	<university id="1049" name="Bank Street College of Education" serveraddress="" port="0" />
+	<university id="1050" name="Baptist Bible College" serveraddress="" port="0" />
+	<university id="1051" name="Baptist Bible College &amp; Seminary" serveraddress="" port="0" />
+	<university id="1052" name="The Baptist College of Florida" serveraddress="" port="0" />
+	<university id="1053" name="Baptist Memorial College of Health Sciences" serveraddress="" port="0" />
+	<university id="1054" name="Baptist Missionary Association Theological Seminary" serveraddress="" port="0" />
+	<university id="1055" name="Barclay College" serveraddress="" port="0" />
+	<university id="1056" name="Bard College" serveraddress="" port="0" />
+	<university id="1057" name="Bard College at Simon's Rock" serveraddress="" port="0" />
+	<university id="1058" name="Barnard College" serveraddress="" port="0" />
+	<university id="1059" name="Barry University" serveraddress="" port="0" />
+	<university id="1060" name="Barton College" serveraddress="" port="0" />
+	<university id="1061" name="Bastyr University" serveraddress="" port="0" />
+	<university id="1062" name="Bates College" serveraddress="" port="0" />
+	<university id="1063" name="Bauder College" serveraddress="" port="0" />
+	<university id="1064" name="Bay Path College" serveraddress="" port="0" />
+	<university id="1065" name="Bay State College" serveraddress="" port="0" />
+	<university id="1066" name="Baylor College of Medicine" serveraddress="" port="0" />
+	<university id="1067" name="Baylor University" serveraddress="" port="0" />
+	<university id="1068" name="Beacon College" serveraddress="" port="0" />
+	<university id="1069" name="Becker College" serveraddress="" port="0" />
+	<university id="1070" name="Belhaven College" serveraddress="" port="0" />
+	<university id="1071" name="Bellarmine University" serveraddress="" port="0" />
+	<university id="1072" name="Bellevue College" serveraddress="" port="0" />
+	<university id="1073" name="Bellevue University" serveraddress="" port="0" />
+	<university id="1074" name="Bellin College" serveraddress="" port="0" />
+	<university id="1075" name="Belmont University" serveraddress="" port="0" />
+	<university id="1076" name="Belmont Abbey College" serveraddress="" port="0" />
+	<university id="1077" name="Beloit College" serveraddress="" port="0" />
+	<university id="1078" name="Bemidji State University" serveraddress="" port="0" />
+	<university id="1079" name="Benedict College" serveraddress="" port="0" />
+	<university id="1080" name="Benedictine College" serveraddress="" port="0" />
+	<university id="1081" name="Benedictine University" serveraddress="" port="0" />
+	<university id="1082" name="Benjamin Franklin Institute of Technology" serveraddress="" port="0" />
+	<university id="1083" name="Bennett College for Women" serveraddress="" port="0" />
+	<university id="1084" name="Bennington College" serveraddress="" port="0" />
+	<university id="1085" name="Bentley University" serveraddress="" port="0" />
+	<university id="1086" name="Berea College" serveraddress="" port="0" />
+	<university id="1087" name="Berkeley College" serveraddress="" port="0" />
+	<university id="1088" name="Berklee College of Music" serveraddress="" port="0" />
+	<university id="1089" name="Berry College" serveraddress="" port="0" />
+	<university id="1090" name="Bethany University" serveraddress="" port="0" />
+	<university id="1091" name="Bethany College" serveraddress="" port="0" />
+	<university id="1092" name="Bethany College" serveraddress="" port="0" />
+	<university id="1093" name="Bethany Lutheran College" serveraddress="" port="0" />
+	<university id="1094" name="Bethany Theological Seminary" serveraddress="" port="0" />
+	<university id="1095" name="Bethel College" serveraddress="" port="0" />
+	<university id="1096" name="Bethel College" serveraddress="" port="0" />
+	<university id="1097" name="Bethel University &amp; Seminary" serveraddress="" port="0" />
+	<university id="1098" name="Bethel University" serveraddress="" port="0" />
+	<university id="1099" name="Bethesda Christian University" serveraddress="" port="0" />
+	<university id="1100" name="Bethune-Cookman University" serveraddress="" port="0" />
+	<university id="1101" name="Beulah Heights University" serveraddress="" port="0" />
+	<university id="1102" name="Biblical Theological Seminary" serveraddress="" port="0" />
+	<university id="1103" name="Biola University" serveraddress="" port="0" />
+	<university id="1104" name="Birmingham-Southern College" serveraddress="" port="0" />
+	<university id="1105" name="Bismark State College" serveraddress="" port="0" />
+	<university id="1106" name="Black Hills State University" serveraddress="" port="0" />
+	<university id="1107" name="Blackburn College" serveraddress="" port="0" />
+	<university id="1108" name="Blessing-Rieman College of Nursing" serveraddress="" port="0" />
+	<university id="1109" name="Bloomfield College" serveraddress="" port="0" />
+	<university id="1110" name="Bloomsburg University of Pennsylvania" serveraddress="" port="0" />
+	<university id="1111" name="Blue Mountain College" serveraddress="" port="0" />
+	<university id="1112" name="Bluefield College" serveraddress="" port="0" />
+	<university id="1113" name="Bluefield State College" serveraddress="" port="0" />
+	<university id="1114" name="Bluffton University" serveraddress="" port="0" />
+	<university id="1115" name="Boise State University" serveraddress="" port="0" />
+	<university id="1116" name="Boricua College" serveraddress="" port="0" />
+	<university id="1117" name="Boston Architectural College" serveraddress="" port="0" />
+	<university id="1118" name="Boston College" serveraddress="" port="0" />
+	<university id="1119" name="Boston Conservatory" serveraddress="" port="0" />
+	<university id="1120" name="Boston Graduate School of Psychoanalysis" serveraddress="" port="0" />
+	<university id="1121" name="Boston University" serveraddress="" port="0" />
+	<university id="1122" name="Bowdoin College" serveraddress="" port="0" />
+	<university id="1123" name="Bowie State University" serveraddress="" port="0" />
+	<university id="1124" name="Bowling Green State University" serveraddress="" port="0" />
+	<university id="1125" name="Bradley University" serveraddress="" port="0" />
+	<university id="1126" name="Brandeis University" serveraddress="" port="0" />
+	<university id="1127" name="Brandman University" serveraddress="" port="0" />
+	<university id="1128" name="Brenau University" serveraddress="" port="0" />
+	<university id="1129" name="Brescia University " serveraddress="" port="0" />
+	<university id="1130" name="Brevard College" serveraddress="" port="0" />
+	<university id="1131" name="Brewton-Parker College" serveraddress="" port="0" />
+	<university id="1132" name="Briar Cliff University" serveraddress="" port="0" />
+	<university id="1133" name="Briarcliffe College" serveraddress="" port="0" />
+	<university id="1134" name="Bridgewater College" serveraddress="" port="0" />
+	<university id="1135" name="Bridgewater State University" serveraddress="" port="0" />
+	<university id="1136" name="Brigham Young University" serveraddress="" port="0" />
+	<university id="1137" name="Brigham Young University-Hawaii" serveraddress="" port="0" />
+	<university id="1138" name="Brigham Young University-Idaho" serveraddress="" port="0" />
+	<university id="1139" name="Broward College" serveraddress="" port="0" />
+	<university id="1140" name="Brown University" serveraddress="" port="0" />
+	<university id="1141" name="Bryan College" serveraddress="" port="0" />
+	<university id="1142" name="BryanLGH College of Health Sciences" serveraddress="" port="0" />
+	<university id="1143" name="Bryant University" serveraddress="" port="0" />
+	<university id="1144" name="Bryn Athyn College of the New Church" serveraddress="" port="0" />
+	<university id="1145" name="Bryn Mawr College" serveraddress="" port="0" />
+	<university id="1146" name="Bucknell University" serveraddress="" port="0" />
+	<university id="1147" name="Buena Vista University" serveraddress="" port="0" />
+	<university id="1148" name="Burlington College" serveraddress="" port="0" />
+	<university id="1149" name="Butler University" serveraddress="" port="0" />
+	<university id="1150" name="Cabarrus College of Health Sciences" serveraddress="" port="0" />
+	<university id="1151" name="Cabrini College" serveraddress="" port="0" />
+	<university id="1152" name="Caldwell College" serveraddress="" port="0" />
+	<university id="1153" name="California Baptist University" serveraddress="" port="0" />
+	<university id="1154" name="California College of the Arts" serveraddress="" port="0" />
+	<university id="1155" name="California Institute of the Arts" serveraddress="" port="0" />
+	<university id="1156" name="California Institute of Integral Studies" serveraddress="" port="0" />
+	<university id="1157" name="California Institute of Technology" serveraddress="" port="0" />
+	<university id="1158" name="California Lutheran University" serveraddress="" port="0" />
+	<university id="1159" name="California Maritime Academy" serveraddress="" port="0" />
+	<university id="1160" name="California Polytechnic State University, San Luis Obispo" serveraddress="" port="0" />
+	<university id="1161" name="California State Polytechnic University, Pomona" serveraddress="" port="0" />
+	<university id="1162" name="California State University-Bakersfield" serveraddress="" port="0" />
+	<university id="1163" name="California State University-Channel Islands" serveraddress="" port="0" />
+	<university id="1164" name="California State University-Chico" serveraddress="" port="0" />
+	<university id="1165" name="California State University-Dominguez Hills" serveraddress="" port="0" />
+	<university id="1166" name="California State University-East Bay" serveraddress="" port="0" />
+	<university id="1167" name="California State University-Fresno" serveraddress="" port="0" />
+	<university id="1168" name="California State University-Fullerton" serveraddress="" port="0" />
+	<university id="1169" name="California State University-Long Beach" serveraddress="" port="0" />
+	<university id="1170" name="California State University-Los Angeles" serveraddress="" port="0" />
+	<university id="1171" name="California State University-Monterey Bay" serveraddress="" port="0" />
+	<university id="1172" name="California State University-Northridge" serveraddress="" port="0" />
+	<university id="1173" name="California State University-Sacramento" serveraddress="" port="0" />
+	<university id="1174" name="California State University-San Bernardino" serveraddress="" port="0" />
+	<university id="1175" name="California State University-San Marcos" serveraddress="" port="0" />
+	<university id="1176" name="California State University-Stanislaus" serveraddress="" port="0" />
+	<university id="1177" name="California State University System" serveraddress="" port="0" />
+	<university id="1178" name="California University of Pennsylvania" serveraddress="" port="0" />
+	<university id="1179" name="Calumet College of Saint Joseph" serveraddress="" port="0" />
+	<university id="1180" name="Calvary Baptist Seminary" serveraddress="" port="0" />
+	<university id="1181" name="Calvary Bible College &amp; Theological Seminary" serveraddress="" port="0" />
+	<university id="1182" name="Calvin College" serveraddress="" port="0" />
+	<university id="1183" name="Cambridge College " serveraddress="" port="0" />
+	<university id="1184" name="Cameron University" serveraddress="" port="0" />
+	<university id="1185" name="Campbell University" serveraddress="" port="0" />
+	<university id="1186" name="Campbellsville University" serveraddress="" port="0" />
+	<university id="1187" name="Canisius College" serveraddress="" port="0" />
+	<university id="1188" name="Capella University" serveraddress="" port="0" />
+	<university id="1189" name="Capital University" serveraddress="" port="0" />
+	<university id="1190" name="Capitol College" serveraddress="" port="0" />
+	<university id="1191" name="Cardinal Stritch University" serveraddress="" port="0" />
+	<university id="1192" name="Caribbean University" serveraddress="" port="0" />
+	<university id="1193" name="Carleton College" serveraddress="" port="0" />
+	<university id="1194" name="Carlos Albizu University" serveraddress="" port="0" />
+	<university id="1195" name="Carlos Albizu University-Miami Campus" serveraddress="" port="0" />
+	<university id="1196" name="Carlow University" serveraddress="" port="0" />
+	<university id="1197" name="Carnegie Mellon University" serveraddress="" port="0" />
+	<university id="1198" name="Carroll College" serveraddress="" port="0" />
+	<university id="1199" name="Carroll University" serveraddress="" port="0" />
+	<university id="1200" name="Carson-Newman College" serveraddress="" port="0" />
+	<university id="1201" name="Carthage College" serveraddress="" port="0" />
+	<university id="1202" name="Case Western Reserve University" serveraddress="" port="0" />
+	<university id="1203" name="Castleton State College" serveraddress="" port="0" />
+	<university id="1204" name="Catawba College" serveraddress="" port="0" />
+	<university id="1205" name="Catholic Theological Union" serveraddress="" port="0" />
+	<university id="1206" name="The Catholic University of America" serveraddress="" port="0" />
+	<university id="1207" name="Cazenovia College" serveraddress="" port="0" />
+	<university id="1208" name="Cedar Crest College" serveraddress="" port="0" />
+	<university id="1209" name="Cedarville University" serveraddress="" port="0" />
+	<university id="1210" name="Centenary College" serveraddress="" port="0" />
+	<university id="1211" name="Centenary College of Louisiana" serveraddress="" port="0" />
+	<university id="1212" name="Central Baptist College" serveraddress="" port="0" />
+	<university id="1213" name="Central Baptist Theological Seminary" serveraddress="" port="0" />
+	<university id="1214" name="Central Bible College" serveraddress="" port="0" />
+	<university id="1215" name="Central Christian College of Kansas" serveraddress="" port="0" />
+	<university id="1216" name="Central Christian College of the Bible" serveraddress="" port="0" />
+	<university id="1217" name="Central College" serveraddress="" port="0" />
+	<university id="1218" name="Central Connecticut State University" serveraddress="" port="0" />
+	<university id="1219" name="Central Methodist University" serveraddress="" port="0" />
+	<university id="1220" name="Central Michigan University" serveraddress="" port="0" />
+	<university id="1221" name="Central Penn College" serveraddress="" port="0" />
+	<university id="1222" name="Central State University" serveraddress="" port="0" />
+	<university id="1223" name="Central Washington University" serveraddress="" port="0" />
+	<university id="1224" name="Centre College" serveraddress="" port="0" />
+	<university id="1225" name="Centro de Estudios Avanzados de Puerto Rico y el Caribe" serveraddress="" port="0" />
+	<university id="1226" name="Chadron State College" serveraddress="" port="0" />
+	<university id="1227" name="Chamberlain College of Nursing" serveraddress="" port="0" />
+	<university id="1228" name="Chaminade University" serveraddress="" port="0" />
+	<university id="1229" name="Champlain College" serveraddress="" port="0" />
+	<university id="1230" name="Chancellor University" serveraddress="" port="0" />
+	<university id="1231" name="Chapman University" serveraddress="" port="0" />
+	<university id="1232" name="Charles R. Drew University of Medicine &amp; Science" serveraddress="" port="0" />
+	<university id="1233" name="Charleston Southern University" serveraddress="" port="0" />
+	<university id="1234" name="Charter Oak State College" serveraddress="" port="0" />
+	<university id="1235" name="Chatham College" serveraddress="" port="0" />
+	<university id="1236" name="Chester College of New England" serveraddress="" port="0" />
+	<university id="1237" name="Chestnut Hill College" serveraddress="" port="0" />
+	<university id="1238" name="Cheyney University" serveraddress="" port="0" />
+	<university id="1239" name="The Chicago School of Professional Psychology" serveraddress="" port="0" />
+	<university id="1240" name="Chicago State University" serveraddress="" port="0" />
+	<university id="1241" name="Chicago Theological Seminary" serveraddress="" port="0" />
+	<university id="1242" name="Chipola College" serveraddress="" port="0" />
+	<university id="1243" name="Chowan College" serveraddress="" port="0" />
+	<university id="1244" name="Christ the King Seminary" serveraddress="" port="0" />
+	<university id="1245" name="Christendom College" serveraddress="" port="0" />
+	<university id="1246" name="Christian Brothers University" serveraddress="" port="0" />
+	<university id="1247" name="Christian Theological Seminary" serveraddress="" port="0" />
+	<university id="1248" name="Christopher Newport University" serveraddress="" port="0" />
+	<university id="1249" name="Church Divinity School of the Pacific" serveraddress="" port="0" />
+	<university id="1250" name="Cincinnati Christian University" serveraddress="" port="0" />
+	<university id="1251" name="Cincinnati College of Mortuary Science" serveraddress="" port="0" />
+	<university id="1252" name="The Citadel" serveraddress="" port="0" />
+	<university id="1253" name="City University of Seattle" serveraddress="" port="0" />
+	<university id="1254" name="City University of New York" serveraddress="" port="0" />
+	<university id="1255" name="Baruch College" serveraddress="" port="0" />
+	<university id="1256" name="Brooklyn College" serveraddress="" port="0" />
+	<university id="1257" name="City College" serveraddress="" port="0" />
+	<university id="1258" name="College of Staten Island" serveraddress="" port="0" />
+	<university id="1259" name="Graduate School &amp; University Center" serveraddress="" port="0" />
+	<university id="1260" name="Hunter College" serveraddress="" port="0" />
+	<university id="1261" name="John Jay College of Criminal Justice" serveraddress="" port="0" />
+	<university id="1262" name="Lehman College" serveraddress="" port="0" />
+	<university id="1263" name="Medgar Evers College" serveraddress="" port="0" />
+	<university id="1264" name="New York City College of Technology" serveraddress="" port="0" />
+	<university id="1265" name="Queens College" serveraddress="" port="0" />
+	<university id="1266" name="York College" serveraddress="" port="0" />
+	<university id="1267" name="Claflin University" serveraddress="" port="0" />
+	<university id="1268" name="Claremont Consortium of Colleges" serveraddress="" port="0" />
+	<university id="1269" name="Claremont Graduate University" serveraddress="" port="0" />
+	<university id="1270" name="Claremont McKenna College" serveraddress="" port="0" />
+	<university id="1271" name="Harvey Mudd College" serveraddress="" port="0" />
+	<university id="1272" name="Keck Graduate Institute of Applied Life Sciences" serveraddress="" port="0" />
+	<university id="1273" name="Pitzer College" serveraddress="" port="0" />
+	<university id="1274" name="Pomona College" serveraddress="" port="0" />
+	<university id="1275" name="Scripps College" serveraddress="" port="0" />
+	<university id="1276" name="Claremont School of Theology" serveraddress="" port="0" />
+	<university id="1277" name="Clarion University of Pennsylvania" serveraddress="" port="0" />
+	<university id="1278" name="Clark University" serveraddress="" port="0" />
+	<university id="1279" name="Clark Atlanta University" serveraddress="" port="0" />
+	<university id="1280" name="Clarke University" serveraddress="" port="0" />
+	<university id="1281" name="Clarkson College" serveraddress="" port="0" />
+	<university id="1282" name="Clarkson University" serveraddress="" port="0" />
+	<university id="1283" name="Clayton State University" serveraddress="" port="0" />
+	<university id="1284" name="Clear Creek Baptist Bible College" serveraddress="" port="0" />
+	<university id="1285" name="Clearwater Christian College" serveraddress="" port="0" />
+	<university id="1286" name="Cleary University" serveraddress="" port="0" />
+	<university id="1287" name="Clemson University" serveraddress="" port="0" />
+	<university id="1288" name="Cleveland Chiropractic College" serveraddress="" port="0" />
+	<university id="1289" name="Cleveland Institute of Art" serveraddress="" port="0" />
+	<university id="1290" name="Cleveland Institute of Music" serveraddress="" port="0" />
+	<university id="1291" name="Cleveland State University" serveraddress="" port="0" />
+	<university id="1292" name="Coastal Carolina University" serveraddress="" port="0" />
+	<university id="1293" name="Coe College" serveraddress="" port="0" />
+	<university id="1294" name="Cogswell Polytechnical College" serveraddress="" port="0" />
+	<university id="1295" name="Coker College" serveraddress="" port="0" />
+	<university id="1296" name="Colby College" serveraddress="" port="0" />
+	<university id="1297" name="Colby-Sawyer College" serveraddress="" port="0" />
+	<university id="1298" name="Colegio Universitario de San Juan" serveraddress="" port="0" />
+	<university id="1299" name="Colgate University" serveraddress="" port="0" />
+	<university id="1300" name="College for Creative Studies" serveraddress="" port="0" />
+	<university id="1301" name="College for Financial Planning" serveraddress="" port="0" />
+	<university id="1302" name="College of the Atlantic" serveraddress="" port="0" />
+	<university id="1303" name="College of Central Florida" serveraddress="" port="0" />
+	<university id="1304" name="College of Charleston" serveraddress="" port="0" />
+	<university id="1305" name="College of Coastal Georgia" serveraddress="" port="0" />
+	<university id="1306" name="College of the Holy Cross" serveraddress="" port="0" />
+	<university id="1307" name="The College of Idaho" serveraddress="" port="0" />
+	<university id="1308" name="College of the Menominee Nation" serveraddress="" port="0" />
+	<university id="1309" name="College of Mount Saint Joseph" serveraddress="" port="0" />
+	<university id="1310" name="College of Mount Saint Vincent" serveraddress="" port="0" />
+	<university id="1311" name="The College of New Jersey" serveraddress="" port="0" />
+	<university id="1312" name="College of New Rochelle" serveraddress="" port="0" />
+	<university id="1313" name="College of Notre Dame of Maryland" serveraddress="" port="0" />
+	<university id="1314" name="College of the Ozarks" serveraddress="" port="0" />
+	<university id="1315" name="College of Saint Benedict" serveraddress="" port="0" />
+	<university id="1316" name="College of Saint Elizabeth" serveraddress="" port="0" />
+	<university id="1317" name="College of Saint Rose" serveraddress="" port="0" />
+	<university id="1318" name="College of Saint Joseph" serveraddress="" port="0" />
+	<university id="1319" name="College of Saint Mary" serveraddress="" port="0" />
+	<university id="1320" name="College of Saint Scholastica" serveraddress="" port="0" />
+	<university id="1321" name="College of Saint Thomas More" serveraddress="" port="0" />
+	<university id="1322" name="College of Southern Nevada" serveraddress="" port="0" />
+	<university id="1323" name="College of Visual Arts " serveraddress="" port="0" />
+	<university id="1324" name="College of William and Mary" serveraddress="" port="0" />
+	<university id="1325" name="College of Wooster" serveraddress="" port="0" />
+	<university id="1326" name="Colorado Christian University" serveraddress="" port="0" />
+	<university id="1327" name="Colorado College" serveraddress="" port="0" />
+	<university id="1328" name="Colorado Mesa University" serveraddress="" port="0" />
+	<university id="1329" name="Colorado School of Mines" serveraddress="" port="0" />
+	<university id="1330" name="Colorado State University" serveraddress="" port="0" />
+	<university id="1331" name="Colorado State University-Pueblo" serveraddress="" port="0" />
+	<university id="1332" name="Colorado Technical University" serveraddress="" port="0" />
+	<university id="1333" name="Columbia Centro Universitario" serveraddress="" port="0" />
+	<university id="1334" name="Columbia College" serveraddress="" port="0" />
+	<university id="1335" name="Columbia College" serveraddress="" port="0" />
+	<university id="1336" name="Columbia College Chicago" serveraddress="" port="0" />
+	<university id="1337" name="Columbia College of Nursing" serveraddress="" port="0" />
+	<university id="1338" name="Columbia International University" serveraddress="" port="0" />
+	<university id="1339" name="Columbia Theological Seminary" serveraddress="" port="0" />
+	<university id="1340" name="Columbia University" serveraddress="" port="0" />
+	<university id="1341" name="Columbus College of Art &amp; Design" serveraddress="" port="0" />
+	<university id="1342" name="Columbus State University" serveraddress="" port="0" />
+	<university id="1343" name="Conception Seminary College" serveraddress="" port="0" />
+	<university id="1344" name="Concord University" serveraddress="" port="0" />
+	<university id="1345" name="Concordia College-Bronxville" serveraddress="" port="0" />
+	<university id="1346" name="Concordia College-Moorhead" serveraddress="" port="0" />
+	<university id="1347" name="Concordia College-New York" serveraddress="" port="0" />
+	<university id="1348" name="Concordia College-Selma" serveraddress="" port="0" />
+	<university id="1349" name="Concordia Seminary-Saint Louis" serveraddress="" port="0" />
+	<university id="1350" name="Concordia Theological Seminary" serveraddress="" port="0" />
+	<university id="1351" name="Concordia University-Ann Arbor" serveraddress="" port="0" />
+	<university id="1352" name="Concordia University-Chicago" serveraddress="" port="0" />
+	<university id="1353" name="Concordia University-Irvine" serveraddress="" port="0" />
+	<university id="1354" name="Concordia University-Nebraska" serveraddress="" port="0" />
+	<university id="1355" name="Concordia University-Portland" serveraddress="" port="0" />
+	<university id="1356" name="Concordia University-Saint Paul" serveraddress="" port="0" />
+	<university id="1357" name="Concordia University-Texas" serveraddress="" port="0" />
+	<university id="1358" name="Concordia University-Wisconsin" serveraddress="" port="0" />
+	<university id="1359" name="Connecticut College" serveraddress="" port="0" />
+	<university id="1360" name="Conservatorio de M&amp;uacute;sica de Puerto Rico" serveraddress="" port="0" />
+	<university id="1361" name="Converse College" serveraddress="" port="0" />
+	<university id="1362" name="Conway School of Landscape Design" serveraddress="" port="0" />
+	<university id="1363" name="The Cooper Union for the Advancement of Science &amp; Art" serveraddress="" port="0" />
+	<university id="1364" name="Coppin State University" serveraddress="" port="0" />
+	<university id="1365" name="Corban University" serveraddress="" port="0" />
+	<university id="1366" name="Corcoran College of Art &amp; Design" serveraddress="" port="0" />
+	<university id="1367" name="Cornell College" serveraddress="" port="0" />
+	<university id="1368" name="Cornell University" serveraddress="" port="0" />
+	<university id="1369" name="Cornerstone University" serveraddress="" port="0" />
+	<university id="1370" name="Cornish College of the Arts" serveraddress="" port="0" />
+	<university id="1371" name="Covenant College" serveraddress="" port="0" />
+	<university id="1372" name="Covenant Theological Seminary" serveraddress="" port="0" />
+	<university id="1373" name="Cox College" serveraddress="" port="0" />
+	<university id="1374" name="Cranbrook Academy of Art" serveraddress="" port="0" />
+	<university id="1375" name="Creighton University" serveraddress="" port="0" />
+	<university id="1376" name="Criswell College" serveraddress="" port="0" />
+	<university id="1377" name="Crossroads College" serveraddress="" port="0" />
+	<university id="1378" name="Crowley's Ridge College" serveraddress="" port="0" />
+	<university id="1379" name="Crown College" serveraddress="" port="0" />
+	<university id="1380" name="Culinary Institute of America" serveraddress="" port="0" />
+	<university id="1381" name="Culver-Stockton College" serveraddress="" port="0" />
+	<university id="1382" name="Cumberland University" serveraddress="" port="0" />
+	<university id="1383" name="Curry College" serveraddress="" port="0" />
+	<university id="1384" name="Curtis Institute of Music" serveraddress="" port="0" />
+	<university id="1385" name="Hamilton College" serveraddress="" port="0" />
+	<university id="1386" name="Hamline University" serveraddress="" port="0" />
+	<university id="1387" name="Hampden-Sydney College" serveraddress="" port="0" />
+	<university id="1388" name="Hampshire College" serveraddress="" port="0" />
+	<university id="1389" name="Hampton University" serveraddress="" port="0" />
+	<university id="1390" name="Hannibal-Lagrange College" serveraddress="" port="0" />
+	<university id="1391" name="Hanover College" serveraddress="" port="0" />
+	<university id="1392" name="Hardin-Simmons University" serveraddress="" port="0" />
+	<university id="1393" name="Harding University" serveraddress="" port="0" />
+	<university id="1394" name="Harrington College of Design" serveraddress="" port="0" />
+	<university id="1395" name="Harris-Stowe State University" serveraddress="" port="0" />
+	<university id="1396" name="Harrisburg University of Science &amp; Technology" serveraddress="" port="0" />
+	<university id="1397" name="Hartford Seminary" serveraddress="" port="0" />
+	<university id="1398" name="Hartwick College" serveraddress="" port="0" />
+	<university id="1399" name="Harvard University" serveraddress="" port="0" />
+	<university id="1400" name="Haskell Indian Nations University" serveraddress="" port="0" />
+	<university id="1401" name="Hastings College" serveraddress="" port="0" />
+	<university id="1402" name="Haverford College" serveraddress="" port="0" />
+	<university id="1403" name="Hawaii Pacific University" serveraddress="" port="0" />
+	<university id="1404" name="Hazelden Graduate School of Addiction Studies" serveraddress="" port="0" />
+	<university id="1405" name="Hebrew College" serveraddress="" port="0" />
+	<university id="1406" name="Hebrew Theological College" serveraddress="" port="0" />
+	<university id="1407" name="Hebrew Union College-Jewish Institute of Religion" serveraddress="" port="0" />
+	<university id="1408" name="Heidelberg College" serveraddress="" port="0" />
+	<university id="1409" name="Hellenic College/Holy Cross Greek Orthodox School of Theology" serveraddress="" port="0" />
+	<university id="1410" name="Henderson State University" serveraddress="" port="0" />
+	<university id="1411" name="Hendrix College" serveraddress="" port="0" />
+	<university id="1412" name="Heritage University" serveraddress="" port="0" />
+	<university id="1413" name="Herzing University" serveraddress="" port="0" />
+	<university id="1414" name="Hesser College" serveraddress="" port="0" />
+	<university id="1415" name="High Point University" serveraddress="" port="0" />
+	<university id="1416" name="Hilbert College" serveraddress="" port="0" />
+	<university id="1417" name="Hillsdale College" serveraddress="" port="0" />
+	<university id="1418" name="Hiram College" serveraddress="" port="0" />
+	<university id="1419" name="Hobart &amp; William Smith Colleges" serveraddress="" port="0" />
+	<university id="1420" name="Hobe Sound Bible College" serveraddress="" port="0" />
+	<university id="1421" name="Hodges University" serveraddress="" port="0" />
+	<university id="1422" name="Hofstra University" serveraddress="" port="0" />
+	<university id="1423" name="Hollins University" serveraddress="" port="0" />
+	<university id="1424" name="Holy Apostles College &amp; Seminary" serveraddress="" port="0" />
+	<university id="1425" name="Holy Cross College" serveraddress="" port="0" />
+	<university id="1426" name="Holy Family University" serveraddress="" port="0" />
+	<university id="1427" name="Holy Names University" serveraddress="" port="0" />
+	<university id="1428" name="Hood College" serveraddress="" port="0" />
+	<university id="1429" name="Hope College" serveraddress="" port="0" />
+	<university id="1430" name="Hope International University" serveraddress="" port="0" />
+	<university id="1431" name="Houghton College" serveraddress="" port="0" />
+	<university id="1432" name="Houston Baptist University" serveraddress="" port="0" />
+	<university id="1433" name="Howard Payne University" serveraddress="" port="0" />
+	<university id="1434" name="Howard University" serveraddress="" port="0" />
+	<university id="1435" name="Hult International Business School" serveraddress="" port="0" />
+	<university id="1436" name="Humboldt State University" serveraddress="" port="0" />
+	<university id="1437" name="Humphreys College" serveraddress="" port="0" />
+	<university id="1438" name="Huntingdon College" serveraddress="" port="0" />
+	<university id="1439" name="Huntington University" serveraddress="" port="0" />
+	<university id="1440" name="Husson University" serveraddress="" port="0" />
+	<university id="1441" name="Huston-Tillotson University" serveraddress="" port="0" />
+	<university id="1442" name="Kalamazoo College" serveraddress="" port="0" />
+	<university id="1443" name="Kansas City Art Institute" serveraddress="" port="0" />
+	<university id="1444" name="Kansas City University of Medicine &amp; Biosciences" serveraddress="" port="0" />
+	<university id="1445" name="Kansas State University" serveraddress="" port="0" />
+	<university id="1446" name="Kansas State University-Salina College of Technology &amp; Aviation" serveraddress="" port="0" />
+	<university id="1447" name="Kansas Wesleyan University" serveraddress="" port="0" />
+	<university id="1448" name="Kaplan University" serveraddress="" port="0" />
+	<university id="1449" name="Kean University" serveraddress="" port="0" />
+	<university id="1450" name="Keene State College" serveraddress="" port="0" />
+	<university id="1451" name="Keiser University" serveraddress="" port="0" />
+	<university id="1452" name="Kendall College" serveraddress="" port="0" />
+	<university id="1453" name="Kendall College of Art &amp; Design of Ferris State University" serveraddress="" port="0" />
+	<university id="1454" name="Kennesaw State University" serveraddress="" port="0" />
+	<university id="1455" name="Kenrick-Glennon Seminary" serveraddress="" port="0" />
+	<university id="1456" name="Kent State University" serveraddress="" port="0" />
+	<university id="1457" name="Kent State University-Ashtabula Campus" serveraddress="" port="0" />
+	<university id="1458" name="Kent State University-East Liverpool Campus" serveraddress="" port="0" />
+	<university id="1459" name="Kent State University-Geauga" serveraddress="" port="0" />
+	<university id="1460" name="Kent State University-Salem Campus" serveraddress="" port="0" />
+	<university id="1461" name="Kent State University-Stark" serveraddress="" port="0" />
+	<university id="1462" name="Kent State University-Trumbull Campus" serveraddress="" port="0" />
+	<university id="1463" name="Kent State University-Tuscarawas" serveraddress="" port="0" />
+	<university id="1464" name="Kentucky Christian University" serveraddress="" port="0" />
+	<university id="1465" name="Kentucky Mountain Bible College" serveraddress="" port="0" />
+	<university id="1466" name="Kentucky State University" serveraddress="" port="0" />
+	<university id="1467" name="Kentucky Wesleyan College" serveraddress="" port="0" />
+	<university id="1468" name="Kenyon College" serveraddress="" port="0" />
+	<university id="1469" name="Kettering College of Medical Arts" serveraddress="" port="0" />
+	<university id="1470" name="Kettering University" serveraddress="" port="0" />
+	<university id="1471" name="Keuka College" serveraddress="" port="0" />
+	<university id="1472" name="Keystone College" serveraddress="" port="0" />
+	<university id="1473" name="King College" serveraddress="" port="0" />
+	<university id="1474" name="King's College" serveraddress="" port="0" />
+	<university id="1475" name="The King's College" serveraddress="" port="0" />
+	<university id="1476" name="Knowledge Systems Institute" serveraddress="" port="0" />
+	<university id="1477" name="Knox College" serveraddress="" port="0" />
+	<university id="1478" name="Kutztown University of Pennsylvania" serveraddress="" port="0" />
+	<university id="1479" name="Kuyper College" serveraddress="" port="0" />
+	<university id="1480" name="Macalester College" serveraddress="" port="0" />
+	<university id="1481" name="MacMurray College" serveraddress="" port="0" />
+	<university id="1482" name="Macon State College" serveraddress="" port="0" />
+	<university id="1483" name="Madonna University" serveraddress="" port="0" />
+	<university id="1484" name="Magnolia Bible College" serveraddress="" port="0" />
+	<university id="1485" name="Maharishi University of Management" serveraddress="" port="0" />
+	<university id="1486" name="Maine College of Art" serveraddress="" port="0" />
+	<university id="1487" name="Maine Maritime Academy" serveraddress="" port="0" />
+	<university id="1488" name="Malone College" serveraddress="" port="0" />
+	<university id="1489" name="Manchester College" serveraddress="" port="0" />
+	<university id="1490" name="Manhattan Christian College" serveraddress="" port="0" />
+	<university id="1491" name="Manhattan College" serveraddress="" port="0" />
+	<university id="1492" name="Manhattan School of Music" serveraddress="" port="0" />
+	<university id="1493" name="Manhattanville  College" serveraddress="" port="0" />
+	<university id="1494" name="Mansfield University of Pennsylvania" serveraddress="" port="0" />
+	<university id="1495" name="Maranatha Baptist Bible College" serveraddress="" port="0" />
+	<university id="1496" name="Marian University" serveraddress="" port="0" />
+	<university id="1497" name="Marian University" serveraddress="" port="0" />
+	<university id="1498" name="Marietta College" serveraddress="" port="0" />
+	<university id="1499" name="Marine Corps University" serveraddress="" port="0" />
+	<university id="1500" name="Marist College" serveraddress="" port="0" />
+	<university id="1501" name="Marlboro College" serveraddress="" port="0" />
+	<university id="1502" name="Marquette University" serveraddress="" port="0" />
+	<university id="1503" name="Mars Hill College" serveraddress="" port="0" />
+	<university id="1504" name="Marshall University" serveraddress="" port="0" />
+	<university id="1505" name="Martin Luther College" serveraddress="" port="0" />
+	<university id="1506" name="Martin Methodist College" serveraddress="" port="0" />
+	<university id="1507" name="Martin University" serveraddress="" port="0" />
+	<university id="1508" name="Mary Baldwin College" serveraddress="" port="0" />
+	<university id="1509" name="Marygrove College" serveraddress="" port="0" />
+	<university id="1510" name="Maryland institute College of Art" serveraddress="" port="0" />
+	<university id="1511" name="Marylhurst University" serveraddress="" port="0" />
+	<university id="1512" name="Marymount College" serveraddress="" port="0" />
+	<university id="1513" name="Marymount Manhattan College" serveraddress="" port="0" />
+	<university id="1514" name="Marymount University" serveraddress="" port="0" />
+	<university id="1515" name="Maryville College" serveraddress="" port="0" />
+	<university id="1516" name="Maryville University of Saint Louis" serveraddress="" port="0" />
+	<university id="1517" name="Marywood University" serveraddress="" port="0" />
+	<university id="1518" name="Massachusetts College of Art &amp; Design" serveraddress="" port="0" />
+	<university id="1519" name="Massachusetts College of Liberal Arts " serveraddress="" port="0" />
+	<university id="1520" name="Massachuetts College of Pharmacy &amp; Health Sciences" serveraddress="" port="0" />
+	<university id="1521" name="Massachusetts Institute of Technology" serveraddress="" port="0" />
+	<university id="1522" name="Massachusetts Maritime Academy" serveraddress="" port="0" />
+	<university id="1523" name="Massachusetts School of Law" serveraddress="" port="0" />
+	<university id="1524" name="Massachusetts School of Professional Psychology" serveraddress="" port="0" />
+	<university id="1525" name="The Master's College" serveraddress="" port="0" />
+	<university id="1526" name="The Master's Seminary" serveraddress="" port="0" />
+	<university id="1527" name="Maui College" serveraddress="" port="0" />
+	<university id="1528" name="Mayo Clinic College of Medicine" serveraddress="" port="0" />
+	<university id="1529" name="Mayo Clinic College of Medicine-Graduate School" serveraddress="" port="0" />
+	<university id="1530" name="Mayo Clinic College of Medicine-Medical School" serveraddress="" port="0" />
+	<university id="1531" name="Mayo Clinic College of Medicine-School of Health Sciences" serveraddress="" port="0" />
+	<university id="1532" name="Mayville State University" serveraddress="" port="0" />
+	<university id="1533" name="McCormick Theological Seminary" serveraddress="" port="0" />
+	<university id="1534" name="McDaniel College" serveraddress="" port="0" />
+	<university id="1535" name="McKendree University" serveraddress="" port="0" />
+	<university id="1536" name="McMurry University" serveraddress="" port="0" />
+	<university id="1537" name="McNeese State University" serveraddress="" port="0" />
+	<university id="1538" name="McPherson College" serveraddress="" port="0" />
+	<university id="1539" name="Medaille College" serveraddress="" port="0" />
+	<university id="1540" name="Medcenter One College of Nursing" serveraddress="" port="0" />
+	<university id="1541" name="Medical College of Wisconsin" serveraddress="" port="0" />
+	<university id="1542" name="Medical University of South Carolina" serveraddress="" port="0" />
+	<university id="1543" name="Meharry Medical College" serveraddress="" port="0" />
+	<university id="1544" name="Memphis College of Art" serveraddress="" port="0" />
+	<university id="1545" name="Memphis Theological Seminary" serveraddress="" port="0" />
+	<university id="1546" name="Menlo College" serveraddress="" port="0" />
+	<university id="1547" name="Mercer University" serveraddress="" port="0" />
+	<university id="1548" name="Mercy College" serveraddress="" port="0" />
+	<university id="1549" name="Mercy College of Health Sciences" serveraddress="" port="0" />
+	<university id="1550" name="Mercy College of Northwest Ohio" serveraddress="" port="0" />
+	<university id="1551" name="Mercyhurst College" serveraddress="" port="0" />
+	<university id="1552" name="Meredith College" serveraddress="" port="0" />
+	<university id="1553" name="Merrimack College" serveraddress="" port="0" />
+	<university id="1554" name="Messiah College" serveraddress="" port="0" />
+	<university id="1555" name="Methodist College of Nursing" serveraddress="" port="0" />
+	<university id="1556" name="Methodist Theological School in Ohio" serveraddress="" port="0" />
+	<university id="1557" name="Methodist University" serveraddress="" port="0" />
+	<university id="1558" name="Metropolitan College of New York" serveraddress="" port="0" />
+	<university id="1559" name="Metropolitan State College of Denver" serveraddress="" port="0" />
+	<university id="1560" name="Metropolitan State University" serveraddress="" port="0" />
+	<university id="1561" name="MGH Institute of Health Professions" serveraddress="" port="0" />
+	<university id="1562" name="Miami Dade College" serveraddress="" port="0" />
+	<university id="1563" name="Miami International University of Art &amp; Design" serveraddress="" port="0" />
+	<university id="1564" name="Miami University" serveraddress="" port="0" />
+	<university id="1565" name="Miami University-Hamilton" serveraddress="" port="0" />
+	<university id="1566" name="Michigan School of Professional Psychology" serveraddress="" port="0" />
+	<university id="1567" name="Michigan State University" serveraddress="" port="0" />
+	<university id="1568" name="Michigan Technological University" serveraddress="" port="0" />
+	<university id="1569" name="Mid-America Baptist Theological Seminary" serveraddress="" port="0" />
+	<university id="1570" name="Mid-America Christian University" serveraddress="" port="0" />
+	<university id="1571" name="Mid-Atlantic Christian University" serveraddress="" port="0" />
+	<university id="1572" name="MidAmerica Nazarene University" serveraddress="" port="0" />
+	<university id="1573" name="Mid-Continent University" serveraddress="" port="0" />
+	<university id="1574" name="Middle Georgia College" serveraddress="" port="0" />
+	<university id="1575" name="Middle Tennessee School of Anesthesia" serveraddress="" port="0" />
+	<university id="1576" name="Middle Tennessee State University" serveraddress="" port="0" />
+	<university id="1577" name="Middlebury College" serveraddress="" port="0" />
+	<university id="1578" name="Midland University" serveraddress="" port="0" />
+	<university id="1579" name="Midstate College" serveraddress="" port="0" />
+	<university id="1580" name="Midway College" serveraddress="" port="0" />
+	<university id="1581" name="Midwestern Baptist Theological Seminary" serveraddress="" port="0" />
+	<university id="1582" name="Midwestern University" serveraddress="" port="0" />
+	<university id="1583" name="Midwestern State University" serveraddress="" port="0" />
+	<university id="1584" name="Miles College" serveraddress="" port="0" />
+	<university id="1585" name="Miller College" serveraddress="" port="0" />
+	<university id="1586" name="Millersville University of Pennsylvania" serveraddress="" port="0" />
+	<university id="1587" name="Milligan College" serveraddress="" port="0" />
+	<university id="1588" name="Millikin University" serveraddress="" port="0" />
+	<university id="1589" name="Mills College" serveraddress="" port="0" />
+	<university id="1590" name="Millsaps College" serveraddress="" port="0" />
+	<university id="1591" name="Milwaukee Institute of Art &amp; Design" serveraddress="" port="0" />
+	<university id="1592" name="Milwaukee School of Engineering" serveraddress="" port="0" />
+	<university id="1593" name="Minnesota State University-Mankato" serveraddress="" port="0" />
+	<university id="1594" name="Minnesota State University-Moorhead" serveraddress="" port="0" />
+	<university id="1595" name="Minot State University" serveraddress="" port="0" />
+	<university id="1596" name="Minneapolis College of Art &amp; Design" serveraddress="" port="0" />
+	<university id="1597" name="Misericordia University" serveraddress="" port="0" />
+	<university id="1598" name="Mississippi College" serveraddress="" port="0" />
+	<university id="1599" name="Mississippi State University" serveraddress="" port="0" />
+	<university id="1600" name="Mississippi University for Women" serveraddress="" port="0" />
+	<university id="1601" name="Mississippi Valley State University" serveraddress="" port="0" />
+	<university id="1602" name="Missouri Baptist University" serveraddress="" port="0" />
+	<university id="1603" name="Missouri Southern State University" serveraddress="" port="0" />
+	<university id="1604" name="Missouri State University" serveraddress="" port="0" />
+	<university id="1605" name="Missouri University of Science &amp; Technology" serveraddress="" port="0" />
+	<university id="1606" name="Missouri Valley College" serveraddress="" port="0" />
+	<university id="1607" name="Missouri Western State University" serveraddress="" port="0" />
+	<university id="1608" name="Mitchell College" serveraddress="" port="0" />
+	<university id="1609" name="Molloy College" serveraddress="" port="0" />
+	<university id="1610" name="Monmouth College" serveraddress="" port="0" />
+	<university id="1611" name="Monmouth University" serveraddress="" port="0" />
+	<university id="1612" name="Monroe College" serveraddress="" port="0" />
+	<university id="1613" name="Montana State University" serveraddress="" port="0" />
+	<university id="1614" name="Montana State University-Billings" serveraddress="" port="0" />
+	<university id="1615" name="Montana State University-Northern" serveraddress="" port="0" />
+	<university id="1616" name="Montana Tech of The University of Montana" serveraddress="" port="0" />
+	<university id="1617" name="Montclair State University" serveraddress="" port="0" />
+	<university id="1618" name="Montreat College" serveraddress="" port="0" />
+	<university id="1619" name="Montserrat College of Art" serveraddress="" port="0" />
+	<university id="1620" name="Moody Bible Institute" serveraddress="" port="0" />
+	<university id="1621" name="Moore College of Art &amp; Design" serveraddress="" port="0" />
+	<university id="1622" name="Moravian College" serveraddress="" port="0" />
+	<university id="1623" name="Morehead State University" serveraddress="" port="0" />
+	<university id="1624" name="Morehouse College" serveraddress="" port="0" />
+	<university id="1625" name="Morehouse School of Medicine" serveraddress="" port="0" />
+	<university id="1626" name="Morgan State University" serveraddress="" port="0" />
+	<university id="1627" name="Morningside College" serveraddress="" port="0" />
+	<university id="1628" name="Morris College" serveraddress="" port="0" />
+	<university id="1629" name="Mount Aloysius College" serveraddress="" port="0" />
+	<university id="1630" name="Mount Angel Seminary" serveraddress="" port="0" />
+	<university id="1631" name="Mount Carmel College of Nursing" serveraddress="" port="0" />
+	<university id="1632" name="Mount Holyoke College" serveraddress="" port="0" />
+	<university id="1633" name="Mount Ida College" serveraddress="" port="0" />
+	<university id="1634" name="Mount Marty College" serveraddress="" port="0" />
+	<university id="1635" name="Mount Mary College" serveraddress="" port="0" />
+	<university id="1636" name="Mount Mercy University" serveraddress="" port="0" />
+	<university id="1637" name="Mount Olive College" serveraddress="" port="0" />
+	<university id="1638" name="Mount Saint Mary College" serveraddress="" port="0" />
+	<university id="1639" name="Mount Saint Mary's College" serveraddress="" port="0" />
+	<university id="1640" name="Mount Saint Mary's University" serveraddress="" port="0" />
+	<university id="1641" name="Mount Sinai School of Medicine" serveraddress="" port="0" />
+	<university id="1642" name="Mount Vernon Nazarene University" serveraddress="" port="0" />
+	<university id="1643" name="Mountain State University" serveraddress="" port="0" />
+	<university id="1644" name="Muhlenberg College" serveraddress="" port="0" />
+	<university id="1645" name="Multnomah University" serveraddress="" port="0" />
+	<university id="1646" name="Murray State University" serveraddress="" port="0" />
+	<university id="1647" name="Muskingum University" serveraddress="" port="0" />
+	<university id="1648" name="Oak Hills Christian College" serveraddress="" port="0" />
+	<university id="1649" name="Oakland City University" serveraddress="" port="0" />
+	<university id="1650" name="Oakland University" serveraddress="" port="0" />
+	<university id="1651" name="Oakwood University" serveraddress="" port="0" />
+	<university id="1652" name="Oberlin College" serveraddress="" port="0" />
+	<university id="1653" name="Oblate School of Theology" serveraddress="" port="0" />
+	<university id="1654" name="Occidental College" serveraddress="" port="0" />
+	<university id="1655" name="Oglala Lakota College" serveraddress="" port="0" />
+	<university id="1656" name="Oglethorpe University" serveraddress="" port="0" />
+	<university id="1657" name="Ohio Christian University" serveraddress="" port="0" />
+	<university id="1658" name="Ohio College of Podiatric Medicine" serveraddress="" port="0" />
+	<university id="1659" name="Ohio Dominican University" serveraddress="" port="0" />
+	<university id="1660" name="Ohio Northern University" serveraddress="" port="0" />
+	<university id="1661" name="Ohio State University" serveraddress="" port="0" />
+	<university id="1662" name="Ohio State University-Lima" serveraddress="" port="0" />
+	<university id="1663" name="Ohio State University-Mansfield" serveraddress="" port="0" />
+	<university id="1664" name="Ohio State University-Marion" serveraddress="" port="0" />
+	<university id="1665" name="Ohio State University-Newark" serveraddress="" port="0" />
+	<university id="1666" name="Ohio University" serveraddress="" port="0" />
+	<university id="1667" name="Ohio University-Eastern Campus" serveraddress="" port="0" />
+	<university id="1668" name="Ohio University-Lancaster" serveraddress="" port="0" />
+	<university id="1669" name="Ohio University-Zanesville" serveraddress="" port="0" />
+	<university id="1670" name="Ohio Valley University" serveraddress="" port="0" />
+	<university id="1671" name="Ohio Wesleyan University" serveraddress="" port="0" />
+	<university id="1672" name="Oklahoma Baptist University" serveraddress="" port="0" />
+	<university id="1673" name="Oklahoma Christian University" serveraddress="" port="0" />
+	<university id="1674" name="Oklahoma City University" serveraddress="" port="0" />
+	<university id="1675" name="Oklahoma Panhandle State University" serveraddress="" port="0" />
+	<university id="1676" name="Oklahoma State University" serveraddress="" port="0" />
+	<university id="1677" name="Oklahoma State University-Center for Health Sciences" serveraddress="" port="0" />
+	<university id="1678" name="Oklahoma State University-Institute of Technology" serveraddress="" port="0" />
+	<university id="1679" name="Oklahoma State University-Oklahoma City" serveraddress="" port="0" />
+	<university id="1680" name="Oklahoma State University-Tulsa" serveraddress="" port="0" />
+	<university id="1681" name="Oklahoma Wesleyan University" serveraddress="" port="0" />
+	<university id="1682" name="Old Dominion University" serveraddress="" port="0" />
+	<university id="1683" name="Olivet College" serveraddress="" port="0" />
+	<university id="1684" name="Olivet Nazarene University" serveraddress="" port="0" />
+	<university id="1685" name="Olympic College" serveraddress="" port="0" />
+	<university id="1686" name="Oral Roberts University" serveraddress="" port="0" />
+	<university id="1687" name="Oregon College of Art &amp; Craft" serveraddress="" port="0" />
+	<university id="1688" name="Oregon Health &amp; Science University" serveraddress="" port="0" />
+	<university id="1689" name="Oregon Institute of Technology" serveraddress="" port="0" />
+	<university id="1690" name="Oregon State University" serveraddress="" port="0" />
+	<university id="1691" name="Otis College of Art &amp; Design" serveraddress="" port="0" />
+	<university id="1692" name="Ottawa University" serveraddress="" port="0" />
+	<university id="1693" name="Otterbein College" serveraddress="" port="0" />
+	<university id="1694" name="Ouachita Baptist University" serveraddress="" port="0" />
+	<university id="1695" name="Our Lady of Holy Cross College" serveraddress="" port="0" />
+	<university id="1696" name="Our Lady of the Lake College" serveraddress="" port="0" />
+	<university id="1697" name="Our Lady of the Lake University" serveraddress="" port="0" />
+	<university id="1698" name="Ozark Christian College" serveraddress="" port="0" />
+	<university id="1699" name="Queens University of Charlotte" serveraddress="" port="0" />
+	<university id="1700" name="Quincy University" serveraddress="" port="0" />
+	<university id="1701" name="Quinnipiac University" serveraddress="" port="0" />
+	<university id="1702" name="Radford University" serveraddress="" port="0" />
+	<university id="1703" name="Ramapo College of New Jersey" serveraddress="" port="0" />
+	<university id="1704" name="Randolph College" serveraddress="" port="0" />
+	<university id="1705" name="Randolph-Macon College" serveraddress="" port="0" />
+	<university id="1706" name="Ranken Technical College" serveraddress="" port="0" />
+	<university id="1707" name="Rasmussen College" serveraddress="" port="0" />
+	<university id="1708" name="Reconstructionist Rabbinical College" serveraddress="" port="0" />
+	<university id="1709" name="Reed College" serveraddress="" port="0" />
+	<university id="1710" name="Reformed Theological Seminary" serveraddress="" port="0" />
+	<university id="1711" name="Regent University" serveraddress="" port="0" />
+	<university id="1712" name="Regis College" serveraddress="" port="0" />
+	<university id="1713" name="Regis University" serveraddress="" port="0" />
+	<university id="1714" name="Reinhardt University" serveraddress="" port="0" />
+	<university id="1715" name="Rensselaer Polytechnic Institute" serveraddress="" port="0" />
+	<university id="1716" name="Research College of Nursing" serveraddress="" port="0" />
+	<university id="1717" name="Resurrection University" serveraddress="" port="0" />
+	<university id="1718" name="Rhode Island College" serveraddress="" port="0" />
+	<university id="1719" name="Rhode Island School of Design" serveraddress="" port="0" />
+	<university id="1720" name="Rhodes College" serveraddress="" port="0" />
+	<university id="1721" name="Rice University" serveraddress="" port="0" />
+	<university id="1722" name="Richard Stockton College of New Jersey" serveraddress="" port="0" />
+	<university id="1723" name="Richmont Graduate University" serveraddress="" port="0" />
+	<university id="1724" name="Rider University" serveraddress="" port="0" />
+	<university id="1725" name="Ringling College of Art &amp; Design" serveraddress="" port="0" />
+	<university id="1726" name="Ripon College" serveraddress="" port="0" />
+	<university id="1727" name="Rivier College" serveraddress="" port="0" />
+	<university id="1728" name="Roanoke College" serveraddress="" port="0" />
+	<university id="1729" name="Robert Morris University" serveraddress="" port="0" />
+	<university id="1730" name="Robert Morris University-Illinois" serveraddress="" port="0" />
+	<university id="1731" name="Roberts Wesleyan College" serveraddress="" port="0" />
+	<university id="1732" name="Rochester College" serveraddress="" port="0" />
+	<university id="1733" name="Rochester Institute of Technology" serveraddress="" port="0" />
+	<university id="1734" name="Rockford College" serveraddress="" port="0" />
+	<university id="1735" name="Rockhurst University" serveraddress="" port="0" />
+	<university id="1736" name="Rocky Mountain College" serveraddress="" port="0" />
+	<university id="1737" name="Rocky Mountain College of Art &amp; Design" serveraddress="" port="0" />
+	<university id="1738" name="Roger Williams University" serveraddress="" port="0" />
+	<university id="1739" name="Rogers State University" serveraddress="" port="0" />
+	<university id="1740" name="Rollins College" serveraddress="" port="0" />
+	<university id="1741" name="Roosevelt University" serveraddress="" port="0" />
+	<university id="1742" name="Rosalind Franklin University of Medicine &amp; Science" serveraddress="" port="0" />
+	<university id="1743" name="Rose-Hulman Institute of Technology" serveraddress="" port="0" />
+	<university id="1744" name="Rosemont College" serveraddress="" port="0" />
+	<university id="1745" name="Rowan University" serveraddress="" port="0" />
+	<university id="1746" name="Rush University" serveraddress="" port="0" />
+	<university id="1747" name="Rust College" serveraddress="" port="0" />
+	<university id="1748" name="Rutgers University-Camden" serveraddress="" port="0" />
+	<university id="1749" name="Rutgers University-New Brunswick" serveraddress="" port="0" />
+	<university id="1750" name="Rutgers University-Newark" serveraddress="" port="0" />
+	<university id="1751" name="Tabor College" serveraddress="" port="0" />
+	<university id="1752" name="Tai Sophia Institute" serveraddress="" port="0" />
+	<university id="1753" name="Talladega College" serveraddress="" port="0" />
+	<university id="1754" name="Tarleton State University" serveraddress="" port="0" />
+	<university id="1755" name="Taylor University" serveraddress="" port="0" />
+	<university id="1756" name="TCM International Institute" serveraddress="" port="0" />
+	<university id="1757" name="Teachers College, Columbia University" serveraddress="" port="0" />
+	<university id="1758" name="Temple University" serveraddress="" port="0" />
+	<university id="1759" name="Tennessee State University" serveraddress="" port="0" />
+	<university id="1760" name="Tennessee Technological University" serveraddress="" port="0" />
+	<university id="1761" name="Tennessee Wesleyan College" serveraddress="" port="0" />
+	<university id="1762" name="Texas A&amp;M International University" serveraddress="" port="0" />
+	<university id="1763" name="Texas A&amp;M University" serveraddress="" port="0" />
+	<university id="1764" name="Texas A&amp;M University-Commerce" serveraddress="" port="0" />
+	<university id="1765" name="Texas A&amp;M University-Corpus Christi" serveraddress="" port="0" />
+	<university id="1766" name="Texas A&amp;M University-Galveston" serveraddress="" port="0" />
+	<university id="1767" name="Texas A&amp;M University Health Science Center" serveraddress="" port="0" />
+	<university id="1768" name="Texas A&amp;M University-Kingsville" serveraddress="" port="0" />
+	<university id="1769" name="Texas A&amp;M University-Texarkana" serveraddress="" port="0" />
+	<university id="1770" name="Texas Chiropractic College" serveraddress="" port="0" />
+	<university id="1771" name="Texas Christian University" serveraddress="" port="0" />
+	<university id="1772" name="Texas College" serveraddress="" port="0" />
+	<university id="1773" name="Texas Lutheran University" serveraddress="" port="0" />
+	<university id="1774" name="Texas Southern University" serveraddress="" port="0" />
+	<university id="1775" name="Texas State University-San Marcos" serveraddress="" port="0" />
+	<university id="1776" name="Texas Tech University" serveraddress="" port="0" />
+	<university id="1777" name="Texas Tech University Health Sciences Center" serveraddress="" port="0" />
+	<university id="1778" name="Texas Wesleyan University" serveraddress="" port="0" />
+	<university id="1779" name="Texas Woman's University" serveraddress="" port="0" />
+	<university id="1780" name="Thiel College" serveraddress="" port="0" />
+	<university id="1781" name="Thomas Aquinas College" serveraddress="" port="0" />
+	<university id="1782" name="Thomas University" serveraddress="" port="0" />
+	<university id="1783" name="Thomas College" serveraddress="" port="0" />
+	<university id="1784" name="Thomas Edison State College" serveraddress="" port="0" />
+	<university id="1785" name="Thomas Jefferson University" serveraddress="" port="0" />
+	<university id="1786" name="Thomas M. Cooley Law School" serveraddress="" port="0" />
+	<university id="1787" name="Thomas More College" serveraddress="" port="0" />
+	<university id="1788" name="The Thomas More College of Liberal Arts" serveraddress="" port="0" />
+	<university id="1789" name="Thunderbird School of Global Management" serveraddress="" port="0" />
+	<university id="1790" name="Tiffin University" serveraddress="" port="0" />
+	<university id="1791" name="Toccoa Falls College" serveraddress="" port="0" />
+	<university id="1792" name="Tougaloo College" serveraddress="" port="0" />
+	<university id="1793" name="Touro College" serveraddress="" port="0" />
+	<university id="1794" name="Touro College Los Angeles" serveraddress="" port="0" />
+	<university id="1795" name="Touro University California" serveraddress="" port="0" />
+	<university id="1796" name="Towson University" serveraddress="" port="0" />
+	<university id="1797" name="Toyota Technological Institute at Chicago" serveraddress="" port="0" />
+	<university id="1798" name="Transylvania University" serveraddress="" port="0" />
+	<university id="1799" name="Trevecca Nazarene University" serveraddress="" port="0" />
+	<university id="1800" name="Trident University International" serveraddress="" port="0" />
+	<university id="1801" name="Trine University" serveraddress="" port="0" />
+	<university id="1802" name="Trinity Bible College" serveraddress="" port="0" />
+	<university id="1803" name="Trinity Christian College" serveraddress="" port="0" />
+	<university id="1804" name="Trinity College" serveraddress="" port="0" />
+	<university id="1805" name="Trinity College of Nursing &amp; Health Sciences" serveraddress="" port="0" />
+	<university id="1806" name="Trinity Lutheran Seminary" serveraddress="" port="0" />
+	<university id="1807" name="Trinity University" serveraddress="" port="0" />
+	<university id="1808" name="Trinity College of Florida" serveraddress="" port="0" />
+	<university id="1809" name="Trinity International University" serveraddress="" port="0" />
+	<university id="1810" name="Trinity Lutheran College" serveraddress="" port="0" />
+	<university id="1811" name="Trinity University" serveraddress="" port="0" />
+	<university id="1812" name="Troy University" serveraddress="" port="0" />
+	<university id="1813" name="Truett-McConnell College" serveraddress="" port="0" />
+	<university id="1814" name="Truman State University" serveraddress="" port="0" />
+	<university id="1815" name="Tufts University" serveraddress="" port="0" />
+	<university id="1816" name="Tulane University" serveraddress="" port="0" />
+	<university id="1817" name="Turtle Mountain Community College" serveraddress="" port="0" />
+	<university id="1818" name="Tusculum College" serveraddress="" port="0" />
+	<university id="1819" name="Tuskegee University" serveraddress="" port="0" />
+	<university id="1820" name="Unification Theological Seminary" serveraddress="" port="0" />
+	<university id="1821" name="Uniformed Services University of the Health Sciences" serveraddress="" port="0" />
+	<university id="1822" name="Union College" serveraddress="" port="0" />
+	<university id="1823" name="Union College" serveraddress="" port="0" />
+	<university id="1824" name="Union College" serveraddress="" port="0" />
+	<university id="1825" name="Union Graduate College" serveraddress="" port="0" />
+	<university id="1826" name="Union Institute &amp; University" serveraddress="" port="0" />
+	<university id="1827" name="Union Presbyterian Seminary" serveraddress="" port="0" />
+	<university id="1828" name="Union Theological Seminary" serveraddress="" port="0" />
+	<university id="1829" name="Union University" serveraddress="" port="0" />
+	<university id="1830" name="United States Air Force Academy" serveraddress="" port="0" />
+	<university id="1831" name="United States Army Command &amp; General Staff College" serveraddress="" port="0" />
+	<university id="1832" name="United States Army War College" serveraddress="" port="0" />
+	<university id="1833" name="United States Coast Guard Academy" serveraddress="" port="0" />
+	<university id="1834" name="United States Merchant Marine Academy" serveraddress="" port="0" />
+	<university id="1835" name="United States Military Academy" serveraddress="" port="0" />
+	<university id="1836" name="United States Naval Academy" serveraddress="" port="0" />
+	<university id="1837" name="United States Naval War College" serveraddress="" port="0" />
+	<university id="1838" name="United States Sports Academy" serveraddress="" port="0" />
+	<university id="1839" name="United States University" serveraddress="" port="0" />
+	<university id="1840" name="United Theological Seminary" serveraddress="" port="0" />
+	<university id="1841" name="United Theological Seminary of the Twin Cities" serveraddress="" port="0" />
+	<university id="1842" name="Unity College" serveraddress="" port="0" />
+	<university id="1843" name="Universidad Adventista de las Antillas" serveraddress="" port="0" />
+	<university id="1844" name="Universidad Central de Bayam?n" serveraddress="" port="0" />
+	<university id="1845" name="Universidad Central del Caribe" serveraddress="" port="0" />
+	<university id="1846" name="Universidad del Sagrado Coraz?n" serveraddress="" port="0" />
+	<university id="1847" name="Universidad Interamericana de Puerto Rico" serveraddress="" port="0" />
+	<university id="1848" name="Aguadilla Campus" serveraddress="" port="0" />
+	<university id="1849" name="Arecibo Campus" serveraddress="" port="0" />
+	<university id="1850" name="Barranquitas Campus" serveraddress="" port="0" />
+	<university id="1851" name="Bayam?n Campus" serveraddress="" port="0" />
+	<university id="1852" name="Fajardo Campus" serveraddress="" port="0" />
+	<university id="1853" name="Guayama Campus" serveraddress="" port="0" />
+	<university id="1854" name="Metropolitan Campus" serveraddress="" port="0" />
+	<university id="1855" name="Ponce Campus" serveraddress="" port="0" />
+	<university id="1856" name="San Germ?n Campus" serveraddress="" port="0" />
+	<university id="1857" name="School of Law" serveraddress="" port="0" />
+	<university id="1858" name="School of Optometry" serveraddress="" port="0" />
+	<university id="1859" name="Universidad Politecnica de Puerto Rico" serveraddress="" port="0" />
+	<university id="1860" name="University System of Maryland" serveraddress="" port="0" />
+	<university id="1861" name="Upper Iowa University" serveraddress="" port="0" />
+	<university id="1862" name="Urbana University" serveraddress="" port="0" />
+	<university id="1863" name="Ursinus College" serveraddress="" port="0" />
+	<university id="1864" name="Ursuline College" serveraddress="" port="0" />
+	<university id="1865" name="Utah State University" serveraddress="" port="0" />
+	<university id="1866" name="Utah Valley University" serveraddress="" port="0" />
+	<university id="1867" name="Utica College" serveraddress="" port="0" />
+	<university id="1868" name="University of Advancing Technology" serveraddress="" port="0" />
+	<university id="1869" name="University of Akron" serveraddress="" port="0" />
+	<university id="1870" name="University of Alabama" serveraddress="192.168.1.3" port="80" />
+	<university id="1871" name="University of Alabama-Birmingham" serveraddress="" port="0" />
+	<university id="1872" name="University of Alabama-Huntsville" serveraddress="" port="0" />
+	<university id="1873" name="University of Alaska System" serveraddress="" port="0" />
+	<university id="1874" name="University of Arizona" serveraddress="" port="0" />
+	<university id="1875" name="University of Arkansas" serveraddress="" port="0" />
+	<university id="1876" name="University of Arkansas-Fort Smith" serveraddress="" port="0" />
+	<university id="1877" name="University of Arkansas-Little Rock" serveraddress="" port="0" />
+	<university id="1878" name="University of Arkansas for Medical Sciences" serveraddress="" port="0" />
+	<university id="1879" name="University of Arkansas-Monticello" serveraddress="" port="0" />
+	<university id="1880" name="University of Arkansas-Pine Bluff" serveraddress="" port="0" />
+	<university id="1881" name="University of Arkansas System" serveraddress="" port="0" />
+	<university id="1882" name="University of Baltimore" serveraddress="" port="0" />
+	<university id="1883" name="University of Bridgeport" serveraddress="" port="0" />
+	<university id="1884" name="University of California-Berkeley" serveraddress="" port="0" />
+	<university id="1885" name="University of California-Davis" serveraddress="" port="0" />
+	<university id="1886" name="University of California Hastings College of the Law" serveraddress="" port="0" />
+	<university id="1887" name="University of California-Irvine" serveraddress="" port="0" />
+	<university id="1888" name="University of California-Los Angeles" serveraddress="" port="0" />
+	<university id="1889" name="University of California-Merced" serveraddress="" port="0" />
+	<university id="1890" name="University of California-Riverside" serveraddress="" port="0" />
+	<university id="1891" name="University of California-San Diego" serveraddress="" port="0" />
+	<university id="1892" name="University of California-San Francisco" serveraddress="" port="0" />
+	<university id="1893" name="University of California-Santa Barbara" serveraddress="" port="0" />
+	<university id="1894" name="University of California-Santa Cruz" serveraddress="" port="0" />
+	<university id="1895" name="University of California System" serveraddress="" port="0" />
+	<university id="1896" name="University of Central Arkansas" serveraddress="" port="0" />
+	<university id="1897" name="University of Central Florida" serveraddress="" port="0" />
+	<university id="1898" name="University of Central Missouri" serveraddress="" port="0" />
+	<university id="1899" name="University of Central Oklahoma" serveraddress="" port="0" />
+	<university id="1900" name="University of Charleston" serveraddress="" port="0" />
+	<university id="1901" name="University of Chicago" serveraddress="" port="0" />
+	<university id="1902" name="University of Cincinnati" serveraddress="" port="0" />
+	<university id="1903" name="University of Cincinnati-Blue Ash" serveraddress="" port="0" />
+	<university id="1904" name="University of Colorado-Boulder" serveraddress="" port="0" />
+	<university id="1905" name="University of Colorado-Colorado Springs" serveraddress="" port="0" />
+	<university id="1906" name="University of Colorado-Denver" serveraddress="" port="0" />
+	<university id="1907" name="University of Colorado System" serveraddress="" port="0" />
+	<university id="1908" name="University of Connecticut" serveraddress="" port="0" />
+	<university id="1909" name="University of Dallas" serveraddress="" port="0" />
+	<university id="1910" name="University of Dayton" serveraddress="" port="0" />
+	<university id="1911" name="University of Delaware" serveraddress="" port="0" />
+	<university id="1912" name="University of Denver" serveraddress="" port="0" />
+	<university id="1913" name="University of the District of Columbia" serveraddress="" port="0" />
+	<university id="1914" name="University of Detroit Mercy" serveraddress="" port="0" />
+	<university id="1915" name="University of Dubuque" serveraddress="" port="0" />
+	<university id="1916" name="University of Evansville" serveraddress="" port="0" />
+	<university id="1917" name="The University of Findlay" serveraddress="" port="0" />
+	<university id="1918" name="University of Florida" serveraddress="" port="0" />
+	<university id="1919" name="University of Georgia" serveraddress="" port="0" />
+	<university id="1920" name="University of Great Falls" serveraddress="" port="0" />
+	<university id="1921" name="University of Guam" serveraddress="" port="0" />
+	<university id="1922" name="University of Hartford" serveraddress="" port="0" />
+	<university id="1923" name="University of Hawaii-Hilo" serveraddress="" port="0" />
+	<university id="1924" name="University of Hawaii-Manoa" serveraddress="" port="0" />
+	<university id="1925" name="University of Hawaii System" serveraddress="" port="0" />
+	<university id="1926" name="University of Hawaii-West O'ahu" serveraddress="" port="0" />
+	<university id="1927" name="University of Houston" serveraddress="" port="0" />
+	<university id="1928" name="University of Houston-Clear Lake" serveraddress="" port="0" />
+	<university id="1929" name="University of Houston-Downtown" serveraddress="" port="0" />
+	<university id="1930" name="University of Houston-Victoria" serveraddress="" port="0" />
+	<university id="1931" name="University of Idaho" serveraddress="" port="0" />
+	<university id="1932" name="University of Illinois-Chicago" serveraddress="" port="0" />
+	<university id="1933" name="University of Illinois-Springfield" serveraddress="" port="0" />
+	<university id="1934" name="University of Illinois System" serveraddress="" port="0" />
+	<university id="1935" name="University of Illinois-Urbana-Champaign" serveraddress="" port="0" />
+	<university id="1936" name="University of Indianapolis" serveraddress="" port="0" />
+	<university id="1937" name="University of Iowa" serveraddress="" port="0" />
+	<university id="1938" name="University of Kansas" serveraddress="" port="0" />
+	<university id="1939" name="University of Kansas Medical Center" serveraddress="" port="0" />
+	<university id="1940" name="University of Kentucky" serveraddress="" port="0" />
+	<university id="1941" name="University of La Verne" serveraddress="" port="0" />
+	<university id="1942" name="University of Louisiana-Monroe" serveraddress="" port="0" />
+	<university id="1943" name="University of Louisiana-Lafayette" serveraddress="" port="0" />
+	<university id="1944" name="University of Louisville" serveraddress="" port="0" />
+	<university id="1945" name="University of Maine" serveraddress="" port="0" />
+	<university id="1946" name="University of Maine-Augusta" serveraddress="" port="0" />
+	<university id="1947" name="University of Maine-Farmington" serveraddress="" port="0" />
+	<university id="1948" name="University of Maine-Fort Kent" serveraddress="" port="0" />
+	<university id="1949" name="University of Maine-Machias" serveraddress="" port="0" />
+	<university id="1950" name="University of Maine-Presque Isle" serveraddress="" port="0" />
+	<university id="1951" name="University of Maine School of Law" serveraddress="" port="0" />
+	<university id="1952" name="University of Maine System" serveraddress="" port="0" />
+	<university id="1953" name="University of Mary" serveraddress="" port="0" />
+	<university id="1954" name="University of Mary Hardin-Baylor" serveraddress="" port="0" />
+	<university id="1955" name="University of Mary Washington" serveraddress="" port="0" />
+	<university id="1956" name="University of Maryland-Baltimore" serveraddress="" port="0" />
+	<university id="1957" name="University of Maryland-Baltimore County" serveraddress="" port="0" />
+	<university id="1958" name="University of Maryland-College Park" serveraddress="" port="0" />
+	<university id="1959" name="University of Maryland-Eastern Shore" serveraddress="" port="0" />
+	<university id="1960" name="University of Maryland-University College" serveraddress="" port="0" />
+	<university id="1961" name="University of Massachusetts-Amherst" serveraddress="" port="0" />
+	<university id="1962" name="University of Massachusetts-Boston" serveraddress="" port="0" />
+	<university id="1963" name="University of Massachusetts-Dartmouth" serveraddress="" port="0" />
+	<university id="1964" name="University of Massachusetts-Lowell" serveraddress="" port="0" />
+	<university id="1965" name="University of Massachusetts Medical School at Worcester" serveraddress="" port="0" />
+	<university id="1966" name="University of Massachusetts System" serveraddress="" port="0" />
+	<university id="1967" name="University of Medicine &amp; Dentistry of New Jersey" serveraddress="" port="0" />
+	<university id="1968" name="University of Memphis" serveraddress="" port="0" />
+	<university id="1969" name="University of Miami" serveraddress="" port="0" />
+	<university id="1970" name="University of Michigan" serveraddress="" port="0" />
+	<university id="1971" name="University of Michigan-Dearborn" serveraddress="" port="0" />
+	<university id="1972" name="University of Michigan-Flint" serveraddress="" port="0" />
+	<university id="1973" name="University of Minnesota-Crookston" serveraddress="" port="0" />
+	<university id="1974" name="University of Minnesota-Duluth" serveraddress="" port="0" />
+	<university id="1975" name="University of Minnesota-Morris" serveraddress="" port="0" />
+	<university id="1976" name="University of Minnesota-Twin Cities" serveraddress="" port="0" />
+	<university id="1977" name="University of Mississippi" serveraddress="" port="0" />
+	<university id="1978" name="University of Mississippi Medical Center" serveraddress="" port="0" />
+	<university id="1979" name="University of Missouri" serveraddress="" port="0" />
+	<university id="1980" name="University of Missouri-Kansas City" serveraddress="" port="0" />
+	<university id="1981" name="University of Missouri-Saint Louis" serveraddress="" port="0" />
+	<university id="1982" name="University of Missouri System" serveraddress="" port="0" />
+	<university id="1983" name="University of Mobile" serveraddress="" port="0" />
+	<university id="1984" name="University of Montana-Missoula" serveraddress="" port="0" />
+	<university id="1985" name="University of Montana-Western" serveraddress="" port="0" />
+	<university id="1986" name="University of Montevallo" serveraddress="" port="0" />
+	<university id="1987" name="University of Mount Union" serveraddress="" port="0" />
+	<university id="1988" name="University of Nebraska-Kearney" serveraddress="" port="0" />
+	<university id="1989" name="University of Nebraska-Lincoln" serveraddress="" port="0" />
+	<university id="1990" name="University of Nebraska Medical Center" serveraddress="" port="0" />
+	<university id="1991" name="University of Nebraska-Omaha" serveraddress="" port="0" />
+	<university id="1992" name="University of Nebraska System" serveraddress="" port="0" />
+	<university id="1993" name="University of Nevada-Las Vegas" serveraddress="" port="0" />
+	<university id="1994" name="University of Nevada-Reno" serveraddress="" port="0" />
+	<university id="1995" name="University of New England" serveraddress="" port="0" />
+	<university id="1996" name="University of New Hampshire" serveraddress="" port="0" />
+	<university id="1997" name="University of New Hampshire at Manchester" serveraddress="" port="0" />
+	<university id="1998" name="University of New Hampshire School of Law" serveraddress="" port="0" />
+	<university id="1999" name="University of New Haven" serveraddress="" port="0" />
+	<university id="2000" name="University of New Mexico" serveraddress="" port="0" />
+	<university id="2001" name="University of New Orleans" serveraddress="" port="0" />
+	<university id="2002" name="University of North Alabama" serveraddress="" port="0" />
+	<university id="2003" name="University of North Carolina-Asheville" serveraddress="" port="0" />
+	<university id="2004" name="University of North Carolina-Chapel Hill" serveraddress="" port="0" />
+	<university id="2005" name="University of North Carolina-Charlotte" serveraddress="" port="0" />
+	<university id="2006" name="University of North Carolina-Greensboro" serveraddress="" port="0" />
+	<university id="2007" name="University of North Carolina-Pembroke" serveraddress="" port="0" />
+	<university id="2008" name="University of North Carolina-School of the Arts" serveraddress="" port="0" />
+	<university id="2009" name="University of North Carolina-Wilmington" serveraddress="" port="0" />
+	<university id="2010" name="University of North Dakota" serveraddress="" port="0" />
+	<university id="2011" name="University of North Florida" serveraddress="" port="0" />
+	<university id="2012" name="University of North Texas" serveraddress="" port="0" />
+	<university id="2013" name="University of North Texas Health Science Center" serveraddress="" port="0" />
+	<university id="2014" name="University of Northern Colorado" serveraddress="" port="0" />
+	<university id="2015" name="University of Northern Iowa" serveraddress="" port="0" />
+	<university id="2016" name="University of Northwestern Ohio" serveraddress="" port="0" />
+	<university id="2017" name="University of Notre Dame" serveraddress="" port="0" />
+	<university id="2018" name="University of Oklahoma" serveraddress="" port="0" />
+	<university id="2019" name="University of Oklahoma Health Sciences Center" serveraddress="" port="0" />
+	<university id="2020" name="University of Oklahoma-Tulsa" serveraddress="" port="0" />
+	<university id="2021" name="University of Oregon" serveraddress="" port="0" />
+	<university id="2022" name="University of the Ozarks" serveraddress="" port="0" />
+	<university id="2023" name="Valdosta State University" serveraddress="" port="0" />
+	<university id="2024" name="Valencia College" serveraddress="" port="0" />
+	<university id="2025" name="Valley City State University" serveraddress="" port="0" />
+	<university id="2026" name="Valley Forge Christian College" serveraddress="" port="0" />
+	<university id="2027" name="Valparaiso University" serveraddress="" port="0" />
+	<university id="2028" name="Vanderbilt University" serveraddress="" port="0" />
+	<university id="2029" name="VanderCook College of Music" serveraddress="" port="0" />
+	<university id="2030" name="Vanguard University of Southern California" serveraddress="" port="0" />
+	<university id="2031" name="Vassar College" serveraddress="" port="0" />
+	<university id="2032" name="Vaughn College of Aeronautics &amp; Technology" serveraddress="" port="0" />
+	<university id="2033" name="Vermont College of Fine Arts" serveraddress="" port="0" />
+	<university id="2034" name="Vermont Law School" serveraddress="" port="0" />
+	<university id="2035" name="Vermont Technical College" serveraddress="" port="0" />
+	<university id="2036" name="Victory University" serveraddress="" port="0" />
+	<university id="2037" name="Villa Maria College of Buffalo" serveraddress="" port="0" />
+	<university id="2038" name="Villanova University" serveraddress="" port="0" />
+	<university id="2039" name="Vincennes University" serveraddress="" port="0" />
+	<university id="2040" name="Virginia Commonwealth University" serveraddress="" port="0" />
+	<university id="2041" name="Virginia Intermont College" serveraddress="" port="0" />
+	<university id="2042" name="Virginia Military Institute" serveraddress="" port="0" />
+	<university id="2043" name="Virginia Polytechnic Institute &amp; State University" serveraddress="" port="0" />
+	<university id="2044" name="Virginia State University" serveraddress="" port="0" />
+	<university id="2045" name="Virginia Union University" serveraddress="" port="0" />
+	<university id="2046" name="Virginia Wesleyan College" serveraddress="" port="0" />
+	<university id="2047" name="Viterbo University" serveraddress="" port="0" />
+	<university id="2048" name="Voorhees College" serveraddress="" port="0" />
+	<university id="2049" name="Wabash College" serveraddress="" port="0" />
+	<university id="2050" name="Wade College" serveraddress="" port="0" />
+	<university id="2051" name="Wagner College" serveraddress="" port="0" />
+	<university id="2052" name="Wake Forest University" serveraddress="" port="0" />
+	<university id="2053" name="Walden University" serveraddress="" port="0" />
+	<university id="2054" name="Waldorf College" serveraddress="" port="0" />
+	<university id="2055" name="Walla Walla University" serveraddress="" port="0" />
+	<university id="2056" name="Walsh College" serveraddress="" port="0" />
+	<university id="2057" name="Walsh University" serveraddress="" port="0" />
+	<university id="2058" name="Warner Pacific College" serveraddress="" port="0" />
+	<university id="2059" name="Warner University" serveraddress="" port="0" />
+	<university id="2060" name="Warren Wilson College" serveraddress="" port="0" />
+	<university id="2061" name="Wartburg College" serveraddress="" port="0" />
+	<university id="2062" name="Wartburg Theological Seminary" serveraddress="" port="0" />
+	<university id="2063" name="Washburn University" serveraddress="" port="0" />
+	<university id="2064" name="Washington &amp; Jefferson College" serveraddress="" port="0" />
+	<university id="2065" name="Washington &amp; Lee University" serveraddress="" port="0" />
+	<university id="2066" name="Washington Adventist University" serveraddress="" port="0" />
+	<university id="2067" name="Washington Bible College/Capital Bible Seminary" serveraddress="" port="0" />
+	<university id="2068" name="Washington College" serveraddress="" port="0" />
+	<university id="2069" name="Washington State University" serveraddress="" port="0" />
+	<university id="2070" name="Washington State University-Spokane" serveraddress="" port="0" />
+	<university id="2071" name="Washington State University-Tri-Cities" serveraddress="" port="0" />
+	<university id="2072" name="Washington State University-Vancouver" serveraddress="" port="0" />
+	<university id="2073" name="Washington Theological Union" serveraddress="" port="0" />
+	<university id="2074" name="Washington University in Saint Louis" serveraddress="" port="0" />
+	<university id="2075" name="Watkins College of Art, Design, &amp; Film" serveraddress="" port="0" />
+	<university id="2076" name="Wayland Baptist University" serveraddress="" port="0" />
+	<university id="2077" name="Wayne State College" serveraddress="" port="0" />
+	<university id="2078" name="Wayne State University" serveraddress="" port="0" />
+	<university id="2079" name="Waynesburg University" serveraddress="" port="0" />
+	<university id="2080" name="Webb Institute" serveraddress="" port="0" />
+	<university id="2081" name="Webber International University" serveraddress="" port="0" />
+	<university id="2082" name="Weber State University" serveraddress="" port="0" />
+	<university id="2083" name="Webster University" serveraddress="" port="0" />
+	<university id="2084" name="Wellesley College" serveraddress="" port="0" />
+	<university id="2085" name="Wells College" serveraddress="" port="0" />
+	<university id="2086" name="Wentworth Institute of Technology" serveraddress="" port="0" />
+	<university id="2087" name="Wesley College" serveraddress="" port="0" />
+	<university id="2088" name="Wesley Theological Seminary" serveraddress="" port="0" />
+	<university id="2089" name="Wesleyan College" serveraddress="" port="0" />
+	<university id="2090" name="Wesleyan University" serveraddress="" port="0" />
+	<university id="2091" name="West Chester University of Pennsylvania" serveraddress="" port="0" />
+	<university id="2092" name="West Liberty University" serveraddress="" port="0" />
+	<university id="2093" name="West Texas A&amp;M University" serveraddress="" port="0" />
+	<university id="2094" name="West Virginia State University" serveraddress="" port="0" />
+	<university id="2095" name="West Virginia University" serveraddress="" port="0" />
+	<university id="2096" name="West Virginia University Institute of Technology" serveraddress="" port="0" />
+	<university id="2097" name="West Virginia University at Parkersburg" serveraddress="" port="0" />
+	<university id="2098" name="West Virginia Wesleyan College" serveraddress="" port="0" />
+	<university id="2099" name="Western Carolina University" serveraddress="" port="0" />
+	<university id="2100" name="Western Connecticut State University" serveraddress="" port="0" />
+	<university id="2101" name="Western Governors University" serveraddress="" port="0" />
+	<university id="2102" name="Western Illinois University" serveraddress="" port="0" />
+	<university id="2103" name="Western International University" serveraddress="" port="0" />
+	<university id="2104" name="Western Kentucky University" serveraddress="" port="0" />
+	<university id="2105" name="Western Michigan University" serveraddress="" port="0" />
+	<university id="2106" name="Western Nevada College" serveraddress="" port="0" />
+	<university id="2107" name="Western New England College" serveraddress="" port="0" />
+	<university id="2108" name="Western New Mexico University" serveraddress="" port="0" />
+	<university id="2109" name="Western Oregon University" serveraddress="" port="0" />
+	<university id="2110" name="Western Seminary" serveraddress="" port="0" />
+	<university id="2111" name="Western State College of Colorado" serveraddress="" port="0" />
+	<university id="2112" name="Western State University College of Law" serveraddress="" port="0" />
+	<university id="2113" name="Western University of Health Sciences" serveraddress="" port="0" />
+	<university id="2114" name="Western Washington University" serveraddress="" port="0" />
+	<university id="2115" name="Westfield State University" serveraddress="" port="0" />
+	<university id="2116" name="Westminster College" serveraddress="" port="0" />
+	<university id="2117" name="Westminster College" serveraddress="" port="0" />
+	<university id="2118" name="Westminster College" serveraddress="" port="0" />
+	<university id="2119" name="Westminster Theological Seminary" serveraddress="" port="0" />
+	<university id="2120" name="Westminster Seminary California" serveraddress="" port="0" />
+	<university id="2121" name="Westmont College" serveraddress="" port="0" />
+	<university id="2122" name="Wheaton College" serveraddress="" port="0" />
+	<university id="2123" name="Wheaton College" serveraddress="" port="0" />
+	<university id="2124" name="Wheeling Jesuit University" serveraddress="" port="0" />
+	<university id="2125" name="Wheelock College" serveraddress="" port="0" />
+	<university id="2126" name="Whitman College" serveraddress="" port="0" />
+	<university id="2127" name="Whittier College" serveraddress="" port="0" />
+	<university id="2128" name="Whitworth University" serveraddress="" port="0" />
+	<university id="2129" name="Wichita State University" serveraddress="" port="0" />
+	<university id="2130" name="Widener University" serveraddress="" port="0" />
+	<university id="2131" name="Wilberforce University" serveraddress="" port="0" />
+	<university id="2132" name="Wiley College" serveraddress="" port="0" />
+	<university id="2133" name="Wilkes University" serveraddress="" port="0" />
+	<university id="2134" name="Willamette University" serveraddress="" port="0" />
+	<university id="2135" name="William Carey University" serveraddress="" port="0" />
+	<university id="2136" name="William Jessup University" serveraddress="" port="0" />
+	<university id="2137" name="William Jewell College" serveraddress="" port="0" />
+	<university id="2138" name="William Penn University" serveraddress="" port="0" />
+	<university id="2139" name="William Paterson University" serveraddress="" port="0" />
+	<university id="2140" name="William Woods University" serveraddress="" port="0" />
+	<university id="2141" name="Williams Baptist College" serveraddress="" port="0" />
+	<university id="2142" name="Williams College" serveraddress="" port="0" />
+	<university id="2143" name="Wilmington University" serveraddress="" port="0" />
+	<university id="2144" name="Wilmington College" serveraddress="" port="0" />
+	<university id="2145" name="Wilson College" serveraddress="" port="0" />
+	<university id="2146" name="Wingate University" serveraddress="" port="0" />
+	<university id="2147" name="Winona State University" serveraddress="" port="0" />
+	<university id="2148" name="Winston-Salem State University" serveraddress="" port="0" />
+	<university id="2149" name="Winthrop University" serveraddress="" port="0" />
+	<university id="2150" name="Wisconsin Lutheran College" serveraddress="" port="0" />
+	<university id="2151" name="Wisconsin School of Professional Psychology" serveraddress="" port="0" />
+	<university id="2152" name="Wittenberg University" serveraddress="" port="0" />
+	<university id="2153" name="Wofford College" serveraddress="" port="0" />
+	<university id="2154" name="Won Institute of Graduate Studies" serveraddress="" port="0" />
+	<university id="2155" name="Woodbury University" serveraddress="" port="0" />
+	<university id="2156" name="Woods Hole Oceanographic Institution" serveraddress="" port="0" />
+	<university id="2157" name="Worcester Polytechnic Institute" serveraddress="" port="0" />
+	<university id="2158" name="Worcester State University" serveraddress="" port="0" />
+	<university id="2159" name="The Wright Institute" serveraddress="" port="0" />
+	<university id="2160" name="Wright State University" serveraddress="" port="0" />
+</universities>

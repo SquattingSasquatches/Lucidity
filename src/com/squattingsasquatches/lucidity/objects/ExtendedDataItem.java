@@ -1,19 +1,23 @@
 package com.squattingsasquatches.lucidity.objects;
 
-
 public class ExtendedDataItem extends DataItem {
-	
+
 	private String itemInfo1;
 	private String itemInfo2;
 
 	public ExtendedDataItem(int id, String name) {
 		this(id, name, "", "");
 	}
-	
-	public ExtendedDataItem(int id, String name, String itemInfo1, String itemInfo2) {
+
+	public ExtendedDataItem(int id, String name, String itemInfo1,
+			String itemInfo2) {
 		super(id, name);
 		this.setItemInfo1(itemInfo1);
 		this.setItemInfo2(itemInfo2);
+	}
+
+	public ExtendedDataItem() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getItemInfo1() {

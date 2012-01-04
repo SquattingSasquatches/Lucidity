@@ -59,9 +59,12 @@ public class PHPService extends IntentService {
 			HttpClient httpclient = new DefaultHttpClient();
 			httpclient.getParams().setParameter(CoreProtocolPNames.USER_AGENT,
 					Config.USER_AGENT);
+			Log.i("PHPService", intent.getStringExtra("serverAddress"));
 
-			HttpPost httppost = new HttpPost(Config.SERVER_ADDRESS + "/"
-					+ action + ".php");
+			HttpPost httppost = new HttpPost("http://"
+					+ intent.getStringExtra("serverAddress") + ":"
+					+ intent.getIntExtra("serverPort", 80) + "/" + action
+					+ ".php");
 			httppost.setEntity(new UrlEncodedFormEntity(nvParams));
 
 			HttpResponse response = httpclient.execute(httppost);

@@ -39,6 +39,7 @@ public class CourseMenuActivity extends LucidityActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.i("CourseMenuActivity", "Started.");
 		setContentView(R.layout.generic_list);
 
 		updateCourses = getIntent().getBooleanExtra("updateCourses", false);

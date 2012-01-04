@@ -42,7 +42,7 @@ public class User extends DataItem {
 	}
 
 	public User(String name) {
-		this(-1, name);
+		this.name = name;
 	}
 
 	public User(int id, String name) {
@@ -53,6 +53,7 @@ public class User extends DataItem {
 			String c2dmRegistrationId) {
 		super(id, name);
 		this.setUniversity(uni);
+		Log.i("User", "uni id: " + uni.getId());
 		this.deviceId = deviceId;
 		this.setC2dmRegistrationId(c2dmRegistrationId);
 	}
@@ -68,13 +69,34 @@ public class User extends DataItem {
 
 	}
 
-	public User(Cursor result) {
-		this(result.getInt(0), result.getString(1), new University(
-				result.getInt(2)), result.getString(3), result.getDouble(4),
-				result.getDouble(5), result.getString(6), result.getInt(7),
-				result.getString(8));
-		Log.i("User()", "" + result.getInt(2));
-		result.close();
+	public User(Cursor c) {
+		this(c.getInt(c.getColumnIndex(Keys.id)), c.getString(c
+				.getColumnIndex(Keys.name)), new University(c.getInt(c
+				.getColumnIndex(Keys.universityId))), c.getString(c
+				.getColumnIndex(Keys.deviceId)), c.getDouble(c
+				.getColumnIndex(Keys.longitude)), c.getDouble(c
+				.getColumnIndex(Keys.latitude)), c.getString(c
+				.getColumnIndex(Keys.c2dmId)), c.getInt(c
+				.getColumnIndex(Keys.c2dmIsRegistered)), c.getString(c
+				.getColumnIndex(Keys.c2dmLastCheck)));
+		c.close();
+	}
+
+	public void load() {
+		User u = User.get();
+		this.setC2dmIsRegistered(u.getC2dmIsRegistered());
+		this.setC2dmLastCheck(u.getC2dmLastCheck());
+		this.setC2dmRegistrationId(u.getC2dmRegistrationId());
+		this.setDeviceId(u.getDeviceId());
+		this.setId(u.getId());
+		this.setLatitude(u.getLatitude());
+		this.setLongitude(u.getLongitude());
+		this.setName(u.getName());
+		this.setUniversity(u.getUniversity());
+	}
+
+	public static boolean exists() {
+		return (User.get() != null);
 	}
 
 	public University getUniversity() {
@@ -202,8 +224,8 @@ public class User extends DataItem {
 	}
 
 	public static boolean userExists() {
-		Cursor result = LucidityDatabase.db().query(tableName,
-				new String[] { User.Keys.id }, null, null, null, null, null);
+		Cursor result = LucidityDatabase.db().query(tableName, null, null,
+				null, null, null, null);
 
 		boolean test = (result.getCount() > 0);
 		result.close();

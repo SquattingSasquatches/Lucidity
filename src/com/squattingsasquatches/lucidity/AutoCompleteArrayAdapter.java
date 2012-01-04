@@ -12,14 +12,15 @@ import com.squattingsasquatches.lucidity.objects.DataItem;
 public class AutoCompleteArrayAdapter<E extends DataItem> extends
 		ArrayAdapter<E> implements Filterable {
 
-	private ArrayList<E> matchingItems, allItems;
+	private ArrayList<E> matchingItems;
+	final private ArrayList<E> allItems;
 
 	@SuppressWarnings("unchecked")
 	public AutoCompleteArrayAdapter(Context ctx, int viewId,
 			ArrayList<E> matchingItems) {
 		super(ctx, viewId, matchingItems);
 		this.allItems = (ArrayList<E>) matchingItems.clone();
-		this.matchingItems = matchingItems;
+		this.matchingItems = (ArrayList<E>) matchingItems.clone();
 	}
 
 	@Override
@@ -40,7 +41,8 @@ public class AutoCompleteArrayAdapter<E extends DataItem> extends
 			protected FilterResults performFiltering(CharSequence constraint) {
 				if (constraint != null) {
 					ArrayList<E> tmpAllData = allItems;
-					ArrayList<E> tmpDataShown = matchingItems;
+					ArrayList<E> tmpDataShown = (ArrayList<E>) matchingItems
+							.clone();
 
 					tmpDataShown.clear();
 

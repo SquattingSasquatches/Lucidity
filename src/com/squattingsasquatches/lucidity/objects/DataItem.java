@@ -18,6 +18,10 @@ public class DataItem {
 		this.name = result.getString(1);
 	}
 
+	public DataItem() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -1,14 +1,26 @@
 package com.squattingsasquatches.lucidity.objects;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squattingsasquatches.lucidity.LucidityDatabase;
+import com.squattingsasquatches.lucidity.UniversityXMLHandler;
 
 public class University extends DataItem {
 
@@ -33,12 +45,32 @@ public class University extends DataItem {
 		this.manualFlag = manualFlag;
 	}
 
-	public University(Cursor result) {
-		super(result.getInt(0), result.getString(1));
-		this.manualFlag = result.getInt(2);
-		this.serverAddress = result.getString(3);
-		this.serverPort = result.getInt(4);
-		result.close();
+	public University(String id, String name, String serverAddress,
+			String serverPort, int manualFlag) {
+		super();
+		this.id = Integer.parseInt(id);
+		this.name = name;
+		this.serverAddress = serverAddress;
+		this.serverPort = Integer.parseInt(serverPort);
+		this.manualFlag = manualFlag;
+	}
+
+	public University(Cursor c) {
+		super(c.getInt(0), c.getString(1));
+		this.manualFlag = c.getInt(c.getColumnIndex(Keys.manualFlag));
+		this.serverAddress = c.getString(c.getColumnIndex(Keys.serverAddress));
+		this.serverPort = c.getInt(c.getColumnIndex(Keys.serverPort));
+		c.close();
+	}
+
+	public University(int id, String name, String serverAddress,
+			int serverPort, int manualFlag) {
+
+		this.id = id;
+		this.name = name;
+		this.serverAddress = serverAddress;
+		this.serverPort = serverPort;
+		this.manualFlag = manualFlag;
 	}
 
 	public int getManualFlag() {
@@ -47,6 +79,49 @@ public class University extends DataItem {
 
 	public void setManualFlag(int flag) {
 		this.manualFlag = flag;
+	}
+
+	// Loads default packaged university server listing. Used when server
+	// listing is empty.
+	public static ArrayList<University> loadDefault(Context context)
+			throws SAXException, ParserConfigurationException, IOException {
+
+		Log.i("loadDefault()", "Loading default universities...");
+
+		InputSource is = new InputSource(context.getAssets().open(
+				"universities.xml"));
+
+		// create the factory
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+
+		// create a parser
+		SAXParser parser = factory.newSAXParser();
+
+		// create the reader (scanner)
+		XMLReader xmlreader = parser.getXMLReader();
+
+		final UniversityXMLHandler UXMLHandler = new UniversityXMLHandler();
+
+		xmlreader.setContentHandler(UXMLHandler);
+
+		xmlreader.parse(is);
+
+		Log.i("loadDefault()", "Done parsing.");
+
+		new Thread(new Runnable() {
+			public void run() {
+				University.insert((ArrayList<University>) UXMLHandler
+						.getUniversities().clone());
+				LucidityDatabase.close();
+			}
+		}).start();
+
+		Log.i("loadDefault()", "Done.");
+		return UXMLHandler.getUniversities();
+	}
+
+	public static boolean isEmpty() {
+		return getAll().isEmpty();
 	}
 
 	public static University get(int id) {
@@ -66,6 +141,10 @@ public class University extends DataItem {
 
 		if (result.getCount() == 0)
 			return universities;
+
+		Log.i("getCount()", "" + result.getCount());
+
+		result.moveToFirst();
 
 		while (!result.isAfterLast()) {
 			universities.add(new University(result));

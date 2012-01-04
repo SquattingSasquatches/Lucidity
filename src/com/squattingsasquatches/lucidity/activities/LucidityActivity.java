@@ -14,6 +14,7 @@ import android.os.Bundle;
 
 import com.squattingsasquatches.lucidity.LucidityDatabase;
 import com.squattingsasquatches.lucidity.RemoteDBAdapter;
+import com.squattingsasquatches.lucidity.objects.User;
 
 public abstract class LucidityActivity extends Activity {
 
@@ -25,12 +26,22 @@ public abstract class LucidityActivity extends Activity {
 	// Intent used to start the next Activity.
 	protected Intent nextActivity;
 
+	protected User user;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		db = new LucidityDatabase(this);
 		remoteDB = new RemoteDBAdapter(this);
+
+		user = new User();
+
+		if (User.exists()) {
+			user.load();
+			remoteDB.setServerAddress(user.getUniversity().getServerAddress());
+			remoteDB.setServerPort(user.getUniversity().getServerPort());
+		}
 	}
 
 	// protected void onStart() {
@@ -50,8 +61,8 @@ public abstract class LucidityActivity extends Activity {
 		super.onPause();
 		if (remoteDB != null)
 			remoteDB.unregisterAllReceivers();
-		if (db != null)
-			db.close();
+		// if (db != null)
+		// db.close();
 	}
 
 	//
@@ -62,7 +73,7 @@ public abstract class LucidityActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		db.close();
+		// db.close();
 		remoteDB.unregisterAllReceivers();
 	}
 

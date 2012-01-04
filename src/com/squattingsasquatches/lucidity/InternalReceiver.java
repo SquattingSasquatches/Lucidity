@@ -12,9 +12,7 @@ import android.util.Log;
 
 public class InternalReceiver extends ResultReceiver {
 
-	private HashMap<String, String> params;
-
-	// private Receiver mReceiver;
+	protected HashMap<String, String> params;
 
 	public InternalReceiver() {
 		super(new Handler());
@@ -37,6 +35,10 @@ public class InternalReceiver extends ResultReceiver {
 	}
 
 	public void onHttpError(int statusCode) {
+	}
+
+	public boolean validate() {
+		return true;
 	}
 
 	@Override
