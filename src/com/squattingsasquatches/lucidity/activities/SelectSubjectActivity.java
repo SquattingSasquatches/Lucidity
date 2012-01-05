@@ -20,7 +20,6 @@ import com.squattingsasquatches.lucidity.InternalReceiver;
 import com.squattingsasquatches.lucidity.ListAdapter;
 import com.squattingsasquatches.lucidity.R;
 import com.squattingsasquatches.lucidity.objects.Subject;
-import com.squattingsasquatches.lucidity.objects.User;
 
 public class SelectSubjectActivity extends LucidityActivity {
 
@@ -54,7 +53,6 @@ public class SelectSubjectActivity extends LucidityActivity {
 				SelectSubjectActivity.this.loadSubjectsCallback(data);
 			}
 		};
-		uniSubjectsView.addParam("uni_id", User.getStoredUniversityId());
 
 		remoteDB.addReceiver("uni.subjects.view", uniSubjectsView);
 		remoteDB.execute("uni.subjects.view");

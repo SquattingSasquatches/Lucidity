@@ -31,7 +31,6 @@ public class CourseMenuActivity extends LucidityActivity {
 
 	/* Misc */
 	private ArrayList<Section> userSections;
-	private int userId;
 	private boolean updateCourses;
 
 	InternalReceiver getCourses;
@@ -48,8 +47,6 @@ public class CourseMenuActivity extends LucidityActivity {
 		coursesListView = (ListView) findViewById(R.id.ListContainer);
 		loading = new ProgressDialog(this);
 
-		userId = getIntent().getIntExtra("userId", -1);
-
 		// Receivers
 		getCourses = new InternalReceiver() {
 			@Override
@@ -57,7 +54,7 @@ public class CourseMenuActivity extends LucidityActivity {
 				CourseMenuActivity.this.displayCourses(data);
 			}
 		};
-		getCourses.addParam("user_id", userId);
+		getCourses.addParam("user_id", user.getId());
 
 		remoteDB.addReceiver("user.courses.view", getCourses);
 
@@ -70,6 +67,7 @@ public class CourseMenuActivity extends LucidityActivity {
 			remoteDB.execute("user.courses.view");
 		} else {
 			displayCourses(new JSONArray(Section.getAll()));
+			loading.dismiss();
 		}
 	}
 
@@ -88,11 +86,13 @@ public class CourseMenuActivity extends LucidityActivity {
 
 		for (int i = 0; i < resultLength; ++i) {
 			try {
+
 				JSONObject section = data.getJSONObject(i);
 
 				userSections
 						.add(new Section(
 								section.getInt("section_id"),
+								section.getString("section_number"),
 								section.getString("section_number"),
 								new Course(
 										section.getInt(Section.Keys.courseId),
@@ -133,7 +133,7 @@ public class CourseMenuActivity extends LucidityActivity {
 				// Start SubjectsActivity
 				nextActivity = new Intent(CourseMenuActivity.this,
 						SelectSubjectActivity.class);
-				nextActivity.putExtra("userId", userId);
+				nextActivity.putExtra("userId", user.getId());
 				startActivity(nextActivity);
 				break;
 			default:

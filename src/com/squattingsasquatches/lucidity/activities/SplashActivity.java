@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -265,8 +266,17 @@ public class SplashActivity extends LucidityActivity {
 		case Codes.SUCCESS:
 			// change to main activity
 			Log.d("Login", "SUCCESS");
-			User.save(user);
-			goToCourseList();
+			try {
+				JSONObject u = result.getJSONObject(0);
+				user.setId(u.getInt("user_id"));
+				user.setName(u.getString("name"));
+				user.setC2dmRegistrationId((u.getString("c2dm_id")));
+				User.save(user);
+				goToCourseList();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		default:
 			Log.d("Register", "Error while logging in. Error code: "
@@ -352,8 +362,6 @@ public class SplashActivity extends LucidityActivity {
 				userRegister.addParam("name", user.getName());
 				userRegister.addParam("device_id", user.getDeviceId());
 				userRegister.addParam("c2dm_id", user.getC2dmRegistrationId());
-				userRegister.addParam("uni_id",
-						Integer.toString(user.getUniversity().getId()));
 
 				remoteDB.addReceiver("user.register", userRegister);
 				remoteDB.execute("user.register");
@@ -397,7 +405,6 @@ public class SplashActivity extends LucidityActivity {
 			loading.show();
 			user.setName(txtName.getText().toString());
 			user.setUniversity(selectedUni);
-			Log.i("onClick", "uni id: " + selectedUni.getId());
 
 			remoteDB.setServerPort(selectedUni.getServerPort());
 			remoteDB.setServerAddress(selectedUni.getServerAddress());

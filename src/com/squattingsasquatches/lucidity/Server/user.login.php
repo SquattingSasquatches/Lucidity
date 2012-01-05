@@ -15,10 +15,10 @@ class Login extends Controller
 	
 	protected function onShowForm(){}
  	protected function onValid(){
-// 		$this->db->query('SELECT * FROM `user_devices` AS ud, `users` AS users WHERE ud.device_id = ? AND ud.user_id = u.id', array('device_id' => $this->params['device_id'] ));
-// 		$records = $this->db->fetch_assoc_all();
-// 		$this->response->addData($records[0]);
-// 		$this->db->close();
+		$this->db->query('SELECT u.id AS user_id, name, c2dm_id FROM `user_devices` AS ud, `users` AS u WHERE ud.device_id = ? AND ud.user_id = u.id', array($this->params['device_id'] ));
+		$records = $this->db->fetch_assoc_all();
+		$this->response->addSuccessMessage();
+		$this->response->addData($records[0]);
  	}
  	protected function onInvalid(){}
 }

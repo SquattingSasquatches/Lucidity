@@ -39,7 +39,7 @@ public class Section extends ExtendedDataItem {
 			+ Keys.days + " TEXT not null, " + Keys.location
 			+ " TEXT not null, " + Keys.startTime + " TEXT not null, "
 			+ Keys.endTime + " TEXT not null, " + Keys.verified
-			+ " INTEGER not null);";
+			+ " INTEGER not null, " + Keys.checkedIn + " INTEGER not null);";
 
 	public static void delete(int id) {
 		LucidityDatabase.db().delete(tableName, "id = ?",
@@ -187,7 +187,8 @@ public class Section extends ExtendedDataItem {
 
 	public Section(Cursor c) {
 		this(c.getInt(c.getColumnIndex(Keys.id)), c.getString(c
-				.getColumnIndex(Keys.name)), new Course(c.getInt(c
+				.getColumnIndex(Keys.name)), c.getString(c
+				.getColumnIndex(Keys.sectionNumber)), new Course(c.getInt(c
 				.getColumnIndex(Keys.courseId)), c.getInt(c
 				.getColumnIndex(Keys.courseNumber))), new User(c.getInt(c
 				.getColumnIndex(Keys.professorId)), c.getString(c
@@ -201,12 +202,12 @@ public class Section extends ExtendedDataItem {
 	}
 
 	public Section(int id, String name) {
-		this(id, name, new Course(), new User(), "", "", "", "", 0, 0);
+		this(id, name, "", new Course(), new User(), "", "", "", "", 0, 0);
 	}
 
-	public Section(int id, String name, Course course, User professor,
-			String location, String days, String startTime, String endTime,
-			int isVerified, int checkedIn) {
+	public Section(int id, String name, String sectionNumber, Course course,
+			User professor, String location, String days, String startTime,
+			String endTime, int isVerified, int checkedIn) {
 		super(id, name);
 		this.setCourse(course);
 		this.setProfessor(professor);
@@ -215,6 +216,7 @@ public class Section extends ExtendedDataItem {
 		this.setStartTime(startTime);
 		this.setEndTime(endTime);
 		this.setIsVerified(isVerified);
+		this.setSectionNumber(sectionNumber);
 		this.setItemInfo1("Instructor: " + professor.toString());
 		this.setItemInfo2("Meets: " + days + " at " + startTime + " - "
 				+ endTime);

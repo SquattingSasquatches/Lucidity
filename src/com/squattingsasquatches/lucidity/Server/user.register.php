@@ -26,13 +26,13 @@ class Register extends Controller
 	    return "luc-" . $pass; 
 	
 	}
-	function universityExists( $param_names )
-	{
-		$this->db->select('id','unis', 'id = ?', false, false, array($this->params[$param_names[0]]) );
+// 	function universityExists( $param_names )
+// 	{
+// 		$this->db->select('id','unis', 'id = ?', false, false, array($this->params[$param_names[0]]) );
 	
-		if( !$this->db->found_rows ) return false;
-		return true;
-	}
+// 		if( !$this->db->found_rows ) return false;
+// 		return true;
+// 	}
 	function deviceDoesNotExist( $param_names )
 	{
 		if( empty($this->params['device_id']) ) return true;
@@ -53,7 +53,7 @@ class Register extends Controller
 			$this->response->addData( array('device_id' => $this->params['device_id']) );
  		}
 						
-		$this->db->insert('users', array( 'name' => $this->params['name'], 'uni_id' => $this->params['uni_id'] , 'c2dm_id' => $this->params['c2dm_id']  ));
+		$this->db->insert('users', array( 'name' => $this->params['name'], 'c2dm_id' => $this->params['c2dm_id']  ));
 	
 		$this->user_id = $this->db->insert_id();
 		
@@ -74,10 +74,10 @@ $controller = new Register();
 
 //$controller->addValidation( 'device_id', 'isParamSet', 'no_device_id_supplied', true );
 $controller->addValidation( 'name', 'isParamSet', 'no_name_supplied', true );
-$controller->addValidation( 'uni_id', 'isParamSet', 'no_uni_id_supplied', true );
+//$controller->addValidation( 'uni_id', 'isParamSet', 'no_uni_id_supplied', true );
 $controller->addValidation( 'c2dm_id', 'isParamSet', 'no_c2dm_id_supplied', true );
 $controller->addValidation( 'device_id', 'deviceDoesNotExist', 'device_id_already_exists', true );
-$controller->addValidation( 'uni_id', 'universityExists', 'no_university_found', true );
+//$controller->addValidation( 'uni_id', 'universityExists', 'no_university_found', true );
 
 $controller->execute();
 
