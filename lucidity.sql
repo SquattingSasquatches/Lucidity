@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 29, 2011 at 10:24 PM
+-- Generation Time: Jan 05, 2012 at 11:09 AM
 -- Server version: 5.5.18
 -- PHP Version: 5.3.8
 
@@ -354,7 +354,7 @@ CREATE TABLE IF NOT EXISTS `student_courses` (
 
 INSERT INTO `student_courses` (`student_id`, `section_id`, `is_verified`, `checked_in`) VALUES
 (61, 2, 0, 0),
-(69, 2, 0, 0);
+(70, 2, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -2560,48 +2560,26 @@ INSERT INTO `unis` (`id`, `name`, `server_address`, `server_port`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `uni_subjects`
---
-
-CREATE TABLE IF NOT EXISTS `uni_subjects` (
-  `subject_id` int(11) NOT NULL,
-  `uni_id` int(11) NOT NULL,
-  KEY `subject_id` (`subject_id`),
-  KEY `uni_id` (`uni_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `uni_subjects`
---
-
-INSERT INTO `uni_subjects` (`subject_id`, `uni_id`) VALUES
-(1, 1870);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `users`
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  `uni_id` int(11) NOT NULL,
   `c2dm_id` text NOT NULL,
   `in_class` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `uni_id` (`uni_id`),
   KEY `in_class` (`in_class`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=70 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=71 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `uni_id`, `c2dm_id`, `in_class`) VALUES
-(57, 'Jeff Gray', 1870, 'thisisfake', 0),
-(61, 'Brett Aaron', 1870, 'APA91bHKsboJGAQnp962wDjPuBQu7681kQXxx9G77ZvZ5Sn7m1yTUJRUaDy0pMb5DbNFwOoR0QZ7VTA1v6S0cpJIuEae2WenBBNWfFy4lwJZIwOAf47AncoHc06Vk4ojGvs9NO9WD12SlEDswN9Kd2iZCvCiUVWdbzXSCbo16e3ujQQYhJApD3o', 1),
-(69, 'Asa Rudick', 1870, 'APA91bFrg6z9q5VNxhWvuTFol2evY_-8_ALA6eTjk1tTV_yFSE5huWZ1W4y_ZlRXRVDZKrZxGJrvtormkV9E8cRc9Ezhkizuz6NmCZOINaJniTpZ_INBjbuLfRiyzAZBS0w3vh4Ht10R8xLwhk4AL_Epj2e3o40yi2Y4o5EDXkjl7oXac92T_Hg', 0);
+INSERT INTO `users` (`id`, `name`, `c2dm_id`, `in_class`) VALUES
+(57, 'Jeff Gray', 'thisisfake', 0),
+(61, 'Brett Aaron', 'APA91bHKsboJGAQnp962wDjPuBQu7681kQXxx9G77ZvZ5Sn7m1yTUJRUaDy0pMb5DbNFwOoR0QZ7VTA1v6S0cpJIuEae2WenBBNWfFy4lwJZIwOAf47AncoHc06Vk4ojGvs9NO9WD12SlEDswN9Kd2iZCvCiUVWdbzXSCbo16e3ujQQYhJApD3o', 1),
+(70, 'Asa Rudick', 'APA91bHfDq4ABOpzs_1ZyyQGCG0__5cJJ2ukQVKXzBDa6qd1HM0YKDRvO5QTivQvX4qY75NSPjbfyOYYu18ioEgdGVPSdwVUPFmxP7_pfebP9Lr6LNkYJe49XKNbaKytSFpz2ty1RLGfeBrqgxHvlmkfE6wvmNg9BLZEdEwLkYurQSUWeO3f7Bg', 0);
 
 -- --------------------------------------------------------
 
@@ -2622,7 +2600,7 @@ CREATE TABLE IF NOT EXISTS `user_devices` (
 INSERT INTO `user_devices` (`user_id`, `device_id`) VALUES
 (61, '4475d581133fc04c'),
 (57, 'fake'),
-(69, 'b217c91b5d134eb1');
+(70, 'b217c91b5d134eb1');
 
 --
 -- Constraints for dumped tables
@@ -2699,19 +2677,6 @@ ALTER TABLE `sections`
 ALTER TABLE `student_courses`
   ADD CONSTRAINT `student_courses_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `student_courses_ibfk_2` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `uni_subjects`
---
-ALTER TABLE `uni_subjects`
-  ADD CONSTRAINT `uni_subjects_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `uni_subjects_ibfk_2` FOREIGN KEY (`uni_id`) REFERENCES `unis` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`uni_id`) REFERENCES `unis` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user_devices`
