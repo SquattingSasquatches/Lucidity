@@ -60,7 +60,7 @@ public class University extends DataItem {
 		this.manualFlag = c.getInt(c.getColumnIndex(Keys.manualFlag));
 		this.serverAddress = c.getString(c.getColumnIndex(Keys.serverAddress));
 		this.serverPort = c.getInt(c.getColumnIndex(Keys.serverPort));
-		c.close();
+
 	}
 
 	public University(int id, String name, String serverAddress,
@@ -110,9 +110,13 @@ public class University extends DataItem {
 
 		new Thread(new Runnable() {
 			public void run() {
+				// Transaction required since user can kill app during this
+				// insertion process.
+				LucidityDatabase.db().beginTransaction();
 				University.insert((ArrayList<University>) UXMLHandler
 						.getUniversities().clone());
-				LucidityDatabase.close();
+				LucidityDatabase.db().setTransactionSuccessful();
+				LucidityDatabase.db().endTransaction();
 			}
 		}).start();
 
@@ -128,10 +132,14 @@ public class University extends DataItem {
 		Cursor result = LucidityDatabase.db().query(tableName, null, "id = ?",
 				new String[] { Keys.id }, null, null, null);
 
-		if (result.getCount() == 0)
+		if (!result.moveToFirst()) {
+			result.close();
 			return null;
+		}
 
-		return new University(result);
+		University u = new University(result);
+		result.close();
+		return u;
 	}
 
 	public static ArrayList<University> getAll() {
@@ -139,12 +147,10 @@ public class University extends DataItem {
 		Cursor result = LucidityDatabase.db().query(tableName, null, null,
 				null, null, null, null);
 
-		if (result.getCount() == 0)
+		if (!result.moveToFirst()) {
+			result.close();
 			return universities;
-
-		Log.i("getCount()", "" + result.getCount());
-
-		result.moveToFirst();
+		}
 
 		while (!result.isAfterLast()) {
 			universities.add(new University(result));

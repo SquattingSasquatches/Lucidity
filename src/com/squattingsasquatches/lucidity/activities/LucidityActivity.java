@@ -11,6 +11,7 @@ package com.squattingsasquatches.lucidity.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.squattingsasquatches.lucidity.LucidityDatabase;
 import com.squattingsasquatches.lucidity.RemoteDBAdapter;
@@ -30,17 +31,24 @@ public abstract class LucidityActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		try {
+			super.onCreate(savedInstanceState);
 
-		db = new LucidityDatabase(this);
-		remoteDB = new RemoteDBAdapter(this);
+			db = new LucidityDatabase(this);
+			remoteDB = new RemoteDBAdapter(this);
 
-		user = new User();
+			user = new User();
 
-		if (User.exists()) {
-			user.load();
-			remoteDB.setServerAddress(user.getUniversity().getServerAddress());
-			remoteDB.setServerPort(user.getUniversity().getServerPort());
+			if (User.exists()) {
+				user.load();
+				remoteDB.setServerAddress(user.getUniversity()
+						.getServerAddress());
+				remoteDB.setServerPort(user.getUniversity().getServerPort());
+			}
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			Log.i("SplashActivity.onCreate()", "Error: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

@@ -72,8 +72,10 @@ public class Section extends ExtendedDataItem {
 		Cursor result = LucidityDatabase.db().query(tableName, null, null,
 				null, null, null, null);
 
-		if (result.getCount() == 0)
+		if (!result.moveToFirst()) {
+			result.close();
 			return sections;
+		}
 
 		while (!result.isAfterLast()) {
 			sections.add(new Section(result));
@@ -186,8 +188,6 @@ public class Section extends ExtendedDataItem {
 				.getColumnIndex(Keys.endTime)), c.getInt(c
 				.getColumnIndex(Keys.verified)), c.getInt(c
 				.getColumnIndex(Keys.checkedIn)));
-		c.close();
-
 	}
 
 	public Section(int id, String name) {

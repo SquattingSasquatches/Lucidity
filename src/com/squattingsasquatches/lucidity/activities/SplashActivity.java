@@ -35,7 +35,6 @@ import com.squattingsasquatches.lucidity.Codes;
 import com.squattingsasquatches.lucidity.Config;
 import com.squattingsasquatches.lucidity.DeviceRegistrar;
 import com.squattingsasquatches.lucidity.InternalReceiver;
-import com.squattingsasquatches.lucidity.LucidityDatabase;
 import com.squattingsasquatches.lucidity.R;
 import com.squattingsasquatches.lucidity.objects.University;
 import com.squattingsasquatches.lucidity.objects.User;
@@ -59,7 +58,7 @@ public class SplashActivity extends LucidityActivity {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		LucidityDatabase.close();
+		// LucidityDatabase.close();
 		DeviceRegistrar.unregisterReceiver(this, remoteRegistration);
 	}
 
@@ -67,8 +66,10 @@ public class SplashActivity extends LucidityActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		try {
+			Log.i("OnCreate()", "Line 68");
 			super.onCreate(savedInstanceState);
 
+			Log.i("OnCreate()", "Line 72");
 			setContentView(R.layout.splash);
 
 			// Load default universities if the University table is empty.
@@ -87,6 +88,10 @@ public class SplashActivity extends LucidityActivity {
 
 			selectedUni = new University();
 
+			Log.i("OnCreate()", "Line 91");
+
+			// If the list of universities is empty, or if the user killed the
+			// app while inserting universities into the database, load default.
 			if (University.isEmpty()) {
 
 				loading.setTitle("Please wait");
@@ -101,8 +106,13 @@ public class SplashActivity extends LucidityActivity {
 				}
 
 				loading.dismiss();
+			} else {
+				unis = University.getAll();
+				Log.i("unis", unis.size() + "");
+
 			}
 
+			Log.i("OnCreate()", "Line 108");
 			if (user.getDeviceId().equals("")) {
 				firstRun = true;
 
@@ -123,6 +133,10 @@ public class SplashActivity extends LucidityActivity {
 			Log.i("SplashActivity.onCreate()", "Error: " + e.getMessage());
 			e.printStackTrace();
 		} catch (IllegalStateException e) {
+			Log.i("SplashActivity.onCreate()", "Error: " + e.getMessage());
+			e.printStackTrace();
+
+		} catch (NullPointerException e) {
 			Log.i("SplashActivity.onCreate()", "Error: " + e.getMessage());
 			e.printStackTrace();
 

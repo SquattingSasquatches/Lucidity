@@ -79,7 +79,6 @@ public class User extends DataItem {
 				.getColumnIndex(Keys.c2dmId)), c.getInt(c
 				.getColumnIndex(Keys.c2dmIsRegistered)), c.getString(c
 				.getColumnIndex(Keys.c2dmLastCheck)));
-		c.close();
 	}
 
 	public void load() {
@@ -121,12 +120,17 @@ public class User extends DataItem {
 		Cursor result = LucidityDatabase.db().query(User.tableName, null, null,
 				null, null, null, null);
 
-		if (result.getCount() == 0) {
+		if (!result.moveToFirst()) {
+			result.close();
 			return null;
 		}
 
 		result.moveToFirst();
-		return new User(result);
+
+		User u = new User(result);
+		result.close();
+		return u;
+
 	}
 
 	public static int getStoredId() {
