@@ -37,8 +37,9 @@ public class InternalReceiver extends ResultReceiver {
 	public void onHttpError(int statusCode) {
 	}
 
-	public void onInvalidMessage() {
-
+	public void onInvalidMessage(String result) {
+		Log.e("InternalReceiver", "Query did not return valid result. Result: "
+				+ result);
 	}
 
 	public boolean validate() {
@@ -49,14 +50,15 @@ public class InternalReceiver extends ResultReceiver {
 	public void onReceiveResult(int resultCode, Bundle resultData) {
 		if (resultCode == Codes.REMOTE_QUERY_COMPLETE) {
 			String result = resultData.getString("result");
+			Log.i("OnReceiveResult()", result);
 			try {
 				if (result.startsWith("["))
 					update(new JSONArray(result));
 				else
 					update(new JSONArray("[" + result + "]"));
 			} catch (JSONException e) {
-				Log.e("onReceiveResult", "Query did not return valid result");
-				onInvalidMessage();
+
+				onInvalidMessage(result);
 			}
 		} else if (resultCode == Codes.REMOTE_CONNECTION_ERROR) {
 			onConnectionError(resultData.getString("connection_error_code"));

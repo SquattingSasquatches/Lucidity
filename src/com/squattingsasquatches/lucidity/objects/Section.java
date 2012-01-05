@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,15 +32,16 @@ public class Section extends ExtendedDataItem {
 
 	public static final String tableName = "sections";
 	public static final String schema = tableName + " (" + Keys.id
-			+ " INTEGER not null, " + Keys.name + " TEXT not null, "
-			+ Keys.subjectPrefix + " TEXT not null, " + Keys.courseId
-			+ " INTEGER not null, " + Keys.courseNumber + " TEXT not null, "
-			+ Keys.sectionNumber + " TEXT not null, " + Keys.professorId
-			+ " INTEGER not null, " + Keys.professorName + " TEXT not null, "
-			+ Keys.days + " TEXT not null, " + Keys.location
-			+ " TEXT not null, " + Keys.startTime + " TEXT not null, "
-			+ Keys.endTime + " TEXT not null, " + Keys.verified
-			+ " INTEGER not null, " + Keys.checkedIn + " INTEGER not null);";
+			+ " INTEGER not null PRIMARY KEY, " + Keys.name
+			+ " TEXT not null, " + Keys.subjectPrefix + " TEXT not null, "
+			+ Keys.courseId + " INTEGER not null, " + Keys.courseNumber
+			+ " TEXT not null, " + Keys.sectionNumber + " TEXT not null, "
+			+ Keys.professorId + " INTEGER not null, " + Keys.professorName
+			+ " TEXT not null, " + Keys.days + " TEXT not null, "
+			+ Keys.location + " TEXT not null, " + Keys.startTime
+			+ " TEXT not null, " + Keys.endTime + " TEXT not null, "
+			+ Keys.verified + " INTEGER not null, " + Keys.checkedIn
+			+ " INTEGER not null);";
 
 	public static void delete(int id) {
 		LucidityDatabase.db().delete(tableName, "id = ?",
@@ -75,6 +77,10 @@ public class Section extends ExtendedDataItem {
 		result.close();
 		return s;
 
+	}
+
+	public static boolean exists(int id) {
+		return (Section.get(id) != null);
 	}
 
 	public static ArrayList<Section> getAll() {
@@ -140,7 +146,11 @@ public class Section extends ExtendedDataItem {
 		values.put(Keys.endTime, section.getEndTime());
 		values.put(Keys.verified, section.getIsVerified());
 		values.put(Keys.checkedIn, section.getCheckedIn());
-		LucidityDatabase.db().insert(tableName, null, values);
+		try {
+			LucidityDatabase.db().insert(tableName, null, values);
+		} catch (SQLiteConstraintException e) {
+
+		}
 	}
 
 	public static void update(Section section) {

@@ -66,7 +66,8 @@ public class CourseMenuActivity extends LucidityActivity {
 		if (updateCourses) {
 			remoteDB.execute("user.courses.view");
 		} else {
-			displayCourses(new JSONArray(Section.getAll()));
+			userSections = Section.getAll();
+			attachCourseOnClickListener();
 			loading.dismiss();
 		}
 	}

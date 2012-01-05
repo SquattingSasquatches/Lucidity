@@ -33,6 +33,7 @@ public class SelectSectionActivity extends LucidityActivity {
 
 	/* Misc */
 	private ArrayList<Section> courseSections;
+	private ArrayList<Section> userSections;
 	private int courseId;
 
 	@Override
@@ -52,6 +53,8 @@ public class SelectSectionActivity extends LucidityActivity {
 
 		/* Misc */
 		courseSections = new ArrayList<Section>();
+		userSections = Section.getAll();
+
 		sectionsListView = (ListView) findViewById(R.id.ListContainer);
 		courseId = getIntent().getIntExtra("courseId", -1);
 
@@ -92,6 +95,10 @@ public class SelectSectionActivity extends LucidityActivity {
 			}
 		}
 
+		// Remove sections that have already been saved.
+		for (Section s : userSections) {
+			courseSections.remove(s);
+		}
 		sectionsListView.setAdapter(new ExtendedListAdapter<Section>(this,
 				courseSections));
 		sectionsListView.setOnItemClickListener(listViewHandler);
