@@ -62,9 +62,19 @@ public class Section extends ExtendedDataItem {
 	}
 
 	public static Section get(int id) {
-		Cursor result = LucidityDatabase.db().query(tableName, null, "id = ?",
-				new String[] { Keys.id }, null, null, null);
-		return new Section(result);
+		Cursor result = LucidityDatabase.db().query(tableName, null,
+				Keys.id + " = ?", new String[] { String.valueOf(id) }, null,
+				null, null);
+
+		if (!result.moveToFirst()) {
+			result.close();
+			return null;
+		}
+
+		Section s = new Section(result);
+		result.close();
+		return s;
+
 	}
 
 	public static ArrayList<Section> getAll() {

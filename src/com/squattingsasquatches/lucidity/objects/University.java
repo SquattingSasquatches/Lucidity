@@ -56,7 +56,8 @@ public class University extends DataItem {
 	}
 
 	public University(Cursor c) {
-		super(c.getInt(0), c.getString(1));
+		super(c.getInt(c.getColumnIndex(Keys.id)), c.getString(c
+				.getColumnIndex(Keys.name)));
 		this.manualFlag = c.getInt(c.getColumnIndex(Keys.manualFlag));
 		this.serverAddress = c.getString(c.getColumnIndex(Keys.serverAddress));
 		this.serverPort = c.getInt(c.getColumnIndex(Keys.serverPort));
@@ -129,8 +130,9 @@ public class University extends DataItem {
 	}
 
 	public static University get(int id) {
-		Cursor result = LucidityDatabase.db().query(tableName, null, "id = ?",
-				new String[] { Keys.id }, null, null, null);
+		Cursor result = LucidityDatabase.db().query(tableName, null,
+				Keys.id + " = ?", new String[] { String.valueOf(id) }, null,
+				null, null);
 
 		if (!result.moveToFirst()) {
 			result.close();

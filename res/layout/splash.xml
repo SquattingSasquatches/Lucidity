@@ -50,7 +50,7 @@
                     android:layout_below="@id/progressBar1"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp"
-                    android:text="@string/checking_registration"
+                    android:text="@string/loading"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FFFFFFFF" />
             </RelativeLayout>

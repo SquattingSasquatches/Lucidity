@@ -30,5 +30,6 @@
     </string-array>
 
     <string name="login_btn">Sign in</string>
+    <string name="loading">Loading...</string>
 
 </resources>

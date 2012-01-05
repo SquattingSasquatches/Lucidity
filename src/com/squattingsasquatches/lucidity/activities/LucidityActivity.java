@@ -44,6 +44,8 @@ public abstract class LucidityActivity extends Activity {
 				remoteDB.setServerAddress(user.getUniversity()
 						.getServerAddress());
 				remoteDB.setServerPort(user.getUniversity().getServerPort());
+			} else {
+				Log.i("OnCreate()", "User does not exist.");
 			}
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block

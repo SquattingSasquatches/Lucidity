@@ -113,6 +113,7 @@ public final class R {
         public static final int connection_error=0x7f05000b;
         public static final int due_date=0x7f05000f;
         public static final int hello=0x7f050000;
+        public static final int loading=0x7f050017;
         public static final int loading_unis=0x7f050006;
         public static final int login_btn=0x7f050016;
         public static final int my_courses=0x7f050004;

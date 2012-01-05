@@ -91,7 +91,10 @@ public class User extends DataItem {
 		this.setLatitude(u.getLatitude());
 		this.setLongitude(u.getLongitude());
 		this.setName(u.getName());
-		this.setUniversity(u.getUniversity());
+
+		University uni = University.get(u.getUniversity().getId());
+		this.setUniversity(uni);
+
 	}
 
 	public static boolean exists() {
@@ -104,7 +107,6 @@ public class User extends DataItem {
 
 	public void setUniversity(University uni) {
 		this.uni = uni;
-		Log.i("setUniversity", "" + uni.getId());
 	}
 
 	public String getC2dmRegistrationId() {

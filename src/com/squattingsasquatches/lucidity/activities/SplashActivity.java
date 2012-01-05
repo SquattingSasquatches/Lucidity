@@ -12,7 +12,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -51,7 +50,7 @@ public class SplashActivity extends LucidityActivity {
 	private TextView txtLoading;
 	private University selectedUni;
 	private ArrayList<University> unis;
-	private boolean firstRun = true;
+	private boolean firstRun = false;
 
 	// private ArrayList<University> unisToSave;
 
@@ -63,83 +62,63 @@ public class SplashActivity extends LucidityActivity {
 	}
 
 	/** Called when the activity is first created. */
-	@Override
+
 	protected void onCreate(Bundle savedInstanceState) {
-		try {
-			Log.i("OnCreate()", "Line 68");
-			super.onCreate(savedInstanceState);
 
-			Log.i("OnCreate()", "Line 72");
-			setContentView(R.layout.splash);
+		super.onCreate(savedInstanceState);
 
-			// Load default universities if the University table is empty.
+		setContentView(R.layout.splash);
 
-			btnRegister = (Button) findViewById(R.id.btnRegister);
-			btnSelectRegister = (Button) findViewById(R.id.btnSelectRegister);
-			btnSelectLogin = (Button) findViewById(R.id.btnSelectLogin);
-			btnLogin = (Button) findViewById(R.id.btnLogin);
+		// Load default universities if the University table is empty.
 
-			layoutFlipper = (ViewFlipper) findViewById(R.id.ViewFlipper);
+		btnRegister = (Button) findViewById(R.id.btnRegister);
+		btnSelectRegister = (Button) findViewById(R.id.btnSelectRegister);
+		btnSelectLogin = (Button) findViewById(R.id.btnSelectLogin);
+		btnLogin = (Button) findViewById(R.id.btnLogin);
 
-			txtName = (EditText) findViewById(R.id.txtName);
-			txtLoading = (TextView) findViewById(R.id.txtLoading);
+		layoutFlipper = (ViewFlipper) findViewById(R.id.ViewFlipper);
 
-			loading = new ProgressDialog(this);
+		txtName = (EditText) findViewById(R.id.txtName);
+		txtLoading = (TextView) findViewById(R.id.txtLoading);
 
-			selectedUni = new University();
+		loading = new ProgressDialog(this);
 
-			Log.i("OnCreate()", "Line 91");
+		selectedUni = new University();
 
-			// If the list of universities is empty, or if the user killed the
-			// app while inserting universities into the database, load default.
-			if (University.isEmpty()) {
+		// If the list of universities is empty, or if the user killed the
+		// app while inserting universities into the database, load default.
+		if (University.isEmpty()) {
 
-				loading.setTitle("Please wait");
-				loading.setMessage("Loading default universities... ");
-				loading.setCancelable(false);
-				loading.show();
+			loading.setTitle("Please wait");
+			loading.setMessage("Loading default universities... ");
+			loading.setCancelable(false);
+			loading.show();
 
-				try {
-					unis = University.loadDefault(this);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				loading.dismiss();
-			} else {
-				unis = University.getAll();
-				Log.i("unis", unis.size() + "");
-
+			try {
+				unis = University.loadDefault(this);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 
-			Log.i("OnCreate()", "Line 108");
-			if (user.getDeviceId().equals("")) {
-				firstRun = true;
+			loading.dismiss();
+		} else {
+			unis = University.getAll();
 
-			}
+		}
 
-			// get device's unique ID
-			user.setDeviceId(Settings.Secure.getString(getContentResolver(),
-					Settings.Secure.ANDROID_ID));
+		if (user.getDeviceId().equals("")) {
+			firstRun = true;
 
-			if (firstRun || user.getUniversity().getServerAddress().equals("")) {
-				// Show Login/Register option.
-				showSelectionScreen();
-			} else {
-				login();
-			}
-		} catch (CursorIndexOutOfBoundsException e) {
-			// TODO Auto-generated catch block
-			Log.i("SplashActivity.onCreate()", "Error: " + e.getMessage());
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			Log.i("SplashActivity.onCreate()", "Error: " + e.getMessage());
-			e.printStackTrace();
+		}
 
-		} catch (NullPointerException e) {
-			Log.i("SplashActivity.onCreate()", "Error: " + e.getMessage());
-			e.printStackTrace();
-
+		// get device's unique ID
+		user.setDeviceId(Settings.Secure.getString(getContentResolver(),
+				Settings.Secure.ANDROID_ID));
+		if (firstRun || user.getUniversity().getServerAddress().equals("")) {
+			// Show Login/Register option.
+			showSelectionScreen();
+		} else {
+			login();
 		}
 	}
 
