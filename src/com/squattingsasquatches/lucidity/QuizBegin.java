@@ -14,15 +14,14 @@ public class QuizBegin extends BroadcastReceiver {
 
 		if (CheckInManager.isCheckedIn()) {
 			// Start quiz
-			Intent quizActivity = new Intent(ctx, QuizActivity.class);
+			final Intent quizActivity = new Intent(ctx, QuizActivity.class);
 			quizActivity.putExtras(intent.getExtras());
 			quizActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			ctx.startActivity(quizActivity);
-		} else {
+		} else
 			Toast.makeText(ctx,
 					"A quiz has started, but you are not checked in.",
 					Toast.LENGTH_LONG).show();
-		}
 	}
 
 };

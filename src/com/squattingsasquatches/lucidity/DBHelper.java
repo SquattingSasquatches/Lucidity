@@ -35,7 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + User.tableName + ";");
 		db.execSQL("DROP TABLE IF EXISTS " + Section.tableName + ";");
 		db.execSQL("DROP TABLE IF EXISTS " + University.tableName + ";");
-		onCreate(db);
+		this.onCreate(db);
 	}
 
 }

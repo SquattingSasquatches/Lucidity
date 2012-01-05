@@ -18,87 +18,87 @@ public class RemoteDBAdapter {
 		this.ctx = ctx;
 
 		// initialize our db service
-		dbService = new Intent(ctx, PHPService.class);
-		receivers = new HashMap<String, InternalReceiver>();
+		this.dbService = new Intent(ctx, PHPService.class);
+		this.receivers = new HashMap<String, InternalReceiver>();
 
 	}
 
 	public void addReceiver(String name, InternalReceiver receiver) {
 		receiver.addParam("action", name);
-		receivers.put(name, receiver);
+		this.receivers.put(name, receiver);
 	}
 
 	public void execute(String name) {
 		Log.i("Executing...", name);
-		HashMap<String, String> params = receivers.get(name).getParams();
-		for (HashMap.Entry<String, String> entry : params.entrySet()) {
+		final HashMap<String, String> params = this.receivers.get(name)
+				.getParams();
+		for (final HashMap.Entry<String, String> entry : params.entrySet())
 			Log.i(entry.getKey(), entry.getValue());
-		}
-		dbService.putExtra("serverAddress", serverAddress);
-		dbService.putExtra("serverPort", serverPort);
-		dbService.putExtra("params", receivers.get(name).getParams());
-		dbService.putExtra("receiver", receivers.get(name));
-		ctx.startService(dbService);
-	}
-
-	public boolean stopService() {
-		return ctx.stopService(dbService);
-	}
-
-	public void unregisterAllReceivers() {
-		try {
-			receivers.clear();
-		} catch (IllegalArgumentException e) {
-			Log.i("unregisterReceiver", "receiver not registered");
-		}
-	}
-
-	public void unregisterReceiver(String name) {
-		try {
-			receivers.remove(name);
-		} catch (IllegalArgumentException e) {
-			Log.i("unregisterReceiver", "receiver not registered");
-		}
+		this.dbService.putExtra("serverAddress", this.serverAddress);
+		this.dbService.putExtra("serverPort", this.serverPort);
+		this.dbService.putExtra("params", this.receivers.get(name).getParams());
+		this.dbService.putExtra("receiver", this.receivers.get(name));
+		this.ctx.startService(this.dbService);
 	}
 
 	public Context getCtx() {
-		return ctx;
+		return this.ctx;
+	}
+
+	public Intent getDbService() {
+		return this.dbService;
+	}
+
+	public HashMap<String, InternalReceiver> getReceivers() {
+		return this.receivers;
+	}
+
+	public String getServerAddress() {
+		return this.serverAddress;
+	}
+
+	public int getServerPort() {
+		return this.serverPort;
 	}
 
 	public void setCtx(Context ctx) {
 		this.ctx = ctx;
 	}
 
-	public Intent getDbService() {
-		return dbService;
-	}
-
 	public void setDbService(Intent dbService) {
 		this.dbService = dbService;
-	}
-
-	public HashMap<String, InternalReceiver> getReceivers() {
-		return receivers;
 	}
 
 	public void setReceivers(HashMap<String, InternalReceiver> receivers) {
 		this.receivers = receivers;
 	}
 
-	public String getServerAddress() {
-		return serverAddress;
-	}
-
 	public void setServerAddress(String serverAddress) {
 		this.serverAddress = serverAddress;
 	}
 
-	public int getServerPort() {
-		return serverPort;
-	}
-
 	public void setServerPort(int serverPort) {
 		this.serverPort = serverPort;
+	}
+
+	public boolean stopService() {
+		return this.ctx.stopService(this.dbService);
+	}
+
+	public void unregisterAllReceivers() {
+		try {
+			this.receivers.clear();
+		} catch (final IllegalArgumentException e) {
+			Log.i("unregisterReceiver", "receiver not registered");
+		}
+	}
+
+	public void unregisterReceiver(String name) {
+		try {
+			this.receivers.remove(name);
+		} catch (final IllegalArgumentException e) {
+			Log.i("unregisterReceiver", "receiver not registered");
+		}
 	}
 
 }

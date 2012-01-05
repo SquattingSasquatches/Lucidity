@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,6 +32,7 @@ public class Section extends ExtendedDataItem {
 	}
 
 	public static final String tableName = "sections";
+
 	public static final String schema = tableName + " (" + Keys.id
 			+ " INTEGER not null PRIMARY KEY, " + Keys.name
 			+ " TEXT not null, " + Keys.subjectPrefix + " TEXT not null, "
@@ -41,30 +43,19 @@ public class Section extends ExtendedDataItem {
 			+ Keys.location + " TEXT not null, " + Keys.startTime
 			+ " TEXT not null, " + Keys.endTime + " TEXT not null, "
 			+ Keys.verified + " INTEGER not null, " + Keys.checkedIn
-			+ " INTEGER not null);";
+			+ " INTEGER DEFAULT 0);";
 
 	public static void delete(int id) {
 		LucidityDatabase.db().delete(tableName, "id = ?",
 				new String[] { Keys.id });
 	}
 
-	public static void setStoredCheckedIn(boolean checkedIn, int id) {
-		ContentValues data = new ContentValues();
-		int c = 0;
-		if (checkedIn)
-			c = 1;
-		data.put(Keys.checkedIn, c);
-		LucidityDatabase.db().update(tableName, data, Keys.id + " = ?",
-				new String[] { String.valueOf(id) });
-
-	}
-
-	public static int getStoredCheckedIn(int id) {
-		return get(id).getCheckedIn();
+	public static boolean exists(int id) {
+		return Section.get(id) != null;
 	}
 
 	public static Section get(int id) {
-		Cursor result = LucidityDatabase.db().query(tableName, null,
+		final Cursor result = LucidityDatabase.db().query(tableName, null,
 				Keys.id + " = ?", new String[] { String.valueOf(id) }, null,
 				null, null);
 
@@ -73,20 +64,16 @@ public class Section extends ExtendedDataItem {
 			return null;
 		}
 
-		Section s = new Section(result);
+		final Section s = new Section(result);
 		result.close();
 		return s;
 
 	}
 
-	public static boolean exists(int id) {
-		return (Section.get(id) != null);
-	}
-
 	public static ArrayList<Section> getAll() {
-		ArrayList<Section> sections = new ArrayList<Section>();
-		Cursor result = LucidityDatabase.db().query(tableName, null, null,
-				null, null, null, null);
+		final ArrayList<Section> sections = new ArrayList<Section>();
+		final Cursor result = LucidityDatabase.db().query(tableName, null,
+				null, null, null, null, null);
 
 		if (!result.moveToFirst()) {
 			result.close();
@@ -102,35 +89,24 @@ public class Section extends ExtendedDataItem {
 		return sections;
 	}
 
-	public static void insert(ArrayList<Section> sections) {
-		for (Section s : sections) {
-			insert(s);
-		}
-	}
-
-	public static String toJSON(int id) {
-		Type t = new TypeToken<Section>() {
-		}.getType();
-		Gson g = new Gson();
-		return g.toJson(get(id), t);
-	}
-
-	public static String toJSON(Section section) {
-		Type t = new TypeToken<Section>() {
-		}.getType();
-		Gson g = new Gson();
-		return g.toJson(section, t);
-	}
-
 	public static String getAllJSON() {
-		Type t = new TypeToken<ArrayList<Section>>() {
+		final Type t = new TypeToken<ArrayList<Section>>() {
 		}.getType();
-		Gson g = new Gson();
+		final Gson g = new Gson();
 		return g.toJson(getAll(), t);
 	}
 
+	public static int getStoredCheckedIn(int id) {
+		return get(id).getCheckedIn();
+	}
+
+	public static void insert(ArrayList<Section> sections) {
+		for (final Section s : sections)
+			insert(s);
+	}
+
 	public static void insert(Section section) {
-		ContentValues values = new ContentValues();
+		final ContentValues values = new ContentValues();
 		values.put(Keys.id, section.getId());
 		values.put(Keys.name, section.getName());
 		values.put(Keys.courseId, section.getCourse().getId());
@@ -148,13 +124,39 @@ public class Section extends ExtendedDataItem {
 		values.put(Keys.checkedIn, section.getCheckedIn());
 		try {
 			LucidityDatabase.db().insert(tableName, null, values);
-		} catch (SQLiteConstraintException e) {
+		} catch (final SQLiteConstraintException e) {
+			Log.i("insert()", e.getMessage());
 
 		}
 	}
 
+	public static void setStoredCheckedIn(boolean checkedIn, int id) {
+		final ContentValues data = new ContentValues();
+		int c = 0;
+		if (checkedIn)
+			c = 1;
+		data.put(Keys.checkedIn, c);
+		LucidityDatabase.db().update(tableName, data, Keys.id + " = ?",
+				new String[] { String.valueOf(id) });
+
+	}
+
+	public static String toJSON(int id) {
+		final Type t = new TypeToken<Section>() {
+		}.getType();
+		final Gson g = new Gson();
+		return g.toJson(get(id), t);
+	}
+
+	public static String toJSON(Section section) {
+		final Type t = new TypeToken<Section>() {
+		}.getType();
+		final Gson g = new Gson();
+		return g.toJson(section, t);
+	}
+
 	public static void update(Section section) {
-		ContentValues values = new ContentValues();
+		final ContentValues values = new ContentValues();
 		values.put(Keys.name, section.getName());
 		values.put(Keys.courseId, section.getCourse().getId());
 		values.put(Keys.courseNumber, section.getCourse().getCourseNum());
@@ -179,14 +181,10 @@ public class Section extends ExtendedDataItem {
 
 	private String days;
 
-	// public Section(int id, String name, Course course, User professor, String
-	// location, String days, String startTime, String endTime) {
-	// this(id, name, course, professor, location, days, startTime, endTime,
-	// sectionNumber, 0, 0);
-	// }
-
 	private String endTime;
+
 	private int isVerified;
+
 	private String location;
 
 	private User professor;
@@ -215,23 +213,6 @@ public class Section extends ExtendedDataItem {
 		this(id, name, "", new Course(), new User(), "", "", "", "", 0, 0);
 	}
 
-	public Section(int id, String name, String sectionNumber, Course course,
-			User professor, String location, String days, String startTime,
-			String endTime, int isVerified, int checkedIn) {
-		super(id, name);
-		this.setCourse(course);
-		this.setProfessor(professor);
-		this.setLocation(location);
-		this.setDays(days);
-		this.setStartTime(startTime);
-		this.setEndTime(endTime);
-		this.setIsVerified(isVerified);
-		this.setSectionNumber(sectionNumber);
-		this.setItemInfo1("Instructor: " + professor.toString());
-		this.setItemInfo2("Meets: " + days + " at " + startTime + " - "
-				+ endTime);
-	}
-
 	public Section(int id, String name, Course course, User professor,
 			String location, String days, String startTime, String endTime,
 			String sectionNumber, int isVerified, int checkedIn) {
@@ -245,46 +226,69 @@ public class Section extends ExtendedDataItem {
 		this.sectionNumber = sectionNumber;
 		this.isVerified = isVerified;
 		this.checkedIn = checkedIn;
+
+		this.setItemInfo1("Instructor: " + professor.toString());
+		this.setItemInfo2("Meets: " + days + " at " + startTime + " - "
+				+ endTime);
 	}
 
-	public int getId() {
-		return id;
+	public Section(int id, String name, String sectionNumber, Course course,
+			User professor, String location, String days, String startTime,
+			String endTime, int isVerified, int checkedIn) {
+		super(id, name);
+		this.setCourse(course);
+		this.setProfessor(professor);
+		this.setLocation(location);
+		this.setDays(days);
+		this.setStartTime(startTime);
+		this.setEndTime(endTime);
+		this.setIsVerified(isVerified);
+		this.setSectionNumber(sectionNumber);
+
+		this.setItemInfo1("Instructor: " + professor.toString());
+		this.setItemInfo2("Meets: " + days + " at " + startTime + " - "
+				+ endTime);
 	}
 
 	public int getCheckedIn() {
-		return checkedIn;
+		return this.checkedIn;
 	}
 
 	public Course getCourse() {
-		return course;
+		return this.course;
 	}
 
 	public String getDays() {
-		return days;
+		return this.days;
 	}
 
 	public String getEndTime() {
-		return endTime;
+		return this.endTime;
+	}
+
+	@Override
+	public int getId() {
+		return this.id;
 	}
 
 	public int getIsVerified() {
-		return isVerified;
+		return this.isVerified;
 	}
 
 	public String getLocation() {
-		return location;
+		return this.location;
 	}
 
 	public User getProfessor() {
-		return professor;
+		return this.professor;
 	}
 
 	public String getSectionNumber() {
-		return sectionNumber;
+		return this.sectionNumber;
 	}
 
 	public String getStartTime() {
-		return startTime;
+		return this.startTime;
 	}
 
 	public void setCheckedIn(int checkedIn) {
@@ -325,10 +329,10 @@ public class Section extends ExtendedDataItem {
 
 	@Override
 	public String toString() {
-		if (getCourse().getCourseNum() > 0)
-			return getCourse().getSubject().getPrefix() + " "
-					+ getCourse().getCourseNum() + "-" + getName();
-		return getName();
+		if (this.getCourse().getCourseNum() > 0)
+			return this.getCourse().getSubject().getPrefix() + " "
+					+ this.getCourse().getCourseNum() + "-" + this.getName();
+		return this.getName();
 	}
 
 }

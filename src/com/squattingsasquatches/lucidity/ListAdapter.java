@@ -36,12 +36,12 @@ public class ListAdapter<E extends DataItem> extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return items.size();
+		return this.items.size();
 	}
 
 	@Override
 	public E getItem(int position) {
-		return items.get(position);
+		return this.items.get(position);
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class ListAdapter<E extends DataItem> extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = mInflater.inflate(itemLayout, null);
+			convertView = this.mInflater.inflate(this.itemLayout, null);
 			holder = new ViewHolder();
 			holder.txtName = (TextView) convertView
 					.findViewById(R.id.txtItemName);
@@ -62,17 +62,16 @@ public class ListAdapter<E extends DataItem> extends BaseAdapter {
 
 			// If this item has id -1, change the arrow to a plus. (Add a
 			// Course)
-			if (items.get(position).getId() == -1)
+			if (this.items.get(position).getId() == -1)
 				holder.imgIcon.setImageResource(R.drawable.plus);
-			else if (items.get(position).getId() == -2)
+			else if (this.items.get(position).getId() == -2)
 				holder.imgIcon.setVisibility(View.GONE);
 
 			convertView.setTag(holder);
-		} else {
+		} else
 			holder = (ViewHolder) convertView.getTag();
-		}
 
-		holder.txtName.setText(items.get(position).toString());
+		holder.txtName.setText(this.items.get(position).toString());
 
 		return convertView;
 	}

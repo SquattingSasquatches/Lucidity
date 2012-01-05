@@ -16,14 +16,14 @@ public class DeviceRegistrar {
 		Log.d("onRegistered",
 				"successfully registered with C2DM server; registrationId: "
 						+ registrationId);
-		Intent notifySplash = new Intent(REMOTE_REGISTRATION_ACTION);
+		final Intent notifySplash = new Intent(REMOTE_REGISTRATION_ACTION);
 		notifySplash.putExtra(Codes.KEY_C2DM_ID, registrationId);
 		notifySplash.putExtra(Codes.KEY_C2DM_RESULT, Codes.SUCCESS);
 		ctx.sendBroadcast(notifySplash);
 	}
 
 	public static void startRegistration(Context ctx, BroadcastReceiver receiver) {
-		Intent registrationIntent = new Intent(
+		final Intent registrationIntent = new Intent(
 				"com.google.android.c2dm.intent.REGISTER");
 		registrationIntent.putExtra("app",
 				PendingIntent.getBroadcast(ctx, 0, new Intent(), 0));
@@ -38,7 +38,7 @@ public class DeviceRegistrar {
 			BroadcastReceiver receiver) {
 		try {
 			ctx.unregisterReceiver(receiver);
-		} catch (IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 			Log.d("unregisterReceiver", "receiver never registered");
 		}
 	}

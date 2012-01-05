@@ -67,14 +67,14 @@ public final class CheckInManager {
 	public static void startGPS(Context ctx, int sectionId) {
 		CheckInManager.ctx = ctx;
 
-		int c = Section.getStoredCheckedIn(sectionId);
+		final int c = Section.getStoredCheckedIn(sectionId);
 
 		CheckInManager.checkedIn = true;
 
 		if (c == 0)
 			CheckInManager.checkedIn = false;
 
-		Criteria criteria = new Criteria();
+		final Criteria criteria = new Criteria();
 
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
 		criteria.setPowerRequirement(Criteria.POWER_MEDIUM);

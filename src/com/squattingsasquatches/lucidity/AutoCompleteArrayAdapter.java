@@ -25,41 +25,38 @@ public class AutoCompleteArrayAdapter<E extends DataItem> extends
 
 	@Override
 	public int getCount() {
-		return matchingItems.size();
+		return this.matchingItems.size();
 	}
 
 	@Override
 	public Filter getFilter() {
-		Filter filter = new Filter() {
+		final Filter filter = new Filter() {
 			@SuppressWarnings("unchecked")
 			@Override
 			public String convertResultToString(Object resultValue) {
-				return ((E) (resultValue)).toString();
+				return ((E) resultValue).toString();
 			}
 
 			@Override
 			protected FilterResults performFiltering(CharSequence constraint) {
 				if (constraint != null) {
-					ArrayList<E> tmpAllData = allItems;
-					ArrayList<E> tmpDataShown = (ArrayList<E>) matchingItems
+					final ArrayList<E> tmpAllData = AutoCompleteArrayAdapter.this.allItems;
+					final ArrayList<E> tmpDataShown = (ArrayList<E>) AutoCompleteArrayAdapter.this.matchingItems
 							.clone();
 
 					tmpDataShown.clear();
 
-					for (int i = 0; i < tmpAllData.size(); i++) {
+					for (int i = 0; i < tmpAllData.size(); i++)
 						if (tmpAllData.get(i).toString().toLowerCase()
-								.contains(constraint.toString().toLowerCase())) {
+								.contains(constraint.toString().toLowerCase()))
 							tmpDataShown.add(tmpAllData.get(i));
-						}
-					}
 
-					FilterResults filterResults = new FilterResults();
+					final FilterResults filterResults = new FilterResults();
 					filterResults.values = tmpDataShown;
 					filterResults.count = tmpDataShown.size();
 					return filterResults;
-				} else {
+				} else
 					return new FilterResults();
-				}
 			}
 
 			@SuppressWarnings("unchecked")
@@ -67,8 +64,8 @@ public class AutoCompleteArrayAdapter<E extends DataItem> extends
 			protected void publishResults(CharSequence contraint,
 					FilterResults results) {
 				if (results != null && results.count > 0) {
-					matchingItems = (ArrayList<E>) results.values;
-					notifyDataSetChanged();
+					AutoCompleteArrayAdapter.this.matchingItems = (ArrayList<E>) results.values;
+					AutoCompleteArrayAdapter.this.notifyDataSetChanged();
 				}
 			}
 		};
@@ -78,6 +75,6 @@ public class AutoCompleteArrayAdapter<E extends DataItem> extends
 
 	@Override
 	public E getItem(int i) {
-		return matchingItems.get(i);
+		return this.matchingItems.get(i);
 	}
 }

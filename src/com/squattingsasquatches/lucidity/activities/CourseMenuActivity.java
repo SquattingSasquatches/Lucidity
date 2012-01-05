@@ -103,9 +103,9 @@ public class CourseMenuActivity extends LucidityActivity {
 								new User(
 										section.getInt(Section.Keys.professorId),
 										section.getString(Section.Keys.professorName)),
+								section.getString(Section.Keys.location),
 								section.getString(Section.Keys.days), section
-										.getString(Section.Keys.location),
-								section.getString(Section.Keys.startTime),
+										.getString(Section.Keys.startTime),
 								section.getString(Section.Keys.endTime),
 								section.getInt("is_verified"), section
 										.getInt(Section.Keys.checkedIn)));

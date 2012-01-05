@@ -28,7 +28,7 @@ public class ExtendedListAdapter<E extends ExtendedDataItem> extends
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = mInflater.inflate(itemLayout, null);
+			convertView = this.mInflater.inflate(this.itemLayout, null);
 			holder = new ViewHolder();
 			holder.txtName = (TextView) convertView
 					.findViewById(R.id.txtItemName);
@@ -41,19 +41,18 @@ public class ExtendedListAdapter<E extends ExtendedDataItem> extends
 
 			// If this item has id -1, change the arrow to a plus. (Add a
 			// Course)
-			if (items.get(position).getId() == -1)
+			if (this.items.get(position).getId() == -1)
 				holder.imgIcon.setImageResource(R.drawable.plus);
-			else if (items.get(position).getId() == -2)
+			else if (this.items.get(position).getId() == -2)
 				holder.imgIcon.setVisibility(View.GONE);
 
 			convertView.setTag(holder);
-		} else {
+		} else
 			holder = (ViewHolder) convertView.getTag();
-		}
 
-		holder.txtName.setText(items.get(position).toString());
-		holder.txtItemInfo1.setText(items.get(position).getItemInfo1());
-		holder.txtItemInfo2.setText(items.get(position).getItemInfo2());
+		holder.txtName.setText(this.items.get(position).toString());
+		holder.txtItemInfo1.setText(this.items.get(position).getItemInfo1());
+		holder.txtItemInfo2.setText(this.items.get(position).getItemInfo2());
 
 		return convertView;
 	}

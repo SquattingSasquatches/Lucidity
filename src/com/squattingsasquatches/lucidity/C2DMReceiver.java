@@ -14,63 +14,61 @@ public class C2DMReceiver extends BroadcastReceiver {
 	private Context ctx;
 
 	public void handleMessage(Intent intent) {
-		Bundle extras = intent.getExtras();
+		final Bundle extras = intent.getExtras();
 
 		if (extras != null) {
-			String activity = extras.getString("activity"), action = extras
+			final String activity = extras.getString("activity"), action = extras
 					.getString("action");
 
 			Log.i("C2DM", "Message received");
-			if (activity != null) {
-
+			if (activity != null)
 				try {
-					Intent newActivity = new Intent(ctx,
+					final Intent newActivity = new Intent(this.ctx,
 							Class.forName("com.squattingsasquatches.lucidity."
 									+ activity));
 					newActivity.putExtras(extras);
 					newActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					ctx.startActivity(newActivity);
-				} catch (ClassNotFoundException e) {
+					this.ctx.startActivity(newActivity);
+				} catch (final ClassNotFoundException e) {
 					Log.e("C2DM Message Handler", "Invalid class supplied");
 				}
-
-			} else if (action != null) {
-				Intent i = new Intent("com.squattingsasquatches.lucidity."
-						+ action);
+			else if (action != null) {
+				final Intent i = new Intent(
+						"com.squattingsasquatches.lucidity." + action);
 				i.putExtras(extras);
-				ctx.sendBroadcast(i);
+				this.ctx.sendBroadcast(i);
 			}
 		}
 	}
 
 	private void handleRegistration(Intent intent) {
-		Bundle extras = intent.getExtras();
+		final Bundle extras = intent.getExtras();
 
-		if (extras != null) {
+		if (extras != null)
 			if (extras.getString("error") != null) {
 				// Registration failed, should try again later.
-				String error = extras.getString("error");
+				final String error = extras.getString("error");
 				Log.d("c2dm error", error);
 			} else if (extras.getString("unregistered") != null) {
-				String storedRegistrationId = ""; // TODO: load registrationId
-													// from local DB
-				DeviceRegistrar.unregisterWithServer(ctx, storedRegistrationId);
-			} else if (c2dmRegistrationID != null) {
-				DeviceRegistrar.registerWithServer(ctx, c2dmRegistrationID);
-			}
-		}
+				final String storedRegistrationId = ""; // TODO: load
+														// registrationId
+				// from local DB
+				DeviceRegistrar.unregisterWithServer(this.ctx,
+						storedRegistrationId);
+			} else if (this.c2dmRegistrationID != null)
+				DeviceRegistrar.registerWithServer(this.ctx,
+						this.c2dmRegistrationID);
 	}
 
 	@Override
 	public void onReceive(Context ctx, Intent intent) {
-		c2dmRegistrationID = intent.getStringExtra("registration_id");
+		this.c2dmRegistrationID = intent.getStringExtra("registration_id");
 		this.ctx = ctx;
 		if (intent.getAction().equals(
-				"com.google.android.c2dm.intent.REGISTRATION")) {
-			handleRegistration(intent);
-		} else if (intent.getAction().equals(
-				"com.google.android.c2dm.intent.RECEIVE")) {
-			handleMessage(intent);
-		}
+				"com.google.android.c2dm.intent.REGISTRATION"))
+			this.handleRegistration(intent);
+		else if (intent.getAction().equals(
+				"com.google.android.c2dm.intent.RECEIVE"))
+			this.handleMessage(intent);
 	}
 }

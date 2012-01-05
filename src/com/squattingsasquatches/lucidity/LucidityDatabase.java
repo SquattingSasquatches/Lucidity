@@ -16,11 +16,48 @@ public class LucidityDatabase extends SQLiteOpenHelper {
 	private static SQLiteDatabase db;
 	private static Context context;
 
+	public static synchronized SQLiteDatabase db() throws SQLException {
+		if (instance == null)
+			instance = new LucidityDatabase(context);
+		return instance.getWritableDatabase();
+	}
+
+	public static synchronized LucidityDatabase getInstance(Context context) {
+		if (instance == null) {
+			instance = new LucidityDatabase(context);
+			db = instance.getWritableDatabase();
+		}
+
+		return instance;
+	}
+
 	public LucidityDatabase(Context ctx) {
 		super(ctx, Config.DB_NAME, null, DB_VERSION);
 		LucidityDatabase.context = ctx;
 
 	}
+
+	// public static void close() {
+	// // dbHelper.close();
+	// }
+	@Override
+	public synchronized void close() {
+		if (instance != null)
+			db.close();
+	}
+
+	// public static SQLiteDatabase db;
+	// private static SQLiteOpenHelper dbHelper;
+
+	// public LucidityDatabase(Context context) {
+	// dbHelper = new DBHelper(context);
+	// db = dbHelper.getWritableDatabase();
+	// // db.setLockingEnabled(true);
+	// }
+
+	// public static SQLiteDatabase db() {
+	// return dbHelper.getWritableDatabase();
+	// }
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -41,44 +78,6 @@ public class LucidityDatabase extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + User.tableName + ";");
 		db.execSQL("DROP TABLE IF EXISTS " + Section.tableName + ";");
 		db.execSQL("DROP TABLE IF EXISTS " + University.tableName + ";");
-		onCreate(db);
-	}
-
-	// public static SQLiteDatabase db;
-	// private static SQLiteOpenHelper dbHelper;
-
-	// public LucidityDatabase(Context context) {
-	// dbHelper = new DBHelper(context);
-	// db = dbHelper.getWritableDatabase();
-	// // db.setLockingEnabled(true);
-	// }
-
-	// public static SQLiteDatabase db() {
-	// return dbHelper.getWritableDatabase();
-	// }
-
-	// public static void close() {
-	// // dbHelper.close();
-	// }
-	@Override
-	public synchronized void close() {
-		if (instance != null)
-			db.close();
-	}
-
-	public static synchronized LucidityDatabase getInstance(Context context) {
-		if (instance == null) {
-			instance = new LucidityDatabase(context);
-			db = instance.getWritableDatabase();
-		}
-
-		return instance;
-	}
-
-	public static synchronized SQLiteDatabase db() throws SQLException {
-		if (instance == null) {
-			instance = new LucidityDatabase(context);
-		}
-		return instance.getWritableDatabase();
+		this.onCreate(db);
 	}
 }
