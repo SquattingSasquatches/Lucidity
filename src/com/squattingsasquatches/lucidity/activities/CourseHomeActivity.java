@@ -60,6 +60,7 @@ public class CourseHomeActivity extends LucidityActivity {
 
 		try {
 			unregisterReceiver(c2dmCheckOut);
+			unregisterReceiver(gpsReceiver);
 		} catch (IllegalArgumentException e) {
 		}
 	}

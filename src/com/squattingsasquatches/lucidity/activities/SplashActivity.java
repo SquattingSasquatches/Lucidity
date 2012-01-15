@@ -495,6 +495,7 @@ public class SplashActivity extends LucidityActivity {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
+		// unregisterReceiver(remoteRegistration);
 	}
 
 	/*

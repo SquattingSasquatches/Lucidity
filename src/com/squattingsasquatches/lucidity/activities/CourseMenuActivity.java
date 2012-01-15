@@ -25,52 +25,42 @@ import com.squattingsasquatches.lucidity.objects.User;
 
 public class CourseMenuActivity extends LucidityActivity {
 
+	private ListView coursesListView;
+	InternalReceiver getCourses;
+
+	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View v, int position,
+				long id) {
+			Object o = coursesListView.getItemAtPosition(position);
+			Section section = (Section) o;
+
+			switch (section.getId()) {
+			case -1:
+				// Add a Course
+				// Start SubjectsActivity
+				nextActivity = new Intent(CourseMenuActivity.this,
+						SelectSubjectActivity.class);
+				nextActivity.putExtra("userId", user.getId());
+				startActivity(nextActivity);
+				break;
+			default:
+				// load selected course and start CourseHome activity
+				nextActivity = new Intent(CourseMenuActivity.this,
+						CourseHomeActivity.class);
+				nextActivity.putExtra("sectionId", section.getId());
+				startActivity(nextActivity);
+				break;
+			}
+		}
+	};
 	/* UI */
 	private ProgressDialog loading;
-	private ListView coursesListView;
+
+	private boolean updateCourses;
 
 	/* Misc */
 	private ArrayList<Section> userSections;
-	private boolean updateCourses;
-
-	InternalReceiver getCourses;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Log.i("CourseMenuActivity", "Started.");
-		setContentView(R.layout.generic_list);
-
-		updateCourses = getIntent().getBooleanExtra("updateCourses", false);
-
-		userSections = new ArrayList<Section>();
-		coursesListView = (ListView) findViewById(R.id.ListContainer);
-		loading = new ProgressDialog(this);
-
-		// Receivers
-		getCourses = new InternalReceiver() {
-			@Override
-			public void update(JSONArray data) {
-				CourseMenuActivity.this.displayCourses(data);
-			}
-		};
-		getCourses.addParam("user_id", user.getId());
-
-		remoteDB.addReceiver("user.courses.view", getCourses);
-
-		loading.setTitle("Please wait");
-		loading.setMessage("Loading your saved courses... ");
-		loading.setCancelable(false);
-		loading.show();
-
-		if (updateCourses) {
-			remoteDB.execute("user.courses.view");
-		} else {
-			userSections = Section.getAll();
-			attachCourseOnClickListener();
-			loading.dismiss();
-		}
-	}
 
 	public void attachCourseOnClickListener() {
 		userSections.add(new Section(-1, "Add a Course"));
@@ -121,30 +111,40 @@ public class CourseMenuActivity extends LucidityActivity {
 		attachCourseOnClickListener();
 	}
 
-	private final OnItemClickListener listViewHandler = new OnItemClickListener() {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View v, int position,
-				long id) {
-			Object o = coursesListView.getItemAtPosition(position);
-			Section section = (Section) o;
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Log.i("CourseMenuActivity", "Started.");
+		setContentView(R.layout.generic_list);
 
-			switch (section.getId()) {
-			case -1:
-				// Add a Course
-				// Start SubjectsActivity
-				nextActivity = new Intent(CourseMenuActivity.this,
-						SelectSubjectActivity.class);
-				nextActivity.putExtra("userId", user.getId());
-				startActivity(nextActivity);
-				break;
-			default:
-				// load selected course and start CourseHome activity
-				nextActivity = new Intent(CourseMenuActivity.this,
-						CourseHomeActivity.class);
-				nextActivity.putExtra("sectionId", section.getId());
-				startActivity(nextActivity);
-				break;
+		updateCourses = getIntent().getBooleanExtra("updateCourses", false);
+
+		userSections = new ArrayList<Section>();
+		coursesListView = (ListView) findViewById(R.id.ListContainer);
+		loading = new ProgressDialog(this);
+
+		// Receivers
+		getCourses = new InternalReceiver() {
+			@Override
+			public void update(JSONArray data) {
+				CourseMenuActivity.this.displayCourses(data);
 			}
+		};
+		getCourses.addParam("user_id", user.getId());
+
+		remoteDB.addReceiver("user.courses.view", getCourses);
+
+		loading.setTitle("Please wait");
+		loading.setMessage("Loading your saved courses... ");
+		loading.setCancelable(false);
+		loading.show();
+
+		if (updateCourses) {
+			remoteDB.execute("user.courses.view");
+		} else {
+			userSections = Section.getAll();
+			attachCourseOnClickListener();
+			loading.dismiss();
 		}
-	};
+	}
 }
