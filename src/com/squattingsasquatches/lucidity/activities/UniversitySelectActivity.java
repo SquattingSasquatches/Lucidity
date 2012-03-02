@@ -53,7 +53,7 @@ public class UniversitySelectActivity extends LucidityActivity {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        setContentView(R.layout.university_select);
+        //setContentView(R.layout.university_select);
 
         txtUni = (AutoCompleteTextView) findViewById(R.id.acUni);
         

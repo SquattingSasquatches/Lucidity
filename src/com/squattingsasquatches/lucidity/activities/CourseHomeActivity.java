@@ -151,6 +151,8 @@ public class CourseHomeActivity extends LucidityActivity {
 						assignment.getString("name"),
 						assignment.getInt("doc_id"),
 						assignment.getString("descrip"), dueDate);
+				
+				
 
 				if (dueDate.after(rightNow))
 					upcomingAssignments.add(a);
@@ -194,9 +196,9 @@ public class CourseHomeActivity extends LucidityActivity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View v, int position,
 				long id) {
-			Object o = upcomingListView.getItemAtPosition(position);
+			Object o = ((ListView) parent).getItemAtPosition(position);
 			Assignment assignment = (Assignment) o;
-
+			
 			nextActivity = new Intent(CourseHomeActivity.this,
 					ViewAssignmentActivity.class);
 			nextActivity.putExtra("assignmentId", assignment.getId());
