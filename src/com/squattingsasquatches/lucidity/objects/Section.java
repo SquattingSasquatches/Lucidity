@@ -198,7 +198,8 @@ public class Section extends ExtendedDataItem {
 				.getColumnIndex(Keys.name)), c.getString(c
 				.getColumnIndex(Keys.sectionNumber)), new Course(c.getInt(c
 				.getColumnIndex(Keys.courseId)), c.getInt(c
-				.getColumnIndex(Keys.courseNumber))), new User(c.getInt(c
+				.getColumnIndex(Keys.courseNumber)), new Subject(c.getString(c
+				.getColumnIndex(Keys.subjectPrefix)))), new User(c.getInt(c
 				.getColumnIndex(Keys.professorId)), c.getString(c
 				.getColumnIndex(Keys.professorName))), c.getString(c
 				.getColumnIndex(Keys.location)), c.getString(c
